@@ -101,7 +101,6 @@ final class Image implements NormalizableInterface
 
       // Additional fields
       'downloadUrl' => $this->fullUrlFor($context['request'], 'images.download', ['id' => $this->getId()]),
-      'downloadAttachmentUrl' => $this->fullUrlFor($context['request'], 'images.download', ['id' => $this->getId()], ['attachment' => true]),
     ];
   }
 }
