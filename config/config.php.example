@@ -1,0 +1,40 @@
+<?php
+// Configuration for your local Faylin installation is done here
+// Rename this file to "config.php" and apply your production settings accordingly
+
+// The base path of the application
+$settings['root'] = '/';
+
+// The secret key to be used for token authorization
+$settings['secret'] = '<secure secret key>';
+
+// The database connection of the application, specified as a Doctrine DBAL connection URL
+// See https://www.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/configuration.html#connecting-using-a-url
+$settings['database.url'] = '<database url>';
+$settings['database.table.images'] = 'images';
+$settings['database.table.users'] = 'users';
+
+// The filesystem adapter of the application, specified as a function that returns a League\Flysystem\FilesystemAdapter instance
+// See https://flysystem.thephpleague.com/v2/docs/
+$settings['filesystem.adapter'] = function() {
+  return new League\Flysystem\Local\LocalFilesystemAdapter(__DIR__ . '/../uploads/');
+};
+
+// The options for the generation of identifiers
+// The 'datacenter' and 'worker' variables are integers in the range 0-31
+// The 'snowflake.epoch' variable is a Unix timestamp integer specified in milliseconds
+$settings['snowflake.datacenter'] = 0;
+$settings['snowflake.worker'] = 0;
+$settings['snowflake.epoch'] = 1288834974657;
+
+// The supported upload MIME types witht their default extensions, provided as an array of 'mimetype' => 'extensions' pairs
+$settings['uploads.supportedContentTypes'] = [
+  'image/png' => 'png',
+  'image/jpeg' => 'jpg',
+  'image/gif' => 'gif',
+  'image/webp' => 'webp',
+  'image/svg+xml' => 'svg',
+];
+
+// The supported upload size, provided in amount of bytes
+$settings['uploads.supportedSize'] = 5242880; // 5 MiB

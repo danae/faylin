@@ -1,0 +1,95 @@
+<?php
+namespace Danae\Faylin\App\Authorization;
+
+use Firebase\JWT\BeforeValidException;
+use Firebase\JWT\ExpiredException;
+use Firebase\JWT\JWT;
+use Firebase\JWT\SignatureInvalidException;
+use Symfony\Component\Serializer\Serializer;
+
+use Danae\Faylin\Model\Token;
+use Danae\Faylin\Model\UserRepository;
+
+
+// Class that defines an authorization context
+final class AuthorizationContext
+{
+  // The user repository to use in the context
+  private $userRepository;
+
+  // the serializer to use in the context
+  private $serializer;
+
+  // The key to use for signing tokens
+  private $key;
+
+  // The algorithm to use for signing tokens
+  private $algorithm;
+
+
+  // Constructor
+  public function __construct(UserRepository $userRepository, Serializer $serializer, string $key, string $algorithm = 'HS256')
+  {
+    $this->userRepository = $userRepository;
+    $this->serializer = $serializer;
+    $this->key = $key;
+    $this->algorithm = $algorithm;
+  }
+
+  // Return an encoded token
+  public function encode(Token $token): string
+  {
+    // Normalize the token
+    $token = $this->serializer->normalize($token);
+
+    // Encode the token
+    return JWT::encode($token, $this->key);
+  }
+
+  // Return a decoded token and its associated user
+  public function decode(string $token): array
+  {
+    try
+    {
+      // Decode the token
+      $token = JWT::decode($token, $this->key, [$this->algorithm]);
+
+      // Check the token claims
+      if (!isset($token->sub))
+        throw new AuthorizationException("No subject has been provided in the token");
+      if (!isset($token->exp))
+        throw new AuthorizationException("No expiration time has been provided in the token");
+      if (!isset($token->iat))
+        throw new AuthorizationException("No issued time has been provided in the token");
+      if (!isset($token->jti))
+        throw new AuthorizationException("No JWT ID has been provided in the token");
+
+      // Denormalize the token
+      $token = $this->serializer->denormalize((array)$token, Token::class);
+
+      // Check the token subject
+      $user = $token->fetchUserFrom($this->userRepository);
+      if ($user === null)
+        throw new AuthorizationException("The subject of the token is invalid");
+
+      // Return the denormalized token and user
+      return [$token, $user];
+    }
+    catch (SignatureInvalidException $ex)
+    {
+      throw new AuthorizationException("The signature of the token is invalid");
+    }
+    catch (BeforeValidException $ex)
+    {
+      throw new AuthorizationException("The issued date or not before date of the token is in the future");
+    }
+    catch (ExpiredException $ex)
+    {
+      throw new AuthorizationException("The token has been expired");
+    }
+    catch (InvalidArgumentException | UnexpectedValueException $ex)
+    {
+      throw new AuthorizationException("Could not decode the token: {$ex->getMessage()}");
+    }
+  }
+}

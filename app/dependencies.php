@@ -1,0 +1,96 @@
+<?php
+use Danae\Astral\Database;
+use DI\ContainerBuilder;
+use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\DriverManager;
+use League\Flysystem\Filesystem;
+use Psr\Container\ContainerInterface;
+use Psr\Http\Message\StreamFactoryInterface;
+use Slim\Psr7\Factory\StreamFactory;
+use Slim\Views\Twig;
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\CustomNormalizer;
+use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
+use Symfony\Component\Serializer\Normalizer\PropertyNormalizer;
+use Twig\Loader\FilesystemLoader as TwigFilesystemLoader;
+use Twig\Loader\LoaderInterface as TwigLoaderInterface;
+
+use Danae\Faylin\App\Authorization\AuthorizationContext;
+use Danae\Faylin\App\Controllers\Backend\BackendController;
+use Danae\Faylin\App\Controllers\Backend\ImageController;
+use Danae\Faylin\App\Controllers\Backend\UserController;
+use Danae\Faylin\App\Controllers\Frontend\FrontendController;
+use Danae\Faylin\App\Middleware\Authorization\AuthorizationMiddleware;
+use Danae\Faylin\App\Middleware\Authorization\JwtAuthorizationMiddleware;
+use Danae\Faylin\Model\ImageRepository;
+use Danae\Faylin\Model\UserRepository;
+use Danae\Faylin\Utils\Snowflake;
+
+
+// Return a function that adds dependencies to the container
+return function(ContainerBuilder $containerBuilder)
+{
+  // Add definitions to the container
+  $containerBuilder->addDefinitions([
+    // Database connection
+    Connection::class => function(ContainerInterface $container) {
+      return DriverManager::getConnection([
+        'url' => $container->get('database.url')
+      ]);
+    },
+
+    // Filesystem
+    Filesystem::class => DI\autowire()
+      ->constructor(DI\get('filesystem.adapter')),
+
+    // Serializer
+    Serializer::class => DI\autowire()
+      ->constructor([new DateTimeNormalizer(), new CustomNormalizer(), new PropertyNormalizer()], [new JsonEncoder()]),
+
+    // Snowflake generator
+    Snowflake::class => DI\autowire()
+      ->constructor(DI\get('snowflake.datacenter'), DI\get('snowflake.worker'), DI\get('snowflake.epoch')),
+
+    // Dependencies of repositories
+    StreamFactoryInterface::class => DI\autowire(StreamFactory::class),
+
+    // Repositories
+    ImageRepository::class => DI\autowire()
+      ->constructorParameter('table', DI\get('database.table.images'))
+      ->method('create'),
+    UserRepository::class => DI\autowire()
+      ->constructorParameter('table', DI\get('database.table.users'))
+      ->method('create'),
+
+    // Twig
+    TwigLoaderInterface::class => DI\autowire(TwigFilesystemLoader::class)
+      ->constructorParameter('paths', 'templates'),
+    Twig::class => DI\autowire(),
+
+    // Authorization
+    AuthorizationContext::class => DI\autowire()
+      ->constructorParameter('key', DI\get('secret'))
+      ->constructorParameter('algorithm', 'HS256'),
+    AuthorizationMiddleware::class => DI\autowire(JwtAuthorizationMiddleware::class),
+
+    // Backend controllers
+    BackendController::class => DI\autowire()
+      ->property('imageRepository', DI\get(ImageRepository::class))
+      ->property('userRepository', DI\get(UserRepository::class))
+      ->property('serializer', DI\get(Serializer::class))
+      ->property('authorizationContext', DI\get(AuthorizationContext::class))
+      ->property('supportedContentTypes', DI\get('uploads.supportedContentTypes'))
+      ->property('supportedSize', DI\get('uploads.supportedSize')),
+    ImageController::class => DI\autowire()
+      ->property('imageRepository', DI\get(ImageRepository::class))
+      ->property('userRepository', DI\get(UserRepository::class))
+      ->property('serializer', DI\get(Serializer::class))
+      ->property('supportedContentTypes', DI\get('uploads.supportedContentTypes'))
+      ->property('supportedSize', DI\get('uploads.supportedSize')),
+    UserController::class => DI\autowire()
+      ->property('imageRepository', DI\get(ImageRepository::class))
+      ->property('userRepository', DI\get(UserRepository::class))
+      ->property('serializer', DI\get(Serializer::class)),
+  ]);
+};
