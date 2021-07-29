@@ -95,7 +95,7 @@ final class Image implements NormalizableInterface
       'contentLength' => $this->getContentLength(),
 
       // Entity fields
-      'user' => $normalizer->normalize($this->fetchUserFrom($context['userRepository']), $format, $context),
+      'user' => $normalizer->normalize($context['userRepository']->get($this->getUserId()), $format, $context),
       'createdAt' => $normalizer->normalize($this->getCreatedAt(), $format, $context),
       'updatedAt' => $normalizer->normalize($this->getUpdatedAt(), $format, $context),
 

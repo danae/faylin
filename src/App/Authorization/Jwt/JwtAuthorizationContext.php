@@ -70,7 +70,7 @@ final class JwtAuthorizationContext
       $token = $this->serializer->denormalize((array)$token, Token::class);
 
       // Check the token subject
-      if ($token->fetchUserFrom($this->userRepository) === null)
+      if ($this->user($token) === null)
         throw new AuthorizationException("The subject of the token is invalid");
 
       // Return the denormalized token

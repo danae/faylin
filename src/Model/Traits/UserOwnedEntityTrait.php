@@ -24,10 +24,4 @@ trait UserOwnedEntityTrait
     $this->userId = $userId;
     return $this;
   }
-
-  // Get the user of the entity from a user repository
-  public function fetchUserFrom(UserRepository $repository): ?User
-  {
-    return $repository->get($this->userId);
-  }
 }
