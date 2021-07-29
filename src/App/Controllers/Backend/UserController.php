@@ -18,7 +18,7 @@ final class UserController extends AbstractBackendController
   public function index(Request $request, Response $response)
   {
     // Get the images
-    $options = $this->queryToSelectOptions($request, ['sort' => '-createdAt']);
+    $options = $this->createSelectOptions($request, ['sort' => '-createdAt']);
     $users = $this->userRepository->select([], $options);
 
     // Return the response

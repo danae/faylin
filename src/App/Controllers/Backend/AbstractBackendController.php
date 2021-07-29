@@ -16,10 +16,10 @@ use Danae\Faylin\Validator\Validator;
 // Base class for backend controllers
 abstract class AbstractBackendController
 {
-  // The image repository of the controller
+  // The image repository to use with the controller
   protected $imageRepository;
 
-  // The user repository of the controller
+  // The user repository to use with the controller
   protected $userRepository;
 
   // The serializer to use with the controller
@@ -47,8 +47,8 @@ abstract class AbstractBackendController
   }
 
 
-  // Create a select options array from query parameters
-  protected function queryToSelectOptions(Request $request, array $defaults = []): array
+  // Create a select options array from a request
+  protected function createSelectOptions(Request $request, array $defaults = []): array
   {
     // Create a new options array
     $options = [];

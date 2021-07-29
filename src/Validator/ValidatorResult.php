@@ -34,6 +34,12 @@ final class ValidatorResult
     return $this->errors;
   }
 
+  // Return the errors as a string
+  public function getErrorsAsString(): string
+  {
+    return implode('; ', $this->getErrors());
+  }
+
   // Return if the errors array is not empty
   public function hasErrors(): bool
   {
@@ -44,7 +50,7 @@ final class ValidatorResult
   public function resultOrThrowBadRequest(Request $request): array
   {
     if ($this->hasErrors())
-      throw new HttpBadRequestException($request, implode('; ', $this->errors));
+      throw new HttpBadRequestException($request, $this->getErrorsAsString());
     return $this->getResult();
   }
 }

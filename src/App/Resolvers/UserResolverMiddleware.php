@@ -17,7 +17,7 @@ final class UserResolverMiddleware implements MiddlewareInterface
   use RouteContextTrait;
 
 
-  // The user repository of this middleware
+  // The user repository to use with the middleware
   private $userRepository;
 
 

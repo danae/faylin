@@ -17,7 +17,7 @@ final class ImageResolverMiddleware implements MiddlewareInterface
   use RouteContextTrait;
 
 
-  // The image repository of this middleware
+  // The image repository to use with the middleware
   private $imageRepository;
 
 
