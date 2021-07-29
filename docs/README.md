@@ -224,8 +224,9 @@ Modify the metadata of an image. Returns:
 
 Uploads a new image. Returns:
 - `201 Created` with the newly created image object as body on success;
+- `400 Bad Request` if the body parameters are invalid;
 - `401 Unauthorized` if the request doesn't contain authorization;
-- `415 Payload Too Large` if the content size of the uploaded file is too large, see the capabilities endpoint to fetch the supported size;
+- `413 Payload Too Large` if the content size of the uploaded file is too large, see the capabilities endpoint to fetch the supported size;
 - `415 Unsupported Media Type` if the content type of the uploaded file is unsupported, see the capabilities endpoint to fetch the supported content types.
 
 #### Body parameters
@@ -239,10 +240,11 @@ The request must contain a body of type `multipart/form-data` containing an uplo
 
 Replaces an existing image. Returns:
 - `201 Created` with the updated image object as body on success;
+- `400 Bad Request` if the body parameters are invalid;
 - `401 Unauthorized` if the request doesn't contain authorization;
 - `403 Forbidden` if the authorized user is not allowed to replace the image;
 - `404 Not Found` if no image with the given id exists;
-- `415 Payload Too Large` if the content size of the uploaded file is too large, see the capabilities endpoint to fetch the supported size;
+- `413 Payload Too Large` if the content size of the uploaded file is too large, see the capabilities endpoint to fetch the supported size;
 - `415 Unsupported Media Type` if the content type of the uploaded file is unsupported, see the capabilities endpoint to fetch the supported content types.
 
 #### Body parameters
