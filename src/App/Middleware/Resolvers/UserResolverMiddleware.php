@@ -6,14 +6,17 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
 use Slim\Exception\HttpNotFoundException;
-use Slim\Routing\RouteContext;
 
 use Danae\Faylin\Model\UserRepository;
+use Danae\Faylin\Utils\Traits\RouteContextTrait;
 
 
 // Middleware that resolves a user from the repository and adds it to the request as an attribute
 final class UserResolverMiddleware implements MiddlewareInterface
 {
+  use RouteContextTrait;
+
+
   // The user repository of this middleware
   private $userRepository;
 
@@ -28,9 +31,7 @@ final class UserResolverMiddleware implements MiddlewareInterface
   public function process(Request $request, RequestHandler $handler): Response
   {
     // Get the identifier from the route
-    $routeContext = RouteContext::fromRequest($request);
-    $route = $routeContext->getRoute();
-    $id = $route->getArgument('id');
+    $id = $this->getRoute($request)->getArgument('id');
 
     // Get the user from the repository
     $user = $this->userRepository->selectOne(['id' => $id]);

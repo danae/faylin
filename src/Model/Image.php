@@ -7,7 +7,7 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Danae\Faylin\Model\Traits\EntityTrait;
 use Danae\Faylin\Model\Traits\UserOwnedEntityTrait;
 use Danae\Faylin\Model\Traits\DatedEntityTrait;
-use Danae\Faylin\Model\Traits\RouteContextTrait;
+use Danae\Faylin\Utils\Traits\RouteContextTrait;
 
 
 // Class that defines an image object

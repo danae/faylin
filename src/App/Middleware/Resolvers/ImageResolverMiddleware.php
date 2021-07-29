@@ -6,14 +6,17 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
 use Slim\Exception\HttpNotFoundException;
-use Slim\Routing\RouteContext;
 
 use Danae\Faylin\Model\ImageRepository;
+use Danae\Faylin\Utils\Traits\RouteContextTrait;
 
 
 // Middleware that resolves an image from the repository and adds it to the request as an attribute
 final class ImageResolverMiddleware implements MiddlewareInterface
 {
+  use RouteContextTrait;
+
+
   // The image repository of this middleware
   private $imageRepository;
 
@@ -28,9 +31,7 @@ final class ImageResolverMiddleware implements MiddlewareInterface
   public function process(Request $request, RequestHandler $handler): Response
   {
     // Get the identifier from the route
-    $routeContext = RouteContext::fromRequest($request);
-    $route = $routeContext->getRoute();
-    $id = $route->getArgument('id');
+    $id = $this->getRoute($request)->getArgument('id');
 
     // Get the image from the repository
     $image = $this->imageRepository->selectOne(['id' => $id]);

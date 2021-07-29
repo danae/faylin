@@ -7,7 +7,6 @@ use Slim\Views\Twig;
 use Slim\Views\TwigMiddleware;
 
 use Danae\Faylin\App\Handlers\HttpErrorHandler;
-use Danae\Faylin\App\Middleware\Route\RouteContextMiddleware;
 
 
 // Return a function that adds middleware to the app
@@ -18,9 +17,6 @@ return function(App $app)
 
   // Add Twig middleware
   $app->add(TwigMiddleware::createFromContainer($app, Twig::class));
-
-  // Add route context middleware
-  $app->add(RouteContextMiddleware::class);
 
   // Add body parsing middleware
   $app->addBodyParsingMiddleware();
