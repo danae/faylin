@@ -6,8 +6,8 @@ namespace Danae\Faylin\App\Authorization;
 class AuthorizationException extends \Exception
 {
   // Constructor
-  public function __construct(string $message, int $code = 0, \Throwable $previous = null)
+  public function __construct(string $message, \Throwable $previous = null)
   {
-    parent::__construct($message, $code, $previous);
+    parent::__construct($message, 0, $previous);
   }
 }

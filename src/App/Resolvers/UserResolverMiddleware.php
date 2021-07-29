@@ -1,5 +1,5 @@
 <?php
-namespace Danae\Faylin\App\Middleware\Resolvers;
+namespace Danae\Faylin\App\Resolvers;
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;

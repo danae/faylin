@@ -16,13 +16,13 @@ use Symfony\Component\Serializer\Normalizer\PropertyNormalizer;
 use Twig\Loader\FilesystemLoader as TwigFilesystemLoader;
 use Twig\Loader\LoaderInterface as TwigLoaderInterface;
 
-use Danae\Faylin\App\Authorization\AuthorizationContext;
+use Danae\Faylin\App\Authorization\AuthorizationMiddleware;
+use Danae\Faylin\App\Authorization\Jwt\JwtAuthorizationContext;
+use Danae\Faylin\App\Authorization\Jwt\JwtAuthorizationStrategy;
 use Danae\Faylin\App\Controllers\Backend\BackendController;
 use Danae\Faylin\App\Controllers\Backend\ImageController;
 use Danae\Faylin\App\Controllers\Backend\UserController;
 use Danae\Faylin\App\Controllers\Frontend\FrontendController;
-use Danae\Faylin\App\Middleware\Authorization\AuthorizationMiddleware;
-use Danae\Faylin\App\Middleware\Authorization\JwtAuthorizationMiddleware;
 use Danae\Faylin\Model\ImageRepository;
 use Danae\Faylin\Model\UserRepository;
 use Danae\Faylin\Utils\Snowflake;
@@ -69,17 +69,20 @@ return function(ContainerBuilder $containerBuilder)
     Twig::class => DI\autowire(),
 
     // Authorization
-    AuthorizationContext::class => DI\autowire()
+    JwtAuthorizationContext::class => DI\autowire()
       ->constructorParameter('key', DI\get('secret'))
       ->constructorParameter('algorithm', 'HS256'),
-    AuthorizationMiddleware::class => DI\autowire(JwtAuthorizationMiddleware::class),
+    JwtAuthorizationStrategy::class => DI\autowire(),
+    AuthorizationMiddleware::class => function(ContainerInterface $container) {
+      return new AuthorizationMiddleware([$container->get(JwtAuthorizationStrategy::class)]);
+    },
 
     // Backend controllers
     BackendController::class => DI\autowire()
       ->property('imageRepository', DI\get(ImageRepository::class))
       ->property('userRepository', DI\get(UserRepository::class))
       ->property('serializer', DI\get(Serializer::class))
-      ->property('authorizationContext', DI\get(AuthorizationContext::class))
+      ->property('authorizationContext', DI\get(JwtAuthorizationContext::class))
       ->property('supportedContentTypes', DI\get('uploads.supportedContentTypes'))
       ->property('supportedSize', DI\get('uploads.supportedSize')),
     ImageController::class => DI\autowire()

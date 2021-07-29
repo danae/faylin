@@ -1,5 +1,5 @@
 <?php
-namespace Danae\Faylin\App\Authorization;
+namespace Danae\Faylin\App\Authorization\Jwt;
 
 use Firebase\JWT\BeforeValidException;
 use Firebase\JWT\ExpiredException;
@@ -7,23 +7,25 @@ use Firebase\JWT\JWT;
 use Firebase\JWT\SignatureInvalidException;
 use Symfony\Component\Serializer\Serializer;
 
+use Danae\Faylin\App\Authorization\AuthorizationException;
 use Danae\Faylin\Model\Token;
+use Danae\Faylin\Model\User;
 use Danae\Faylin\Model\UserRepository;
 
 
-// Class that defines an authorization context
-final class AuthorizationContext
+// Class that defines an authorization context for JWT (JSON Web Tokens)
+final class JwtAuthorizationContext
 {
-  // The user repository to use in the context
+  // The user repository to use with the context
   private $userRepository;
 
-  // the serializer to use in the context
+  // The serializer to use with the context
   private $serializer;
 
-  // The key to use for signing tokens
+  // The key for signing tokens
   private $key;
 
-  // The algorithm to use for signing tokens
+  // The algorithm for signing tokens
   private $algorithm;
 
 
@@ -46,8 +48,8 @@ final class AuthorizationContext
     return JWT::encode($token, $this->key);
   }
 
-  // Return a decoded token and its associated user
-  public function decode(string $token): array
+  // Return a decoded token
+  public function decode(string $token): Token
   {
     try
     {
@@ -68,28 +70,33 @@ final class AuthorizationContext
       $token = $this->serializer->denormalize((array)$token, Token::class);
 
       // Check the token subject
-      $user = $token->fetchUserFrom($this->userRepository);
-      if ($user === null)
+      if ($token->fetchUserFrom($this->userRepository) === null)
         throw new AuthorizationException("The subject of the token is invalid");
 
-      // Return the denormalized token and user
-      return [$token, $user];
+      // Return the denormalized token
+      return $token;
     }
     catch (SignatureInvalidException $ex)
     {
-      throw new AuthorizationException("The signature of the token is invalid");
+      throw new AuthorizationException("The signature of the token is invalid", $ex);
     }
     catch (BeforeValidException $ex)
     {
-      throw new AuthorizationException("The issued date or not before date of the token is in the future");
+      throw new AuthorizationException("The issued date or not before date of the token is in the future", $ex);
     }
     catch (ExpiredException $ex)
     {
-      throw new AuthorizationException("The token has been expired");
+      throw new AuthorizationException("The token has been expired", $ex);
     }
     catch (InvalidArgumentException | UnexpectedValueException $ex)
     {
-      throw new AuthorizationException("Could not decode the token: {$ex->getMessage()}");
+      throw new AuthorizationException("Could not decode the token: {$ex->getMessage()}", $ex);
     }
+  }
+
+  // Return the associated user for a token
+  public function user(Token $token): ?User
+  {
+    return $this->userRepository->get($token->getUserId());
   }
 }
