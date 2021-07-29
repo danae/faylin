@@ -71,11 +71,11 @@ Fetches the user for the given id. Returns:
 - `404 Not Found` if no user with the given id exists.
 
 
-### Get the authenticated user
+### Get the authorized user
 
 `GET /api/v1/users/me`
 
-Fetches the user that is currently authenticated. Returns:
+Fetches the user that is currently authorized. Returns:
 - `200 OK` with the fetched user object as body on success;
 - `401 Unauthorized` if the request doesn't contain authorization;
 - `403 Forbidden` if the authorized user is not allowed to fetch the user.
@@ -93,11 +93,11 @@ Modify the metadata of a user. Returns:
 - `404 Not Found` if no user with the given id exists.
 
 
-### Modify the authenticated user
+### Modify the authorized user
 
 `PATCH /api/v1/users/me`
 
-Modify the metadata of the user that is currently authenticated. Returns:
+Modify the metadata of the user that is currently authorized. Returns:
 - `200 OK` with the updated image object as body on success;
 - `400 Bad Request` if the body parameters are invalid;
 - `401 Unauthorized` if the request doesn't contain authorization;
@@ -163,11 +163,11 @@ Fetches all images that are owned by the user for the given id. Returns:
 The query parameters for this request are the same as the `GET /api/v1/images/` endpoint.
 
 
-### List images that are owned by the authenticated user
+### List images that are owned by the authorized user
 
 `GET /api/v1/users/me/images/`
 
-Fetches all images that are owned by the user that is currently authenticated. Returns:
+Fetches all images that are owned by the user that is currently authorized. Returns:
 - `200 OK` with an array of the fetched images on success;
 - `400 Bad Request` if the query parameters are invalid;
 - `401 Unauthorized` if the request doesn't contain authorization;
