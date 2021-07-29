@@ -34,7 +34,7 @@ final class UserResolverMiddleware implements MiddlewareInterface
     $id = $this->getRoute($request)->getArgument('id');
 
     // Get the user from the repository
-    $user = $this->userRepository->selectOne(['id' => $id]);
+    $user = $this->userRepository->get($id);
     if ($user == null)
       throw new HttpNotFoundException($request, "A user with id \"{$id}\" coud not be found");
 

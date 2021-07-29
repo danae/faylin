@@ -36,6 +36,12 @@ final class ImageRepository extends Repository
     $this->primary('id');
   }
 
+  // Return an image for an identifier
+  public function get(string $id): ?Image
+  {
+    return $this->selectOne(['id' => $id]);
+  }
+
   // Return a stream containing the contents of the image
   public function readFile(Image $image): StreamInterface
   {

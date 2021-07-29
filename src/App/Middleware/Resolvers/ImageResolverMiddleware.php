@@ -34,7 +34,7 @@ final class ImageResolverMiddleware implements MiddlewareInterface
     $id = $this->getRoute($request)->getArgument('id');
 
     // Get the image from the repository
-    $image = $this->imageRepository->selectOne(['id' => $id]);
+    $image = $this->imageRepository->get($id);
     if ($image == null)
       throw new HttpNotFoundException($request, "An image with id \"{$id}\" coud not be found");
 

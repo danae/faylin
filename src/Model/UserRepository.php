@@ -22,4 +22,10 @@ final class UserRepository extends Repository
 
     $this->primary('id');
   }
+
+  // Return a user for an identifier
+  public function get(string $id): ?User
+  {
+    return $this->selectOne(['id' => $id]);
+  }
 }

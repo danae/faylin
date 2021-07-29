@@ -22,4 +22,10 @@ final class TokenRepository extends Repository
 
     $this->primary('id');
   }
+
+  // Return a token for an identifier
+  public function get(string $id): ?Token
+  {
+    return $this->selectOne(['id' => $id]);
+  }
 }
