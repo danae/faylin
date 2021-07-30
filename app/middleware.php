@@ -3,7 +3,6 @@ use Slim\App;
 
 use Slim\Middleware\ContentLengthMiddleware;
 use Slim\Middleware\MethodOverrideMiddleware;
-use Slim\Views\Twig;
 use Slim\Views\TwigMiddleware;
 
 use Danae\Faylin\App\Handlers\HttpErrorHandler;
@@ -16,7 +15,7 @@ return function(App $app)
   $app->add(ContentLengthMiddleware::class);
 
   // Add Twig middleware
-  $app->add(TwigMiddleware::createFromContainer($app, Twig::class));
+  $app->add(TwigMiddleware::class);
 
   // Add body parsing middleware
   $app->addBodyParsingMiddleware();

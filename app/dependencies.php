@@ -6,8 +6,10 @@ use Doctrine\DBAL\DriverManager;
 use League\Flysystem\Filesystem;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\StreamFactoryInterface;
+use Slim\App;
 use Slim\Psr7\Factory\StreamFactory;
 use Slim\Views\Twig;
+use Slim\Views\TwigMiddleware;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\CustomNormalizer;
@@ -52,7 +54,7 @@ return function(ContainerBuilder $containerBuilder)
     Snowflake::class => DI\autowire()
       ->constructor(DI\get('snowflake.datacenter'), DI\get('snowflake.worker'), DI\get('snowflake.epoch')),
 
-    // Dependencies of repositories
+    // Dependencies for repositories
     StreamFactoryInterface::class => DI\autowire(StreamFactory::class),
 
     // Repositories
@@ -67,6 +69,9 @@ return function(ContainerBuilder $containerBuilder)
     TwigLoaderInterface::class => DI\autowire(TwigFilesystemLoader::class)
       ->constructorParameter('paths', 'templates'),
     Twig::class => DI\autowire(),
+    TwigMiddleware::class => function(App $app) {
+      return TwigMiddleware::createFromContainer($app, Twig::class);
+    },
 
     // Authorization
     JwtAuthorizationContext::class => DI\autowire()
