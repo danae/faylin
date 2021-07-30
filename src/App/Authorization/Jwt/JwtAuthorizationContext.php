@@ -88,7 +88,7 @@ final class JwtAuthorizationContext
     {
       throw new AuthorizationException("The token has been expired", $ex);
     }
-    catch (InvalidArgumentException | UnexpectedValueException $ex)
+    catch (\InvalidArgumentException | \UnexpectedValueException $ex)
     {
       throw new AuthorizationException("Could not decode the token: {$ex->getMessage()}", $ex);
     }

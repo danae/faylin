@@ -63,9 +63,16 @@ final class JwtAuthorizationStrategy implements AuthorizationStrategyInterface
   // Parse the authorization header for bearer authentication
   private static function parseHeader(string $header): ?string
   {
-    if (strpos($header, 'Bearer') !== 0)
+    // Check if the header contains anything
+    $header = explode(' ', $header, 2);
+    if ($header === false || count($header) !== 2)
       return null;
-    else
-      return substr($header, 7);
+
+    // Check if the header contains a bearer token
+    if ($header[0] !== 'Bearer')
+      return null;
+
+    // Return the token
+    return $header[1];
   }
 }

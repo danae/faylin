@@ -48,6 +48,6 @@ final class AuthorizationMiddleware implements MiddlewareInterface
     }
 
     // No strategies found that could authorize the request
-    throw new HttpUnauthorizedException($request, "The request contains an invalid authorization header");
+    throw new HttpUnauthorizedException($request, "The request contains no acceptable authorization header");
   }
 }

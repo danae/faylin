@@ -61,14 +61,22 @@ final class BasicAuthorizationStrategy implements AuthorizationStrategyInterface
   // Parse the authorization header for basic authentication
   private static function parseHeader(string $header): ?array
   {
-    if (strpos($header, 'Basic') !== 0)
+    // Check if the header contains anything
+    $header = explode(' ', $header, 2);
+    if ($header === false || count($header) !== 2)
       return null;
 
-    $header = base64_decode(substr($header, 6));
-    if ($header === false)
+    // Check if the header contains a bearer token
+    if ($header[0] !== 'Basic')
       return null;
 
-    $header = explode(':', $header, 2);
-    return ['username' => $header[0], 'password' => isset($header[1]) ? $header[1] : null];
+    // Decode the credentials
+    $credentials = base64_decode($header[1]);
+    if ($credentials === false)
+      return null;
+
+    // Split and return the credentials
+    $credentials = explode(':', $header, 2);
+    return ['username' => $credentials[0], 'password' => $credentials[1] ?? null];
   }
 }
