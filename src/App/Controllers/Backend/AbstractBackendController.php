@@ -26,6 +26,14 @@ abstract class AbstractBackendController
   protected $serializer;
 
 
+  // Constructor
+  public function __construct(ImageRepository $imageRepository, UserRepository $userRepository, Serializer $serializer)
+  {
+    $this->imageRepository = $imageRepository;
+    $this->userRepository = $userRepository;
+    $this->serializer = $serializer;
+  }
+
   // Return a response with the JSON-serialized data
   protected function serialize(Request $request, Response $response, $data): Response
   {

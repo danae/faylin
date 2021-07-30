@@ -79,21 +79,12 @@ return function(ContainerBuilder $containerBuilder)
 
     // Backend controllers
     BackendController::class => DI\autowire()
-      ->property('imageRepository', DI\get(ImageRepository::class))
-      ->property('userRepository', DI\get(UserRepository::class))
-      ->property('serializer', DI\get(Serializer::class))
       ->property('authorizationContext', DI\get(JwtAuthorizationContext::class))
       ->property('supportedContentTypes', DI\get('uploads.supportedContentTypes'))
       ->property('supportedSize', DI\get('uploads.supportedSize')),
     ImageController::class => DI\autowire()
-      ->property('imageRepository', DI\get(ImageRepository::class))
-      ->property('userRepository', DI\get(UserRepository::class))
-      ->property('serializer', DI\get(Serializer::class))
       ->property('supportedContentTypes', DI\get('uploads.supportedContentTypes'))
       ->property('supportedSize', DI\get('uploads.supportedSize')),
-    UserController::class => DI\autowire()
-      ->property('imageRepository', DI\get(ImageRepository::class))
-      ->property('userRepository', DI\get(UserRepository::class))
-      ->property('serializer', DI\get(Serializer::class)),
+    UserController::class => DI\autowire(),
   ]);
 };
