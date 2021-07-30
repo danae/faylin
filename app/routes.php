@@ -1,16 +1,13 @@
 <?php
-use Psr\Http\Message\ResponseInterface as Response;
-use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\App;
 use Slim\Routing\RouteCollectorProxy;
 
 use Danae\Faylin\App\Authorization\AuthorizationMiddleware;
 use Danae\Faylin\App\Controllers\Backend\BackendController;
 use Danae\Faylin\App\Controllers\Backend\ImageController;
+use Danae\Faylin\App\Controllers\Backend\ImageResolverMiddleware;
 use Danae\Faylin\App\Controllers\Backend\UserController;
-use Danae\Faylin\App\Resolvers\ImageResolverMiddleware;
-use Danae\Faylin\App\Resolvers\UserResolverMiddleware;
-use Danae\Faylin\Utils\Snowflake;
+use Danae\Faylin\App\Controllers\Backend\UserResolverMiddleware;
 
 // Return a function that adds routes to the app
 return function(App $app)
