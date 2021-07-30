@@ -98,12 +98,12 @@ return function(App $app)
         ->setName('users.patch');
 
       // Return all images owned by the authorized user as a JSON response
-      $group->get('/me/images', [UserController::class, 'imagesMe'])
+      $group->get('/me/images/', [UserController::class, 'imagesMe'])
         ->add(AuthorizationMiddleware::class)
         ->setName('users.me.images');
 
       // Return all images owned by a user as a JSON response
-      $group->get('/{id:[A-Za-z0-9-_]+}/images', [UserController::class, 'images'])
+      $group->get('/{id:[A-Za-z0-9-_]+}/images/', [UserController::class, 'images'])
         ->add(UserResolverMiddleware::class)
         ->add(AuthorizationMiddleware::class)
         ->setName('users.get.images');
