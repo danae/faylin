@@ -50,11 +50,6 @@ return function(App $app)
         ->add(AuthorizationMiddleware::class)
         ->setName('images.delete');
 
-      // Download the contents of an image
-      $group->get('/{id:[A-Za-z0-9-_]+}/download', [ImageController::class, 'download'])
-        ->add(ImageResolverMiddleware::class)
-        ->setName('images.download');
-
       // Upload an image
       $group->post('/upload', [ImageController::class, 'upload'])
         ->add(AuthorizationMiddleware::class)
@@ -109,4 +104,9 @@ return function(App $app)
         ->setName('users.get.images');
     });
   });
+
+  // Download the contents of an image
+  $app->get('/{id:[A-Za-z0-9-_]+}', [ImageController::class, 'download'])
+    ->add(ImageResolverMiddleware::class)
+    ->setName('images.download');
 };
