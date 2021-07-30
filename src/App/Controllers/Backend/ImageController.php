@@ -180,7 +180,11 @@ final class ImageController extends AbstractBackendController
   private function getUploadedFile(Request $request, string $name): UploadedFile
   {
     // Get the file from the request
-    $file = $request->getUploadedFiles()['file'];
+    $files = $request->getUploadedFiles();
+    if (!isset($files[$name]))
+      throw new HttpBadRequestException($request, "No uploaded file has been provided");
+
+    $file = $files[$name];
 
     // Check if the upload succeeded
     if ($file->getError() === UPLOAD_ERR_INI_SIZE)
