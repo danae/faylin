@@ -2,17 +2,33 @@
 // Configuration for your local Faylin installation is done here
 // Rename this file to "config.php" and apply your production settings accordingly
 
+
+// APP SETTINGS
+
 // The base path of the application
-$settings['root'] = '/';
+$settings['app.basePath'] = '/';
 
-// The secret key to be used for token authorization
-$settings['secret'] = '<secure secret key>';
 
-// The database connection of the application, specified as a Doctrine DBAL connection URL
+// DATABASE SETTINGS
+
+// The database connection of the application, specified as a string representing a Doctrine DBAL connection URL
 // See https://www.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/configuration.html#connecting-using-a-url
 $settings['database.url'] = '<database url>';
+
+// The name of the table where images are stored, specified as a string
 $settings['database.table.images'] = 'images';
+
+// The name of the table where users are stored, specified as a string
 $settings['database.table.users'] = 'users';
+
+
+// AUTHORIZATION SETTINGS
+
+// The key used for signing JWT tokens, specified as a base64-encoded string
+$settings['authorization.signKey'] = '<sign key>';
+
+
+// FILESYSTEM SETTINGS
 
 // The filesystem adapter of the application, specified as a function that returns a League\Flysystem\FilesystemAdapter instance
 // See https://flysystem.thephpleague.com/v2/docs/
@@ -20,14 +36,22 @@ $settings['filesystem.adapter'] = function() {
   return new League\Flysystem\Local\LocalFilesystemAdapter(__DIR__ . '/../uploads/');
 };
 
-// The options for the generation of identifiers
-// The 'datacenter' and 'worker' variables are integers in the range 0-31
-// The 'snowflake.epoch' variable is a Unix timestamp integer specified in milliseconds
+
+// SNOWFLAKE SETTINGS
+
+// The datacenter id for the snowflake generator, specified as an int in the range 0-31
 $settings['snowflake.datacenter'] = 0;
+
+// The worker id for the snowflake generator, specified as an int in the range 0-31
 $settings['snowflake.worker'] = 0;
+
+// The epoch for the snowflake generator, specfied as an int representing milliseconds since the Unix epoch
 $settings['snowflake.epoch'] = 1288834974657;
 
-// The supported upload MIME types witht their default extensions, provided as an array of 'mimetype' => 'extensions' pairs
+
+// UPLOAD SETTINGS
+
+// The supported upload MIME types with their default extensions, specified as an array of 'mimetype' => 'extensions' pairs
 $settings['uploads.supportedContentTypes'] = [
   'image/png' => 'png',
   'image/jpeg' => 'jpg',
@@ -36,5 +60,5 @@ $settings['uploads.supportedContentTypes'] = [
   'image/svg+xml' => 'svg',
 ];
 
-// The supported upload size, provided in amount of bytes
+// The supported upload size, specified as an int representing the size in bytes
 $settings['uploads.supportedSize'] = 5242880; // 5 MiB

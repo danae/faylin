@@ -6,6 +6,7 @@ use Slim\Routing\RouteCollectorProxy;
 use Slim\Views\Twig;
 
 use Danae\Faylin\App\Authorization\AuthorizationMiddleware;
+use Danae\Faylin\App\Controllers\AuthorizationController;
 use Danae\Faylin\App\Controllers\BackendController;
 use Danae\Faylin\App\Controllers\FrontendController;
 use Danae\Faylin\App\Controllers\ImageController;
@@ -19,8 +20,8 @@ return function(App $app)
   // Backend controller routes
   $app->group('/api/v1', function(RouteCollectorProxy $group)
   {
-    // Return a JWT token for an authenticated client
-    $group->post('/token', [BackendController::class, 'token'])
+    // Request an access token
+    $group->post('/token', [AuthorizationController::class, 'token'])
       ->setName('token');
 
     // Return the capabilities of the API

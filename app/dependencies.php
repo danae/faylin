@@ -1,5 +1,4 @@
 <?php
-use Danae\Astral\Database;
 use DI\ContainerBuilder;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DriverManager;
@@ -21,6 +20,7 @@ use Twig\Loader\LoaderInterface as TwigLoaderInterface;
 use Danae\Faylin\App\Authorization\AuthorizationMiddleware;
 use Danae\Faylin\App\Authorization\Jwt\JwtAuthorizationContext;
 use Danae\Faylin\App\Authorization\Jwt\JwtAuthorizationStrategy;
+use Danae\Faylin\App\Controllers\AuthorizationController;
 use Danae\Faylin\App\Controllers\BackendController;
 use Danae\Faylin\App\Controllers\FrontendController;
 use Danae\Faylin\App\Controllers\ImageController;
@@ -67,7 +67,7 @@ return function(ContainerBuilder $containerBuilder)
 
     // Authorization
     JwtAuthorizationContext::class => DI\autowire()
-      ->constructorParameter('key', DI\get('secret'))
+      ->constructorParameter('key', DI\get('authorization.signKey'))
       ->constructorParameter('algorithm', 'HS256'),
     JwtAuthorizationStrategy::class => DI\autowire(),
     AuthorizationMiddleware::class => function(ContainerInterface $container) {
@@ -83,8 +83,9 @@ return function(ContainerBuilder $containerBuilder)
     },
 
     // Backend controllers
+    AuthorizationController::class => DI\autowire()
+      ->property('authorizationContext', DI\get(JwtAuthorizationContext::class)),
     BackendController::class => DI\autowire()
-      ->property('authorizationContext', DI\get(JwtAuthorizationContext::class))
       ->property('supportedContentTypes', DI\get('uploads.supportedContentTypes'))
       ->property('supportedSize', DI\get('uploads.supportedSize')),
     ImageController::class => DI\autowire()

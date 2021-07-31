@@ -9,19 +9,19 @@ return function(ContainerBuilder $containerBuilder)
   $settings = [];
 
   // Include the default settings
-  $settings['root'] = '/';
-
-  $settings['secret'] = '';
+  $settings['app.basePath'] = '/';
 
   $settings['database.url'] = '';
   $settings['database.table.images'] = 'images';
   $settings['database.table.users'] = 'users';
 
+  $settings['authorization.signKey'] = '';
+
   $settings['filesystem.adapter'] = null;
 
   $settings['snowflake.datacenter'] = 0;
   $settings['snowflake.worker'] = 0;
-  $settings['snowflake.epoch'] = null;
+  $settings['snowflake.epoch'] = 1288834974657;
 
   $settings['uploads.supportedContentTypes'] = [];
   $settings['uploads.supportedSize'] = 5242880; // 5 MiB

@@ -21,7 +21,7 @@ $container = $containerBuilder->build();
 
 // Create the application
 $app = AppFactory::create($container);
-$app->setBasePath($container->get('root'));
+$app->setBasePath($container->get('app.basePath'));
 
 $middleware = require(__DIR__ . "/../app/middleware.php");
 $middleware($app);
