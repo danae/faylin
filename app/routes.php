@@ -1,13 +1,16 @@
 <?php
+use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\App;
 use Slim\Routing\RouteCollectorProxy;
+use Slim\Views\Twig;
 
 use Danae\Faylin\App\Authorization\AuthorizationMiddleware;
-use Danae\Faylin\App\Controllers\Backend\BackendController;
-use Danae\Faylin\App\Controllers\Backend\ImageController;
-use Danae\Faylin\App\Controllers\Backend\ImageResolverMiddleware;
-use Danae\Faylin\App\Controllers\Backend\UserController;
-use Danae\Faylin\App\Controllers\Backend\UserResolverMiddleware;
+use Danae\Faylin\App\Controllers\BackendController;
+use Danae\Faylin\App\Controllers\ImageController;
+use Danae\Faylin\App\Controllers\ImageResolverMiddleware;
+use Danae\Faylin\App\Controllers\UserController;
+use Danae\Faylin\App\Controllers\UserResolverMiddleware;
 
 // Return a function that adds routes to the app
 return function(App $app)
@@ -49,6 +52,11 @@ return function(App $app)
         ->add(ImageResolverMiddleware::class)
         ->add(AuthorizationMiddleware::class)
         ->setName('images.delete');
+
+      // Download the contents of an image
+      $group->get('/{id:[A-Za-z0-9-_]+}/download', [ImageController::class, 'download'])
+        ->add(ImageResolverMiddleware::class)
+        ->setName('images.download');
 
       // Upload an image
       $group->post('/upload', [ImageController::class, 'upload'])
@@ -105,8 +113,8 @@ return function(App $app)
     });
   });
 
-  // Download the contents of an image
-  $app->get('/{id:[A-Za-z0-9-_]+}', [ImageController::class, 'download'])
-    ->add(ImageResolverMiddleware::class)
-    ->setName('images.download');
+  // Frontend controller routes
+  $app->get('/[{route:.*}]', function (Request $request, Response $response, Twig $twig) {
+    return $twig->render($response, 'index.twig');
+  });
 };

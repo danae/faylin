@@ -1,5 +1,5 @@
 <?php
-namespace Danae\Faylin\App\Controllers\Backend;
+namespace Danae\Faylin\App\Controllers;
 
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -13,7 +13,7 @@ use Danae\Faylin\Validator\Validator;
 
 
 // Controller that defines routes for the backend root
-final class BackendController extends AbstractBackendController
+final class BackendController extends AbstractController
 {
   // The authorization context to use with the controller
   protected $authorizationContext;

@@ -1,5 +1,5 @@
 <?php
-namespace Danae\Faylin\App\Controllers\Backend;
+namespace Danae\Faylin\App\Controllers;
 
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -13,8 +13,8 @@ use Danae\Faylin\Utils\Snowflake;
 use Danae\Faylin\Validator\Validator;
 
 
-// Base class for backend controllers
-abstract class AbstractBackendController
+// Base class for controllers
+abstract class AbstractController
 {
   // The image repository to use with the controller
   protected $imageRepository;

@@ -1,5 +1,5 @@
 <?php
-namespace Danae\Faylin\App\Controllers\Backend;
+namespace Danae\Faylin\App\Controllers;
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -12,7 +12,7 @@ use Danae\Faylin\Validator\Validator;
 
 
 // Controller that defines routes for users
-final class UserController extends AbstractBackendController
+final class UserController extends AbstractController
 {
   // Return all users as a JSON response
   public function index(Request $request, Response $response)

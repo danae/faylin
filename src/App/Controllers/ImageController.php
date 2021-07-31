@@ -1,5 +1,5 @@
 <?php
-namespace Danae\Faylin\App\Controllers\Backend;
+namespace Danae\Faylin\App\Controllers;
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\StreamInterface as Stream;
@@ -19,7 +19,7 @@ use Danae\Faylin\Validator\Validator;
 
 
 // Controller that defines routes for images
-final class ImageController extends AbstractBackendController
+final class ImageController extends AbstractController
 {
   // The supported content types for uploaded files
   protected $supportedContentTypes;
