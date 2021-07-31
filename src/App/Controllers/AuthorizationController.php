@@ -1,55 +1,36 @@
 <?php
 namespace Danae\Faylin\App\Controllers;
 
+use League\OAuth2\Server\Exception\OAuthServerException;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use Slim\Exception\HttpBadRequestException;
-
-use Danae\Faylin\Model\Token;
-use Danae\Faylin\Model\User;
-use Danae\Faylin\Utils\Snowflake;
-use Danae\Faylin\Validator\Validator;
+use Slim\Exception\HttpInternalServerErrorException;
 
 
 // Controller that defines routes for authorization
 final class AuthorizationController extends AbstractController
 {
-  // The authorization context to use with the controller
-  protected $authorizationContext;
+  // The authorization server to use with the controller
+  protected $authorizationServer;
 
 
   // Request an access token
   public function token(Request $request, Response $response, Snowflake $snowflake)
   {
-    // Get and validate the parameters
-    $params = (new Validator())
-      ->withRequired('username', 'string|maxlength:32')
-      ->withRequired('password', 'string')
-      ->validate($request->getParsedBody())
-      ->resultOrThrowBadRequest($request);
-
-    // Check if the user is valid
-    $user = $this->userRepository->selectOne(['name' => $params['username']]);
-    if ($user === null)
-      throw new HttpBadRequestException($request, "Invalid username");
-    if (!$user->verifyPassword($params['password']))
-      throw new HttpBadRequestException($request, "Invalid password");
-
-    // Create a token
-    $token = (new Token())
-      ->setId($snowflake->generateBase64String())
-      ->setUserId($user->getId())
-      ->setIssuedAt(new \DateTime())
-      ->setExpiresAt(new \DateTime('60 minutes'));
-
-    // Encode the token
-    $token = $this->authorizationContext->encode($token);
-
-    // Create the body
-    $body = ['token' => $token];
-
-    // Return the response
-    return $this->serialize($request, $response, $body)
-      ->withStatus(200);
+    try
+    {
+      // Try to respond to the request
+      return $this->server->respondToAccessTokenRequest($request, $response);
+    }
+    catch (OAuthServerException $ex)
+    {
+      // All instances of OAuthServerException can be formatted into a HTTP response
+      return $ex->generateHttpResponse($response);
+    }
+    catch (Exception $ex)
+    {
+      // Unknown exception
+      throw new HttpInternalServerErrorException($request, $ex->getMessage(), $ex);
+    }
   }
 }

@@ -15,6 +15,9 @@ $settings['app.basePath'] = '/';
 // See https://www.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/configuration.html#connecting-using-a-url
 $settings['database.url'] = '<database url>';
 
+// The name of the table where clients are stored, specified as a string
+$settings['database.table.clients'] = 'clients';
+
 // The name of the table where images are stored, specified as a string
 $settings['database.table.images'] = 'images';
 
@@ -24,8 +27,20 @@ $settings['database.table.users'] = 'users';
 
 // AUTHORIZATION SETTINGS
 
-// The key used for signing JWT tokens, specified as a base64-encoded string
-$settings['authorization.signKey'] = '<sign key>';
+// The public key for the authorization server, specified as a string containing the path to the key file
+$settings['authorization.publicKey'] = 'file://<path to public key>';
+
+// The private key for the authorization server, specified as a strinc containing the path to the key file
+$settings['authorization.privateKey'] = 'file://<path to private key>';
+
+// The encrption key for the authorization server, specified as a base64-encoded string
+$settings['authorization.encryptionKey'] = '<encryption key>';
+
+// The TTL for access tokens, specified as a DateInterval instance
+$settings['authorization.accessTokenTTL'] = new DateInterval('PT1H');
+
+// The TTL for refresh tokens, specified as a DateInterval instance
+$settings['authorization.refreshTokenTTL'] = new DateInterval('P1D');
 
 
 // FILESYSTEM SETTINGS

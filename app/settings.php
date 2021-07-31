@@ -12,10 +12,15 @@ return function(ContainerBuilder $containerBuilder)
   $settings['app.basePath'] = '/';
 
   $settings['database.url'] = '';
+  $settings['database.table.clients'] = 'clients';
   $settings['database.table.images'] = 'images';
   $settings['database.table.users'] = 'users';
 
-  $settings['authorization.signKey'] = '';
+  $settings['authorization.publicKey'] = '';
+  $settings['authorization.privateKey'] = '';
+  $settings['authorization.encryptionKey'] = '';
+  $settings['authorization.accessTokenTTL'] = new DateInterval('PT1H');
+  $settings['authorization.refreshTokenTTL'] = new DateInterval('P1D');
 
   $settings['filesystem.adapter'] = null;
 
