@@ -1,0 +1,164 @@
+// Import variables and fonts
+@import 'variables';
+@import 'bulma';
+
+
+// Header layout styling
+header {
+
+}
+
+// Main layout styling
+main {
+
+}
+
+// Footer layout styling
+footer {
+  @extend .is-size-7;
+  @extend .has-text-centered;
+  @extend .has-background-white;
+  @extend .py-5;
+}
+
+// Container styling
+.container {
+  max-width: 800px !important;
+}
+
+// Section styling
+.section {
+  @extend .my-0;
+}
+
+// Content styling
+.content {
+  // Heading styling
+  @for $i from 1 through 6
+  {
+    h#{$i} {
+      @extend .is-family-secondary;
+      @extend .has-text-weight-normal;
+
+      @if $i <= 2 {
+        @extend .has-text-primary;
+      }
+    }
+  }
+
+  // Link styling
+  a:not(.button) {
+    color: $link;
+    border-bottom: 1px $link dotted;
+
+    &:active {
+      color: $link-active;
+      border-bottom-color: $link-active;
+    }
+
+    &:hover {
+      color: $link-hover;
+      border-bottom-color: $link-hover;
+    }
+
+    // Links in the footer have no border
+    .footer > & {
+      border-bottom: none;
+    }
+  }
+
+  // Button styling
+  .button {
+  }
+}
+
+// Image styling
+img {
+  @extend .box;
+  //@extend .is-shadowless;
+  @extend .p-0;
+
+  // Uploading image styling
+  &.is-uploading {
+    max-width: 100%;
+    max-height: 10rem;
+
+    opacity: 0.5;
+  }
+}
+
+// Box styling
+.box {
+  @extend .is-shadowless;
+  
+  &.is-outlined-primary {
+    border: 4px $primary dotted;
+  }
+  &.is-outlined-link {
+    border: 4px $link dotted;
+  }
+  &.is-outlined-info {
+    border: 4px $info dotted;
+  }
+  &.is-outlined-success {
+    border: 4px $success dotted;
+  }
+  &.is-outlined-warning {
+    border: 4px $warning dotted;
+  }
+  &.is-outlined-danger {
+    border: 4px $danger dotted;
+  }
+}
+
+// Upload hero styling
+.upload-hero {
+  @extend .box;
+  @extend .is-outlined-primary;
+  @extend .has-text-centered;
+  @extend .my-0;
+
+  a {
+    border-bottom: none !important;
+  }
+}
+
+// The columns class for images
+.image-tiles {
+  @extend .columns;
+  @extend .is-mobile;
+  @extend .is-multiline;
+  @extend .is-justify-content-left;
+  @extend .is-align-items-flex-start;
+  @extend .my-0;
+
+  // The column class for images
+  .image-tile {
+    @extend .column;
+    @extend .is-narrow-mobile;
+    @extend .is-narrow;
+    @extend .m-0;
+
+    // Actual image styling
+    .image {
+      @extend .m-0;
+
+      img {
+        @extend .p-0;
+
+        width: auto;
+        height: 7.5rem;
+        margin: auto;
+      }
+    }
+  }
+}
+
+// Emoji styling
+.emoji {
+  display: inline-block;
+  height: 1em;
+  width: 1em;
+  margin: 0 .05em 0 .1em;
+  vertical-align: -0.1em;
+}

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- Meta-tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="{{ base_path() }}/static/css/styles.css">
+
+    <!-- Icons -->
+    <link rel="icon" href="{{ base_path() }}/static/images/icon.svg" sizes="any" type="image/svg+xml">
+    <link rel="icon" href="{{ base_path() }}/static/images/icon-16px.png" sizes="16x16" type="image/png">
+    <link rel="icon" href="{{ base_path() }}/static/images/icon-32px.png" sizes="32x32" type="image/png">
+    <link rel="icon" href="{{ base_path() }}/static/images/icon-48px.png" sizes="48x48" type="image/png">
+    <link rel="icon" href="{{ base_path() }}/static/images/icon-64px.png" sizes="64x64" type="image/png">
+    <link rel="icon" href="{{ base_path() }}/static/images/icon-128px.png" sizes="128x128" type="image/png">
+    <link rel="icon" href="{{ base_path() }}/static/images/icon-256px.png" sizes="256x256" type="image/png">
+    <link rel="icon" href="{{ base_path() }}/static/images/icon-512px.png" sizes="512x512" type="image/png">
+
+    <!-- Title -->
+    <title>fayl.in</title>
+  </head>
+
+  <body>
+    <!-- Application root -->
+    <div id="app">
+      <!-- Navigation -->
+      <b-navbar fixed-top wrapper-class="container">
+        <!-- Navbar brand and burger button -->
+        <template #brand>
+          <b-navbar-item tag="router-link" :to="{name: 'home'}">
+            <span class="icon-text">
+              <b-icon pack="fas" icon="igloo" class="mr-1"></b-icon>
+              <span class="has-text-weight-bold">fayl.in</span>
+            </span>
+          </b-navbar-item>
+        </template>
+
+        <!-- Navbar menu -->
+        <template #end>
+          <template v-if="authenticated">
+            <b-navbar-item tag="router-link" :to="{name: 'user'}">profile</b-navbar-item>
+            <b-navbar-item tag="router-link" :to="{name: 'settings'}">settings</b-navbar-item>
+            <b-navbar-item tag="router-link" :to="{name: 'logout'}">sign out</b-navbar-item>
+          </template>
+
+          <template v-else>
+            <b-navbar-item tag="router-link" :to="{name: 'login'}">sign in</b-navbar-item>
+          </template>
+        </template>
+      </b-navbar>
+
+      <!-- Main -->
+      <main class="container">
+        <router-view></router-view>
+      </main>
+
+      <!-- Footer -->
+      <footer>
+        <p class="mb-0">fayl.in was created by <a target="_blank" href="https://github.com/danae">Danae</a> &middot; made with <a target="_blank" href="https://vuejs.org/">Vue.js</a> &middot; <a target="_blank" href="https://bulma.io/">Bulma</a> &middot; <a target="_blank" href="https://fontawesome.com/">Font Awesome</a> &middot; <a target="_blank" href="https://twemoji.twitter.com/">Twemoji</a>
+      </footer>
+    </div>
+
+    <!-- Third-party scripts -->
+    <script src="{{ base_path() }}/node_modules/vue/dist/vue.js"></script>
+    <script src="{{ base_path() }}/node_modules/vue-router/dist/vue-router.js"></script>
+    <script src="{{ base_path() }}/node_modules/buefy/dist/buefy.min.js"></script>
+    <script src="{{ base_path() }}/node_modules/@fortawesome/fontawesome-free/js/all.js"></script>
+    <script src="{{ base_path() }}/node_modules/twemoji/dist/twemoji.min.js"></script>
+
+    <!-- Main script -->
+    <script src="{{ base_path() }}/src/index.js" type="module"></script>
+  </body>
+</html>

@@ -1,0 +1,24 @@
+// Import the fonts
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,700|Signika:400,700&display=swap');
+
+// Import the initial variables
+@import "../../node_modules/bulma/sass/utilities/initial-variables.sass";
+
+// Custom fonts
+$family-primary: 'Montserrat', sans-serif;
+$family-secondary: 'Signika', sans-serif;
+
+// Custom colors
+$primary: #5eb2ce;
+$primary-active: #add8e6;
+
+// Custom derived colors
+$link: $primary;
+$link-active: $primary-active;
+$link-hover: $primary-active;
+
+// Set other variables
+$body-overflow-y: auto;
+$dimensions: 16 24 32 48 64 96 128 192 256;
+$section-padding: 1.5rem 1rem;
+$section-padding-desktop: 1.5rem 1rem;
