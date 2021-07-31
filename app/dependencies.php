@@ -22,6 +22,7 @@ use Danae\Faylin\App\Authorization\AuthorizationMiddleware;
 use Danae\Faylin\App\Authorization\Jwt\JwtAuthorizationContext;
 use Danae\Faylin\App\Authorization\Jwt\JwtAuthorizationStrategy;
 use Danae\Faylin\App\Controllers\BackendController;
+use Danae\Faylin\App\Controllers\FrontendController;
 use Danae\Faylin\App\Controllers\ImageController;
 use Danae\Faylin\App\Controllers\UserController;
 use Danae\Faylin\Model\ImageRepository;
@@ -64,14 +65,6 @@ return function(ContainerBuilder $containerBuilder)
       ->constructorParameter('table', DI\get('database.table.users'))
       ->method('create'),
 
-    // Twig
-    TwigLoaderInterface::class => DI\autowire(TwigFilesystemLoader::class)
-      ->constructorParameter('paths', 'templates'),
-    Twig::class => DI\autowire(),
-    TwigMiddleware::class => function(App $app) {
-      return TwigMiddleware::createFromContainer($app, Twig::class);
-    },
-
     // Authorization
     JwtAuthorizationContext::class => DI\autowire()
       ->constructorParameter('key', DI\get('secret'))
@@ -79,6 +72,14 @@ return function(ContainerBuilder $containerBuilder)
     JwtAuthorizationStrategy::class => DI\autowire(),
     AuthorizationMiddleware::class => function(ContainerInterface $container) {
       return new AuthorizationMiddleware([$container->get(JwtAuthorizationStrategy::class)]);
+    },
+
+    // Twig
+    TwigLoaderInterface::class => DI\autowire(TwigFilesystemLoader::class)
+      ->constructorParameter('paths', '/'),
+    Twig::class => DI\autowire(),
+    TwigMiddleware::class => function(App $app) {
+      return TwigMiddleware::createFromContainer($app, Twig::class);
     },
 
     // Backend controllers
@@ -90,5 +91,9 @@ return function(ContainerBuilder $containerBuilder)
       ->property('supportedContentTypes', DI\get('uploads.supportedContentTypes'))
       ->property('supportedSize', DI\get('uploads.supportedSize')),
     UserController::class => DI\autowire(),
+
+    // Frontend controllers
+    FrontendController::class => DI\autowire()
+      ->property('twig', DI\get(Twig::class)),
   ]);
 };

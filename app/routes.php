@@ -7,6 +7,7 @@ use Slim\Views\Twig;
 
 use Danae\Faylin\App\Authorization\AuthorizationMiddleware;
 use Danae\Faylin\App\Controllers\BackendController;
+use Danae\Faylin\App\Controllers\FrontendController;
 use Danae\Faylin\App\Controllers\ImageController;
 use Danae\Faylin\App\Controllers\ImageResolverMiddleware;
 use Danae\Faylin\App\Controllers\UserController;
@@ -52,11 +53,6 @@ return function(App $app)
         ->add(ImageResolverMiddleware::class)
         ->add(AuthorizationMiddleware::class)
         ->setName('images.delete');
-
-      // Download the contents of an image
-      $group->get('/{id:[A-Za-z0-9-_]+}/download', [ImageController::class, 'download'])
-        ->add(ImageResolverMiddleware::class)
-        ->setName('images.download');
 
       // Upload an image
       $group->post('/upload', [ImageController::class, 'upload'])
@@ -114,7 +110,20 @@ return function(App $app)
   });
 
   // Frontend controller routes
-  $app->get('/[{route:.*}]', function (Request $request, Response $response, Twig $twig) {
-    return $twig->render($response, 'index.twig');
+  $app->group('', function(RouteCollectorProxy $group)
+  {
+    // Routes doubled from the frontend app
+    $group->get('/', [FrontendController::class, 'render']);
+    $group->get('/login', [FrontendController::class, 'render']);
+    $group->get('/logout', [FrontendController::class, 'render']);
+    $group->get('/users', [FrontendController::class, 'render']);
+    $group->get('/users/{id:[A-Za-z0-9-_]+}', [FrontendController::class, 'render']);
+    $group->get('/images', [FrontendController::class, 'render']);
+    $group->get('/images/{id:[A-Za-z0-9-_]+}', [FrontendController::class, 'render']);
+
+    // Download the contents of an image
+    $group->get('/{id:[A-Za-z0-9-_]+}', [ImageController::class, 'download'])
+      ->add(ImageResolverMiddleware::class)
+      ->setName('images.download');
   });
 };
