@@ -39,8 +39,8 @@ export default {
       <p>Log in to fayl.in to be able to upload and organize your images.</p>
 
       <form @submit.prevent="onSubmit">
-        <b-field label="Username" label-position="on-border">
-          <b-input v-model="username" type="text" name="username" id="username" icon-pack="fas" icon="user" autofocus></b-input>
+        <b-field label="Email address" label-position="on-border">
+          <b-input v-model="username" type="text" name="username" id="username" icon-pack="fas" icon="envelope" autofocus></b-input>
         </b-field>
 
         <b-field label="Password" label-position="on-border">

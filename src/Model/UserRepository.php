@@ -28,4 +28,15 @@ final class UserRepository extends Repository
   {
     return $this->selectOne(['id' => $id]);
   }
+
+  // Validate a user for an email address and password
+  public function validate(string $email, string $password): ?User
+  {
+    $user = $this->selectOne(['email' => $email]);
+    if ($user == null)
+      return null;
+    if (!$user->verifyPassword($password))
+      return null;
+    return $user;
+  }
 }

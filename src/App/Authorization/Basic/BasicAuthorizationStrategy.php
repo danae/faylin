@@ -47,11 +47,9 @@ final class BasicAuthorizationStrategy implements AuthorizationStrategyInterface
       throw new AuthorizationException("The request contains an invalid authorization header");
 
     // Check the username and password
-    $user = $this->userRepository->selectOne(['name' => $authorization['username']]);
+    $user = $this->userRepository->validate($authorization['username'], $authorization['password']);
     if ($user == null)
-      throw new AuthorizationException("The username is incorrect");
-    if (!$user->verifyPassword($authorization['password']))
-      throw new AuthorizationException("The password is incorrect");
+      throw new AuthorizationException("The authorization credentials are incorrect");
 
     // Return the user
     return $user;

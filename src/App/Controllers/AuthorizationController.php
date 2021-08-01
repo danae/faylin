@@ -23,17 +23,15 @@ final class AuthorizationController extends AbstractController
   {
     // Get and validate the parameters
     $params = (new Validator())
-      ->withRequired('username', 'string|maxlength:32')
-      ->withRequired('password', 'string')
+      ->withRequired('username', 'string|notempty|maxlength:32')
+      ->withRequired('password', 'string|notempty')
       ->validate($request->getParsedBody())
       ->resultOrThrowBadRequest($request);
 
     // Check if the user is valid
-    $user = $this->userRepository->selectOne(['name' => $params['username']]);
+    $user = $this->userRepository->validate($params['username'], $params['password']);
     if ($user === null)
-      throw new HttpBadRequestException($request, "Invalid username");
-    if (!$user->verifyPassword($params['password']))
-      throw new HttpBadRequestException($request, "Invalid password");
+      throw new HttpBadRequestException($request, "The combination of username and password is incorrect");
 
     // Create a token
     $token = (new Token())
