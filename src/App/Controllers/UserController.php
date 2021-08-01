@@ -50,8 +50,8 @@ final class UserController extends AbstractController
 
     // Get and validate the parameters
     $params = (new Validator())
-      ->withOptional('name', 'string|maxlength:32', null)
-      ->withOptional('email', 'email|maxlength:256', null)
+      ->withOptional('name', 'string|notempty|maxlength:32', null)
+      ->withOptional('email', 'email|notempty|maxlength:256', null)
       ->validate($request->getParsedBody())
       ->resultOrThrowBadRequest($request);
 

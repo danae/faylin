@@ -50,7 +50,7 @@ final class ImageController extends AbstractController
 
     // Get and validate the body parameters
     $params = (new Validator())
-      ->withOptional('name', 'string|maxlength:256')
+      ->withOptional('name', 'string|notempty|maxlength:256')
       ->validate($request->getParsedBody())
       ->resultOrThrowBadRequest($request);
 
