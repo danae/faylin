@@ -7,7 +7,7 @@ use Slim\Views\Twig;
 
 
 // Controller that defines routes for the frontend root
-final class FrontendController extends AbstractController
+final class FrontendController
 {
   // The Twig renderer to use with the controller
   protected $twig;
