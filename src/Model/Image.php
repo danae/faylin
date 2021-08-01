@@ -100,7 +100,7 @@ final class Image implements NormalizableInterface
       'updatedAt' => $normalizer->normalize($this->getUpdatedAt(), $format, $context),
 
       // Additional fields
-      'downloadUrl' => $this->fullUrlFor($context['request'], 'images.download', ['id' => $this->getId()]),
+      'downloadUrl' => $this->fullUrlFor($context['request'], 'images.download', ['id' => $this->getId(), 'extension' => $context['supportedContentTypes'][$this->getContentType()]]),
     ];
   }
 }

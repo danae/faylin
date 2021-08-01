@@ -84,6 +84,8 @@ return function(ContainerBuilder $containerBuilder)
 
     // Backend controllers
     AuthorizationController::class => DI\autowire()
+      ->property('supportedContentTypes', DI\get('uploads.supportedContentTypes'))
+      ->property('supportedSize', DI\get('uploads.supportedSize'))
       ->property('authorizationContext', DI\get(JwtAuthorizationContext::class)),
     BackendController::class => DI\autowire()
       ->property('supportedContentTypes', DI\get('uploads.supportedContentTypes'))
@@ -91,7 +93,9 @@ return function(ContainerBuilder $containerBuilder)
     ImageController::class => DI\autowire()
       ->property('supportedContentTypes', DI\get('uploads.supportedContentTypes'))
       ->property('supportedSize', DI\get('uploads.supportedSize')),
-    UserController::class => DI\autowire(),
+    UserController::class => DI\autowire()
+      ->property('supportedContentTypes', DI\get('uploads.supportedContentTypes'))
+      ->property('supportedSize', DI\get('uploads.supportedSize')),
 
     // Frontend controllers
     FrontendController::class => DI\autowire()

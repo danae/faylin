@@ -8,13 +8,6 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 // Controller that defines routes for the backend root
 final class BackendController extends AbstractController
 {
-  // The supported content types for uploaded files
-  protected $supportedContentTypes;
-
-  // The supported size for uploaded files
-  protected $supportedSize;
-
-
   // Return the capabilities of the API
   public function capabilities(Request $request, Response $response)
   {

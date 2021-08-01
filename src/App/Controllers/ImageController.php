@@ -21,13 +21,6 @@ use Danae\Faylin\Validator\Validator;
 // Controller that defines routes for images
 final class ImageController extends AbstractController
 {
-  // The supported content types for uploaded files
-  protected $supportedContentTypes;
-
-  // The supported size for uploaded files
-  protected $supportedSize;
-
-
   // Return all images as a JSON response
   public function index(Request $request, Response $response)
   {
@@ -90,11 +83,21 @@ final class ImageController extends AbstractController
   }
 
   // Download the contents of an image
-  public function download(Request $request, Response $response, Image $image)
+  public function download(Request $request, Response $response, Image $image, string $extension = '')
   {
+    // Get the content name
+    $contentExtension = $this->supportedContentTypes[$image->getContentType()] ?? null;
+    $contentName = $image->getName();
+    if ($contentExtension !== null && !preg_match("/\.{$contentExtension}\$/i", $contentName))
+      $contentName .= '.' . $contentExtension;
+
+    // Check if the extension is valid
+    if (!empty($extension) && strtolower($extension) !== $contentExtension)
+      throw new HttpBadRequestException($request, "The extension of the route does not match the extension of the content");
+
     // Get and validate the query parameters
     $query = (new Validator())
-      ->withOptional('attachment', 'bool:true', false)
+      ->withOptional('dl', 'bool:true', false)
       ->validate($request->getQueryParams())
       ->resultOrThrowBadRequest($request);
 
@@ -102,10 +105,10 @@ final class ImageController extends AbstractController
     $fileStream = $this->readFile($image);
 
     // Create the content disposition header
-    if ($query['attachment'])
-      $contentDisposition = "attachment; filename=\"{$image->getName()}\"";
+    if ($query['dl'])
+      $contentDisposition = "attachment; filename=\"{$contentName}\"";
     else
-      $contentDisposition = "inline; filename=\"{$image->getName()}\"";
+      $contentDisposition = "inline; filename=\"{$contentName}\"";
 
     // Return the response
     return $response
