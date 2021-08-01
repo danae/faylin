@@ -29,7 +29,7 @@
       <b-navbar fixed-top wrapper-class="container">
         <!-- Navbar brand and burger button -->
         <template #brand>
-          <b-navbar-item tag="router-link" :to="{name: 'home'}">
+          <b-navbar-item tag="router-link" v-bind:to="{name: 'home'}">
             <span class="icon-text">
               <b-icon pack="fas" icon="igloo" class="mr-1"></b-icon>
               <span class="has-text-weight-bold">fayl.in</span>
@@ -40,13 +40,11 @@
         <!-- Navbar menu -->
         <template #end>
           <template v-if="authenticated">
-            <b-navbar-item tag="router-link" :to="{name: 'user'}">profile</b-navbar-item>
-            <b-navbar-item tag="router-link" :to="{name: 'settings'}">settings</b-navbar-item>
-            <b-navbar-item tag="router-link" :to="{name: 'logout'}">sign out</b-navbar-item>
+            <b-navbar-item tag="router-link" v-bind:to="{name: 'logout'}">log out</b-navbar-item>
           </template>
 
           <template v-else>
-            <b-navbar-item tag="router-link" :to="{name: 'login'}">sign in</b-navbar-item>
+            <b-navbar-item tag="router-link" v-bind:to="{name: 'login'}">log in</b-navbar-item>
           </template>
         </template>
       </b-navbar>
