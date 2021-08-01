@@ -3,14 +3,13 @@
 @import 'bulma';
 
 
-// Header layout styling
-header {
-
+// Nav layout styling
+nav {
 }
 
 // Main layout styling
 main {
-
+  min-height: calc(100vh - 118px);
 }
 
 // Footer layout styling
@@ -23,12 +22,15 @@ footer {
 
 // Container styling
 .container {
-  max-width: 800px !important;
-}
+  // Set a maximal width on desktop devices
+  @media screen and (min-width: $tablet) {
+    max-width: $tablet !important;
+  }
 
-// Section styling
-.section {
-  @extend .my-0;
+  // Set a maximal width on widescreen devices
+  @media screen and (min-width: $widescreen) {
+    max-width: 65vw !important;
+  }
 }
 
 // Content styling
@@ -61,67 +63,178 @@ footer {
       border-bottom-color: $link-hover;
     }
 
+    // Borderless links
+    &.is-borderless {
+      border-bottom: none;
+    }
+
     // Links in the footer have no border
     .footer > & {
-      border-bottom: none;
+      @extend .is-borderless;
     }
   }
 
-  // Button styling
-  .button {
+  // Image styling
+  img {
+    @extend .box;
+    @extend .p-0;
+
+    // Uploading image styling
+    &.is-uploading {
+      @extend .mx-auto;
+
+      max-width: 100%;
+      max-height: 10rem;
+
+      opacity: 0.5;
+    }
   }
 }
 
-// Image styling
-img {
-  @extend .box;
-  //@extend .is-shadowless;
-  @extend .p-0;
+// Emoji styling
+.emoji {
+  display: inline-block;
+  height: 1em;
+  width: 1em;
+  margin: 0 .05em 0 .1em;
+  vertical-align: -0.1em;
+}
 
-  // Uploading image styling
-  &.is-uploading {
-    max-width: 100%;
-    max-height: 10rem;
+// Hero stylinh
+.hero {
+  @extend .is-family-secondary;
+  @extend .has-text-centered;
 
-    opacity: 0.5;
+  &.has-background {
+    position: relative;
+    overflow: hidden;
+  }
+
+  &-background {
+    position: absolute;
+    object-fit: cover;
+    object-position: center center;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+
+    &.is-transparent {
+      opacity: 0.3;
+    }
   }
 }
 
 // Box styling
 .box {
-  @extend .is-shadowless;
-  
-  &.is-outlined-primary {
-    border: 4px $primary dotted;
+  &.is-primary {
+    border: 2px $primary solid;
   }
-  &.is-outlined-link {
-    border: 4px $link dotted;
+  &.is-link {
+    border: 2px $link solid;
   }
-  &.is-outlined-info {
-    border: 4px $info dotted;
+  &.is-info {
+    border: 2px $info solid;
   }
-  &.is-outlined-success {
-    border: 4px $success dotted;
+  &.is-success {
+    border: 2px $success solid;
   }
-  &.is-outlined-warning {
-    border: 4px $warning dotted;
+  &.is-warning {
+    border: 2px $warning solid;
   }
-  &.is-outlined-danger {
-    border: 4px $danger dotted;
+  &.is-danger {
+    border: 2px $danger solid;
   }
 }
 
-// Upload hero styling
-.upload-hero {
-  @extend .box;
-  @extend .is-outlined-primary;
+// Image detail styling
+.image-details {
+  @extend .is-clipped;
+
+  // Name text for the image thumbnail
+  .image-details-name {
+    @extend .is-size-4;
+    @extend .has-text-weight-bold;
+  }
+
+  // User name text for the image thumbnail
+  .image-details-user {
+    @extend .is-size-6;
+    @extend .has-text-weight-bold;
+  }
+
+  // Image for the image details
+  .image {
+    @extend .mx-auto;
+
+    img {
+      @extend .p-2;
+
+      @media screen and (min-width: $desktop) {
+        max-height: 70vh;
+        width: auto;
+      }
+    }
+  }
+}
+
+// Image thumbnail styling
+.image-thumbnail {
   @extend .has-text-centered;
-  @extend .my-0;
 
-  a {
-    border-bottom: none !important;
+  // Name text for the image thumbnail
+  .image-thumbnail-name {
+    @extend .is-size-6;
+    @extend .has-text-weight-bold;
+  }
+
+  // User name text for the image thumbnail
+  .image-thumbnail-user {
+    @extend .is-size-7;
+  }
+
+  // Image for the image thumbnail
+  .image {
+    img {
+      width: auto;
+      height: 10rem;
+      max-width: 100%;
+    }
   }
 }
+
+// Image thumbnail list styling
+.image-thumbnail-list {
+  // Columns for the image thumbnail list
+  .columns {
+    @extend .is-multiline;
+
+    // Column for the image thumbnail list
+    .column {
+      @extend .is-narrow;
+      @extend .is-clipped;
+      @extend .is-half;
+      @extend .is-one-third-desktop;
+      @extend .is-one-quarter-widescreen;
+      @extend .is-one-fifth-fullhd;
+    }
+  }
+}
+
+// User thumbnail list styling
+.user-thumbnail-list {
+  // Columns for the user thumbnail list
+  .columns {
+    @extend .is-mobile;
+    @extend .is-multiline;
+
+    // Column for the image thumbnail list
+    .column {
+      @extend .is-narrow;
+      @extend .is-half;
+    }
+  }
+}
+
 
 // The columns class for images
 .image-tiles {
@@ -152,13 +265,4 @@ img {
       }
     }
   }
-}
-
-// Emoji styling
-.emoji {
-  display: inline-block;
-  height: 1em;
-  width: 1em;
-  margin: 0 .05em 0 .1em;
-  vertical-align: -0.1em;
 }

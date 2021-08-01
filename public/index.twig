@@ -29,7 +29,7 @@
       <b-navbar fixed-top wrapper-class="container">
         <!-- Navbar brand and burger button -->
         <template #brand>
-          <b-navbar-item tag="router-link" v-bind:to="{name: 'home'}">
+          <b-navbar-item tag="router-link" :to="{name: 'home'}">
             <span class="icon-text">
               <b-icon pack="fas" icon="igloo" class="mr-1"></b-icon>
               <span class="has-text-weight-bold">fayl.in</span>
@@ -38,31 +38,42 @@
         </template>
 
         <!-- Navbar menu -->
+        <template #start>
+          <b-navbar-item tag="router-link" :to="{name: 'userList'}">directory</b-navbar-item>
+        </template>
+
         <template #end>
-          <template v-if="authenticated">
-            <b-navbar-item tag="router-link" v-bind:to="{name: 'logout'}">log out</b-navbar-item>
+          <template v-if="loggedIn">
+            <b-navbar-item tag="router-link" :to="{name: 'userView', params: {userId: currentUserId}}">profile</b-navbar-item>
+            <!--<b-navbar-item tag="router-link" :to="{name: 'settings'}">settings</b-navbar-item>-->
+            <b-navbar-item tag="router-link" :to="{name: 'logout'}">log out</b-navbar-item>
           </template>
 
           <template v-else>
-            <b-navbar-item tag="router-link" v-bind:to="{name: 'login'}">log in</b-navbar-item>
+            <b-navbar-item tag="router-link" :to="{name: 'login'}">log in</b-navbar-item>
           </template>
         </template>
       </b-navbar>
 
       <!-- Main -->
-      <main class="container">
-        <router-view></router-view>
+      <main>
+        <div class="container">
+          <router-view></router-view>
+        </div>
       </main>
 
       <!-- Footer -->
       <footer>
-        <p class="mb-0">fayl.in was created by <a target="_blank" href="https://github.com/danae">Danae</a> &middot; made with <a target="_blank" href="https://vuejs.org/">Vue.js</a> &middot; <a target="_blank" href="https://bulma.io/">Bulma</a> &middot; <a target="_blank" href="https://fontawesome.com/">Font Awesome</a> &middot; <a target="_blank" href="https://twemoji.twitter.com/">Twemoji</a>
+        <div class="container">
+          <p class="mb-0">fayl.in was created by <a target="_blank" href="https://github.com/danae">Danae</a> &middot; made with <a target="_blank" href="https://vuejs.org/">Vue.js</a> &middot; <a target="_blank" href="https://bulma.io/">Bulma</a> &middot; <a target="_blank" href="https://fontawesome.com/">Font Awesome</a> &middot; <a target="_blank" href="https://twemoji.twitter.com/">Twemoji</a>
+        </div>
       </footer>
     </div>
 
     <!-- Third-party scripts -->
     <script src="{{ base_path() }}/node_modules/vue/dist/vue.js"></script>
     <script src="{{ base_path() }}/node_modules/vue-router/dist/vue-router.js"></script>
+    <script src="{{ base_path() }}/node_modules/jwt-decode/build/jwt-decode.js"></script>
     <script src="{{ base_path() }}/node_modules/buefy/dist/buefy.min.js"></script>
     <script src="{{ base_path() }}/node_modules/@fortawesome/fontawesome-free/js/all.js"></script>
     <script src="{{ base_path() }}/node_modules/twemoji/dist/twemoji.min.js"></script>
