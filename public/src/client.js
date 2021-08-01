@@ -3,7 +3,7 @@ import Client from './api/Client.js';
 
 // Create the client
 const client = new Client({
-  baseUrl: '/php/faylin-slim/api/v1',
+  baseUrl: '/api/v1',
   token: localStorage.getItem('token'),
 });
 
