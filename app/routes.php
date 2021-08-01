@@ -26,7 +26,6 @@ return function(App $app)
 
     // Return the capabilities of the API
     $group->get('/capabilities', [BackendController::class, 'capabilities'])
-      ->add(AuthorizationMiddleware::class)
       ->setName('capabilities');
 
     // Image controller routes
@@ -34,13 +33,11 @@ return function(App $app)
     {
       // Return all images as a JSON response
       $group->get('/', [ImageController::class, 'index'])
-        ->add(AuthorizationMiddleware::class)
         ->setName('images.index');
 
       // Get an image as a JSON response
       $group->get('/{id:[A-Za-z0-9-_]+}', [ImageController::class, 'get'])
         ->add(ImageResolverMiddleware::class)
-        ->add(AuthorizationMiddleware::class)
         ->setName('images.get');
 
       // Patch an image and return the image as a JSON response
@@ -72,7 +69,6 @@ return function(App $app)
     {
       // Return all users as a JSON response
       $group->get('/', [UserController::class, 'index'])
-        ->add(AuthorizationMiddleware::class)
         ->setName('users.index');
 
       // Get the authorized user as a JSON response
@@ -83,7 +79,6 @@ return function(App $app)
       // Get a user as a JSON response
       $group->get('/{id:[A-Za-z0-9-_]+}', [UserController::class, 'get'])
         ->add(UserResolverMiddleware::class)
-        ->add(AuthorizationMiddleware::class)
         ->setName('users.get');
 
       // Patch the authorized user and return the user as a JSON response
@@ -99,13 +94,11 @@ return function(App $app)
 
       // Return all images owned by the authorized user as a JSON response
       $group->get('/me/images/', [UserController::class, 'imagesMe'])
-        ->add(AuthorizationMiddleware::class)
         ->setName('users.me.images');
 
       // Return all images owned by a user as a JSON response
       $group->get('/{id:[A-Za-z0-9-_]+}/images/', [UserController::class, 'images'])
         ->add(UserResolverMiddleware::class)
-        ->add(AuthorizationMiddleware::class)
         ->setName('users.get.images');
     });
   });
