@@ -6,7 +6,7 @@
 // APP SETTINGS
 
 // The base path of the application
-$settings['app.basePath'] = '/';
+$settings['app.basePath'] = '';
 
 
 // DATABASE SETTINGS
