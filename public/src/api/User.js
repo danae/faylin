@@ -16,7 +16,7 @@ export default class User
   // Patch the user
   async patch()
   {
-    await this.client.patchUser(this.id, {name: this.name, email: this.email});
+    return await this.client.patchUser(this.id, {name: this.name, email: this.email});
   }
 
   // Get all images owned by the user

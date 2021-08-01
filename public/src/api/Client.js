@@ -163,7 +163,7 @@ export default class Client
   // Delete an image
   async deleteImage(imageId)
   {
-    let response = await this.delete(`/images/${imageId}`, {headers: this.headers});
+    let response = await this.delete(`/images/${imageId}`, null, {headers: this.headers});
 
     if (!response.ok)
       throw new ClientError(responseJson.error.description, responseJson.error.type, response.status);

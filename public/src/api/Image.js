@@ -22,7 +22,7 @@ export default class Image
   // Patch the image
   async patch()
   {
-    await this.client.patchImage(this.id, {name: this.name});
+    return await this.client.patchImage(this.id, {name: this.name});
   }
 
   // Delete the image
