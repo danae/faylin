@@ -79,5 +79,10 @@
 
     <!-- Main script -->
     <script src="{{ base_path() }}/src/index.js" type="module"></script>
+
+    <!-- Script to assign the router base path -->
+    <script>
+      const routerBasePath = "{{ base_path() }}/";
+    </script>
   </body>
 </html>

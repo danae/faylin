@@ -4,7 +4,7 @@ import routes from './routes.js';
 // Create the router
 const router = new VueRouter({
   mode: 'history',
-  base: '/',
+  base: routerBasePath || '/',
   routes: routes,
 });
 
