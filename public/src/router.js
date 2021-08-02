@@ -4,7 +4,7 @@ import routes from './routes.js';
 // Create the router
 const router = new VueRouter({
   mode: 'history',
-  base: '/php/faylin-slim/',
+  base: '/',
   routes: routes,
 });
 
