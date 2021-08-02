@@ -19,21 +19,9 @@ export default class Image
     this.downloadUrl = data.downloadUrl;
   }
 
-  // Patch the image
-  async patch()
-  {
-    return await this.client.patchImage(this.id, {name: this.name});
-  }
-
-  // Delete the image
-  async delete()
-  {
-    await this.client.deleteImage(this.id);
-  }
-
   // Return the string representation of the image
   toString()
   {
-    return `Image ${this.id} with name "${this.name}"`;
+    return this.name;
   }
 }

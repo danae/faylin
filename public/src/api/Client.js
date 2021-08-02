@@ -1,4 +1,6 @@
+import ClientError from './ClientError.js';
 import Image from './Image.js';
+import Rest from './Rest.js';
 import User from './User.js';
 
 
@@ -8,192 +10,140 @@ export default class Client
   // Constructor
   constructor(options)
   {
-    this.baseUrl = options.baseUrl || "";
     this.token = options.token || null;
+
+    // Create the REST client
+    this.rest = new Rest(options);
+
+    // Add middlewares to the REST client
+    this.rest.add(this._requestMiddleware.bind(this));
+    this.rest.add(this._responseMiddleware.bind(this));
+    this.rest.add(this._authorizationMiddleware.bind(this));
   }
 
-
-  // Return an authorization header with the token
-  get headers()
+  // Request handler middleware
+  async _requestMiddleware(request, requestHandler)
   {
-    let headers = new Headers();
-    if (this.token !== null)
-      headers.set('Authorization', `Bearer ${this.token}`);
-    return headers;
-  }
-
-
-  // Make a request and return the response
-  async request(method, url, options = {})
-  {
-    // Initialize the request
-    let init = {method: method};
-
-    // Create the headers for the request
-    if (options.headers !== undefined)
-      init.headers = new Headers(options.headers);
-    else
-      init.headers = new Headers();
-
-    // Create the body for the request
-    if (options.body !== undefined)
+    // Check if the request contains a body
+    if (request.body !== undefined)
     {
-      // Check if the body is an instance of FormData
-      if (options.body instanceof FormData)
+      // Check if the body should be formatted as a JSON object
+      if (!(body instanceof Blob || body instanceof FormData))
       {
-        init.body = options.body;
+        request = new Request(request, {body: JSON.stringify(request.body)});
+        request.headers.set('Content-Type', 'application/json');
       }
+    }
 
-      // Check if the body is JSON
-      else if (typeof options.body === 'object')
+    // Handle the request
+    return await requestHandler(request);
+  }
+
+  // Response handler middleware
+  async _responseMiddleware(request, requestHandler)
+  {
+    // Handle the request
+    const response = await requestHandler(request);
+
+    // Check if the response was successful
+    if (!reponse.ok)
+    {
+      // Response was not successful, so throw the error
+      if (response.headers.get('Content-Type').startsWith('application/json'))
       {
-        init.body = JSON.stringify(options.body);
-        init.headers.set('Content-Type', 'application/json');
+        // Throw an error with the JSON error details
+        const responseJson = await response.json();
+        throw new ClientError(responseJson.error.description, responseJson.error.type, response.status);
       }
-
-      // Otherwise the body is invalid
       else
-        throw new TypeError("Body must be either an instance of FormData or an object or array");
+      {
+        // Throw an unspecified error
+        throw new ClientError(response.statusText, 'UNSPECIFIED', response.status);
+      }
     }
-
-    // Create the url for the request
-    url = this.baseUrl + url;
-    if (options.query !== undefined)
+    else
     {
-      let query = new URLSearchParams();
-      for (let [key, value] of Object.entries(options.query))
-        query.set(key, String(value));
-
-      url += '?' + query.toString();
+      // Response was succesful, so parse the body
+      if (response.headers.get('Content-Type').startsWith('application/json'))
+        return await response.json();
+      else if (response.headers.get('Content-Type').startsWith('text/plain'))
+        return await response.text();
+      else if (response.headers.get('Content-Type').startsWith('multipart/form-data'))
+        return await response.formData();
+      else
+        return await response.blob();
     }
-
-    // Execute and return the request
-    return await fetch(url, init);
   }
 
-  // Make a GET request
-  async get(url, options = {})
+  // Authorization middleware
+  async _authorizationMiddleware(request, requestHandler)
   {
-    return await this.request('GET', url, options);
-  }
+    // Add the authorization header if a token is present
+    if (this.token)
+      request.headers.set('Authorization', `Bearer ${this.token}`);
 
-  // Make a POST request
-  async post(url, body, options = {})
-  {
-    Object.assign(options, {body: body});
-    return await this.request('POST', url, options);
-  }
-
-  // Make a PATCH request
-  async patch(url, body, options = {})
-  {
-    Object.assign(options, {body: body});
-    return await this.request('PATCH', url, options);
-  }
-
-  // Make a DELETE request
-  async delete(url, body, options = {})
-  {
-    Object.assign(options, {body: body});
-    return await this.request('DELETE', url, options);
+    // Handle the request
+    return await requestHandler(request);
   }
 
 
   // Authenticate to the API with a username and password
   async authenticateWithCredentials(username, password)
   {
-    let response = await this.post('/token', {username: username, password: password});
-    let responseJson = await response.json();
-
-    if (!response.ok)
-      throw new ClientError(responseJson.error.description, responseJson.error.type, response.status);
-
-    return responseJson.token;
+    const response = await this.rest.post('/api/v1/token', {username: username, password: password});
+    this.token = response.token;
+    return response.token;
   }
-
 
   // Return the capabilities of the API
   async getCapabilities()
   {
-    let response = await this.get(`/capabilities`, {headers: this.headers});
-    let responseJson = await response.json();
-
-    if (!response.ok)
-      throw new ClientError(responseJson.error.description, responseJson.error.type, response.status);
-
-    return responseJson;
+    const response = await this.rest.get(`/api/v1/capabilities`);
+    return response;
   }
 
   // Get all images
   async getImages(query = {})
   {
-    let response = await this.get(`/images/`, {headers: this.headers, query: query});
-    let responseJson = await response.json();
-
-    if (!response.ok)
-      throw new ClientError(responseJson.error.description, responseJson.error.type, response.status);
-
-    return responseJson.map(data => new Image(this, data));
+    const response = await this.rest.get(`/api/v1/images/`, {query: query});
+    return response.map(data => new Image(this, data));
   }
 
   // Get an image
   async getImage(imageId)
   {
-    let response = await this.get(`/images/${imageId}`, {headers: this.headers});
-    let responseJson = await response.json();
-
-    if (!response.ok)
-      throw new ClientError(responseJson.error.description, responseJson.error.type, response.status);
-
-    return new Image(this, responseJson);
+    const response = await this.rest.get(`/api/v1/images/${imageId}`);
+    return new Image(this, response);
   }
 
   // Patch an image
   async patchImage(imageId, fields)
   {
-    let response = await this.patch(`/images/${imageId}`, fields, {headers: this.headers});
-    let responseJson = await response.json();
-
-    if (!response.ok)
-      throw new ClientError(responseJson.error.description, responseJson.error.type, response.status);
-
-    return new Image(this, responseJson);
+    const response = await this.rest.patch(`/api/v1/images/${imageId}`, fields);
+    return new Image(this, response);
   }
 
   // Delete an image
   async deleteImage(imageId)
   {
-    let response = await this.delete(`/images/${imageId}`, null, {headers: this.headers});
-
-    if (!response.ok)
-      throw new ClientError(responseJson.error.description, responseJson.error.type, response.status);
+    await this.rest.delete(`/api/v1/images/${imageId}`);
   }
 
   // Download an image
   async downloadImage(imageId, query = {})
   {
-    let response = await this.get(`/images/${imageId}/download`, {headers: this.headers, query: query});
-    let responseBlob = await response.blob();
-
-    if (!response.ok)
-      throw new ClientError(responseJson.error.description, responseJson.error.type, response.status);
-
-    return responseBlob;
+    const response = await this.rest.get(`/api/v1/images/${imageId}/download`, {query: query});
+    return response;
   }
 
   // Upload an image
   async uploadImage(file)
   {
-    let body = new FormData();
+    const body = new FormData();
     body.set('file', file);
 
-    let response = await this.post(`/images/upload`, body, {headers: this.headers});
-    let responseJson = await response.json();
-
-    if (!response.ok)
-      throw new ClientError(responseJson.error.description, responseJson.error.type, response.status);
-
-    return new Image(this, responseJson);
+    const response = await this.rest.post(`/api/v1/images/upload`, body);
+    return new Image(this, response);
   }
 
   // Replace an image
@@ -202,115 +152,56 @@ export default class Client
     let body = new FormData();
     body.set('file', file);
 
-    let response = await this.post(`/images/${imageId}/upload`, body, {headers: this.headers});
-    let responseJson = await response.json();
-
-    if (!response.ok)
-      throw new ClientError(responseJson.error.description, responseJson.error.type, response.status);
-
-    return new Image(responseJson);
+    const response = await this.rest.post(`/api/v1/images/${imageId}/upload`, body);
+    return new Image(this, response);
   }
 
   // Get all users
   async getUsers(query = [])
   {
-    let response = await this.get('/users/', {headers: this.headers, query: query});
-    let responseJson = await response.json();
-
-    if (!response.ok)
-      throw new ClientError(responseJson.error.description, responseJson.error.type, response.status);
-
-    return responseJson.map(data => new User(this, data));
+    const response = await this.rest.get('/api/v1/users/', {query: query});
+    return response.map(data => new User(this, data));
   }
 
   // Get a user
   async getUser(userId)
   {
-    let response = await this.get(`/users/${userId}`, {headers: this.headers});
-    let responseJson = await response.json();
-
-    if (!response.ok)
-      throw new ClientError(responseJson.error.description, responseJson.error.type, response.status);
-
-    return new User(this, responseJson);
+    const response = await this.rest.get(`/api/v1/users/${userId}`);
+    return new User(this, response);
   }
 
   // Get the current authenticated user
   async getAuthenticatedUser()
   {
-    let response = await this.get(`/users/me`, {headers: this.headers});
-    let responseJson = await response.json();
-
-    if (!response.ok)
-      throw new ClientError(responseJson.error.description, responseJson.error.type, response.status);
-
-    return new User(this, responseJson);
+    const response = await this.rest.get(`/api/v1/users/me`);
+    return new User(this, response);
   }
 
   // Patch a user
   async patchUser(userId, fields)
   {
-    let response = await this.patch(`/user/${userId}`, fields, {headers: this.headers});
-    let responseJson = await response.json();
-
-    if (!response.ok)
-      throw new ClientError(responseJson.error.description, responseJson.error.type, response.status);
-
-    return new User(this, responseJson);
+    const response = await this.rest.patch(`/api/v1/users/${userId}`, fields);
+    return new User(this, response);
   }
 
   // Patch the authenticated user
   async patchAuthenticatedUser(fields)
   {
-    let response = await this.patch(`/user/me`, fields, {headers: this.headers});
-    let responseJson = await response.json();
-
-    if (!response.ok)
-      throw new ClientError(responseJson.error.description, responseJson.error.type, response.status);
-
-    return new User(this, responseJson);
+    const response = await this.rest.patch(`/api/v1/users/me`, fields);
+    return new User(this, response);
   }
 
   // Get all images owned by a user
   async getUserImages(userId, query = {})
   {
-    let response = await this.get(`/users/${userId}/images/`, {headers: this.headers, query: query});
-    let responseJson = await response.json();
-
-    if (!response.ok)
-      throw new ClientError(responseJson.error.description, responseJson.error.type, response.status);
-
-    return responseJson.map(data => new Image(this, data));
+    const response = await this.rest.get(`/api/v1/users/${userId}/images/`, {query: query});
+    return response.map(data => new Image(this, data));
   }
 
   // Get all images owned by the authenticated user
   async getAuthenticatedUserImages(query = {})
   {
-    let response = await this.get(`/users/me/images/`, {headers: this.headers, query: query});
-    let responseJson = await response.json();
-
-    if (!response.ok)
-      throw new ClientError(responseJson.error.description, responseJson.error.type, response.status);
-
-    return responseJson.map(data => new Image(this, data));
-  }
-}
-
-
-// Class that defines a client error
-export class ClientError extends Error
-{
-  // Constructor
-  constructor(message, type, status)
-  {
-    super(message);
-    this.type = type;
-    this.status = status;
-  }
-
-  // Return the string representation of the error
-  toString()
-  {
-    return this.message;
+    const response = await this.rest.get(`/api/v1/users/me/images/`, {query: query});
+    return response.map(data => new Image(this, data));
   }
 }
