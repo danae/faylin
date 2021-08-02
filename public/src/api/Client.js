@@ -8,7 +8,7 @@ import User from './User.js';
 export default class Client
 {
   // Constructor
-  constructor(options)
+  constructor(options = {})
   {
     this.token = options.token || null;
 
@@ -22,31 +22,31 @@ export default class Client
   }
 
   // Request handler middleware
-  async _requestMiddleware(request, requestHandler)
+  async _requestMiddleware(url, init, next)
   {
     // Check if the request contains a body
-    if (request.body !== undefined)
+    if (init.body !== undefined)
     {
       // Check if the body should be formatted as a JSON object
-      if (!(body instanceof Blob || body instanceof FormData))
+      if (!(init.body instanceof Blob || init.body instanceof FormData))
       {
-        request = new Request(request, {body: JSON.stringify(request.body)});
-        request.headers.set('Content-Type', 'application/json');
+        init.body = JSON.stringify(init.body);
+        init.headers.set('Content-Type', 'application/json');
       }
     }
 
     // Handle the request
-    return await requestHandler(request);
+    return await next(url, init);
   }
 
   // Response handler middleware
-  async _responseMiddleware(request, requestHandler)
+  async _responseMiddleware(url, init, next)
   {
     // Handle the request
-    const response = await requestHandler(request);
+    const response = await next(url, init);
 
     // Check if the response was successful
-    if (!reponse.ok)
+    if (!response.ok)
     {
       // Response was not successful, so throw the error
       if (response.headers.get('Content-Type').startsWith('application/json'))
@@ -76,19 +76,19 @@ export default class Client
   }
 
   // Authorization middleware
-  async _authorizationMiddleware(request, requestHandler)
+  async _authorizationMiddleware(url, init, next)
   {
     // Add the authorization header if a token is present
     if (this.token)
-      request.headers.set('Authorization', `Bearer ${this.token}`);
+      init.headers.set('Authorization', `Bearer ${this.token}`);
 
     // Handle the request
-    return await requestHandler(request);
+    return await next(url, init);
   }
 
 
   // Authenticate to the API with a username and password
-  async authenticateWithCredentials(username, password)
+  async authorizeWithUserCredentials(username, password)
   {
     const response = await this.rest.post('/api/v1/token', {username: username, password: password});
     this.token = response.token;

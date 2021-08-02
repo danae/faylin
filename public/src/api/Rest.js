@@ -4,14 +4,15 @@ export default class Rest
   // Constructor
   constructor(options = {})
   {
-    this.base = options.base || undefined;
+    this.base = options.base || '';
     this.fetch = options.fetch || fetch;
   }
 
   // Add middleware to the middleware stack
   add(middleware)
   {
-    this.fetch = request => middleware(request, this.fetch);
+    const fetch = this.fetch;
+    this.fetch = (url, init) => middleware(url, init, fetch);
   }
 
   // Send a request and return the response
@@ -26,20 +27,20 @@ export default class Rest
       url += '?' + query.toString();
     }
 
-    // Create the absolute URL
-    const requestUrl = new URL(url, this.base);
+    // Create the request URL
+    const requestUrl = this.base + url;
 
-    // Create the request
-    const request = new Request(requestUrl, {
+    // Create the request options
+    const requestInit = {
       method: method,
-      headers: options.headers,
+      headers: new Headers(options.headers),
       body: options.body,
       mode: 'cors',
       credentials: 'omit'
-    });
+    };
 
     // Send the request
-    return await this.fetch(this.base + url, request);
+    return await this.fetch(requestUrl, requestInit);
   }
 
   // Send a HEAD request
