@@ -60,24 +60,6 @@ const client = {
     }
   },
 
-  // The provided fields to the descendants
-  provide: function() {
-    // Create the object
-    const provides = {
-      clientAccessToken: this.clientAccessToken,
-      clientLoggedIn: this.clientLoggedIn,
-    };
-
-    // Inject methods
-    for (const method of Object.keys(this.$options.methods))
-      provides[method] = this.$options.methods[method];
-
-    console.log(provides);
-
-    // Return the object
-    return provides;
-  },
-
   // The methods for the mixin
   methods: {
     // Send a request and handle errors
