@@ -2,28 +2,17 @@
 export default {
   // The methods for the route
   methods: {
-    // Callback for when the login has succeeded
-    onLoginSuccess: function(token)
-    {
-      // Set the token
-      this.$root.token = token;
-
+    // Event handler when the login has succeeded
+    onLoginSuccess: function() {
       // Display a success message
       this.$displayMessage('Logged in succesfully');
 
-      // Redirect to the next page
+      // Redirect to the page specified by the query, or the home page otherwise
       let query = new URLSearchParams(window.location.search);
       if (query.has('redirect'))
-        this.$router.replace(query.get('redirect'));
+        this.$router.push(query.get('redirect'));
       else
-        this.$router.replace('/');
-    },
-
-    // Callback for when the login has failed
-    onLoginError: function(error)
-    {
-      // Display an error message
-      this.$displayErrorMessage(error.message);
+        this.$router.push('/');
     },
   },
 
@@ -31,7 +20,7 @@ export default {
   template: `
     <div id="login-page">
       <section class="section content">
-        <login-form @login-success="onLoginSuccess" @login-error="onLoginError"></login-form>
+        <login-form @login-success="onLoginSuccess"></login-form>
       </section>
     </div>
   `

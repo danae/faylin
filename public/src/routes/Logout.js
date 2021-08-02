@@ -1,15 +1,14 @@
 // Logout route component
 export default {
   // Hook when the route has been created
-  created: function ()
-  {
-    // Remove the token
-    this.$root.token = null;
+  created: async function() {
+    // Send a logout request
+    await this.$logout();
 
     // Display a success message
     this.$displayMessage('Logged out succesfully');
 
-    // Redirect to the next page
+    // Redirect to the page specified by the query, or the home page otherwise
     let query = new URLSearchParams(window.location.search);
     if (query.has('redirect'))
       this.$router.replace(query.get('redirect'));

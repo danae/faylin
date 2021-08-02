@@ -10,47 +10,16 @@ export default {
 
   // The methods for the component
   methods: {
-    // Event handler when the form is submitted
-    onSubmit: async function()
-    {
-      // Patch the image
-      this.patchImage();
-    },
-
     // Patch the image
-    patchImage: async function()
-    {
-      try
-      {
-        // Send a patch request
-        const image = await this.image.patch();
-
-        // Emit the success event
-        this.$emit('image-patch-success', image);
-      }
-      catch (error)
-      {
-        // Emit the error event
-        this.$emit('image-patch-error', error);
-      }
+    patchImage: async function() {
+      // Send a patch request
+      await this.$patchImage(this.image.id);
     },
 
     // Delete the image
-    deleteImage: async function()
-    {
-      try
-      {
-        // Send a delete request
-        await this.image.delete();
-
-        // Emit the success event
-        this.$emit('image-delete-success');
-      }
-      catch (error)
-      {
-        // Emit the error event
-        this.$emit('image-delete-error', error);
-      }
+    deleteImage: async function() {
+      // Send a delete request
+      await this.$deleteImage(this.image.id);
     },
   },
 
@@ -58,7 +27,7 @@ export default {
   template: `
     <div class="image-details">
       <template v-if="image">
-        <form id="image-details-form" @submit.prevent="onSubmit">
+        <form id="image-details-form" @submit.prevent="patchImage">
           <h4>Image details</h4>
 
           <b-field label="Name" label-position="on-border">

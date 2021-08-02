@@ -2,33 +2,23 @@
 export default {
   // The data for the component
   data: function() {
-    return {username: '', password: ''}
+    return {
+      username: '',
+      password: ''
+    }
   },
 
   // The methods for the component
   methods: {
     // Submit the form
-    onSubmit: async function()
-    {
-      try
-      {
-        // Send a token request
-        const token = await this.$client.authenticateWithCredentials(this.username, this.password)
-
-        // Emit the success event
-        this.$emit('login-success', token);
-      }
-      catch (error)
-      {
-        // Emit the error event
-        this.$emit('login-error', error);
-      }
+    onSubmit: async function() {
+      // Send a login request
+      return await this.$login(this.username, this.password);
     },
 
     // Cancel the form
-    onCancel: function()
-    {
-      // Go back one page in the history
+    onCancel: function() {
+      // Redirect to the previous page
       this.$router.back();
     },
   },

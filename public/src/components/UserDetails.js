@@ -9,27 +9,17 @@ export default {
   },
 
   // The data for the component
-  data: function()
-  {
+  data: function() {
     return {
       userImages: null,
     }
   },
 
-  // Hook when the component is updated
-  updated: async function()
-  {
-    try
-    {
-      // Get the images for the user
-      if (this.user !== null)
-        this.userImages = await this.user.getImages();
-    }
-    catch (error)
-    {
-      // Display the error message
-      this.$displayErrorMessage(error.message);
-    }
+  // Hook when the component is created
+  created: async function() {
+    // Get the images for the user
+    if (this.user !== null)
+      this.userImages = await this.$getUserImages(this.user.id);
   },
 
   // The template for the component

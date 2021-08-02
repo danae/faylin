@@ -8,50 +8,32 @@ const app = new Vue({
   el: '#app',
   router: router,
 
-  // Data for the app
-  data: {
-    // The token used for authorization
-    token: null,
-  },
+  // Mixins for the app
+  mixins: [client],
 
-  // Computed data for the app
-  computed: {
-    currentToken : function() {
-      if (this.token !== null)
-        return jwt_decode(this.token);
-      else
-        return null;
-    },
-    currentUserId: function() {
-      if (this.currentToken !== null)
-        return this.currentToken.sub;
-      else
-        return null;
-    },
-    loggedIn: function() {
-      return this.token !== null;
-    }
-  },
-
-  // Watchers for the app
-  watch: {
-    // Watcher for the token property
-    token: function(newToken)
+  // The methods for the app
+  methods: {
+    // Event handler when a client request returns an error
+    onClientError: function(error)
     {
-      if (newToken !== null)
-        localStorage.setItem('token', newToken);
-      else
-        localStorage.removeItem('token');
+      // Display the error message
+      this.$displayErrorMessage(error.message);
+    },
 
-      this.$client.token = newToken;
-    }
+    // Event handler when a client request is unauthorized
+    onClientUnauthorized: function(error)
+    {
+      // Display the error message
+      this.$displayErrorMessage('Unauthorized: ' + error.message);
+    },
   },
 
   // Hook for when the app is created
   created: function()
   {
-    if (localStorage.getItem('token') !== null)
-      this.token = localStorage.getItem('token');
+    // Add an event listener for a client request that returns an error or is unauthorized
+    this.$on('client-error', this.onClientError);
+    this.$on('client-unauthorized', this.onClientUnauthorized);
   },
 
   // Hook for when the app is mounted
@@ -73,20 +55,6 @@ const app = new Vue({
   }
 });
 
-
-// Function to format bytes to a human-readable string
-Vue.prototype.$formatBytes = function(bytes, decimals = 2)
-{
-  if (bytes === 0)
-    return '0 bytes';
-
-  const k = 1024;
-  const dm = decimals < 0 ? 0 : decimals;
-  const sizes = ['bytes', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB'];
-
-  const i = Math.floor(Math.log(bytes) / Math.log(k));
-  return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
-}
 
 // Function to return an icon text span
 Vue.prototype.$iconText = function(icon, message)

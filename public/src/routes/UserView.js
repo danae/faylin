@@ -1,8 +1,7 @@
 // Image view route component
 export default {
   // The data for the route
-  data: function()
-  {
+  data: function() {
     return {
       // The user that will be viewed
       user: null,
@@ -10,18 +9,9 @@ export default {
   },
 
   // Hook when the component is created
-  created: async function()
-  {
-    try
-    {
-      // Get the user
-      this.user = await this.$client.getUser(this.$route.params.userId)
-    }
-    catch (error)
-    {
-      // Display the error message
-      this.$displayErrorMessage(error.message);
-    }
+  created: async function() {
+    // Get the user
+    this.user = await this.$root.$getUser(this.$route.params.userId);
   },
 
   // The template for the route

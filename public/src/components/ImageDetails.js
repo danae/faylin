@@ -11,8 +11,7 @@ export default {
   // The methods for the component
   methods: {
     // Copy the image link to the clipboard
-    copyLink: async function()
-    {
+    copyLink: async function() {
       // Check for the clipboard permission
       const permission = await navigator.permissions.query({name: "clipboard-write"});
       if (permission.state == "granted" || permission.state == "prompt")
@@ -31,26 +30,18 @@ export default {
     },
 
     // Callback for when the image patch has succeeded
-    onImagePatchSuccess: function(image)
-    {
+    onImagePatchSuccess: function(image) {
       // Display a success message
       this.$displayMessage('Image updated succesfully');
     },
+
     // Callback for when the image delete has succeeded
-    onImageDeleteSuccess: function()
-    {
+    onImageDeleteSuccess: function() {
       // Display a success message
       this.$displayMessage('Image deleted succesfully');
 
-      // Redirect to the home page
-      this.$router.replace({name: 'home'});
-    },
-
-    // Callback for when something has failed
-    onError: function(error)
-    {
-      // Display an error message
-      this.$displayErrorMessage(error.message);
+      // Redirect to the previous page
+      this.$router.back();
     },
   },
 

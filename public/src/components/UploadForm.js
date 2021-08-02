@@ -8,8 +8,34 @@ export default {
     }
   },
 
+  // Hook when the component is created
+  created: function() {
+    // Add the file paste event handler
+    window.addEventListener('paste', this.onFilePaste);
+  },
+
+  // Hook when the component is destroyed
+  destroyed: function() {
+    // Remove the file paste event handler
+    window.removeEventListener('paste', this.onFilePaste);
+  },
+
   // The methods for the component
   methods: {
+    // Format an anmount of bytes to a human-readable representation
+    formatBytes: function(bytes, decimals = 2)
+    {
+      if (bytes === 0)
+        return '0 bytes';
+
+      const k = 1024;
+      const dm = decimals < 0 ? 0 : decimals;
+      const sizes = ['bytes', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB'];
+
+      const i = Math.floor(Math.log(bytes) / Math.log(k));
+      return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+    },
+
     // Upload a file
     upload: async function(file)
     {
@@ -32,7 +58,7 @@ export default {
 
         // Check if the file is not too big
         if (file.size > capabilities.supportedSize)
-          throw new Error(`Unsupported file size, maximal supported size is ${this.$formatBytes(capabilities.supportedSize)}`);
+          throw new Error(`Unsupported file size, maximal supported size is ${this.formatBytes(capabilities.supportedSize)}`);
 
         // Send an image upload request
         const image = await this.$client.uploadImage(file);
@@ -99,20 +125,6 @@ export default {
       // Upload the clipboard data from the event
       await this.uploadDataTransfer(event.clipboardData);
     },
-  },
-
-  // Hook when the component is created
-  created: function()
-  {
-    // Add the file paste event handler
-    window.addEventListener('paste', this.onFilePaste);
-  },
-
-  // Hook when the component is destroyed
-  destroyed: function()
-  {
-    // Remove the file paste event handler
-    window.removeEventListener('paste', this.onFilePaste);
   },
 
   // The template for the component
