@@ -37,13 +37,11 @@ export default {
     <div class="image-details">
       <template v-if="image">
         <div class="columns">
-          <div class="column is-7">
-            <a :href="image.downloadUrl">
-              <b-image class="mx-0 mb-6" :src="image.downloadUrl" :alt="image.name"></b-image>
-            </a>
+          <div class="column is-8">
+            <b-image class="mx-0 mb-6" :src="image.downloadUrl" :alt="image.name"></b-image>
           </div>
 
-          <div class="column is-5">
+          <div class="column is-4">
             <h2 class="image-details-name mb-0">{{ image.name }}</h2>
             <p class="image-details-user">by <router-link :to="{name: 'userView', params: {userId: image.user.id }}">{{ image.user.name }}</router-link></p>
 
