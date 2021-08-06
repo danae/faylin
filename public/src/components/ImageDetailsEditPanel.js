@@ -26,7 +26,7 @@ export default {
         hasIcon: true,
         icon: 'trash-alt',
         iconPack: 'fas',
-        message: `Are you sure you want to delete <b>${this.image.name}</b>? All data and links associated with the image will stop working forever, which is a long time!`,
+        message: `Are you sure you want to delete <b>${this.image.name}</b>? All associated data and links to the image will stop working forever, which is a long time!`,
         confirmText: 'Delete',
         cancelText: 'Cancel',
         onConfirm: this.deleteImage.bind(this),

@@ -29,7 +29,7 @@ footer {
 
   // Set a maximal width on widescreen devices
   @media screen and (min-width: $widescreen) {
-    max-width: 70vw !important;
+    max-width: 65vw !important;
   }
 }
 
@@ -157,6 +157,8 @@ footer {
 .dialog {
   // Modal card footer
   .modal-card .modal-card-foot {
+    border-top-color: $border-light;
+
     // Buttons in the card footer
     .button {
       @extend .is-light;

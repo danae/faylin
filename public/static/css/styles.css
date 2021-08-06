@@ -18698,7 +18698,7 @@ main {
 
 @media screen and (min-width: 1216px) {
   .container {
-    max-width: 70vw !important;
+    max-width: 65vw !important;
   }
 }
 
@@ -18768,6 +18768,10 @@ main {
 
 .panel a.panel-block:hover {
   color: #2A3D45;
+}
+
+.dialog .modal-card .modal-card-foot {
+  border-top-color: #ededed;
 }
 
 @media screen and (min-width: 769px) {

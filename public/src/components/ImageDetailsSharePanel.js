@@ -10,8 +10,19 @@ export default {
 
   // The methods for the component
   methods: {
+    // Return if the Web share API is available
+    canShareImage: function() {
+      return navigator.share !== undefined;
+    },
+
+    // Share the image
+    shareImage: async function() {
+      // Share the image
+      await navigator.share({url: this.image.downloadUrl, title: this.image.name});
+    },
+
     // Copy the image link to the clipboard
-    copyLink: async function(template = null) {
+    copyImage: async function(template = null) {
       // Check for the clipboard permission
       const permission = await navigator.permissions.query({name: "clipboard-write"});
       if (permission.state == "granted" || permission.state == "prompt")
@@ -23,7 +34,7 @@ export default {
         await navigator.clipboard.writeText(text);
 
         // Display a success message
-        this.$displayMessage('Link copied succesfully');
+        this.$displayMessage('Image link copied succesfully');
       }
       else
       {
@@ -40,10 +51,17 @@ export default {
         <div class="panel is-dark">
           <p class="panel-heading">Share image</p>
 
-          <a class="panel-block" :href="image.downloadUrl + '?dl=1'" >
+          <template v-if="canShareImage()">
+            <a class="panel-block" @click="shareImage()">
+              <b-icon icon="share-alt" pack="fas" class="panel-icon"></b-icon> Share
+            </a>
+          </template>
+
+          <a class="panel-block" :href="image.downloadUrl + '?dl=1'">
             <b-icon icon="download" pack="fas" class="panel-icon"></b-icon> Download
           </a>
-          <a class="panel-block" @click="copyLink">
+
+          <a class="panel-block" @click="copyImage()">
             <b-icon icon="link" pack="fas" class="panel-icon"></b-icon> Copy link
           </a>
         </div>
