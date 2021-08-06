@@ -49,7 +49,7 @@ footer {
   }
 
   // Link styling
-  a:not(.button) {
+  /*a:not(.button, .panel-block) {
     color: $link;
     border-bottom: 1px $link dotted;
 
@@ -72,7 +72,7 @@ footer {
     .footer > & {
       @extend .is-borderless;
     }
-  }
+  }*/
 
   // Image styling
   img {
@@ -87,6 +87,25 @@ footer {
       max-height: 10rem;
 
       opacity: 0.5;
+    }
+  }
+
+  // Panel styling
+  .panel {
+    // Panel heading
+    .panel-heading {
+      @extend .menu-label;
+      @extend .mb-0;
+    }
+
+    // Panel form
+    .panel-block.is-form {
+      @extend .is-flex-direction-column;
+
+      & > .field {
+        @extend .is-align-self-stretch;
+        @extend .my-2;
+      }
     }
   }
 }
@@ -124,8 +143,11 @@ footer {
   }
 }
 
-// Box styling
+// Box and panel styling
 .box {
+  &.dark {
+    border: 2px $dark solid;
+  }
   &.is-primary {
     border: 2px $primary solid;
   }
@@ -148,8 +170,6 @@ footer {
 
 // Image detail styling
 .image-details {
-  @extend .is-clipped;
-
   // Name text for the image thumbnail
   .image-details-name {
     @extend .is-size-4;

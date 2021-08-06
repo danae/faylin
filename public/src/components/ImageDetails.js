@@ -10,38 +10,25 @@ export default {
 
   // The methods for the component
   methods: {
-    // Copy the image link to the clipboard
-    copyLink: async function() {
-      // Check for the clipboard permission
-      const permission = await navigator.permissions.query({name: "clipboard-write"});
-      if (permission.state == "granted" || permission.state == "prompt")
-      {
-        // Write the link to the clipboard
-        await navigator.clipboard.writeText(this.image.downloadUrl);
-
-        // Display a success message
-        this.$displayMessage('Link copied succesfully');
-      }
-      else
-      {
-        // Display an error message
-        this.$displayErrorMessage('No permission to use the clipboard');
-      }
-    },
-
-    // Callback for when the image patch has succeeded
-    onImagePatchSuccess: function(image) {
+    // Event handler when the image patch was successful
+    onEditPatchSuccess: function(image) {
       // Display a success message
       this.$displayMessage('Image updated succesfully');
     },
 
-    // Callback for when the image delete has succeeded
-    onImageDeleteSuccess: function() {
+    // Event handler when the image deletion was successful
+    onEditDeleteSuccess: function() {
       // Display a success message
       this.$displayMessage('Image deleted succesfully');
 
       // Redirect to the previous page
       this.$router.back();
+    },
+
+    // Event handler when the image edit was unsuccessful
+    onEditError: function(error) {
+      // Display the error
+      this.$displayError(error);
     },
   },
 
@@ -60,13 +47,10 @@ export default {
             <h2 class="image-details-name mb-0">{{ image.name }}</h2>
             <p class="image-details-user">by <router-link :to="{name: 'userView', params: {userId: image.user.id }}">{{ image.user.name }}</router-link></p>
 
-            <div class="buttons">
-              <b-button type="is-light" tag="a" :href="image.downloadUrl + '?dl=1'" icon-pack="fas" icon-left="download">Download</b-button>
-              <b-button type="is-light" icon-pack="fas" icon-left="link" @click="copyLink">Copy link</b-button>
-            </div>
+            <image-details-share-panel :image="image" class="mb-4"></image-details-share-panel>
 
-            <template v-if="image.user.id == $root.currentUserId">
-              <image-details-form :image="image" class="mt-6" @image-patch-success="onImagePatchSuccess" @image-patch-error="onError" @image-delete-success="onImageDeleteSuccess" @on-image-delete-error="onError"></image-details-form>
+            <template v-if="image.user.id == $root.clientUser.id">
+              <image-details-edit-panel :image="image" class="mb-4" @edit-patch-success="onEditPatchSuccess" @edit-delete-success="onEditDeleteSuccess" @edit-error="onEditError"></image-details-edit-panel>
             </template>
           </div>
         </div>
