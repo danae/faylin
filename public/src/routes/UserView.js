@@ -11,12 +11,12 @@ export default {
   // Hook when the component is created
   created: async function() {
     // Get the user
-    this.user = await this.$root.$getUser(this.$route.params.userId);
+    this.user = await this.$root.client.getUser(this.$route.params.userId);
   },
 
   // The template for the route
   template: `
-    <div id="user-view-page">
+    <div class="user-view-page">
       <section class="section content">
         <user-details :user="user"></user-details>
       </section>

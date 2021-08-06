@@ -1,135 +1,112 @@
+import UploadMixin from '../mixins/UploadMixin.js';
+
+
 // Upload form component
 export default {
+  // The mixins for the component
+  mixins: [UploadMixin],
+
   // The data for the component
   data: function() {
     return {
+      // The upload form image as a data URL
       image: null,
+
+      // The upload form message
       message: 'Upload or drag an image here or paste one from your clipboard',
+
+      // The original upload form message
+      messageOriginal: null,
     }
   },
 
   // Hook when the component is created
   created: function() {
-    // Add the file paste event handler
+    // Register upload event handlers
+    this.$on('upload-start', this.onUploadStart.bind(this));
+    this.$on('upload-end', this.onUploadEnd.bind(this));
+    this.$on('upload-success', this.onUploadSuccess.bind(this));
+    this.$on('upload-error', this.onUploadError.bind(this));
+
+    // Register paste event handler
     window.addEventListener('paste', this.onFilePaste);
   },
 
   // Hook when the component is destroyed
   destroyed: function() {
-    // Remove the file paste event handler
+    // Unregister upload event handlers
+    this.$off('upload-start', this.onUploadStart.bind(this));
+    this.$off('upload-end', this.onUploadEnd.bind(this));
+    this.$off('upload-success', this.onUploadSuccess.bind(this));
+    this.$off('upload-error', this.onUploadError.bind(this));
+
+    // Unregister paste event handler
     window.removeEventListener('paste', this.onFilePaste);
   },
 
   // The methods for the component
   methods: {
-    // Format an anmount of bytes to a human-readable representation
-    formatBytes: function(bytes, decimals = 2)
-    {
-      if (bytes === 0)
-        return '0 bytes';
-
-      const k = 1024;
-      const dm = decimals < 0 ? 0 : decimals;
-      const sizes = ['bytes', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB'];
-
-      const i = Math.floor(Math.log(bytes) / Math.log(k));
-      return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
-    },
-
-    // Upload a file
-    upload: async function(file)
-    {
-      // Set the form image
+    // Event handler for when the upload starts
+    onUploadStart: function(file) {
+      // Set the form image and message
       this.image = URL.createObjectURL(file);
-
-      // Set the form message
-      const originalMessage = this.message;
+      this.messageOriginal = this.message;
       this.message = this.$iconText('spinner fa-spin', 'Uploading image...');
-
-      // Upload the file from the form
-      try
-      {
-        // Send a capabilities request
-        const capabilities = await this.$client.getCapabilities();
-
-        // Check if the file is a correct type
-        if (!(file.type in capabilities.supportedContentTypes))
-          throw new Error(`Unsupported file type, supported types are ${Object.values(capabilities.supportedContentTypes).join(', ')}`);
-
-        // Check if the file is not too big
-        if (file.size > capabilities.supportedSize)
-          throw new Error(`Unsupported file size, maximal supported size is ${this.formatBytes(capabilities.supportedSize)}`);
-
-        // Send an image upload request
-        const image = await this.$client.uploadImage(file);
-
-        // Emit the success event
-        this.$emit('upload-success', image);
-      }
-      catch (error)
-      {
-        // Emit the error event
-        this.$emit('upload-error', error);
-      }
-      finally
-      {
-        // Reset the file input
-        this.$refs.fileInput.value = '';
-
-        // Revoke the image
-        URL.revokeObjectURL(this.image);
-
-        // Reset the form image and message
-        this.image = null;
-        this.message = originalMessage;
-      }
     },
 
-    // Upload a file from a DataTransfer object
-    uploadDataTransfer: async function(dataTransfer)
-    {
-      // Check if the data tranfser items are available
-      if (dataTransfer.items)
-      {
-        // Upload the first item as a file if there is one
-        if (dataTransfer.items.length > 0 && dataTransfer.items[0].kind === 'file')
-          await this.upload(dataTransfer.items[0].getAsFile());
-      }
-      else
-      {
-        // Upload the first file if there is one
-        if (dataTransfer.files.length > 0)
-          await this.upload(dataTransfer.files[0]);
-      }
+    // Event handler for when the upload ends
+    onUploadEnd: function(file) {
+      // Reset the form image and message
+      URL.revokeObjectURL(this.image);
+
+      this.image = null;
+      this.message = this.messageOriginal;
+      this.messageOriginal = null;
+
+      // Reset the file input
+      this.$refs.fileInput.value = '';
+    },
+
+    // Event handler for when the upload is successful
+    onUploadSuccess: function(image) {
+      // Display a success message
+      this.$displayMessage('Uploaded succesfully');
+
+      // Redirect to the newly created image
+      this.$router.push({name: 'imageView', params: {imageId: image.id}});
+    },
+
+    // Event handler for when the upload is unsuccessful
+    onUploadError: function(error) {
+      // Display an error message
+      this.$displayError(error);
     },
 
     // Event handler when a file is selected using the file input
     onFileInput: async function(event)
     {
-      // Upload the first file if there is one
-      if (event.target.files.length > 0)
-        await this.upload(event.target.files[0]);
+      // Upload the first file from the event target
+      await this.$uploadFileInput(event.target);
     },
 
     // Event handler when a file is dropped
     onFileDrop: async function(event)
     {
-      console.log("Dropped", event);
       // Upload the data transfer from the event
-      await this.uploadDataTransfer(event.dataTransfer);
+      await this.$uploadDataTransfer(event.dataTransfer);
     },
 
     // Event handler when a file is pasted
     onFilePaste: async function(event)
     {
       // Upload the clipboard data from the event
-      await this.uploadDataTransfer(event.clipboardData);
+      await this.$uploadDataTransfer(event.clipboardData);
     },
   },
 
   // The template for the component
   template: `
-    <form id="upload-form">
+    <div class="upload-form">
       <div class="box is-primary has-text-centered" @dragenter.prevent @dragover.prevent @drop="onFileDrop">
         <div class="mb-3">
           <template v-if="image">
@@ -146,7 +123,7 @@ export default {
         <p class="has-text-primary" v-html="message"></p>
       </div>
 
-      <input type="file" name="file" id="file" ref="fileInput" class="is-hidden" @change.prevent="onFileInput">
-    </form>
+      <input ref="fileInput" id="file" type="file" class="is-hidden" @change.prevent="onFileInput">
+    </div>
   `
 };

@@ -11,27 +11,15 @@ export default {
   // Hook when the component is created
   created: async function() {
     // Get the images
-    this.images = await this.$root.$getImages({perPage: 30});
-  },
-
-  // The methods for the route
-  methods: {
-    // Event handler when the upload has succeeded
-    onUploadImageSuccess: function(image) {
-      // Display a success message
-      this.$displayMessage('Uploaded succesfully');
-
-      // Redirect to the newly created image
-      this.$router.push({name: 'imageView', params: {imageId: image.id}});
-    },
+    this.images = await this.$root.client.getImages({perPage: 30});
   },
 
   // The template for the route
   template: `
-    <div id="home-page">
-      <template v-if="clientLoggedIn">
+    <div class="home-page">
+      <template v-if="$root.clientLoggedIn">
         <section class="section content">
-          <upload-form @upload-image-success="onUploadImageSuccess"></upload-form>
+          <upload-form></upload-form>
         </section>
       </template>
 

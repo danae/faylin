@@ -1,9 +1,9 @@
 // Logout route component
 export default {
   // Hook when the route has been created
-  created: async function() {
+  created: function() {
     // Send a logout request
-    await this.$logout();
+    this.$logout();
 
     // Display a success message
     this.$displayMessage('Logged out succesfully');
@@ -18,7 +18,7 @@ export default {
 
   // The template for the route
   template: `
-    <div id="logout-page">
+    <div class="logout-page">
       <b-loading active></b-loading>
     </div>
   `

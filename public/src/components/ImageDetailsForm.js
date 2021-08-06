@@ -13,13 +13,13 @@ export default {
     // Patch the image
     patchImage: async function() {
       // Send a patch request
-      await this.$patchImage(this.image.id);
+      await this.$root.$patchImage(this.image.id);
     },
 
     // Delete the image
     deleteImage: async function() {
       // Send a delete request
-      await this.$deleteImage(this.image.id);
+      await this.$root.$deleteImage(this.image.id);
     },
   },
 

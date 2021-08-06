@@ -19,7 +19,7 @@ export default {
   created: async function() {
   // Get the images for the user
     if (this.user !== null)
-      this.userImages = await this.$getUserImages(this.user.id, {perPage: 3});
+      this.userImages = await this.$root.client.getUserImages(this.user.id, {perPage: 3});
   },
 
   // The template for the component

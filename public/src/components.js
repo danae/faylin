@@ -2,7 +2,6 @@ import ImageDetails from './components/ImageDetails.js';
 import ImageDetailsForm from './components/ImageDetailsForm.js';
 import ImageThumbnail from './components/ImageThumbnail.js';
 import ImageThumbnailList from './components/ImageThumbnailList.js';
-import LoginForm from './components/LoginForm.js';
 import UploadForm from './components/UploadForm.js';
 import UserDetails from './components/UserDetails.js';
 import UserThumbnail from './components/UserThumbnail.js';
@@ -15,7 +14,6 @@ const components =  {
   ImageDetailsForm,
   ImageThumbnail,
   ImageThumbnailList,
-  LoginForm,
   UploadForm,
   UserDetails,
   UserThumbnail,

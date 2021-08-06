@@ -11,12 +11,12 @@ export default {
   // Hook when the component is created
   created: async function() {
     // Get the users
-    this.users = await this.$root.$getUsers({sort: 'name'});
+    this.users = await this.$root.client.getUsers({sort: 'name'});
   },
 
   // The template for the route
   template: `
-    <div id="home-page">
+    <div class="home-page">
       <section class="section content">
         <user-thumbnail-list :users="users"></user-thumbnail-list>
       </section>
