@@ -9,16 +9,27 @@ $family-primary: 'Montserrat', sans-serif;
 $family-secondary: 'Signika', sans-serif;
 
 // Custom colors
-$primary: #5eb2ce;
-$primary-active: #add8e6;
+$primary: #5Eb2CE;
+$primary-light: #ADD8E6;
+$success: #B0DB43;
+$warning: #F49E4C;
+$danger: #AB3428;
+$light: #EFF8FA;
+$dark: #2A3D45;
+
+$custom-colors: ('primary-light': $primary-light);
 
 // Custom derived colors
 $link: $primary;
-$link-active: $primary-active;
-$link-hover: $primary-active;
+$link-active: $primary-light;
+$link-hover: $primary-light;
+$info: $primary-light;
 
 // Set other variables
 $body-overflow-y: auto;
 $dimensions: 16 24 32 48 64 96 128 192 256;
 $section-padding: 1.5rem 1rem;
 $section-padding-desktop: 1.5rem 1rem;
+$panel-block-color: $dark;
+$panel-block-hover-background-color: $light;
+$panel-icon-color: $dark;

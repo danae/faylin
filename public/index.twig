@@ -26,7 +26,7 @@
     <!-- Application root -->
     <div id="app">
       <!-- Navigation -->
-      <b-navbar fixed-top wrapper-class="container">
+      <b-navbar fixed-top type="is-light" wrapper-class="container">
         <!-- Navbar brand and burger button -->
         <template #brand>
           <b-navbar-item tag="router-link" :to="{name: 'home'}">
@@ -39,18 +39,18 @@
 
         <!-- Navbar menu -->
         <template #start>
-          <b-navbar-item tag="router-link" :to="{name: 'userList'}">directory</b-navbar-item>
+          <b-navbar-item tag="router-link" :to="{name: 'userList'}">Directory</b-navbar-item>
         </template>
 
         <template #end>
-          <template v-if="loggedIn">
-            <b-navbar-item tag="router-link" :to="{name: 'userView', params: {userId: currentUserId}}">profile</b-navbar-item>
-            <!--<b-navbar-item tag="router-link" :to="{name: 'settings'}">settings</b-navbar-item>-->
-            <b-navbar-item tag="router-link" :to="{name: 'logout'}">log out</b-navbar-item>
+          <template v-if="clientLoggedIn">
+            <b-navbar-item tag="router-link" :to="{name: 'userView', params: {userId: clientUser.id}}">Profile</b-navbar-item>
+            <!--<b-navbar-item tag="router-link" :to="{name: 'settings'}">Settings</b-navbar-item>-->
+            <b-navbar-item tag="router-link" :to="{name: 'logout'}">Log out</b-navbar-item>
           </template>
 
           <template v-else>
-            <b-navbar-item tag="router-link" :to="{name: 'login'}">log in</b-navbar-item>
+            <b-navbar-item tag="router-link" :to="{name: 'login'}">Log in</b-navbar-item>
           </template>
         </template>
       </b-navbar>
@@ -73,12 +73,16 @@
     <!-- Third-party scripts -->
     <script src="{{ base_path() }}/node_modules/vue/dist/vue.js"></script>
     <script src="{{ base_path() }}/node_modules/vue-router/dist/vue-router.js"></script>
-    <script src="{{ base_path() }}/node_modules/jwt-decode/build/jwt-decode.js"></script>
     <script src="{{ base_path() }}/node_modules/buefy/dist/buefy.min.js"></script>
     <script src="{{ base_path() }}/node_modules/@fortawesome/fontawesome-free/js/all.js"></script>
     <script src="{{ base_path() }}/node_modules/twemoji/dist/twemoji.min.js"></script>
 
     <!-- Main script -->
     <script src="{{ base_path() }}/src/index.js" type="module"></script>
+
+    <!-- Script to assign the router base path -->
+    <script>
+      const routerBasePath = "{{ base_path() }}/";
+    </script>
   </body>
 </html>

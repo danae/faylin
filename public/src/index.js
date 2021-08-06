@@ -1,6 +1,8 @@
-import client from './client.js';
 import components from './components.js';
 import router from './router.js';
+
+import ClientError from './api/ClientError.js';
+import ClientMixin from './mixins/ClientMixin.js';
 
 
 // Create the Vue app
@@ -8,55 +10,46 @@ const app = new Vue({
   el: '#app',
   router: router,
 
-  // Data for the app
-  data: {
-    // The token used for authorization
-    token: null,
-  },
+  // Mixins for the app
+  mixins: [ClientMixin],
 
-  // Computed data for the app
-  computed: {
-    currentToken : function() {
-      if (this.token !== null)
-        return jwt_decode(this.token);
-      else
-        return null;
+  // The methods for the app
+  methods: {
+    // Event handler when a client request returns an error
+    onClientError: function(error) {
+      // Display the error message
+      this.$displayError(error);
     },
-    currentUserId: function() {
-      if (this.currentToken !== null)
-        return this.currentToken.sub;
-      else
-        return null;
+
+    // Event handler when a client request is unauthorized
+    onClientUnauthorized: function(error) {
+      // Display an unauthorized message
+      this.$displayMessage('Your session has been expired or is invalid, please log in again');
+
+      // Log out to remove the invalid token from the storage
+      this.$logout();
+
+      // Redirect to the login page
+      this.$router.replace({name: 'login'});
     },
-    loggedIn: function() {
-      return this.token !== null;
-    }
-  },
-
-  // Watchers for the app
-  watch: {
-    // Watcher for the token property
-    token: function(newToken)
-    {
-      if (newToken !== null)
-        localStorage.setItem('token', newToken);
-      else
-        localStorage.removeItem('token');
-
-      this.$client.token = newToken;
-    }
   },
 
   // Hook for when the app is created
-  created: function()
-  {
-    if (localStorage.getItem('token') !== null)
-      this.token = localStorage.getItem('token');
+  created: function() {
+    // Register event handlers for client errors
+    this.$on('client-error', this.onClientError.bind(this));
+    this.$on('client-unauthorized', this.onClientUnauthorized.bind(this));
+  },
+
+  // Hook for when the app is destroyed
+  destroyed: function() {
+    // Unregister event handlers for client errors
+    this.$off('client-error', this.onClientError.bind(this));
+    this.$off('client-unauthorized', this.onClientUnauthorized.bind(this));
   },
 
   // Hook for when the app is mounted
-  mounted: function()
-  {
+  mounted: function() {
     // Parse the body through Twemoji
     this.$nextTick(function() {
       twemoji.parse(document.body);
@@ -64,53 +57,41 @@ const app = new Vue({
   },
 
   // Hook for when the app is updated
-  updated: function()
-  {
+  updated: function() {
     // Parse the body through Twemoji
     this.$nextTick(function() {
       twemoji.parse(document.body);
     });
-  }
+  },
 });
 
 
-// Function to format bytes to a human-readable string
-Vue.prototype.$formatBytes = function(bytes, decimals = 2)
-{
-  if (bytes === 0)
-    return '0 bytes';
-
-  const k = 1024;
-  const dm = decimals < 0 ? 0 : decimals;
-  const sizes = ['bytes', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB'];
-
-  const i = Math.floor(Math.log(bytes) / Math.log(k));
-  return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
-}
-
-// Function to return an icon text span
-Vue.prototype.$iconText = function(icon, message)
-{
+// Register a global method to return an icon text span
+Vue.prototype.$iconText = function(icon, message) {
   return `<span class="icon-text"><span class="icon"><i class="fas fa-${icon}"></i></span><span>${message}</span></span>`;
 }
 
-// Function to display a message
-Vue.prototype.$displayMessage = function(message)
-{
+// Register a global method to display a message
+Vue.prototype.$displayMessage = function(message, type = 'is-dark', duration = 2000) {
   console.log('%c info %c ' + message, 'color: white; background: black; padding: 1px; border-radius: 3px', 'background: transparent');
-  this.$buefy.toast.open({message: message, type: 'is-dark', position: 'is-top', duration: 2000});
+
+  this.$buefy.toast.open({message: message, type, duration});
 }
 
-// Function to display a warning message
-Vue.prototype.$displayWarningMessage = function(message)
-{
-  console.log('%c warning %c %c' + message, 'color: white; background: #f4bd00; padding: 1px; border-radius: 3px', 'background: transparent', 'color: #5c3c00');
-  this.$buefy.toast.open({message: message, type: 'is-warning', position: 'is-top', duration: 5000});
+// Register a global method to display a warning
+Vue.prototype.$displayWarning = function(error) {
+  console.groupCollapsed('%c warning %c %c' + error.message, 'color: white; background: #f4bd00; padding: 1px; border-radius: 3px', 'background: transparent', 'color: #5c3c00');
+  console.warn(error);
+  console.groupEnd();
+
+  this.$buefy.toast.open({message: error.message, type: 'is-warning', position: 'is-top', duration: 5000});
 }
 
-// Function to display an error message
-Vue.prototype.$displayErrorMessage = function(message)
-{
-  console.log('%c error %c %c' + message, 'color:white; background:#ff0000; padding: 1px; border-radius: 3px', 'background: transparent', 'color: #ff0000');
-  this.$buefy.toast.open({message: message, type: 'is-danger', position: 'is-top', duration: 5000});
+// Register a global method to display an error
+Vue.prototype.$displayError = function(error) {
+  console.groupCollapsed('%c error %c %c' + error.message, 'color:white; background:#ff0000; padding: 1px; border-radius: 3px', 'background: transparent', 'color: #ff0000');
+  console.error(error);
+  console.groupEnd();
+
+  this.$buefy.toast.open({message: error.message, type: 'is-danger', position: 'is-top', duration: 5000});
 }

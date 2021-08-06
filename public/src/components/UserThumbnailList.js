@@ -2,7 +2,7 @@
 export default {
   // The properties for the component
   props: {
-    'users': {type: Array},
+    users: {type: Array},
   },
 
   // The template for the component

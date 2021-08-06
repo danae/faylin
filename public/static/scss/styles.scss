@@ -41,36 +41,6 @@ footer {
     h#{$i} {
       @extend .is-family-secondary;
       @extend .has-text-weight-normal;
-
-      @if $i <= 2 {
-        @extend .has-text-primary;
-      }
-    }
-  }
-
-  // Link styling
-  a:not(.button) {
-    color: $link;
-    border-bottom: 1px $link dotted;
-
-    &:active {
-      color: $link-active;
-      border-bottom-color: $link-active;
-    }
-
-    &:hover {
-      color: $link-hover;
-      border-bottom-color: $link-hover;
-    }
-
-    // Borderless links
-    &.is-borderless {
-      border-bottom: none;
-    }
-
-    // Links in the footer have no border
-    .footer > & {
-      @extend .is-borderless;
     }
   }
 
@@ -100,7 +70,15 @@ footer {
   vertical-align: -0.1em;
 }
 
-// Hero stylinh
+// Navbar styling
+.navbar {
+  // Navbar brand
+  .navbar-brand .navbar-item {
+    color: $primary !important;
+  }
+}
+
+// Hero styling
 .hero {
   @extend .is-family-secondary;
   @extend .has-text-centered;
@@ -126,6 +104,9 @@ footer {
 
 // Box styling
 .box {
+  &.dark {
+    border: 2px $dark solid;
+  }
   &.is-primary {
     border: 2px $primary solid;
   }
@@ -146,10 +127,48 @@ footer {
   }
 }
 
+// Panel styling
+.panel {
+  // Panel heading
+  .panel-heading {
+    @extend .menu-label;
+    @extend .mb-0;
+  }
+
+  // Panel form
+  .panel-block.is-form {
+    @extend .is-flex-direction-column;
+
+    & > .field {
+      @extend .is-align-self-stretch;
+      @extend .my-2;
+    }
+  }
+
+  // Panel link
+  a.panel-block {
+    &:hover {
+      color: $panel-block-color;
+    }
+  }
+}
+
+// Dialog styling
+.dialog {
+  // Modal card footer
+  .modal-card .modal-card-foot {
+    border-top-color: $border-light;
+
+    // Buttons in the card footer
+    .button {
+      @extend .is-light;
+      @extend .has-text-weight-normal;
+    }
+  }
+}
+
 // Image detail styling
 .image-details {
-  @extend .is-clipped;
-
   // Name text for the image thumbnail
   .image-details-name {
     @extend .is-size-4;
@@ -159,18 +178,16 @@ footer {
   // User name text for the image thumbnail
   .image-details-user {
     @extend .is-size-6;
-    @extend .has-text-weight-bold;
   }
 
   // Image for the image details
   .image {
     @extend .mx-auto;
+    @extend .my-0;
 
     img {
-      @extend .p-2;
-
-      @media screen and (min-width: $desktop) {
-        max-height: 70vh;
+      @media screen and (min-width: $tablet) {
+        max-height: calc(100vh - 174px);
         width: auto;
       }
     }

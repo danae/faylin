@@ -1,37 +1,81 @@
 // Login route component
 export default {
+  // The data for the route
+  data: function() {
+    return {
+      username: '',
+      password: ''
+    }
+  },
+
+  // Hook when the component is created
+  created: function() {
+    // Set the document title
+    document.title = `Log in – fayl.in`;
+  },
+
   // The methods for the route
   methods: {
-    // Callback for when the login has succeeded
-    onLoginSuccess: function(token)
-    {
-      // Set the token
-      this.$root.token = token;
+    // Submit the form
+    onSubmit: function() {
+      // Send a login request
+      this.$login(this.username, this.password)
+        .then(this.onLoginSuccess.bind(this), this.onLoginError.bind(this));
+    },
 
+    // Cancel the form
+    onCancel: function() {
+      // Redirect to the previous page
+      this.$router.back();
+    },
+
+    // Event handler when the login has succeeded
+    onLoginSuccess: function() {
       // Display a success message
       this.$displayMessage('Logged in succesfully');
 
-      // Redirect to the next page
+      // Redirect to the page specified by the query, or the home page otherwise
       let query = new URLSearchParams(window.location.search);
       if (query.has('redirect'))
-        this.$router.replace(query.get('redirect'));
+        this.$router.push(query.get('redirect'));
       else
-        this.$router.replace('/');
+        this.$router.push('/');
     },
 
-    // Callback for when the login has failed
-    onLoginError: function(error)
-    {
-      // Display an error message
-      this.$displayErrorMessage(error.message);
+    // Event handler when the login was unsuccessful
+    onLoginError: function(error) {
+      // Display the error
+      this.$displayError(error);
     },
   },
 
   // The template for the route
   template: `
-    <div id="login-page">
+    <div class="login-page">
       <section class="section content">
-        <login-form @login-success="onLoginSuccess" @login-error="onLoginError"></login-form>
+        <div class="login-form box is-primary">
+          <p>Log in to fayl.in to be able to upload and organize your images.</p>
+
+          <form @submit.prevent="onSubmit">
+            <b-field label="Email address" label-position="on-border">
+              <b-input v-model="username" type="text" name="username" id="username" icon-pack="fas" icon="envelope" autofocus></b-input>
+            </b-field>
+
+            <b-field label="Password" label-position="on-border">
+              <b-input v-model="password" type="password" name="password" id="password" icon-pack="fas" icon="key"></b-input>
+            </b-field>
+
+            <b-field grouped>
+              <div class="control">
+                <b-button type="is-primary" icon-pack="fas" icon-left="check" native-type="submit">Sign in</b-button>
+              </div>
+
+              <div class="control">
+                <b-button type="is-light" @click="onCancel">Cancel</b-button>
+              </div>
+            </b-field>
+          </form>
+        </div>
       </section>
     </div>
   `

@@ -1,8 +1,8 @@
 import ImageDetails from './components/ImageDetails.js';
-import ImageDetailsForm from './components/ImageDetailsForm.js';
+import ImageDetailsEditPanel from './components/ImageDetailsEditPanel.js';
+import ImageDetailsSharePanel from './components/ImageDetailsSharePanel.js';
 import ImageThumbnail from './components/ImageThumbnail.js';
 import ImageThumbnailList from './components/ImageThumbnailList.js';
-import LoginForm from './components/LoginForm.js';
 import UploadForm from './components/UploadForm.js';
 import UserDetails from './components/UserDetails.js';
 import UserThumbnail from './components/UserThumbnail.js';
@@ -12,10 +12,10 @@ import UserThumbnailList from './components/UserThumbnailList.js';
 // Create the components
 const components =  {
   ImageDetails,
-  ImageDetailsForm,
+  ImageDetailsEditPanel,
+  ImageDetailsSharePanel,
   ImageThumbnail,
   ImageThumbnailList,
-  LoginForm,
   UploadForm,
   UserDetails,
   UserThumbnail,

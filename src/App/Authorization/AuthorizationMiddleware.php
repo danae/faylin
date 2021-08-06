@@ -7,6 +7,8 @@ use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
 use Slim\Exception\HttpUnauthorizedException;
 
+use Danae\Faylin\Model\User;
+
 
 // Middleware that adds required authorization to a route
 final class AuthorizationMiddleware implements MiddlewareInterface
@@ -26,28 +28,52 @@ final class AuthorizationMiddleware implements MiddlewareInterface
   {
     try
     {
-      // Iterate over the strategies
-      foreach ($this->strategies as $strategy)
-      {
-        // Check if this strategy is able to authorize the request
-        if (!($strategy instanceof AuthorizationStrategyInterface))
-          continue;
-        if (!$strategy->canAuthorize($request))
-          continue;
+      // Authorize the request and get the authorized user
+      $user = $this->authorize($request);
+      if ($user === null)
+        throw new HttpUnauthorizedException($request, "The request contains no acceptable authorization header");
 
-        // Authorize the request and get the authorized user
-        $user = $strategy->authorize($request);
-
-        // Handle the request with the user stored as an attribute
-        return $handler->handle($request->withAttribute('authUser', $user));
-      }
+      // Handle the request with the user stored as an attribute
+      return $handler->handle($request->withAttribute('authUser', $user));
     }
     catch (AuthorizationException $ex)
     {
       throw new HttpUnauthorizedException($request, $ex->getMessage(), $ex);
     }
+  }
+
+  // Process the middleware where authorization is optional
+  public function optional(Request $request, RequestHandler $handler): Response
+  {
+    try
+    {
+      // Handle the request through the middleware
+      return $this->process($request, $handler);
+    }
+    catch (HttpUnauthorizedException $ex)
+    {
+      // Handle the request without authorized user
+      return $handler->handle($request);
+    }
+  }
+
+  // Authorize a request and return the authorized user
+  public function authorize(Request $request): ?User
+  {
+    // Iterate over the strategies
+    foreach ($this->strategies as $strategy)
+    {
+      // Check if this strategy is able to authorize the request
+      if (!($strategy instanceof AuthorizationStrategyInterface))
+        continue;
+      if (!$strategy->canAuthorize($request))
+        continue;
+
+      // Authorize the request and get the authorized user
+      return $strategy->authorize($request);
+    }
 
     // No strategies found that could authorize the request
-    throw new HttpUnauthorizedException($request, "The request contains no acceptable authorization header");
+    return null;
   }
 }

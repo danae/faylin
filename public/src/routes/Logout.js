@@ -1,15 +1,17 @@
 // Logout route component
 export default {
   // Hook when the route has been created
-  created: function ()
-  {
-    // Remove the token
-    this.$root.token = null;
+  created: function() {
+    // Set the document title
+    document.title = `Log out – fayl.in`;
+
+    // Send a logout request
+    this.$logout();
 
     // Display a success message
     this.$displayMessage('Logged out succesfully');
 
-    // Redirect to the next page
+    // Redirect to the page specified by the query, or the home page otherwise
     let query = new URLSearchParams(window.location.search);
     if (query.has('redirect'))
       this.$router.replace(query.get('redirect'));
@@ -19,7 +21,7 @@ export default {
 
   // The template for the route
   template: `
-    <div id="logout-page">
+    <div class="logout-page">
       <b-loading active></b-loading>
     </div>
   `
