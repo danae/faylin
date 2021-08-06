@@ -63,10 +63,10 @@ Vue.prototype.$iconText = function(icon, message) {
 }
 
 // Register a global method to display a message
-Vue.prototype.$displayMessage = function(message) {
+Vue.prototype.$displayMessage = function(message, type = 'is-dark', duration = 2000) {
   console.log('%c info %c ' + message, 'color: white; background: black; padding: 1px; border-radius: 3px', 'background: transparent');
 
-  this.$buefy.toast.open({message: message, type: 'is-dark', position: 'is-top', duration: 2000});
+  this.$buefy.toast.open({message: message, type, duration});
 }
 
 // Register a global method to display a warning

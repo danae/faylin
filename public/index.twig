@@ -44,7 +44,7 @@
 
         <template #end>
           <template v-if="clientLoggedIn">
-            <b-navbar-item tag="router-link" :to="{name: 'userView', params: {userId: 'me'}}">profile</b-navbar-item>
+            <b-navbar-item tag="router-link" :to="{name: 'userView', params: {userId: clientUser.id}}">profile</b-navbar-item>
             <!--<b-navbar-item tag="router-link" :to="{name: 'settings'}">settings</b-navbar-item>-->
             <b-navbar-item tag="router-link" :to="{name: 'logout'}">log out</b-navbar-item>
           </template>

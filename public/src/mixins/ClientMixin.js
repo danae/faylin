@@ -9,6 +9,9 @@ export default {
     return {
       // The client
       client: null,
+
+      // The client user
+      clientUser: null,
     }
   },
 
@@ -31,12 +34,12 @@ export default {
 
     // The logged in state of the client
     clientLoggedIn: function() {
-      return this.clientAccessToken !== null;
+      return this.clientUser !== null;
     },
   },
 
   // Hook when the mixin is created
-  created: function() {
+  created: async function() {
     // Get the client options
     this.$options.clientBasePath ||= this.$router?.options.base.replace(/\/$/, '') || '';
     this.$options.clientAccessTokenKey ||= 'accessToken';
@@ -46,6 +49,10 @@ export default {
 
     // Get the access token from the storage
     this.clientAccessToken = localStorage.getItem(this.$options.clientAccessTokenKey);
+
+    // Get the client user
+    if (this.clientAccessToken)
+      this.clientUser = await this.client.getMe();
   },
 
   // The watchers for the mixin
@@ -64,9 +71,11 @@ export default {
 // Register a global method to log in and set the access token
 Vue.prototype.$login = async function(username, password) {
   this.$root.clientAccessToken = await this.$root.client.authorizeWithUserCredentials(username, password);
+  this.$root.clientUser = await this.$root.client.getMe();
 }
 
 // Register a global method to log out and reset the access token
 Vue.prototype.$logout = function() {
   this.$root.clientAccessToken = null;
+  this.$root.clientUser = null;
 }

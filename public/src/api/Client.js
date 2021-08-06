@@ -49,7 +49,7 @@ export default class Client
     if (!response.ok)
     {
       // Response was not successful, so throw the error
-      if (response.headers.get('Content-Type').startsWith('application/json'))
+      if (response.headers.get('Content-Type')?.startsWith('application/json'))
       {
         // Throw an error with the JSON error details
         const responseJson = await response.json();
@@ -64,11 +64,13 @@ export default class Client
     else
     {
       // Response was succesful, so parse the body
-      if (response.headers.get('Content-Type').startsWith('application/json'))
+      if (response.status === 204)
+        return null;
+      if (response.headers.get('Content-Type')?.startsWith('application/json'))
         return await response.json();
-      else if (response.headers.get('Content-Type').startsWith('text/plain'))
+      else if (response.headers.get('Content-Type')?.startsWith('text/plain'))
         return await response.text();
-      else if (response.headers.get('Content-Type').startsWith('multipart/form-data'))
+      else if (response.headers.get('Content-Type')?.startsWith('multipart/form-data'))
         return await response.formData();
       else
         return await response.blob();
@@ -170,24 +172,10 @@ export default class Client
     return new User(this, response);
   }
 
-  // Get the current authenticated user
-  async getAuthenticatedUser()
-  {
-    const response = await this.rest.get(`/api/v1/users/me`);
-    return new User(this, response);
-  }
-
   // Patch a user
   async patchUser(userId, fields)
   {
     const response = await this.rest.patch(`/api/v1/users/${userId}`, fields);
-    return new User(this, response);
-  }
-
-  // Patch the authenticated user
-  async patchAuthenticatedUser(fields)
-  {
-    const response = await this.rest.patch(`/api/v1/users/me`, fields);
     return new User(this, response);
   }
 
@@ -198,10 +186,24 @@ export default class Client
     return response.map(data => new Image(this, data));
   }
 
-  // Get all images owned by the authenticated user
-  async getAuthenticatedUserImages(query = {})
+
+  // Get the current authenticated user
+  async getMe()
   {
-    const response = await this.rest.get(`/api/v1/users/me/images/`, {query: query});
+    const response = await this.rest.get(`/api/v1/me`);
+    return new User(this, response);
+  }
+
+  // Patch the authenticated user
+  async patchMe(fields)
+  {
+    const response = await this.rest.patch(`/api/v1/me`, fields);
+    return new User(this, response);
+  }
+  // Get all images owned by the authenticated user
+  async getMeImages(query = {})
+  {
+    const response = await this.rest.get(`/api/v1/me/images/`, {query: query});
     return response.map(data => new Image(this, data));
   }
 }
