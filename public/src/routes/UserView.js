@@ -10,8 +10,12 @@ export default {
 
   // Hook when the component is created
   created: async function() {
+    // Set the document title
+    document.title = `User – fayl.in`;
+
     // Get the user
     this.user = await this.$root.client.getUser(this.$route.params.userId);
+    document.title = `${this.user.name} – fayl.in`;
   },
 
   // The template for the route

@@ -10,8 +10,12 @@ export default {
 
   // Hook when the component is created
   created: async function() {
+    // Set the document title
+    document.title = `Image – fayl.in`;
+
     // Get the image
     this.image = await this.$root.client.getImage(this.$route.params.imageId);
+    document.title = `${this.image.name} by ${this.image.user.name} – fayl.in`;
   },
 
   // The template for the route

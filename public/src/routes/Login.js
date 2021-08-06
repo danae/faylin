@@ -8,6 +8,12 @@ export default {
     }
   },
 
+  // Hook when the component is created
+  created: function() {
+    // Set the document title
+    document.title = `Log in – fayl.in`;
+  },
+
   // The methods for the route
   methods: {
     // Submit the form

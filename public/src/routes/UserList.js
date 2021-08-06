@@ -10,6 +10,9 @@ export default {
 
   // Hook when the component is created
   created: async function() {
+    // Set the document title
+    document.title = `Directory – fayl.in`;
+
     // Get the users
     this.users = await this.$root.client.getUsers({sort: 'name'});
   },

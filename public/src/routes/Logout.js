@@ -2,6 +2,9 @@
 export default {
   // Hook when the route has been created
   created: function() {
+    // Set the document title
+    document.title = `Log out – fayl.in`;
+
     // Send a logout request
     this.$logout();
 

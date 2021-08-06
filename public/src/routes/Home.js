@@ -10,6 +10,9 @@ export default {
 
   // Hook when the component is created
   created: async function() {
+    // Set the document title
+    document.title = `Home – fayl.in`;
+
     // Get the images
     this.images = await this.$root.client.getImages({perPage: 30});
   },
