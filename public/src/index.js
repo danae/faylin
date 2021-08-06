@@ -1,6 +1,7 @@
 import components from './components.js';
 import router from './router.js';
 
+import ClientError from './api/ClientError.js';
 import ClientMixin from './mixins/ClientMixin.js';
 
 
@@ -15,31 +16,40 @@ const app = new Vue({
   // The methods for the app
   methods: {
     // Event handler when a client request returns an error
-    onClientError: function(error)
-    {
+    onClientError: function(error) {
       // Display the error message
-      this.$displayErrorMessage(error.message);
+      this.$displayError(error);
     },
 
     // Event handler when a client request is unauthorized
-    onClientUnauthorized: function(error)
-    {
-      // Display the error message
-      this.$displayErrorMessage('Unauthorized: ' + error.message);
+    onClientUnauthorized: function(error) {
+      // Display an unauthorized message
+      this.$displayMessage('Your session has been expired or is invalid, please log in again');
+
+      // Log out to remove the invalid token from the storage
+      this.$logout();
+
+      // Redirect to the login page
+      this.$router.replace({name: 'login'});
     },
   },
 
   // Hook for when the app is created
-  created: function()
-  {
-    // Register event handlers for a client request that returns an error or is unauthorized
-    this.$on('error', this.onClientError.bind(this));
-    this.$on('unauthorized', this.onClientUnauthorized.bind(this));
+  created: function() {
+    // Register event handlers for client errors
+    this.$on('client-error', this.onClientError.bind(this));
+    this.$on('client-unauthorized', this.onClientUnauthorized.bind(this));
+  },
+
+  // Hook for when the app is destroyed
+  destroyed: function() {
+    // Unregister event handlers for client errors
+    this.$off('client-error', this.onClientError.bind(this));
+    this.$off('client-unauthorized', this.onClientUnauthorized.bind(this));
   },
 
   // Hook for when the app is mounted
-  mounted: function()
-  {
+  mounted: function() {
     // Parse the body through Twemoji
     this.$nextTick(function() {
       twemoji.parse(document.body);
@@ -47,13 +57,12 @@ const app = new Vue({
   },
 
   // Hook for when the app is updated
-  updated: function()
-  {
+  updated: function() {
     // Parse the body through Twemoji
     this.$nextTick(function() {
       twemoji.parse(document.body);
     });
-  }
+  },
 });
 
 
