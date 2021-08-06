@@ -15,11 +15,15 @@ export default {
     }
   },
 
-  // Hook when the component is created
-  created: async function() {
-    // Get the images for the user
-    if (this.user !== null)
-      this.userImages = await this.$root.client.getUserImages(this.user.id);
+  // The watchers for the component
+  watch: {
+    user: async function(newUser) {
+      // Get the images for the user
+      if (newUser !== null)
+        this.userImages = await this.$root.client.getUserImages(newUser.id);
+      else
+        this.userImages = null;
+    },
   },
 
   // The template for the component
