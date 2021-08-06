@@ -18,6 +18,21 @@ export default {
         .catch(error => this.$emit('edit-error', error));
     },
 
+    // Ask for comfirmation to delete the image
+    deleteImageComfirm: function() {
+      // Show the confirmation dialog
+      this.$buefy.dialog.confirm({
+        type: 'is-danger',
+        hasIcon: true,
+        icon: 'trash-alt',
+        iconPack: 'fas',
+        message: `Are you sure you want to delete <b>${this.image.name}</b>? All data and links associated with the image will stop working forever, which is a long time!`,
+        confirmText: 'Delete',
+        cancelText: 'Cancel',
+        onConfirm: this.deleteImage.bind(this),
+      });
+    },
+
     // Delete the image
     deleteImage: async function() {
       // Send a delete request
@@ -47,7 +62,7 @@ export default {
             <a class="panel-block">
               <b-icon icon="upload" pack="fas" class="panel-icon"></b-icon> Replace
             </a>
-            <a class="panel-block has-text-danger" @click="deleteImage()">
+            <a class="panel-block has-text-danger" @click="deleteImageComfirm()">
               <b-icon icon="trash-alt" pack="fas" type="is-danger" class="panel-icon"></b-icon> Delete
             </a>
           </div>

@@ -153,6 +153,18 @@ footer {
   }
 }
 
+// Dialog styling
+.dialog {
+  // Modal card footer
+  .modal-card .modal-card-foot {
+    // Buttons in the card footer
+    .button {
+      @extend .is-light;
+      @extend .has-text-weight-normal;
+    }
+  }
+}
+
 // Image detail styling
 .image-details {
   // Name text for the image thumbnail
