@@ -48,7 +48,7 @@ export default {
   template: `
     <div class="image-details-share-panel">
       <template v-if="image">
-        <div class="panel is-dark">
+        <div class="panel is-primary">
           <p class="panel-heading">Share image</p>
 
           <template v-if="canShareImage()">

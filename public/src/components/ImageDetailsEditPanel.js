@@ -47,7 +47,7 @@ export default {
     <div class="image-details-edit-panel">
       <template v-if="image">
         <form @submit.prevent="patchImage()">
-          <div class="panel is-dark">
+          <div class="panel is-primary">
             <p class="panel-heading">Edit image</p>
 
             <div class="panel-block is-form">

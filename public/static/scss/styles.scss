@@ -16,7 +16,6 @@ main {
 footer {
   @extend .is-size-7;
   @extend .has-text-centered;
-  @extend .has-background-white;
   @extend .py-5;
 }
 
@@ -72,9 +71,11 @@ footer {
 
 // Navbar styling
 .navbar {
-  // Navbar brand
-  .navbar-brand .navbar-item {
-    color: $primary !important;
+  // Navbar items
+  .navbar-item {
+    @extend .is-family-secondary;
+    @extend .is-size-5;
+    @extend .has-text-weight-light;
   }
 }
 

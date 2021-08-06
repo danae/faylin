@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css?family=Montserrat:400,700|Signika:400,700&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Montserrat:400,700|Signika:300,400,700&display=swap");
 /*! bulma.io v0.9.3 | MIT License | github.com/jgthms/bulma */
 /* Bulma Utilities */
 .button, .input, .textarea, .taginput .taginput-container.is-focusable, .select select, .file-cta,
@@ -9285,7 +9285,7 @@ a.has-text-white:hover, a.has-text-white:focus {
   color: #e6e6e6 !important;
 }
 
-.has-background-white, footer {
+.has-background-white {
   background-color: white !important;
 }
 
@@ -10404,7 +10404,7 @@ a.has-text-primary-light-dark:hover, a.has-text-primary-light-dark:focus {
   font-size: 1.5rem !important;
 }
 
-.is-size-5 {
+.is-size-5, .navbar .navbar-item {
   font-size: 1.25rem !important;
 }
 
@@ -10812,7 +10812,7 @@ a.has-text-primary-light-dark:hover, a.has-text-primary-light-dark:focus {
   text-decoration: underline !important;
 }
 
-.has-text-weight-light {
+.has-text-weight-light, .navbar .navbar-item {
   font-weight: 300 !important;
 }
 
@@ -10836,7 +10836,7 @@ a.has-text-primary-light-dark:hover, a.has-text-primary-light-dark:focus {
   font-family: "Montserrat", sans-serif !important;
 }
 
-.is-family-secondary, .content h1, .content h2, .content h3, .content h4, .content h5, .content h6, .hero {
+.is-family-secondary, .content h1, .content h2, .content h3, .content h4, .content h5, .content h6, .navbar .navbar-item, .hero {
   font-family: "Signika", sans-serif !important;
 }
 
@@ -18714,10 +18714,6 @@ main {
   width: 1em;
   margin: 0 .05em 0 .1em;
   vertical-align: -0.1em;
-}
-
-.navbar .navbar-brand .navbar-item {
-  color: #5Eb2CE !important;
 }
 
 .hero.has-background {
