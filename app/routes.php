@@ -6,6 +6,7 @@ use Slim\Routing\RouteCollectorProxy;
 use Slim\Views\Twig;
 
 use Danae\Faylin\App\Authorization\AuthorizationMiddleware;
+use Danae\Faylin\App\Authorization\AuthorizationOptionalMiddleware;
 use Danae\Faylin\App\Controllers\AuthorizationController;
 use Danae\Faylin\App\Controllers\BackendController;
 use Danae\Faylin\App\Controllers\FrontendController;
@@ -33,13 +34,13 @@ return function(App $app)
     {
       // Return all images as a JSON response
       $group->get('/', [ImageController::class, 'index'])
-        ->add(AuthorizationMiddleware::class)
+        ->add(AuthorizationOptionalMiddleware::class)
         ->setName('images.index');
 
       // Get an image as a JSON response
       $group->get('/{id:[A-Za-z0-9-_]+}', [ImageController::class, 'get'])
         ->add(ImageResolverMiddleware::class)
-        ->add(AuthorizationMiddleware::class)
+        ->add(AuthorizationOptionalMiddleware::class)
         ->setName('images.get');
 
       // Patch an image and return the image as a JSON response
@@ -71,12 +72,13 @@ return function(App $app)
     {
       // Return all users as a JSON response
       $group->get('/', [UserController::class, 'index'])
-        ->add(AuthorizationMiddleware::class)
+        ->add(AuthorizationOptionalMiddleware::class)
         ->setName('users.index');
 
       // Get a user as a JSON response
       $group->get('/{id:[A-Za-z0-9-_]+}', [UserController::class, 'get'])
         ->add(UserResolverMiddleware::class)
+        ->add(AuthorizationOptionalMiddleware::class)
         ->setName('users.get');
 
       // Patch a user and return the user as a JSON response
@@ -88,6 +90,7 @@ return function(App $app)
       // Return all images owned by a user as a JSON response
       $group->get('/{id:[A-Za-z0-9-_]+}/images/', [UserController::class, 'images'])
         ->add(UserResolverMiddleware::class)
+        ->add(AuthorizationOptionalMiddleware::class)
         ->setName('users.images.get');
     });
 

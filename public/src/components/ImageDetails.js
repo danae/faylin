@@ -47,7 +47,7 @@ export default {
 
             <image-details-share-panel :image="image" class="mb-4"></image-details-share-panel>
 
-            <template v-if="image.user.id == $root.clientUser.id">
+            <template v-if="$root.clientUser && $root.clientUser.id == image.user.id">
               <image-details-edit-panel :image="image" class="mb-4" @edit-patch-success="onEditPatchSuccess" @edit-delete-success="onEditDeleteSuccess" @edit-error="onEditError"></image-details-edit-panel>
             </template>
           </div>
