@@ -74,20 +74,10 @@ return function(App $app)
         ->add(AuthorizationMiddleware::class)
         ->setName('users.index');
 
-      // Get the authorized user as a JSON response
-      $group->get('/me', [UserController::class, 'getMe'])
-        ->add(AuthorizationMiddleware::class)
-        ->setName('users.get.me');
-
       // Get a user as a JSON response
       $group->get('/{id:[A-Za-z0-9-_]+}', [UserController::class, 'get'])
         ->add(UserResolverMiddleware::class)
         ->setName('users.get');
-
-      // Patch the authorized user and return the user as a JSON response
-      $group->patch('/me', [UserController::class, 'patchMe'])
-        ->add(AuthorizationMiddleware::class)
-        ->setName('users.patch.me');
 
       // Patch a user and return the user as a JSON response
       $group->patch('/{id:[A-Za-z0-9-_]+}', [UserController::class, 'patch'])
@@ -95,15 +85,29 @@ return function(App $app)
         ->add(AuthorizationMiddleware::class)
         ->setName('users.patch');
 
-      // Return all images owned by the authorized user as a JSON response
-      $group->get('/me/images/', [UserController::class, 'imagesMe'])
-        ->add(AuthorizationMiddleware::class)
-        ->setName('users.me.images');
-
       // Return all images owned by a user as a JSON response
       $group->get('/{id:[A-Za-z0-9-_]+}/images/', [UserController::class, 'images'])
         ->add(UserResolverMiddleware::class)
-        ->setName('users.get.images');
+        ->setName('users.images.get');
+    });
+
+    // Authorized user routes
+    $group->group('/me', function(RouteCollectorProxy $group)
+    {
+      // Get the authorized user as a JSON response
+      $group->get('', [UserController::class, 'getMe'])
+        ->add(AuthorizationMiddleware::class)
+        ->setName('me.get');
+
+      // Patch the authorized user and return the user as a JSON response
+      $group->patch('', [UserController::class, 'patchMe'])
+        ->add(AuthorizationMiddleware::class)
+        ->setName('me.patch');
+
+      // Return all images owned by the authorized user as a JSON response
+      $group->get('/images/', [UserController::class, 'imagesMe'])
+        ->add(AuthorizationMiddleware::class)
+        ->setName('me.images.get');
     });
   });
 
