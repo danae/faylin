@@ -36,7 +36,7 @@ export default {
           </div>
         </section>
 
-        <image-thumbnail-list :images="userImages" :displayUser="false"></image-thumbnail-list>
+        <image-thumbnail-list :images="userImages" :display-user-name="false"></image-thumbnail-list>
       </template>
 
       <template v-else>

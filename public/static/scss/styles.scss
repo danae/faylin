@@ -44,18 +44,11 @@ footer {
   }
 
   // Image styling
-  img {
-    @extend .box;
-    @extend .p-0;
+  .image {
+    @extend .mx-0;
 
-    // Uploading image styling
-    &.is-uploading {
-      @extend .mx-auto;
-
-      max-width: 100%;
-      max-height: 10rem;
-
-      opacity: 0.5;
+    &:not(:last-child) {
+      @extend .mb-4;
     }
   }
 }
@@ -67,6 +60,20 @@ footer {
   width: 1em;
   margin: 0 .05em 0 .1em;
   vertical-align: -0.1em;
+}
+
+// Uploading styling
+.uploading {
+  // Uploadting text
+  p {
+    color: black;
+  }
+
+  // Uploading image
+  img {
+    max-width: 35vw;
+    max-height: 15rem;
+  }
 }
 
 // Navbar styling
@@ -83,24 +90,6 @@ footer {
 .hero {
   @extend .is-family-secondary;
   @extend .has-text-centered;
-
-  &.has-background {
-    position: relative;
-    overflow: hidden;
-  }
-
-  &-background {
-    position: absolute;
-    object-fit: cover;
-    object-position: center center;
-    width: 100%;
-    height: 100%;
-    z-index: 0;
-
-    &.is-transparent {
-      opacity: 0.3;
-    }
-  }
 }
 
 // Box styling
@@ -168,118 +157,100 @@ footer {
   }
 }
 
-// Image detail styling
-.image-details {
-  // Name text for the image thumbnail
-  .image-details-name {
-    @extend .is-size-4;
-    @extend .has-text-weight-bold;
-  }
+// Page components styling
+.page {
+  // Image details styling
+  .image-details {
+    // Name text for the image thumbnail
+    &-name {
+      @extend .is-size-4;
+      @extend .has-text-weight-bold;
+    }
 
-  // User name text for the image thumbnail
-  .image-details-user {
-    @extend .is-size-6;
-  }
+    // User name text for the image thumbnail
+    &-user-name {
+      @extend .is-size-6;
+    }
 
-  // Image for the image details
-  .image {
-    @extend .mx-auto;
-    @extend .my-0;
+    // Image for the image details
+    &-image {
+      @extend .mx-auto;
+      @extend .my-0;
 
-    img {
-      @media screen and (min-width: $tablet) {
-        max-height: calc(100vh - 174px);
-        width: auto;
+      // Image element
+      img {
+        @extend .box;
+        @extend .p-0;
+
+        @media screen and (min-width: $tablet) {
+          max-height: calc(100vh - 174px);
+          width: auto;
+        }
       }
     }
   }
-}
 
-// Image thumbnail styling
-.image-thumbnail {
-  @extend .has-text-centered;
+  // Image thumbnail styling
+  .image-thumbnail {
+    @extend .has-text-centered;
 
-  // Name text for the image thumbnail
-  .image-thumbnail-name {
-    @extend .is-size-6;
-    @extend .has-text-weight-bold;
-  }
-
-  // User name text for the image thumbnail
-  .image-thumbnail-user {
-    @extend .is-size-7;
-  }
-
-  // Image for the image thumbnail
-  .image {
-    img {
-      width: auto;
-      height: 10rem;
-      max-width: 100%;
+    // Name text for the image thumbnail
+    &-name {
+      @extend .is-size-6;
+      @extend .has-text-weight-bold;
     }
-  }
-}
 
-// Image thumbnail list styling
-.image-thumbnail-list {
-  // Columns for the image thumbnail list
-  .columns {
-    @extend .is-multiline;
-
-    // Column for the image thumbnail list
-    .column {
-      @extend .is-narrow;
-      @extend .is-clipped;
-      @extend .is-half;
-      @extend .is-one-third-desktop;
-      @extend .is-one-quarter-widescreen;
-      @extend .is-one-fifth-fullhd;
+    // User name text for the image thumbnail
+    &-user-name {
+      @extend .is-size-7;
     }
-  }
-}
 
-// User thumbnail list styling
-.user-thumbnail-list {
-  // Columns for the user thumbnail list
-  .columns {
-    @extend .is-mobile;
-    @extend .is-multiline;
+    // Image for the image thumbnail
+    &-image {
+      @extend .mx-0;
+      @extend .mb-2;
 
-    // Column for the image thumbnail list
-    .column {
-      @extend .is-narrow;
-      @extend .is-half;
-    }
-  }
-}
-
-
-// The columns class for images
-.image-tiles {
-  @extend .columns;
-  @extend .is-mobile;
-  @extend .is-multiline;
-  @extend .is-justify-content-left;
-  @extend .is-align-items-flex-start;
-  @extend .my-0;
-
-  // The column class for images
-  .image-tile {
-    @extend .column;
-    @extend .is-narrow-mobile;
-    @extend .is-narrow;
-    @extend .m-0;
-
-    // Actual image styling
-    .image {
-      @extend .m-0;
-
+      // Image element
       img {
+        @extend .box;
+        @extend .mx-auto;
         @extend .p-0;
 
         width: auto;
-        height: 7.5rem;
-        margin: auto;
+        height: 10rem;
+        max-width: 100%;
+      }
+    }
+  }
+
+  // Image thumbnail list styling
+  .image-thumbnail-list {
+    // Columns for the image thumbnail list
+    .columns {
+      @extend .is-multiline;
+
+      // Column for the image thumbnail list
+      .column {
+        @extend .is-clipped;
+        @extend .is-half;
+        @extend .is-one-third-desktop;
+        @extend .is-one-quarter-widescreen;
+        @extend .is-one-fifth-fullhd;
+      }
+    }
+  }
+
+  // User thumbnail list styling
+  .user-thumbnail-list {
+    // Columns for the user thumbnail list
+    .columns {
+      @extend .is-mobile;
+      @extend .is-multiline;
+
+      // Column for the image thumbnail list
+      .column {
+        @extend .is-narrow;
+        @extend .is-half;
       }
     }
   }

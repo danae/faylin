@@ -34,7 +34,7 @@ export default {
           <template v-if="userImages">
             <div class="columns mt-4">
               <div class="column is-one-third" v-for="image in userImages" :key="image.id">
-                <image-thumbnail :image="image" :display-name="false" :display-user="false"></image-thumbnail>
+                <image-thumbnail :image="image" :display-name="false" :display-user-name="false"></image-thumbnail>
               </div>
             </div>
           </template>

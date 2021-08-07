@@ -15,12 +15,12 @@ export default {
       <template v-if="image">
         <div class="columns">
           <div class="column is-8">
-            <b-image class="mx-0 mb-6" :src="image.downloadUrl" :alt="image.name"></b-image>
+            <b-image class="image-details-image mx-0 mb-6" :src="image.downloadUrl" :alt="image.name"></b-image>
           </div>
 
           <div class="column is-4">
             <h2 class="image-details-name mb-0">{{ image.name }}</h2>
-            <p class="image-details-user">by <router-link :to="{name: 'userView', params: {userId: image.user.id }}">{{ image.user.name }}</router-link></p>
+            <p class="image-details-user-name">by <router-link :to="{name: 'userView', params: {userId: image.user.id }}">{{ image.user.name }}</router-link></p>
 
             <image-details-share-panel :image="image" class="mb-4"></image-details-share-panel>
 
