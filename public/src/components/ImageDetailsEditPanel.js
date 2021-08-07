@@ -1,25 +1,61 @@
 import Image from '../api/Image.js';
+import UploadMixin from '../mixins/UploadMixin.js';
 
 
 // Image details edit panel component
 export default {
+  // The mixins for the component
+  mixins: [UploadMixin],
+
   // The properties for the component
   props: {
+    // The image to reference in the component
     image: {type: Image},
+  },
+
+  // Hook when the component is created
+  created: function() {
+    // Set the referenced image
+    this.image = this.image;
+
+    // Register upload event handlers
+    this.$on('upload-start', this.onUploadStart.bind(this));
+    this.$on('upload-end', this.onUploadEnd.bind(this));
+    this.$on('upload-success', this.onUploadSuccess.bind(this));
+    this.$on('upload-error', this.onUploadError.bind(this));
+  },
+
+  // Hook when the component is destroyed
+  destroyed: function() {
+    // Unregister upload event handlers
+    this.$off('upload-start');
+    this.$off('upload-end');
+    this.$off('upload-success');
+    this.$off('upload-error');
   },
 
   // The methods for the component
   methods: {
     // Patch the image
-    patchImage: function() {
+    patchImage: async function() {
       // Send a patch request
-      this.$root.client.patchImage(this.image.id, {name: this.image.name})
-        .then(image => this.$emit('edit-patch-success', image))
-        .catch(error => this.$emit('edit-error', error));
+      const image = await this.$root.client.patchImage(this.image.id, {name: this.image.name});
+
+      // Display a success message
+      this.$displayMessage('Image updated succesfully');
+
+      // Update the image
+      this.image.update(image);
     },
 
-    // Ask for comfirmation to delete the image
-    deleteImageComfirm: function() {
+    // Replace the image
+    replaceImage: function() {
+      // Click the file input to select a file
+      this.$file.click();
+    },
+
+    // Delete the image
+    deleteImage: async function() {
       // Show the confirmation dialog
       this.$buefy.dialog.confirm({
         type: 'is-danger',
@@ -29,16 +65,45 @@ export default {
         message: `Are you sure you want to delete <b>${this.image.name}</b>? All associated data and links to the image will stop working forever, which is a long time!`,
         confirmText: 'Delete',
         cancelText: 'Cancel',
-        onConfirm: this.deleteImage.bind(this),
+        onConfirm: await this.deleteImageConfirmed.bind(this),
       });
     },
 
-    // Delete the image
-    deleteImage: async function() {
+    // Delete the image after confirmation
+    deleteImageConfirmed: async function() {
       // Send a delete request
-      this.$root.client.deleteImage(this.image.id)
-        .then(image => this.$emit('edit-delete-success', image))
-        .catch(error => this.$emit('edit-error', error));
+      await this.$root.client.deleteImage(this.image.id);
+
+      // Display a success message
+      this.$displayMessage('Image deleted succesfully');
+
+      // Redirect to the previous page
+      this.$router.back();
+    },
+
+    // Event handler for when the upload starts
+    onUploadStart: function(file) {
+
+    },
+
+    // Event handler for when the upload ends
+    onUploadEnd: function(file) {
+
+    },
+
+    // Event handler for when the upload is succesful
+    onUploadSuccess: function(image) {
+      // Display a success message
+      this.$displayMessage('Image replaced succesfully');
+
+      // Update the image
+      this.image.update(image);
+    },
+
+    // Event handler for when the upload is unsuccessful
+    onUploadError: function(error) {
+      // Display an error message
+      this.$displayError(error);
     },
   },
 
@@ -59,10 +124,12 @@ export default {
             <a class="panel-block" @click="patchImage()">
               <b-icon icon="save" pack="fas" class="panel-icon"></b-icon> Save
             </a>
-            <a class="panel-block">
+
+            <a class="panel-block" @click="replaceImage()">
               <b-icon icon="upload" pack="fas" class="panel-icon"></b-icon> Replace
             </a>
-            <a class="panel-block has-text-danger" @click="deleteImageComfirm()">
+
+            <a class="panel-block has-text-danger" @click="deleteImage()">
               <b-icon icon="trash-alt" pack="fas" type="is-danger" class="panel-icon"></b-icon> Delete
             </a>
           </div>
@@ -70,7 +137,7 @@ export default {
       </template>
 
       <template v-else>
-        <b-loading active></b-loading>
+        <b-loading active :is-full-page="false"></b-loading>
       </template>
     </div>
   `

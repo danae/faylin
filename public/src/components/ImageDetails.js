@@ -5,31 +5,8 @@ import Image from '../api/Image.js';
 export default {
   // The properties for the component
   props: {
+    // The image to reference in the component
     image: {type: Image},
-  },
-
-  // The methods for the component
-  methods: {
-    // Event handler when the image patch was successful
-    onEditPatchSuccess: function(image) {
-      // Display a success message
-      this.$displayMessage('Image updated succesfully');
-    },
-
-    // Event handler when the image deletion was successful
-    onEditDeleteSuccess: function() {
-      // Display a success message
-      this.$displayMessage('Image deleted succesfully');
-
-      // Redirect to the previous page
-      this.$router.back();
-    },
-
-    // Event handler when the image edit was unsuccessful
-    onEditError: function(error) {
-      // Display the error
-      this.$displayError(error);
-    },
   },
 
   // The template for the component
@@ -48,7 +25,7 @@ export default {
             <image-details-share-panel :image="image" class="mb-4"></image-details-share-panel>
 
             <template v-if="$root.clientUser && $root.clientUser.id == image.user.id">
-              <image-details-edit-panel :image="image" class="mb-4" @edit-patch-success="onEditPatchSuccess" @edit-delete-success="onEditDeleteSuccess" @edit-error="onEditError"></image-details-edit-panel>
+              <image-details-edit-panel :image="image" :replace="image.id" class="mb-4"></image-details-edit-panel>
             </template>
           </div>
         </div>

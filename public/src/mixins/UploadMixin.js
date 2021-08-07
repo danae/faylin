@@ -4,10 +4,101 @@ export default {
   props: {
     // If specified, then the specified image is replaced, otherwise a new image is created
     replace: {type: String, default: null},
+
+    // The drop behaviour of the mixin
+    drop: {type: Boolean, default: false},
+    dropTarget: {type: Object, default: null},
+
+    // The paste behaviour of the mixin
+    paste: {type: Boolean, default: false},
+    pasteTarget: {type: [Object, String], default: null},
+  },
+
+  // The data for the mixin
+  data: function() {
+    return {
+      // The file input element for the mixins
+      $file: null,
+    };
+  },
+
+  // Hook when the mixin is created
+  created: function() {
+    // Create the file input element
+    this.$file = document.createElement('input');
+    this.$file.type = 'file';
+    this.$file.className = 'is-hidden';
+    this.$file.onchange = this.onFileInput.bind(this);
+
+    this.$root.$el.append(this.$file);
+
+    // Register event handlers for the drop behaviour
+    if (this.drop && this.dropTarget !== null)
+    {
+      this.dropTarget.$on('dragenter', event => { event.preventDefault(); });
+      this.dropTarget.$on('dragover', event => { event.preventDefault(); });
+      this.dropTarget.$on('drop', this.onFileDrop.bind(this));
+    }
+
+    // Register event handlers for the paste behaviour
+    if (this.paste && this.pasteTarget !== null)
+    {
+      if (this.pasteTarget === 'window')
+        window.addEventListener('paste', this.onFilePaste.bind(this));
+      else
+        this.pasteTarget.$on('paste', this.onFilePaste.bind(this));
+    }
+  },
+
+  // Hook when the mixin is destroyed
+  destroyed: function() {
+    // Remove the file input element
+    this.$file.remove();
+
+    // Unregister event handlers for the drop behaviour
+    if (this.drop && this.dropTarget !== null)
+    {
+      this.dropTarget.$off('dragenter');
+      this.dropTarget.$off('dragover');
+      this.dropTarget.$off('drop');
+    }
+
+    // Unregister event handlers for the paste behaviour
+    if (this.paste && this.pasteTarget !== null)
+    {
+      if (this.pasteTarget === 'window')
+        window.removeEventListener('paste', this.onFilePaste.bind(this));
+      else
+        this.pasteTarget.$off('paste');
+    }
   },
 
   // The methods for the mixin
   methods: {
+    // Click the file input
+    inputFile: function() {
+      // Simulate a click on the file input
+      this.$file.click();
+    },
+
+    // Event handler when a file is selected using the file input
+    onFileInput: async function(event) {
+      // Upload the first file from the event target
+      await this.$uploadFileInput(event.target);
+    },
+
+    // Event handler when a file is dropped
+    onFileDrop: async function(event) {
+      // Upload the data transfer from the event
+      await this.$uploadDataTransfer(event.dataTransfer);
+    },
+
+    // Event handler when a file is pasted
+    onFilePaste: async function(event) {
+      // Upload the clipboard data from the event
+      await this.$uploadDataTransfer(event.clipboardData);
+    },
+
     // Format an anmount of bytes to a human-readable representation
     $formatBytes: function(bytes, decimals = 2) {
       if (bytes === 0)
@@ -48,8 +139,6 @@ export default {
       }
       catch (error)
       {
-        console.error(error);
-
         // Emit upload end and error events
         this.$emit('upload-end', file);
         this.$emit('upload-error', error);
@@ -80,21 +169,15 @@ export default {
 
     // Upload a file
     $uploadFile: async function(file) {
-      console.log(`Upload file ${file.name}`);
-      console.log(file);
-
       // Send an upload request and return the response
       if (this.replace === null)
         return await this.$uploadFileRequest(file, file => this.$root.client.uploadImage(file));
       else
-        return await this.$uploadFileRequest(file, file => this.$root.client.replaceImage(imageId, file));
+        return await this.$uploadFileRequest(file, file => this.$root.client.replaceImage(this.replace, file));
     },
 
     // Upload a file from a file input element
     $uploadFileInput: async function(fileInput) {
-      console.log(`Upload file input ${fileInput}`);
-      console.log(fileInput);
-
       // Check if the file input contains any files
       if (fileInput.files && fileInput.files.length > 0)
         // Send an upload request and return the response
@@ -106,14 +189,11 @@ export default {
 
     // Upload a data transfer
     $uploadDataTransfer: async function(dataTransfer) {
-      console.log(`Upload data transfer ${dataTransfer}`);
-      console.log(dataTransfer);
-
       // Send an upload request and return the response
       if (this.replace === null)
         return await this.$uploadDataTransferRequest(dataTransfer, file => this.$root.client.uploadImage(file));
       else
-        return await this.$uploadDataTransferRequest(dataTransfer, file => this.$root.client.replaceImage(file));
+        return await this.$uploadDataTransferRequest(dataTransfer, file => this.$root.client.replaceImage(this.replace, file));
     },
   },
 };

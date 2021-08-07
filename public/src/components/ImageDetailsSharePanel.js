@@ -5,6 +5,7 @@ import Image from '../api/Image.js';
 export default {
   // The properties for the component
   props: {
+    // The image to reference in the component
     image: {type: Image},
   },
 
@@ -68,7 +69,7 @@ export default {
       </template>
 
       <template v-else>
-        <b-loading active></b-loading>
+        <b-loading active :is-full-page="false"></b-loading>
       </template>
     </div>
   `
