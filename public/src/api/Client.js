@@ -108,21 +108,21 @@ export default class Client
   async getImages(query = {})
   {
     const response = await this.rest.get(`/api/v1/images/`, {query: query});
-    return response.map(data => new Image(this, data));
+    return response.map(data => new Image(data));
   }
 
   // Get an image
   async getImage(imageId)
   {
     const response = await this.rest.get(`/api/v1/images/${imageId}`);
-    return new Image(this, response);
+    return new Image(response);
   }
 
   // Patch an image
   async patchImage(imageId, fields)
   {
     const response = await this.rest.patch(`/api/v1/images/${imageId}`, fields);
-    return new Image(this, response);
+    return new Image(response);
   }
 
   // Delete an image
@@ -145,7 +145,7 @@ export default class Client
     body.set('file', file);
 
     const response = await this.rest.post(`/api/v1/images/upload`, body);
-    return new Image(this, response);
+    return new Image(response);
   }
 
   // Replace an image
@@ -155,35 +155,35 @@ export default class Client
     body.set('file', file);
 
     const response = await this.rest.post(`/api/v1/images/${imageId}/upload`, body);
-    return new Image(this, response);
+    return new Image(response);
   }
 
   // Get all users
   async getUsers(query = [])
   {
     const response = await this.rest.get('/api/v1/users/', {query: query});
-    return response.map(data => new User(this, data));
+    return response.map(data => new User(data));
   }
 
   // Get a user
   async getUser(userId)
   {
     const response = await this.rest.get(`/api/v1/users/${userId}`);
-    return new User(this, response);
+    return new User(response);
   }
 
   // Patch a user
   async patchUser(userId, fields)
   {
     const response = await this.rest.patch(`/api/v1/users/${userId}`, fields);
-    return new User(this, response);
+    return new User(response);
   }
 
   // Get all images owned by a user
   async getUserImages(userId, query = {})
   {
     const response = await this.rest.get(`/api/v1/users/${userId}/images/`, {query: query});
-    return response.map(data => new Image(this, data));
+    return response.map(data => new Image(data));
   }
 
 
@@ -191,19 +191,19 @@ export default class Client
   async getMe()
   {
     const response = await this.rest.get(`/api/v1/me`);
-    return new User(this, response);
+    return new User(response);
   }
 
   // Patch the authenticated user
   async patchMe(fields)
   {
     const response = await this.rest.patch(`/api/v1/me`, fields);
-    return new User(this, response);
+    return new User(response);
   }
   // Get all images owned by the authenticated user
   async getMeImages(query = {})
   {
     const response = await this.rest.get(`/api/v1/me/images/`, {query: query});
-    return response.map(data => new Image(this, data));
+    return response.map(data => new Image(data));
   }
 }

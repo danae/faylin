@@ -2,15 +2,19 @@
 export default class User
 {
   // Constructor
-  constructor(client, data)
+  constructor(data)
   {
-    this.client = client;
+    this.update(data);
+  }
 
+  // Update the user from a data array
+  update(data)
+  {
     this.id = data.id;
     this.name = data.name;
     this.email = data.email;
-    this.createdAt = new Date(data.createdAt);
-    this.updatedAt = new Date(data.updatedAt);
+    this.createdAt = data.createdAt instanceof Date ? data.createdAt : new Date(data.createdAt);
+    this.updatedAt = data.updatedAt instanceof Date ? data.updatedAt : new Date(data.updatedAt);
   }
 
   // Return the string representation of the image
