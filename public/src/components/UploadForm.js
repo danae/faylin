@@ -12,11 +12,11 @@ export default {
       // The upload form image as a data URL
       image: null,
 
-      // The upload form message
-      message: 'Upload or drag an image here or paste one from your clipboard',
+      // The default upload form message
+      defaultMessage: 'Upload or drag an image here or paste one from your clipboard',
 
-      // The original upload form message
-      messageOriginal: null,
+      // The actual upload form message
+      message: 'Upload or drag an image here or paste one from your clipboard',
     }
   },
 
@@ -30,6 +30,9 @@ export default {
 
     // Register paste event handler
     window.addEventListener('paste', this.onFilePaste);
+
+    // Set the upload form message
+    this.message = this.defaultMessage;
   },
 
   // Hook when the component is destroyed
@@ -50,7 +53,6 @@ export default {
     onUploadStart: function(file) {
       // Set the form image and message
       this.image = URL.createObjectURL(file);
-      this.messageOriginal = this.message;
       this.message = this.$iconText('spinner fa-spin', 'Uploading image...');
     },
 
@@ -60,8 +62,7 @@ export default {
       URL.revokeObjectURL(this.image);
 
       this.image = null;
-      this.message = this.messageOriginal;
-      this.messageOriginal = null;
+      this.message = this.defaultMessage;
 
       // Reset the file input
       this.$refs.fileInput.value = '';
@@ -83,22 +84,19 @@ export default {
     },
 
     // Event handler when a file is selected using the file input
-    onFileInput: async function(event)
-    {
+    onFileInput: async function(event) {
       // Upload the first file from the event target
       await this.$uploadFileInput(event.target);
     },
 
     // Event handler when a file is dropped
-    onFileDrop: async function(event)
-    {
+    onFileDrop: async function(event) {
       // Upload the data transfer from the event
       await this.$uploadDataTransfer(event.dataTransfer);
     },
 
     // Event handler when a file is pasted
-    onFilePaste: async function(event)
-    {
+    onFilePaste: async function(event) {
       // Upload the clipboard data from the event
       await this.$uploadDataTransfer(event.clipboardData);
     },
@@ -107,7 +105,7 @@ export default {
   // The template for the component
   template: `
     <div class="upload-form">
-      <div class="box is-primary has-text-centered" @dragenter.prevent @dragover.prevent @drop="onFileDrop">
+      <div class="box is-primary has-text-centered" @dragenter.prevent @dragover.prevent @drop.prevent="onFileDrop">
         <div class="mb-3">
           <template v-if="image">
             <img class="is-uploading" :src="image">
