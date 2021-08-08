@@ -10125,7 +10125,7 @@ a.has-text-primary-light-dark:hover, a.has-text-primary-light-dark:focus {
   margin-left: auto !important;
 }
 
-.mx-auto, .page .image-details-image, .page .image-thumbnail-image img {
+.mx-auto, .page .image-details-image img, .page .image-thumbnail-image img {
   margin-left: auto !important;
   margin-right: auto !important;
 }

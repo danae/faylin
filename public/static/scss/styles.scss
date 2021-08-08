@@ -174,12 +174,12 @@ footer {
 
     // Image for the image details
     &-image {
-      @extend .mx-auto;
       @extend .my-0;
 
       // Image element
       img {
         @extend .box;
+        @extend .mx-auto;
         @extend .p-0;
 
         @media screen and (min-width: $tablet) {
