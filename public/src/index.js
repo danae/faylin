@@ -1,7 +1,7 @@
 import components from './components.js';
 import router from './router.js';
 
-import ClientError from './api/ClientError.js';
+import ClientErrorCaptureMixin from './mixins/ClientErrorCaptureMixin.js';
 import ClientMixin from './mixins/ClientMixin.js';
 
 
@@ -12,27 +12,6 @@ const app = new Vue({
 
   // Mixins for the app
   mixins: [ClientMixin],
-
-  // The methods for the app
-  methods: {
-    // Event handler when a client request returns an error
-    onClientError: function(error) {
-      // Display the error message
-      this.$displayError(error);
-    },
-
-    // Event handler when a client request is unauthorized
-    onClientUnauthorized: function(error) {
-      // Display an unauthorized message
-      this.$displayMessage('Your session has been expired or is invalid, please log in again');
-
-      // Log out to remove the invalid token from the storage
-      this.$logout();
-
-      // Redirect to the login page
-      this.$router.replace({name: 'login'});
-    },
-  },
 
   // Hook for when the app is created
   created: function() {
@@ -63,8 +42,31 @@ const app = new Vue({
       twemoji.parse(document.body);
     });
   },
+
+  // The methods for the app
+  methods: {
+    // Event handler when a client request returns an error
+    onClientError: function(error) {
+      // Display the error message
+      this.$displayError(error);
+    },
+
+    // Event handler when a client request is unauthorized
+    onClientUnauthorized: function(error) {
+      // Display an unauthorized message
+      this.$displayMessage('Your session has been expired or is invalid, please log in again');
+
+      // Log out to remove the invalid token from the storage
+      this.$logout();
+
+      // Redirect to the login page
+      this.$router.replace({name: 'login'});
+    },
+  },
 });
 
+// Add the client error capture mixin to all components
+Vue.mixin(ClientErrorCaptureMixin);
 
 // Register a global method to return an icon text span
 Vue.prototype.$iconText = function(icon, message) {
