@@ -78,8 +78,8 @@ footer {
 
 // Navbar styling
 .navbar {
-  // Navbar items
-  .navbar-item {
+  // Navbar brand
+  .navbar-brand {
     @extend .is-family-secondary;
     @extend .is-size-5;
     @extend .has-text-weight-light;

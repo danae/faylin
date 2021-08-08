@@ -38,19 +38,44 @@
         </template>
 
         <!-- Navbar menu -->
-        <template #start>
-          <b-navbar-item tag="router-link" :to="{name: 'userList'}">directory</b-navbar-item>
-        </template>
-
         <template #end>
+          <b-navbar-item tag="router-link" :to="{name: 'userList'}" key="browse">
+            <span class="icon-text">
+              <b-icon pack="fas" icon="folder-open"></b-icon>
+              <span>Browse</span>
+            </span>
+          </b-navbar-item>
+
           <template v-if="clientLoggedIn">
-            <b-navbar-item tag="router-link" :to="{name: 'userView', params: {userId: clientUser.id}}">profile</b-navbar-item>
-            <b-navbar-item tag="router-link" :to="{name: 'settings'}">settings</b-navbar-item>
-            <b-navbar-item tag="router-link" :to="{name: 'logout'}">log out</b-navbar-item>
+            <b-navbar-item tag="router-link" :to="{name: 'userView', params: {userId: clientUser.id}}" key="profile">
+              <span class="icon-text">
+                <b-icon pack="fas" icon="user-circle"></b-icon>
+                <span>Profile</span>
+              </span>
+            </b-navbar-item>
+
+            <b-navbar-item tag="router-link" :to="{name: 'settings'}" key="settings">
+              <span class="icon-text">
+                <b-icon pack="fas" icon="cog"></b-icon>
+                <span>Settings</span>
+              </span>
+            </b-navbar-item>
+
+            <b-navbar-item tag="router-link" :to="{name: 'logout'}" key="logout">
+              <span class="icon-text">
+                <b-icon pack="fas" icon="sign-out-alt"></b-icon>
+                <span>Log out</span>
+              </span>
+            </b-navbar-item>
           </template>
 
           <template v-else>
-            <b-navbar-item tag="router-link" :to="{name: 'login'}">log in</b-navbar-item>
+            <b-navbar-item tag="router-link" :to="{name: 'login'}" key="login">
+              <span class="icon-text">
+                <b-icon pack="fas" icon="sign-in-alt"></b-icon>
+                <span>Log in</span>
+              </span>
+            </b-navbar-item>
           </template>
         </template>
       </b-navbar>

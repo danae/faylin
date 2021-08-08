@@ -10391,7 +10391,7 @@ a.has-text-primary-light-dark:hover, a.has-text-primary-light-dark:focus {
   font-size: 1.5rem !important;
 }
 
-.is-size-5, .navbar .navbar-item {
+.is-size-5, .navbar .navbar-brand {
   font-size: 1.25rem !important;
 }
 
@@ -10799,7 +10799,7 @@ a.has-text-primary-light-dark:hover, a.has-text-primary-light-dark:focus {
   text-decoration: underline !important;
 }
 
-.has-text-weight-light, .navbar .navbar-item {
+.has-text-weight-light, .navbar .navbar-brand {
   font-weight: 300 !important;
 }
 
@@ -10823,7 +10823,7 @@ a.has-text-primary-light-dark:hover, a.has-text-primary-light-dark:focus {
   font-family: "Montserrat", sans-serif !important;
 }
 
-.is-family-secondary, .content h1, .content h2, .content h3, .content h4, .content h5, .content h6, .navbar .navbar-item, .hero {
+.is-family-secondary, .content h1, .content h2, .content h3, .content h4, .content h5, .content h6, .navbar .navbar-brand, .hero {
   font-family: "Signika", sans-serif !important;
 }
 
