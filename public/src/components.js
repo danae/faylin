@@ -6,6 +6,7 @@ import ImageThumbnailList from './components/ImageThumbnailList.js';
 import SettingsDeleteAccountForm from './components/SettingsDeleteAccountForm.js';
 import SettingsUpdateEmailForm from './components/SettingsUpdateEmailForm.js';
 import SettingsUpdatePasswordForm from './components/SettingsUpdatePasswordForm.js';
+import SettingsUpdateProfileForm from './components/SettingsUpdateProfileForm.js';
 import UploadForm from './components/UploadForm.js';
 import UserDetails from './components/UserDetails.js';
 import UserThumbnail from './components/UserThumbnail.js';
@@ -22,6 +23,7 @@ const components =  {
   SettingsDeleteAccountForm,
   SettingsUpdateEmailForm,
   SettingsUpdatePasswordForm,
+  SettingsUpdateProfileForm,
   UploadForm,
   UserDetails,
   UserThumbnail,

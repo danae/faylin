@@ -42,15 +42,7 @@ export default {
               <h3 class="mb-0">Profile</h3>
               <p>Change the appearance of your user account.</p>
 
-              <div class="box is-primary">
-                <h4>Update profile</h4>
-
-                <b-field label="Name" label-position="on-border">
-                  <b-input v-model="$root.clientUser.name" type="text" name="name" icon-pack="fas" icon="user"></b-input>
-                </b-field>
-
-                <b-button type="is-primary" icon-left="check" icon-pack="fas">Update profile</b-button>
-              </div>
+              <settings-update-profile-form></settings-update-profile-form>
             </template>
           </div>
         </div>

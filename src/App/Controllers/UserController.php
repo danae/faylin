@@ -50,8 +50,6 @@ final class UserController extends AbstractController
     // Modify the user
     if ($params['name'] !== null)
       $user->setName($params['name']);
-    if ($params['email'] !== null)
-      $user->setEmail($params['email']);
     $user->setUpdatedAt(new \DateTime());
 
     // Update the user in the repository
