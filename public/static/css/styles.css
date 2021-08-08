@@ -572,106 +572,114 @@ fieldset[disabled] .button.is-text {
   text-decoration: underline;
 }
 
-.button.is-white {
+.button.is-white, .dialog .modal-card .modal-card-foot .button:not([class*="is-"]) {
   background-color: white;
   border-color: transparent;
   color: #0a0a0a;
 }
 
-.button.is-white:hover, .button.is-white.is-hovered {
+.button.is-white:hover, .dialog .modal-card .modal-card-foot .button:hover:not([class*="is-"]), .button.is-white.is-hovered, .dialog .modal-card .modal-card-foot .button.is-hovered:not([class*="is-"]) {
   background-color: #f9f9f9;
   border-color: transparent;
   color: #0a0a0a;
 }
 
-.button.is-white:focus, .button.is-white.is-focused {
+.button.is-white:focus, .dialog .modal-card .modal-card-foot .button:focus:not([class*="is-"]), .button.is-white.is-focused, .dialog .modal-card .modal-card-foot .button.is-focused:not([class*="is-"]) {
   border-color: transparent;
   color: #0a0a0a;
 }
 
-.button.is-white:focus:not(:active), .button.is-white.is-focused:not(:active) {
+.button.is-white:focus:not(:active), .dialog .modal-card .modal-card-foot .button:focus:not(:active):not([class*="is-"]), .button.is-white.is-focused:not(:active), .dialog .modal-card .modal-card-foot .button.is-focused:not(:active):not([class*="is-"]) {
   box-shadow: 0 0 0 0.125em rgba(255, 255, 255, 0.25);
 }
 
-.button.is-white:active, .button.is-white.is-active {
+.button.is-white:active, .dialog .modal-card .modal-card-foot .button:active:not([class*="is-"]), .button.is-white.is-active, .dialog .modal-card .modal-card-foot .button.is-active:not([class*="is-"]) {
   background-color: #f2f2f2;
   border-color: transparent;
   color: #0a0a0a;
 }
 
-.button.is-white[disabled],
-fieldset[disabled] .button.is-white {
+.button.is-white[disabled], .dialog .modal-card .modal-card-foot .button[disabled]:not([class*="is-"]),
+fieldset[disabled] .button.is-white,
+fieldset[disabled] .dialog .modal-card .modal-card-foot .button:not([class*="is-"]),
+.dialog .modal-card .modal-card-foot fieldset[disabled] .button:not([class*="is-"]) {
   background-color: white;
   border-color: transparent;
   box-shadow: none;
 }
 
-.button.is-white.is-inverted {
+.button.is-white.is-inverted, .dialog .modal-card .modal-card-foot .button.is-inverted:not([class*="is-"]) {
   background-color: #0a0a0a;
   color: white;
 }
 
-.button.is-white.is-inverted:hover, .button.is-white.is-inverted.is-hovered {
+.button.is-white.is-inverted:hover, .dialog .modal-card .modal-card-foot .button.is-inverted:hover:not([class*="is-"]), .button.is-white.is-inverted.is-hovered, .dialog .modal-card .modal-card-foot .button.is-inverted.is-hovered:not([class*="is-"]) {
   background-color: black;
 }
 
-.button.is-white.is-inverted[disabled],
-fieldset[disabled] .button.is-white.is-inverted {
+.button.is-white.is-inverted[disabled], .dialog .modal-card .modal-card-foot .button.is-inverted[disabled]:not([class*="is-"]),
+fieldset[disabled] .button.is-white.is-inverted,
+fieldset[disabled] .dialog .modal-card .modal-card-foot .button.is-inverted:not([class*="is-"]),
+.dialog .modal-card .modal-card-foot fieldset[disabled] .button.is-inverted:not([class*="is-"]) {
   background-color: #0a0a0a;
   border-color: transparent;
   box-shadow: none;
   color: white;
 }
 
-.button.is-white.is-loading::after {
+.button.is-white.is-loading::after, .dialog .modal-card .modal-card-foot .button.is-loading:not([class*="is-"])::after {
   border-color: transparent transparent #0a0a0a #0a0a0a !important;
 }
 
-.button.is-white.is-outlined {
+.button.is-white.is-outlined, .dialog .modal-card .modal-card-foot .button.is-outlined:not([class*="is-"]) {
   background-color: transparent;
   border-color: white;
   color: white;
 }
 
-.button.is-white.is-outlined:hover, .button.is-white.is-outlined.is-hovered, .button.is-white.is-outlined:focus, .button.is-white.is-outlined.is-focused {
+.button.is-white.is-outlined:hover, .dialog .modal-card .modal-card-foot .button.is-outlined:hover:not([class*="is-"]), .button.is-white.is-outlined.is-hovered, .dialog .modal-card .modal-card-foot .button.is-outlined.is-hovered:not([class*="is-"]), .button.is-white.is-outlined:focus, .dialog .modal-card .modal-card-foot .button.is-outlined:focus:not([class*="is-"]), .button.is-white.is-outlined.is-focused, .dialog .modal-card .modal-card-foot .button.is-outlined.is-focused:not([class*="is-"]) {
   background-color: white;
   border-color: white;
   color: #0a0a0a;
 }
 
-.button.is-white.is-outlined.is-loading::after {
+.button.is-white.is-outlined.is-loading::after, .dialog .modal-card .modal-card-foot .button.is-outlined.is-loading:not([class*="is-"])::after {
   border-color: transparent transparent white white !important;
 }
 
-.button.is-white.is-outlined.is-loading:hover::after, .button.is-white.is-outlined.is-loading.is-hovered::after, .button.is-white.is-outlined.is-loading:focus::after, .button.is-white.is-outlined.is-loading.is-focused::after {
+.button.is-white.is-outlined.is-loading:hover::after, .dialog .modal-card .modal-card-foot .button.is-outlined.is-loading:not([class*="is-"]):hover::after, .button.is-white.is-outlined.is-loading.is-hovered::after, .dialog .modal-card .modal-card-foot .button.is-outlined.is-loading.is-hovered:not([class*="is-"])::after, .button.is-white.is-outlined.is-loading:focus::after, .dialog .modal-card .modal-card-foot .button.is-outlined.is-loading:not([class*="is-"]):focus::after, .button.is-white.is-outlined.is-loading.is-focused::after, .dialog .modal-card .modal-card-foot .button.is-outlined.is-loading.is-focused:not([class*="is-"])::after {
   border-color: transparent transparent #0a0a0a #0a0a0a !important;
 }
 
-.button.is-white.is-outlined[disabled],
-fieldset[disabled] .button.is-white.is-outlined {
+.button.is-white.is-outlined[disabled], .dialog .modal-card .modal-card-foot .button.is-outlined[disabled]:not([class*="is-"]),
+fieldset[disabled] .button.is-white.is-outlined,
+fieldset[disabled] .dialog .modal-card .modal-card-foot .button.is-outlined:not([class*="is-"]),
+.dialog .modal-card .modal-card-foot fieldset[disabled] .button.is-outlined:not([class*="is-"]) {
   background-color: transparent;
   border-color: white;
   box-shadow: none;
   color: white;
 }
 
-.button.is-white.is-inverted.is-outlined {
+.button.is-white.is-inverted.is-outlined, .dialog .modal-card .modal-card-foot .button.is-inverted.is-outlined:not([class*="is-"]) {
   background-color: transparent;
   border-color: #0a0a0a;
   color: #0a0a0a;
 }
 
-.button.is-white.is-inverted.is-outlined:hover, .button.is-white.is-inverted.is-outlined.is-hovered, .button.is-white.is-inverted.is-outlined:focus, .button.is-white.is-inverted.is-outlined.is-focused {
+.button.is-white.is-inverted.is-outlined:hover, .dialog .modal-card .modal-card-foot .button.is-inverted.is-outlined:hover:not([class*="is-"]), .button.is-white.is-inverted.is-outlined.is-hovered, .dialog .modal-card .modal-card-foot .button.is-inverted.is-outlined.is-hovered:not([class*="is-"]), .button.is-white.is-inverted.is-outlined:focus, .dialog .modal-card .modal-card-foot .button.is-inverted.is-outlined:focus:not([class*="is-"]), .button.is-white.is-inverted.is-outlined.is-focused, .dialog .modal-card .modal-card-foot .button.is-inverted.is-outlined.is-focused:not([class*="is-"]) {
   background-color: #0a0a0a;
   color: white;
 }
 
-.button.is-white.is-inverted.is-outlined.is-loading:hover::after, .button.is-white.is-inverted.is-outlined.is-loading.is-hovered::after, .button.is-white.is-inverted.is-outlined.is-loading:focus::after, .button.is-white.is-inverted.is-outlined.is-loading.is-focused::after {
+.button.is-white.is-inverted.is-outlined.is-loading:hover::after, .dialog .modal-card .modal-card-foot .button.is-inverted.is-outlined.is-loading:not([class*="is-"]):hover::after, .button.is-white.is-inverted.is-outlined.is-loading.is-hovered::after, .dialog .modal-card .modal-card-foot .button.is-inverted.is-outlined.is-loading.is-hovered:not([class*="is-"])::after, .button.is-white.is-inverted.is-outlined.is-loading:focus::after, .dialog .modal-card .modal-card-foot .button.is-inverted.is-outlined.is-loading:not([class*="is-"]):focus::after, .button.is-white.is-inverted.is-outlined.is-loading.is-focused::after, .dialog .modal-card .modal-card-foot .button.is-inverted.is-outlined.is-loading.is-focused:not([class*="is-"])::after {
   border-color: transparent transparent white white !important;
 }
 
-.button.is-white.is-inverted.is-outlined[disabled],
-fieldset[disabled] .button.is-white.is-inverted.is-outlined {
+.button.is-white.is-inverted.is-outlined[disabled], .dialog .modal-card .modal-card-foot .button.is-inverted.is-outlined[disabled]:not([class*="is-"]),
+fieldset[disabled] .button.is-white.is-inverted.is-outlined,
+fieldset[disabled] .dialog .modal-card .modal-card-foot .button.is-inverted.is-outlined:not([class*="is-"]),
+.dialog .modal-card .modal-card-foot fieldset[disabled] .button.is-inverted.is-outlined:not([class*="is-"]) {
   background-color: transparent;
   border-color: #0a0a0a;
   box-shadow: none;
@@ -784,114 +792,106 @@ fieldset[disabled] .button.is-black.is-inverted.is-outlined {
   color: white;
 }
 
-.button.is-light, .dialog .modal-card .modal-card-foot .button {
+.button.is-light {
   background-color: #EFF8FA;
   border-color: transparent;
   color: rgba(0, 0, 0, 0.7);
 }
 
-.button.is-light:hover, .dialog .modal-card .modal-card-foot .button:hover, .button.is-light.is-hovered, .dialog .modal-card .modal-card-foot .button.is-hovered {
+.button.is-light:hover, .button.is-light.is-hovered {
   background-color: #e5f4f7;
   border-color: transparent;
   color: rgba(0, 0, 0, 0.7);
 }
 
-.button.is-light:focus, .dialog .modal-card .modal-card-foot .button:focus, .button.is-light.is-focused, .dialog .modal-card .modal-card-foot .button.is-focused {
+.button.is-light:focus, .button.is-light.is-focused {
   border-color: transparent;
   color: rgba(0, 0, 0, 0.7);
 }
 
-.button.is-light:focus:not(:active), .dialog .modal-card .modal-card-foot .button:focus:not(:active), .button.is-light.is-focused:not(:active), .dialog .modal-card .modal-card-foot .button.is-focused:not(:active) {
+.button.is-light:focus:not(:active), .button.is-light.is-focused:not(:active) {
   box-shadow: 0 0 0 0.125em rgba(239, 248, 250, 0.25);
 }
 
-.button.is-light:active, .dialog .modal-card .modal-card-foot .button:active, .button.is-light.is-active, .dialog .modal-card .modal-card-foot .button.is-active {
+.button.is-light:active, .button.is-light.is-active {
   background-color: #dcf0f4;
   border-color: transparent;
   color: rgba(0, 0, 0, 0.7);
 }
 
-.button.is-light[disabled], .dialog .modal-card .modal-card-foot .button[disabled],
-fieldset[disabled] .button.is-light,
-fieldset[disabled] .dialog .modal-card .modal-card-foot .button,
-.dialog .modal-card .modal-card-foot fieldset[disabled] .button {
+.button.is-light[disabled],
+fieldset[disabled] .button.is-light {
   background-color: #EFF8FA;
   border-color: transparent;
   box-shadow: none;
 }
 
-.button.is-light.is-inverted, .dialog .modal-card .modal-card-foot .button.is-inverted {
+.button.is-light.is-inverted {
   background-color: rgba(0, 0, 0, 0.7);
   color: #EFF8FA;
 }
 
-.button.is-light.is-inverted:hover, .dialog .modal-card .modal-card-foot .button.is-inverted:hover, .button.is-light.is-inverted.is-hovered, .dialog .modal-card .modal-card-foot .button.is-inverted.is-hovered {
+.button.is-light.is-inverted:hover, .button.is-light.is-inverted.is-hovered {
   background-color: rgba(0, 0, 0, 0.7);
 }
 
-.button.is-light.is-inverted[disabled], .dialog .modal-card .modal-card-foot .button.is-inverted[disabled],
-fieldset[disabled] .button.is-light.is-inverted,
-fieldset[disabled] .dialog .modal-card .modal-card-foot .button.is-inverted,
-.dialog .modal-card .modal-card-foot fieldset[disabled] .button.is-inverted {
+.button.is-light.is-inverted[disabled],
+fieldset[disabled] .button.is-light.is-inverted {
   background-color: rgba(0, 0, 0, 0.7);
   border-color: transparent;
   box-shadow: none;
   color: #EFF8FA;
 }
 
-.button.is-light.is-loading::after, .dialog .modal-card .modal-card-foot .button.is-loading::after {
+.button.is-light.is-loading::after {
   border-color: transparent transparent rgba(0, 0, 0, 0.7) rgba(0, 0, 0, 0.7) !important;
 }
 
-.button.is-light.is-outlined, .dialog .modal-card .modal-card-foot .button.is-outlined {
+.button.is-light.is-outlined {
   background-color: transparent;
   border-color: #EFF8FA;
   color: #EFF8FA;
 }
 
-.button.is-light.is-outlined:hover, .dialog .modal-card .modal-card-foot .button.is-outlined:hover, .button.is-light.is-outlined.is-hovered, .dialog .modal-card .modal-card-foot .button.is-outlined.is-hovered, .button.is-light.is-outlined:focus, .dialog .modal-card .modal-card-foot .button.is-outlined:focus, .button.is-light.is-outlined.is-focused, .dialog .modal-card .modal-card-foot .button.is-outlined.is-focused {
+.button.is-light.is-outlined:hover, .button.is-light.is-outlined.is-hovered, .button.is-light.is-outlined:focus, .button.is-light.is-outlined.is-focused {
   background-color: #EFF8FA;
   border-color: #EFF8FA;
   color: rgba(0, 0, 0, 0.7);
 }
 
-.button.is-light.is-outlined.is-loading::after, .dialog .modal-card .modal-card-foot .button.is-outlined.is-loading::after {
+.button.is-light.is-outlined.is-loading::after {
   border-color: transparent transparent #EFF8FA #EFF8FA !important;
 }
 
-.button.is-light.is-outlined.is-loading:hover::after, .dialog .modal-card .modal-card-foot .button.is-outlined.is-loading:hover::after, .button.is-light.is-outlined.is-loading.is-hovered::after, .dialog .modal-card .modal-card-foot .button.is-outlined.is-loading.is-hovered::after, .button.is-light.is-outlined.is-loading:focus::after, .dialog .modal-card .modal-card-foot .button.is-outlined.is-loading:focus::after, .button.is-light.is-outlined.is-loading.is-focused::after, .dialog .modal-card .modal-card-foot .button.is-outlined.is-loading.is-focused::after {
+.button.is-light.is-outlined.is-loading:hover::after, .button.is-light.is-outlined.is-loading.is-hovered::after, .button.is-light.is-outlined.is-loading:focus::after, .button.is-light.is-outlined.is-loading.is-focused::after {
   border-color: transparent transparent rgba(0, 0, 0, 0.7) rgba(0, 0, 0, 0.7) !important;
 }
 
-.button.is-light.is-outlined[disabled], .dialog .modal-card .modal-card-foot .button.is-outlined[disabled],
-fieldset[disabled] .button.is-light.is-outlined,
-fieldset[disabled] .dialog .modal-card .modal-card-foot .button.is-outlined,
-.dialog .modal-card .modal-card-foot fieldset[disabled] .button.is-outlined {
+.button.is-light.is-outlined[disabled],
+fieldset[disabled] .button.is-light.is-outlined {
   background-color: transparent;
   border-color: #EFF8FA;
   box-shadow: none;
   color: #EFF8FA;
 }
 
-.button.is-light.is-inverted.is-outlined, .dialog .modal-card .modal-card-foot .button.is-inverted.is-outlined {
+.button.is-light.is-inverted.is-outlined {
   background-color: transparent;
   border-color: rgba(0, 0, 0, 0.7);
   color: rgba(0, 0, 0, 0.7);
 }
 
-.button.is-light.is-inverted.is-outlined:hover, .dialog .modal-card .modal-card-foot .button.is-inverted.is-outlined:hover, .button.is-light.is-inverted.is-outlined.is-hovered, .dialog .modal-card .modal-card-foot .button.is-inverted.is-outlined.is-hovered, .button.is-light.is-inverted.is-outlined:focus, .dialog .modal-card .modal-card-foot .button.is-inverted.is-outlined:focus, .button.is-light.is-inverted.is-outlined.is-focused, .dialog .modal-card .modal-card-foot .button.is-inverted.is-outlined.is-focused {
+.button.is-light.is-inverted.is-outlined:hover, .button.is-light.is-inverted.is-outlined.is-hovered, .button.is-light.is-inverted.is-outlined:focus, .button.is-light.is-inverted.is-outlined.is-focused {
   background-color: rgba(0, 0, 0, 0.7);
   color: #EFF8FA;
 }
 
-.button.is-light.is-inverted.is-outlined.is-loading:hover::after, .dialog .modal-card .modal-card-foot .button.is-inverted.is-outlined.is-loading:hover::after, .button.is-light.is-inverted.is-outlined.is-loading.is-hovered::after, .dialog .modal-card .modal-card-foot .button.is-inverted.is-outlined.is-loading.is-hovered::after, .button.is-light.is-inverted.is-outlined.is-loading:focus::after, .dialog .modal-card .modal-card-foot .button.is-inverted.is-outlined.is-loading:focus::after, .button.is-light.is-inverted.is-outlined.is-loading.is-focused::after, .dialog .modal-card .modal-card-foot .button.is-inverted.is-outlined.is-loading.is-focused::after {
+.button.is-light.is-inverted.is-outlined.is-loading:hover::after, .button.is-light.is-inverted.is-outlined.is-loading.is-hovered::after, .button.is-light.is-inverted.is-outlined.is-loading:focus::after, .button.is-light.is-inverted.is-outlined.is-loading.is-focused::after {
   border-color: transparent transparent #EFF8FA #EFF8FA !important;
 }
 
-.button.is-light.is-inverted.is-outlined[disabled], .dialog .modal-card .modal-card-foot .button.is-inverted.is-outlined[disabled],
-fieldset[disabled] .button.is-light.is-inverted.is-outlined,
-fieldset[disabled] .dialog .modal-card .modal-card-foot .button.is-inverted.is-outlined,
-.dialog .modal-card .modal-card-foot fieldset[disabled] .button.is-inverted.is-outlined {
+.button.is-light.is-inverted.is-outlined[disabled],
+fieldset[disabled] .button.is-light.is-inverted.is-outlined {
   background-color: transparent;
   border-color: rgba(0, 0, 0, 0.7);
   box-shadow: none;
@@ -1110,18 +1110,18 @@ fieldset[disabled] .button.is-primary.is-inverted.is-outlined {
   color: #fff;
 }
 
-.button.is-primary.is-light, .dialog .modal-card .modal-card-foot .button.is-primary {
+.button.is-primary.is-light {
   background-color: #ADD8E6;
   color: #276b81;
 }
 
-.button.is-primary.is-light:hover, .dialog .modal-card .modal-card-foot .button.is-primary:hover, .button.is-primary.is-light.is-hovered, .dialog .modal-card .modal-card-foot .button.is-primary.is-hovered {
+.button.is-primary.is-light:hover, .button.is-primary.is-light.is-hovered {
   background-color: #a3d3e3;
   border-color: transparent;
   color: #276b81;
 }
 
-.button.is-primary.is-light:active, .dialog .modal-card .modal-card-foot .button.is-primary:active, .button.is-primary.is-light.is-active, .dialog .modal-card .modal-card-foot .button.is-primary.is-active {
+.button.is-primary.is-light:active, .button.is-primary.is-light.is-active {
   background-color: #99cfe0;
   border-color: transparent;
   color: #276b81;
@@ -1233,18 +1233,18 @@ fieldset[disabled] .button.is-link.is-inverted.is-outlined {
   color: #fff;
 }
 
-.button.is-link.is-light, .dialog .modal-card .modal-card-foot .button.is-link {
+.button.is-link.is-light {
   background-color: #eff8fa;
   color: #276b81;
 }
 
-.button.is-link.is-light:hover, .dialog .modal-card .modal-card-foot .button.is-link:hover, .button.is-link.is-light.is-hovered, .dialog .modal-card .modal-card-foot .button.is-link.is-hovered {
+.button.is-link.is-light:hover, .button.is-link.is-light.is-hovered {
   background-color: #e6f3f7;
   border-color: transparent;
   color: #276b81;
 }
 
-.button.is-link.is-light:active, .dialog .modal-card .modal-card-foot .button.is-link:active, .button.is-link.is-light.is-active, .dialog .modal-card .modal-card-foot .button.is-link.is-active {
+.button.is-link.is-light:active, .button.is-link.is-light.is-active {
   background-color: #dceef4;
   border-color: transparent;
   color: #276b81;
@@ -1356,18 +1356,18 @@ fieldset[disabled] .button.is-info.is-inverted.is-outlined {
   color: rgba(0, 0, 0, 0.7);
 }
 
-.button.is-info.is-light, .dialog .modal-card .modal-card-foot .button.is-info {
+.button.is-info.is-light {
   background-color: #eff8fa;
   color: #235e71;
 }
 
-.button.is-info.is-light:hover, .dialog .modal-card .modal-card-foot .button.is-info:hover, .button.is-info.is-light.is-hovered, .dialog .modal-card .modal-card-foot .button.is-info.is-hovered {
+.button.is-info.is-light:hover, .button.is-info.is-light.is-hovered {
   background-color: #e6f3f7;
   border-color: transparent;
   color: #235e71;
 }
 
-.button.is-info.is-light:active, .dialog .modal-card .modal-card-foot .button.is-info:active, .button.is-info.is-light.is-active, .dialog .modal-card .modal-card-foot .button.is-info.is-active {
+.button.is-info.is-light:active, .button.is-info.is-light.is-active {
   background-color: #dceef4;
   border-color: transparent;
   color: #235e71;
@@ -1479,18 +1479,18 @@ fieldset[disabled] .button.is-success.is-inverted.is-outlined {
   color: rgba(0, 0, 0, 0.7);
 }
 
-.button.is-success.is-light, .dialog .modal-card .modal-card-foot .button.is-success {
+.button.is-success.is-light {
   background-color: #f8fcee;
   color: #607c18;
 }
 
-.button.is-success.is-light:hover, .dialog .modal-card .modal-card-foot .button.is-success:hover, .button.is-success.is-light.is-hovered, .dialog .modal-card .modal-card-foot .button.is-success.is-hovered {
+.button.is-success.is-light:hover, .button.is-success.is-light.is-hovered {
   background-color: #f3fae3;
   border-color: transparent;
   color: #607c18;
 }
 
-.button.is-success.is-light:active, .dialog .modal-card .modal-card-foot .button.is-success:active, .button.is-success.is-light.is-active, .dialog .modal-card .modal-card-foot .button.is-success.is-active {
+.button.is-success.is-light:active, .button.is-success.is-light.is-active {
   background-color: #eff8d8;
   border-color: transparent;
   color: #607c18;
@@ -1602,18 +1602,18 @@ fieldset[disabled] .button.is-warning.is-inverted.is-outlined {
   color: #fff;
 }
 
-.button.is-warning.is-light, .dialog .modal-card .modal-card-foot .button.is-warning {
+.button.is-warning.is-light {
   background-color: #fef5ec;
   color: #954d09;
 }
 
-.button.is-warning.is-light:hover, .dialog .modal-card .modal-card-foot .button.is-warning:hover, .button.is-warning.is-light.is-hovered, .dialog .modal-card .modal-card-foot .button.is-warning.is-hovered {
+.button.is-warning.is-light:hover, .button.is-warning.is-light.is-hovered {
   background-color: #fdeee0;
   border-color: transparent;
   color: #954d09;
 }
 
-.button.is-warning.is-light:active, .dialog .modal-card .modal-card-foot .button.is-warning:active, .button.is-warning.is-light.is-active, .dialog .modal-card .modal-card-foot .button.is-warning.is-active {
+.button.is-warning.is-light:active, .button.is-warning.is-light.is-active {
   background-color: #fce8d4;
   border-color: transparent;
   color: #954d09;
@@ -1725,18 +1725,18 @@ fieldset[disabled] .button.is-danger.is-inverted.is-outlined {
   color: #fff;
 }
 
-.button.is-danger.is-light, .dialog .modal-card .modal-card-foot .button.is-danger {
+.button.is-danger.is-light {
   background-color: #fbf0ee;
   color: #cb3e2f;
 }
 
-.button.is-danger.is-light:hover, .dialog .modal-card .modal-card-foot .button.is-danger:hover, .button.is-danger.is-light.is-hovered, .dialog .modal-card .modal-card-foot .button.is-danger.is-hovered {
+.button.is-danger.is-light:hover, .button.is-danger.is-light.is-hovered {
   background-color: #f9e6e4;
   border-color: transparent;
   color: #cb3e2f;
 }
 
-.button.is-danger.is-light:active, .dialog .modal-card .modal-card-foot .button.is-danger:active, .button.is-danger.is-light.is-active, .dialog .modal-card .modal-card-foot .button.is-danger.is-active {
+.button.is-danger.is-light:active, .button.is-danger.is-light.is-active {
   background-color: #f6dcda;
   border-color: transparent;
   color: #cb3e2f;
@@ -1848,18 +1848,18 @@ fieldset[disabled] .button.is-primary-light.is-inverted.is-outlined {
   color: rgba(0, 0, 0, 0.7);
 }
 
-.button.is-primary-light.is-light, .dialog .modal-card .modal-card-foot .button.is-primary-light {
+.button.is-primary-light.is-light {
   background-color: #eff8fa;
   color: #235e71;
 }
 
-.button.is-primary-light.is-light:hover, .dialog .modal-card .modal-card-foot .button.is-primary-light:hover, .button.is-primary-light.is-light.is-hovered, .dialog .modal-card .modal-card-foot .button.is-primary-light.is-hovered {
+.button.is-primary-light.is-light:hover, .button.is-primary-light.is-light.is-hovered {
   background-color: #e6f3f7;
   border-color: transparent;
   color: #235e71;
 }
 
-.button.is-primary-light.is-light:active, .dialog .modal-card .modal-card-foot .button.is-primary-light:active, .button.is-primary-light.is-light.is-active, .dialog .modal-card .modal-card-foot .button.is-primary-light.is-active {
+.button.is-primary-light.is-light:active, .button.is-primary-light.is-light.is-active {
   background-color: #dceef4;
   border-color: transparent;
   color: #235e71;
@@ -2498,7 +2498,7 @@ div.icon-text {
   color: currentColor;
 }
 
-.notification.is-white {
+.notification.is-white, .dialog .modal-card .modal-card-foot .notification.button:not([class*="is-"]) {
   background-color: white;
   color: #0a0a0a;
 }
@@ -2508,7 +2508,7 @@ div.icon-text {
   color: white;
 }
 
-.notification.is-light, .dialog .modal-card .modal-card-foot .notification.button {
+.notification.is-light {
   background-color: #EFF8FA;
   color: rgba(0, 0, 0, 0.7);
 }
@@ -2523,7 +2523,7 @@ div.icon-text {
   color: #fff;
 }
 
-.notification.is-primary.is-light, .dialog .modal-card .modal-card-foot .notification.is-primary.button {
+.notification.is-primary.is-light {
   background-color: #ADD8E6;
   color: #276b81;
 }
@@ -2533,7 +2533,7 @@ div.icon-text {
   color: #fff;
 }
 
-.notification.is-link.is-light, .dialog .modal-card .modal-card-foot .notification.is-link.button {
+.notification.is-link.is-light {
   background-color: #eff8fa;
   color: #276b81;
 }
@@ -2543,7 +2543,7 @@ div.icon-text {
   color: rgba(0, 0, 0, 0.7);
 }
 
-.notification.is-info.is-light, .dialog .modal-card .modal-card-foot .notification.is-info.button {
+.notification.is-info.is-light {
   background-color: #eff8fa;
   color: #235e71;
 }
@@ -2553,7 +2553,7 @@ div.icon-text {
   color: rgba(0, 0, 0, 0.7);
 }
 
-.notification.is-success.is-light, .dialog .modal-card .modal-card-foot .notification.is-success.button {
+.notification.is-success.is-light {
   background-color: #f8fcee;
   color: #607c18;
 }
@@ -2563,7 +2563,7 @@ div.icon-text {
   color: #fff;
 }
 
-.notification.is-warning.is-light, .dialog .modal-card .modal-card-foot .notification.is-warning.button {
+.notification.is-warning.is-light {
   background-color: #fef5ec;
   color: #954d09;
 }
@@ -2573,7 +2573,7 @@ div.icon-text {
   color: #fff;
 }
 
-.notification.is-danger.is-light, .dialog .modal-card .modal-card-foot .notification.is-danger.button {
+.notification.is-danger.is-light {
   background-color: #fbf0ee;
   color: #cb3e2f;
 }
@@ -2583,7 +2583,7 @@ div.icon-text {
   color: rgba(0, 0, 0, 0.7);
 }
 
-.notification.is-primary-light.is-light, .dialog .modal-card .modal-card-foot .notification.is-primary-light.button {
+.notification.is-primary-light.is-light {
   background-color: #eff8fa;
   color: #235e71;
 }
@@ -2617,19 +2617,19 @@ div.icon-text {
   border: none;
 }
 
-.progress.is-white::-webkit-progress-value, .is-white.progress-wrapper.is-not-native::-webkit-progress-value {
+.progress.is-white::-webkit-progress-value, .is-white.progress-wrapper.is-not-native::-webkit-progress-value, .dialog .modal-card .modal-card-foot .progress-wrapper.is-not-native.button:not([class*="is-"])::-webkit-progress-value, .dialog .modal-card .modal-card-foot .progress.button:not([class*="is-"])::-webkit-progress-value {
   background-color: white;
 }
 
-.progress.is-white::-moz-progress-bar, .is-white.progress-wrapper.is-not-native::-moz-progress-bar {
+.progress.is-white::-moz-progress-bar, .is-white.progress-wrapper.is-not-native::-moz-progress-bar, .dialog .modal-card .modal-card-foot .progress-wrapper.is-not-native.button:not([class*="is-"])::-moz-progress-bar, .dialog .modal-card .modal-card-foot .progress.button:not([class*="is-"])::-moz-progress-bar {
   background-color: white;
 }
 
-.progress.is-white::-ms-fill, .is-white.progress-wrapper.is-not-native::-ms-fill {
+.progress.is-white::-ms-fill, .is-white.progress-wrapper.is-not-native::-ms-fill, .dialog .modal-card .modal-card-foot .progress-wrapper.is-not-native.button:not([class*="is-"])::-ms-fill, .dialog .modal-card .modal-card-foot .progress.button:not([class*="is-"])::-ms-fill {
   background-color: white;
 }
 
-.progress.is-white:indeterminate, .is-white.progress-wrapper.is-not-native:indeterminate {
+.progress.is-white:indeterminate, .is-white.progress-wrapper.is-not-native:indeterminate, .dialog .modal-card .modal-card-foot .progress-wrapper.is-not-native.button:indeterminate:not([class*="is-"]), .dialog .modal-card .modal-card-foot .progress.button:indeterminate:not([class*="is-"]) {
   background-image: linear-gradient(to right, white 30%, #ededed 30%);
 }
 
@@ -2649,19 +2649,19 @@ div.icon-text {
   background-image: linear-gradient(to right, #0a0a0a 30%, #ededed 30%);
 }
 
-.progress.is-light::-webkit-progress-value, .is-light.progress-wrapper.is-not-native::-webkit-progress-value, .dialog .modal-card .modal-card-foot .progress-wrapper.is-not-native.button::-webkit-progress-value, .dialog .modal-card .modal-card-foot .progress.button::-webkit-progress-value {
+.progress.is-light::-webkit-progress-value, .is-light.progress-wrapper.is-not-native::-webkit-progress-value {
   background-color: #EFF8FA;
 }
 
-.progress.is-light::-moz-progress-bar, .is-light.progress-wrapper.is-not-native::-moz-progress-bar, .dialog .modal-card .modal-card-foot .progress-wrapper.is-not-native.button::-moz-progress-bar, .dialog .modal-card .modal-card-foot .progress.button::-moz-progress-bar {
+.progress.is-light::-moz-progress-bar, .is-light.progress-wrapper.is-not-native::-moz-progress-bar {
   background-color: #EFF8FA;
 }
 
-.progress.is-light::-ms-fill, .is-light.progress-wrapper.is-not-native::-ms-fill, .dialog .modal-card .modal-card-foot .progress-wrapper.is-not-native.button::-ms-fill, .dialog .modal-card .modal-card-foot .progress.button::-ms-fill {
+.progress.is-light::-ms-fill, .is-light.progress-wrapper.is-not-native::-ms-fill {
   background-color: #EFF8FA;
 }
 
-.progress.is-light:indeterminate, .is-light.progress-wrapper.is-not-native:indeterminate, .dialog .modal-card .modal-card-foot .progress-wrapper.is-not-native.button:indeterminate, .dialog .modal-card .modal-card-foot .progress.button:indeterminate {
+.progress.is-light:indeterminate, .is-light.progress-wrapper.is-not-native:indeterminate {
   background-image: linear-gradient(to right, #EFF8FA 30%, #ededed 30%);
 }
 
@@ -2851,8 +2851,10 @@ div.icon-text {
   vertical-align: top;
 }
 
-.table td.is-white,
-.table th.is-white {
+.table td.is-white, .table .dialog .modal-card .modal-card-foot td.button:not([class*="is-"]), .dialog .modal-card .modal-card-foot .table td.button:not([class*="is-"]),
+.table th.is-white,
+.table .dialog .modal-card .modal-card-foot th.button:not([class*="is-"]),
+.dialog .modal-card .modal-card-foot .table th.button:not([class*="is-"]) {
   background-color: white;
   border-color: white;
   color: #0a0a0a;
@@ -2865,10 +2867,8 @@ div.icon-text {
   color: white;
 }
 
-.table td.is-light, .table .dialog .modal-card .modal-card-foot td.button, .dialog .modal-card .modal-card-foot .table td.button,
-.table th.is-light,
-.table .dialog .modal-card .modal-card-foot th.button,
-.dialog .modal-card .modal-card-foot .table th.button {
+.table td.is-light,
+.table th.is-light {
   background-color: #EFF8FA;
   border-color: #EFF8FA;
   color: rgba(0, 0, 0, 0.7);
@@ -3139,7 +3139,7 @@ div.icon-text {
   margin-right: -0.375rem;
 }
 
-.tag:not(body).is-white {
+.tag:not(body).is-white, .dialog .modal-card .modal-card-foot .tag.button:not(body):not([class*="is-"]) {
   background-color: white;
   color: #0a0a0a;
 }
@@ -3149,7 +3149,7 @@ div.icon-text {
   color: white;
 }
 
-.tag:not(body).is-light, .dialog .modal-card .modal-card-foot .tag.button:not(body) {
+.tag:not(body).is-light {
   background-color: #EFF8FA;
   color: rgba(0, 0, 0, 0.7);
 }
@@ -3164,7 +3164,7 @@ div.icon-text {
   color: #fff;
 }
 
-.tag:not(body).is-primary.is-light, .dialog .modal-card .modal-card-foot .tag.button:not(body).is-primary {
+.tag:not(body).is-primary.is-light {
   background-color: #ADD8E6;
   color: #276b81;
 }
@@ -3174,7 +3174,7 @@ div.icon-text {
   color: #fff;
 }
 
-.tag:not(body).is-link.is-light, .dialog .modal-card .modal-card-foot .tag.button:not(body).is-link {
+.tag:not(body).is-link.is-light {
   background-color: #eff8fa;
   color: #276b81;
 }
@@ -3184,7 +3184,7 @@ div.icon-text {
   color: rgba(0, 0, 0, 0.7);
 }
 
-.tag:not(body).is-info.is-light, .dialog .modal-card .modal-card-foot .tag.button:not(body).is-info {
+.tag:not(body).is-info.is-light {
   background-color: #eff8fa;
   color: #235e71;
 }
@@ -3194,7 +3194,7 @@ div.icon-text {
   color: rgba(0, 0, 0, 0.7);
 }
 
-.tag:not(body).is-success.is-light, .dialog .modal-card .modal-card-foot .tag.button:not(body).is-success {
+.tag:not(body).is-success.is-light {
   background-color: #f8fcee;
   color: #607c18;
 }
@@ -3204,7 +3204,7 @@ div.icon-text {
   color: #fff;
 }
 
-.tag:not(body).is-warning.is-light, .dialog .modal-card .modal-card-foot .tag.button:not(body).is-warning {
+.tag:not(body).is-warning.is-light {
   background-color: #fef5ec;
   color: #954d09;
 }
@@ -3214,7 +3214,7 @@ div.icon-text {
   color: #fff;
 }
 
-.tag:not(body).is-danger.is-light, .dialog .modal-card .modal-card-foot .tag.button:not(body).is-danger {
+.tag:not(body).is-danger.is-light {
   background-color: #fbf0ee;
   color: #cb3e2f;
 }
@@ -3224,7 +3224,7 @@ div.icon-text {
   color: rgba(0, 0, 0, 0.7);
 }
 
-.tag:not(body).is-primary-light.is-light, .dialog .modal-card .modal-card-foot .tag.button:not(body).is-primary-light {
+.tag:not(body).is-primary-light.is-light {
   background-color: #eff8fa;
   color: #235e71;
 }
@@ -3534,11 +3534,11 @@ fieldset[disabled] .select select:-ms-input-placeholder,
   box-shadow: none;
 }
 
-.is-white.input, .is-white.textarea, .taginput .is-white.taginput-container.is-focusable {
+.is-white.input, .dialog .modal-card .modal-card-foot .input.button:not([class*="is-"]), .is-white.textarea, .dialog .modal-card .modal-card-foot .textarea.button:not([class*="is-"]), .taginput .is-white.taginput-container.is-focusable, .taginput .dialog .modal-card .modal-card-foot .taginput-container.is-focusable.button:not([class*="is-"]), .dialog .modal-card .modal-card-foot .taginput .taginput-container.is-focusable.button:not([class*="is-"]) {
   border-color: white;
 }
 
-.is-white.input:focus, .is-white.textarea:focus, .taginput .is-white.taginput-container.is-focusable:focus, .is-white.is-focused.input, .is-white.is-focused.textarea, .taginput .is-white.is-focused.taginput-container.is-focusable, .is-white.input:active, .is-white.textarea:active, .taginput .is-white.taginput-container.is-focusable:active, .is-white.is-active.input, .is-white.is-active.textarea, .taginput .is-white.is-active.taginput-container.is-focusable {
+.is-white.input:focus, .dialog .modal-card .modal-card-foot .input.button:focus:not([class*="is-"]), .is-white.textarea:focus, .dialog .modal-card .modal-card-foot .textarea.button:focus:not([class*="is-"]), .taginput .is-white.taginput-container.is-focusable:focus, .taginput .dialog .modal-card .modal-card-foot .taginput-container.is-focusable.button:focus:not([class*="is-"]), .dialog .modal-card .modal-card-foot .taginput .taginput-container.is-focusable.button:focus:not([class*="is-"]), .is-white.is-focused.input, .dialog .modal-card .modal-card-foot .is-focused.input.button:not([class*="is-"]), .is-white.is-focused.textarea, .dialog .modal-card .modal-card-foot .is-focused.textarea.button:not([class*="is-"]), .taginput .is-white.is-focused.taginput-container.is-focusable, .taginput .dialog .modal-card .modal-card-foot .is-focused.taginput-container.is-focusable.button:not([class*="is-"]), .dialog .modal-card .modal-card-foot .taginput .is-focused.taginput-container.is-focusable.button:not([class*="is-"]), .is-white.input:active, .dialog .modal-card .modal-card-foot .input.button:active:not([class*="is-"]), .is-white.textarea:active, .dialog .modal-card .modal-card-foot .textarea.button:active:not([class*="is-"]), .taginput .is-white.taginput-container.is-focusable:active, .taginput .dialog .modal-card .modal-card-foot .taginput-container.is-focusable.button:active:not([class*="is-"]), .dialog .modal-card .modal-card-foot .taginput .taginput-container.is-focusable.button:active:not([class*="is-"]), .is-white.is-active.input, .dialog .modal-card .modal-card-foot .is-active.input.button:not([class*="is-"]), .is-white.is-active.textarea, .dialog .modal-card .modal-card-foot .is-active.textarea.button:not([class*="is-"]), .taginput .is-white.is-active.taginput-container.is-focusable, .taginput .dialog .modal-card .modal-card-foot .is-active.taginput-container.is-focusable.button:not([class*="is-"]), .dialog .modal-card .modal-card-foot .taginput .is-active.taginput-container.is-focusable.button:not([class*="is-"]) {
   box-shadow: 0 0 0 0.125em rgba(255, 255, 255, 0.25);
 }
 
@@ -3550,11 +3550,11 @@ fieldset[disabled] .select select:-ms-input-placeholder,
   box-shadow: 0 0 0 0.125em rgba(10, 10, 10, 0.25);
 }
 
-.is-light.input, .dialog .modal-card .modal-card-foot .input.button, .is-light.textarea, .dialog .modal-card .modal-card-foot .textarea.button, .taginput .is-light.taginput-container.is-focusable, .taginput .dialog .modal-card .modal-card-foot .taginput-container.is-focusable.button, .dialog .modal-card .modal-card-foot .taginput .taginput-container.is-focusable.button {
+.is-light.input, .is-light.textarea, .taginput .is-light.taginput-container.is-focusable {
   border-color: #EFF8FA;
 }
 
-.is-light.input:focus, .dialog .modal-card .modal-card-foot .input.button:focus, .is-light.textarea:focus, .dialog .modal-card .modal-card-foot .textarea.button:focus, .taginput .is-light.taginput-container.is-focusable:focus, .taginput .dialog .modal-card .modal-card-foot .taginput-container.is-focusable.button:focus, .dialog .modal-card .modal-card-foot .taginput .taginput-container.is-focusable.button:focus, .is-light.is-focused.input, .dialog .modal-card .modal-card-foot .is-focused.input.button, .is-light.is-focused.textarea, .dialog .modal-card .modal-card-foot .is-focused.textarea.button, .taginput .is-light.is-focused.taginput-container.is-focusable, .taginput .dialog .modal-card .modal-card-foot .is-focused.taginput-container.is-focusable.button, .dialog .modal-card .modal-card-foot .taginput .is-focused.taginput-container.is-focusable.button, .is-light.input:active, .dialog .modal-card .modal-card-foot .input.button:active, .is-light.textarea:active, .dialog .modal-card .modal-card-foot .textarea.button:active, .taginput .is-light.taginput-container.is-focusable:active, .taginput .dialog .modal-card .modal-card-foot .taginput-container.is-focusable.button:active, .dialog .modal-card .modal-card-foot .taginput .taginput-container.is-focusable.button:active, .is-light.is-active.input, .dialog .modal-card .modal-card-foot .is-active.input.button, .is-light.is-active.textarea, .dialog .modal-card .modal-card-foot .is-active.textarea.button, .taginput .is-light.is-active.taginput-container.is-focusable, .taginput .dialog .modal-card .modal-card-foot .is-active.taginput-container.is-focusable.button, .dialog .modal-card .modal-card-foot .taginput .is-active.taginput-container.is-focusable.button {
+.is-light.input:focus, .is-light.textarea:focus, .taginput .is-light.taginput-container.is-focusable:focus, .is-light.is-focused.input, .is-light.is-focused.textarea, .taginput .is-light.is-focused.taginput-container.is-focusable, .is-light.input:active, .is-light.textarea:active, .taginput .is-light.taginput-container.is-focusable:active, .is-light.is-active.input, .is-light.is-active.textarea, .taginput .is-light.is-active.taginput-container.is-focusable {
   box-shadow: 0 0 0 0.125em rgba(239, 248, 250, 0.25);
 }
 
@@ -3764,19 +3764,19 @@ fieldset[disabled] .select select:hover {
   border-color: #363636;
 }
 
-.select.is-white:not(:hover)::after {
+.select.is-white:not(:hover)::after, .dialog .modal-card .modal-card-foot .select.button:not([class*="is-"]):not(:hover)::after {
   border-color: white;
 }
 
-.select.is-white select {
+.select.is-white select, .dialog .modal-card .modal-card-foot .select.button:not([class*="is-"]) select {
   border-color: white;
 }
 
-.select.is-white select:hover, .select.is-white select.is-hovered {
+.select.is-white select:hover, .dialog .modal-card .modal-card-foot .select.button:not([class*="is-"]) select:hover, .select.is-white select.is-hovered, .dialog .modal-card .modal-card-foot .select.button:not([class*="is-"]) select.is-hovered {
   border-color: #f2f2f2;
 }
 
-.select.is-white select:focus, .select.is-white select.is-focused, .select.is-white select:active, .select.is-white select.is-active {
+.select.is-white select:focus, .dialog .modal-card .modal-card-foot .select.button:not([class*="is-"]) select:focus, .select.is-white select.is-focused, .dialog .modal-card .modal-card-foot .select.button:not([class*="is-"]) select.is-focused, .select.is-white select:active, .dialog .modal-card .modal-card-foot .select.button:not([class*="is-"]) select:active, .select.is-white select.is-active, .dialog .modal-card .modal-card-foot .select.button:not([class*="is-"]) select.is-active {
   box-shadow: 0 0 0 0.125em rgba(255, 255, 255, 0.25);
 }
 
@@ -3796,19 +3796,19 @@ fieldset[disabled] .select select:hover {
   box-shadow: 0 0 0 0.125em rgba(10, 10, 10, 0.25);
 }
 
-.select.is-light:not(:hover)::after, .dialog .modal-card .modal-card-foot .select.button:not(:hover)::after {
+.select.is-light:not(:hover)::after {
   border-color: #EFF8FA;
 }
 
-.select.is-light select, .dialog .modal-card .modal-card-foot .select.button select {
+.select.is-light select {
   border-color: #EFF8FA;
 }
 
-.select.is-light select:hover, .dialog .modal-card .modal-card-foot .select.button select:hover, .select.is-light select.is-hovered, .dialog .modal-card .modal-card-foot .select.button select.is-hovered {
+.select.is-light select:hover, .select.is-light select.is-hovered {
   border-color: #dcf0f4;
 }
 
-.select.is-light select:focus, .dialog .modal-card .modal-card-foot .select.button select:focus, .select.is-light select.is-focused, .dialog .modal-card .modal-card-foot .select.button select.is-focused, .select.is-light select:active, .dialog .modal-card .modal-card-foot .select.button select:active, .select.is-light select.is-active, .dialog .modal-card .modal-card-foot .select.button select.is-active {
+.select.is-light select:focus, .select.is-light select.is-focused, .select.is-light select:active, .select.is-light select.is-active {
   box-shadow: 0 0 0 0.125em rgba(239, 248, 250, 0.25);
 }
 
@@ -3992,25 +3992,25 @@ fieldset[disabled] .select select:hover {
   position: relative;
 }
 
-.file.is-white .file-cta {
+.file.is-white .file-cta, .dialog .modal-card .modal-card-foot .file.button:not([class*="is-"]) .file-cta {
   background-color: white;
   border-color: transparent;
   color: #0a0a0a;
 }
 
-.file.is-white:hover .file-cta, .file.is-white.is-hovered .file-cta {
+.file.is-white:hover .file-cta, .dialog .modal-card .modal-card-foot .file.button:hover:not([class*="is-"]) .file-cta, .file.is-white.is-hovered .file-cta, .dialog .modal-card .modal-card-foot .file.is-hovered.button:not([class*="is-"]) .file-cta {
   background-color: #f9f9f9;
   border-color: transparent;
   color: #0a0a0a;
 }
 
-.file.is-white:focus .file-cta, .file.is-white.is-focused .file-cta {
+.file.is-white:focus .file-cta, .dialog .modal-card .modal-card-foot .file.button:focus:not([class*="is-"]) .file-cta, .file.is-white.is-focused .file-cta, .dialog .modal-card .modal-card-foot .file.is-focused.button:not([class*="is-"]) .file-cta {
   border-color: transparent;
   box-shadow: 0 0 0.5em rgba(255, 255, 255, 0.25);
   color: #0a0a0a;
 }
 
-.file.is-white:active .file-cta, .file.is-white.is-active .file-cta {
+.file.is-white:active .file-cta, .dialog .modal-card .modal-card-foot .file.button:active:not([class*="is-"]) .file-cta, .file.is-white.is-active .file-cta, .dialog .modal-card .modal-card-foot .file.is-active.button:not([class*="is-"]) .file-cta {
   background-color: #f2f2f2;
   border-color: transparent;
   color: #0a0a0a;
@@ -4040,25 +4040,25 @@ fieldset[disabled] .select select:hover {
   color: white;
 }
 
-.file.is-light .file-cta, .dialog .modal-card .modal-card-foot .file.button .file-cta {
+.file.is-light .file-cta {
   background-color: #EFF8FA;
   border-color: transparent;
   color: rgba(0, 0, 0, 0.7);
 }
 
-.file.is-light:hover .file-cta, .dialog .modal-card .modal-card-foot .file.button:hover .file-cta, .file.is-light.is-hovered .file-cta, .dialog .modal-card .modal-card-foot .file.is-hovered.button .file-cta {
+.file.is-light:hover .file-cta, .file.is-light.is-hovered .file-cta {
   background-color: #e5f4f7;
   border-color: transparent;
   color: rgba(0, 0, 0, 0.7);
 }
 
-.file.is-light:focus .file-cta, .dialog .modal-card .modal-card-foot .file.button:focus .file-cta, .file.is-light.is-focused .file-cta, .dialog .modal-card .modal-card-foot .file.is-focused.button .file-cta {
+.file.is-light:focus .file-cta, .file.is-light.is-focused .file-cta {
   border-color: transparent;
   box-shadow: 0 0 0.5em rgba(239, 248, 250, 0.25);
   color: rgba(0, 0, 0, 0.7);
 }
 
-.file.is-light:active .file-cta, .dialog .modal-card .modal-card-foot .file.button:active .file-cta, .file.is-light.is-active .file-cta, .dialog .modal-card .modal-card-foot .file.is-active.button .file-cta {
+.file.is-light:active .file-cta, .file.is-light.is-active .file-cta {
   background-color: #dcf0f4;
   border-color: transparent;
   color: rgba(0, 0, 0, 0.7);
@@ -4474,7 +4474,7 @@ fieldset[disabled] .select select:hover {
   margin-top: 0.25rem;
 }
 
-.help.is-white {
+.help.is-white, .dialog .modal-card .modal-card-foot .help.button:not([class*="is-"]) {
   color: white;
 }
 
@@ -4482,7 +4482,7 @@ fieldset[disabled] .select select:hover {
   color: #0a0a0a;
 }
 
-.help.is-light, .dialog .modal-card .modal-card-foot .help.button {
+.help.is-light {
   color: #EFF8FA;
 }
 
@@ -5326,16 +5326,16 @@ button.dropdown-item.is-active {
   font-size: 1.5rem;
 }
 
-.message.is-white {
+.message.is-white, .dialog .modal-card .modal-card-foot .message.button:not([class*="is-"]) {
   background-color: white;
 }
 
-.message.is-white .message-header {
+.message.is-white .message-header, .dialog .modal-card .modal-card-foot .message.button:not([class*="is-"]) .message-header {
   background-color: white;
   color: #0a0a0a;
 }
 
-.message.is-white .message-body {
+.message.is-white .message-body, .dialog .modal-card .modal-card-foot .message.button:not([class*="is-"]) .message-body {
   border-color: white;
 }
 
@@ -5352,16 +5352,16 @@ button.dropdown-item.is-active {
   border-color: #0a0a0a;
 }
 
-.message.is-light, .dialog .modal-card .modal-card-foot .message.button {
+.message.is-light {
   background-color: #f7fcfd;
 }
 
-.message.is-light .message-header, .dialog .modal-card .modal-card-foot .message.button .message-header {
+.message.is-light .message-header {
   background-color: #EFF8FA;
   color: rgba(0, 0, 0, 0.7);
 }
 
-.message.is-light .message-body, .dialog .modal-card .modal-card-foot .message.button .message-body {
+.message.is-light .message-body {
   border-color: #EFF8FA;
 }
 
@@ -5623,63 +5623,82 @@ button.dropdown-item.is-active {
   z-index: 30;
 }
 
-.navbar.is-white {
+.navbar.is-white, .dialog .modal-card .modal-card-foot .navbar.button:not([class*="is-"]) {
   background-color: white;
   color: #0a0a0a;
 }
 
-.navbar.is-white .navbar-brand > .navbar-item,
-.navbar.is-white .navbar-brand .navbar-link {
+.navbar.is-white .navbar-brand > .navbar-item, .dialog .modal-card .modal-card-foot .navbar.button:not([class*="is-"]) .navbar-brand > .navbar-item,
+.navbar.is-white .navbar-brand .navbar-link,
+.dialog .modal-card .modal-card-foot .navbar.button:not([class*="is-"]) .navbar-brand .navbar-link {
   color: #0a0a0a;
 }
 
-.navbar.is-white .navbar-brand > a.navbar-item:focus, .navbar.is-white .navbar-brand > a.navbar-item:hover, .navbar.is-white .navbar-brand > a.navbar-item.is-active,
+.navbar.is-white .navbar-brand > a.navbar-item:focus, .dialog .modal-card .modal-card-foot .navbar.button:not([class*="is-"]) .navbar-brand > a.navbar-item:focus, .navbar.is-white .navbar-brand > a.navbar-item:hover, .dialog .modal-card .modal-card-foot .navbar.button:not([class*="is-"]) .navbar-brand > a.navbar-item:hover, .navbar.is-white .navbar-brand > a.navbar-item.is-active, .dialog .modal-card .modal-card-foot .navbar.button:not([class*="is-"]) .navbar-brand > a.navbar-item.is-active,
 .navbar.is-white .navbar-brand .navbar-link:focus,
+.dialog .modal-card .modal-card-foot .navbar.button:not([class*="is-"]) .navbar-brand .navbar-link:focus,
 .navbar.is-white .navbar-brand .navbar-link:hover,
-.navbar.is-white .navbar-brand .navbar-link.is-active {
+.dialog .modal-card .modal-card-foot .navbar.button:not([class*="is-"]) .navbar-brand .navbar-link:hover,
+.navbar.is-white .navbar-brand .navbar-link.is-active,
+.dialog .modal-card .modal-card-foot .navbar.button:not([class*="is-"]) .navbar-brand .navbar-link.is-active {
   background-color: #f2f2f2;
   color: #0a0a0a;
 }
 
-.navbar.is-white .navbar-brand .navbar-link::after {
+.navbar.is-white .navbar-brand .navbar-link::after, .dialog .modal-card .modal-card-foot .navbar.button:not([class*="is-"]) .navbar-brand .navbar-link::after {
   border-color: #0a0a0a;
 }
 
-.navbar.is-white .navbar-burger {
+.navbar.is-white .navbar-burger, .dialog .modal-card .modal-card-foot .navbar.button:not([class*="is-"]) .navbar-burger {
   color: #0a0a0a;
 }
 
 @media screen and (min-width: 1024px) {
-  .navbar.is-white .navbar-start > .navbar-item,
+  .navbar.is-white .navbar-start > .navbar-item, .dialog .modal-card .modal-card-foot .navbar.button:not([class*="is-"]) .navbar-start > .navbar-item,
   .navbar.is-white .navbar-start .navbar-link,
+  .dialog .modal-card .modal-card-foot .navbar.button:not([class*="is-"]) .navbar-start .navbar-link,
   .navbar.is-white .navbar-end > .navbar-item,
-  .navbar.is-white .navbar-end .navbar-link {
+  .dialog .modal-card .modal-card-foot .navbar.button:not([class*="is-"]) .navbar-end > .navbar-item,
+  .navbar.is-white .navbar-end .navbar-link,
+  .dialog .modal-card .modal-card-foot .navbar.button:not([class*="is-"]) .navbar-end .navbar-link {
     color: #0a0a0a;
   }
-  .navbar.is-white .navbar-start > a.navbar-item:focus, .navbar.is-white .navbar-start > a.navbar-item:hover, .navbar.is-white .navbar-start > a.navbar-item.is-active,
+  .navbar.is-white .navbar-start > a.navbar-item:focus, .dialog .modal-card .modal-card-foot .navbar.button:not([class*="is-"]) .navbar-start > a.navbar-item:focus, .navbar.is-white .navbar-start > a.navbar-item:hover, .dialog .modal-card .modal-card-foot .navbar.button:not([class*="is-"]) .navbar-start > a.navbar-item:hover, .navbar.is-white .navbar-start > a.navbar-item.is-active, .dialog .modal-card .modal-card-foot .navbar.button:not([class*="is-"]) .navbar-start > a.navbar-item.is-active,
   .navbar.is-white .navbar-start .navbar-link:focus,
+  .dialog .modal-card .modal-card-foot .navbar.button:not([class*="is-"]) .navbar-start .navbar-link:focus,
   .navbar.is-white .navbar-start .navbar-link:hover,
+  .dialog .modal-card .modal-card-foot .navbar.button:not([class*="is-"]) .navbar-start .navbar-link:hover,
   .navbar.is-white .navbar-start .navbar-link.is-active,
+  .dialog .modal-card .modal-card-foot .navbar.button:not([class*="is-"]) .navbar-start .navbar-link.is-active,
   .navbar.is-white .navbar-end > a.navbar-item:focus,
+  .dialog .modal-card .modal-card-foot .navbar.button:not([class*="is-"]) .navbar-end > a.navbar-item:focus,
   .navbar.is-white .navbar-end > a.navbar-item:hover,
+  .dialog .modal-card .modal-card-foot .navbar.button:not([class*="is-"]) .navbar-end > a.navbar-item:hover,
   .navbar.is-white .navbar-end > a.navbar-item.is-active,
+  .dialog .modal-card .modal-card-foot .navbar.button:not([class*="is-"]) .navbar-end > a.navbar-item.is-active,
   .navbar.is-white .navbar-end .navbar-link:focus,
+  .dialog .modal-card .modal-card-foot .navbar.button:not([class*="is-"]) .navbar-end .navbar-link:focus,
   .navbar.is-white .navbar-end .navbar-link:hover,
-  .navbar.is-white .navbar-end .navbar-link.is-active {
+  .dialog .modal-card .modal-card-foot .navbar.button:not([class*="is-"]) .navbar-end .navbar-link:hover,
+  .navbar.is-white .navbar-end .navbar-link.is-active,
+  .dialog .modal-card .modal-card-foot .navbar.button:not([class*="is-"]) .navbar-end .navbar-link.is-active {
     background-color: #f2f2f2;
     color: #0a0a0a;
   }
-  .navbar.is-white .navbar-start .navbar-link::after,
-  .navbar.is-white .navbar-end .navbar-link::after {
+  .navbar.is-white .navbar-start .navbar-link::after, .dialog .modal-card .modal-card-foot .navbar.button:not([class*="is-"]) .navbar-start .navbar-link::after,
+  .navbar.is-white .navbar-end .navbar-link::after,
+  .dialog .modal-card .modal-card-foot .navbar.button:not([class*="is-"]) .navbar-end .navbar-link::after {
     border-color: #0a0a0a;
   }
-  .navbar.is-white .navbar-item.has-dropdown:focus .navbar-link,
+  .navbar.is-white .navbar-item.has-dropdown:focus .navbar-link, .dialog .modal-card .modal-card-foot .navbar.button:not([class*="is-"]) .navbar-item.has-dropdown:focus .navbar-link,
   .navbar.is-white .navbar-item.has-dropdown:hover .navbar-link,
-  .navbar.is-white .navbar-item.has-dropdown.is-active .navbar-link {
+  .dialog .modal-card .modal-card-foot .navbar.button:not([class*="is-"]) .navbar-item.has-dropdown:hover .navbar-link,
+  .navbar.is-white .navbar-item.has-dropdown.is-active .navbar-link,
+  .dialog .modal-card .modal-card-foot .navbar.button:not([class*="is-"]) .navbar-item.has-dropdown.is-active .navbar-link {
     background-color: #f2f2f2;
     color: #0a0a0a;
   }
-  .navbar.is-white .navbar-dropdown a.navbar-item.is-active {
+  .navbar.is-white .navbar-dropdown a.navbar-item.is-active, .dialog .modal-card .modal-card-foot .navbar.button:not([class*="is-"]) .navbar-dropdown a.navbar-item.is-active {
     background-color: white;
     color: #0a0a0a;
   }
@@ -5747,82 +5766,63 @@ button.dropdown-item.is-active {
   }
 }
 
-.navbar.is-light, .dialog .modal-card .modal-card-foot .navbar.button {
+.navbar.is-light {
   background-color: #EFF8FA;
   color: rgba(0, 0, 0, 0.7);
 }
 
-.navbar.is-light .navbar-brand > .navbar-item, .dialog .modal-card .modal-card-foot .navbar.button .navbar-brand > .navbar-item,
-.navbar.is-light .navbar-brand .navbar-link,
-.dialog .modal-card .modal-card-foot .navbar.button .navbar-brand .navbar-link {
+.navbar.is-light .navbar-brand > .navbar-item,
+.navbar.is-light .navbar-brand .navbar-link {
   color: rgba(0, 0, 0, 0.7);
 }
 
-.navbar.is-light .navbar-brand > a.navbar-item:focus, .dialog .modal-card .modal-card-foot .navbar.button .navbar-brand > a.navbar-item:focus, .navbar.is-light .navbar-brand > a.navbar-item:hover, .dialog .modal-card .modal-card-foot .navbar.button .navbar-brand > a.navbar-item:hover, .navbar.is-light .navbar-brand > a.navbar-item.is-active, .dialog .modal-card .modal-card-foot .navbar.button .navbar-brand > a.navbar-item.is-active,
+.navbar.is-light .navbar-brand > a.navbar-item:focus, .navbar.is-light .navbar-brand > a.navbar-item:hover, .navbar.is-light .navbar-brand > a.navbar-item.is-active,
 .navbar.is-light .navbar-brand .navbar-link:focus,
-.dialog .modal-card .modal-card-foot .navbar.button .navbar-brand .navbar-link:focus,
 .navbar.is-light .navbar-brand .navbar-link:hover,
-.dialog .modal-card .modal-card-foot .navbar.button .navbar-brand .navbar-link:hover,
-.navbar.is-light .navbar-brand .navbar-link.is-active,
-.dialog .modal-card .modal-card-foot .navbar.button .navbar-brand .navbar-link.is-active {
+.navbar.is-light .navbar-brand .navbar-link.is-active {
   background-color: #dcf0f4;
   color: rgba(0, 0, 0, 0.7);
 }
 
-.navbar.is-light .navbar-brand .navbar-link::after, .dialog .modal-card .modal-card-foot .navbar.button .navbar-brand .navbar-link::after {
+.navbar.is-light .navbar-brand .navbar-link::after {
   border-color: rgba(0, 0, 0, 0.7);
 }
 
-.navbar.is-light .navbar-burger, .dialog .modal-card .modal-card-foot .navbar.button .navbar-burger {
+.navbar.is-light .navbar-burger {
   color: rgba(0, 0, 0, 0.7);
 }
 
 @media screen and (min-width: 1024px) {
-  .navbar.is-light .navbar-start > .navbar-item, .dialog .modal-card .modal-card-foot .navbar.button .navbar-start > .navbar-item,
+  .navbar.is-light .navbar-start > .navbar-item,
   .navbar.is-light .navbar-start .navbar-link,
-  .dialog .modal-card .modal-card-foot .navbar.button .navbar-start .navbar-link,
   .navbar.is-light .navbar-end > .navbar-item,
-  .dialog .modal-card .modal-card-foot .navbar.button .navbar-end > .navbar-item,
-  .navbar.is-light .navbar-end .navbar-link,
-  .dialog .modal-card .modal-card-foot .navbar.button .navbar-end .navbar-link {
+  .navbar.is-light .navbar-end .navbar-link {
     color: rgba(0, 0, 0, 0.7);
   }
-  .navbar.is-light .navbar-start > a.navbar-item:focus, .dialog .modal-card .modal-card-foot .navbar.button .navbar-start > a.navbar-item:focus, .navbar.is-light .navbar-start > a.navbar-item:hover, .dialog .modal-card .modal-card-foot .navbar.button .navbar-start > a.navbar-item:hover, .navbar.is-light .navbar-start > a.navbar-item.is-active, .dialog .modal-card .modal-card-foot .navbar.button .navbar-start > a.navbar-item.is-active,
+  .navbar.is-light .navbar-start > a.navbar-item:focus, .navbar.is-light .navbar-start > a.navbar-item:hover, .navbar.is-light .navbar-start > a.navbar-item.is-active,
   .navbar.is-light .navbar-start .navbar-link:focus,
-  .dialog .modal-card .modal-card-foot .navbar.button .navbar-start .navbar-link:focus,
   .navbar.is-light .navbar-start .navbar-link:hover,
-  .dialog .modal-card .modal-card-foot .navbar.button .navbar-start .navbar-link:hover,
   .navbar.is-light .navbar-start .navbar-link.is-active,
-  .dialog .modal-card .modal-card-foot .navbar.button .navbar-start .navbar-link.is-active,
   .navbar.is-light .navbar-end > a.navbar-item:focus,
-  .dialog .modal-card .modal-card-foot .navbar.button .navbar-end > a.navbar-item:focus,
   .navbar.is-light .navbar-end > a.navbar-item:hover,
-  .dialog .modal-card .modal-card-foot .navbar.button .navbar-end > a.navbar-item:hover,
   .navbar.is-light .navbar-end > a.navbar-item.is-active,
-  .dialog .modal-card .modal-card-foot .navbar.button .navbar-end > a.navbar-item.is-active,
   .navbar.is-light .navbar-end .navbar-link:focus,
-  .dialog .modal-card .modal-card-foot .navbar.button .navbar-end .navbar-link:focus,
   .navbar.is-light .navbar-end .navbar-link:hover,
-  .dialog .modal-card .modal-card-foot .navbar.button .navbar-end .navbar-link:hover,
-  .navbar.is-light .navbar-end .navbar-link.is-active,
-  .dialog .modal-card .modal-card-foot .navbar.button .navbar-end .navbar-link.is-active {
+  .navbar.is-light .navbar-end .navbar-link.is-active {
     background-color: #dcf0f4;
     color: rgba(0, 0, 0, 0.7);
   }
-  .navbar.is-light .navbar-start .navbar-link::after, .dialog .modal-card .modal-card-foot .navbar.button .navbar-start .navbar-link::after,
-  .navbar.is-light .navbar-end .navbar-link::after,
-  .dialog .modal-card .modal-card-foot .navbar.button .navbar-end .navbar-link::after {
+  .navbar.is-light .navbar-start .navbar-link::after,
+  .navbar.is-light .navbar-end .navbar-link::after {
     border-color: rgba(0, 0, 0, 0.7);
   }
-  .navbar.is-light .navbar-item.has-dropdown:focus .navbar-link, .dialog .modal-card .modal-card-foot .navbar.button .navbar-item.has-dropdown:focus .navbar-link,
+  .navbar.is-light .navbar-item.has-dropdown:focus .navbar-link,
   .navbar.is-light .navbar-item.has-dropdown:hover .navbar-link,
-  .dialog .modal-card .modal-card-foot .navbar.button .navbar-item.has-dropdown:hover .navbar-link,
-  .navbar.is-light .navbar-item.has-dropdown.is-active .navbar-link,
-  .dialog .modal-card .modal-card-foot .navbar.button .navbar-item.has-dropdown.is-active .navbar-link {
+  .navbar.is-light .navbar-item.has-dropdown.is-active .navbar-link {
     background-color: #dcf0f4;
     color: rgba(0, 0, 0, 0.7);
   }
-  .navbar.is-light .navbar-dropdown a.navbar-item.is-active, .dialog .modal-card .modal-card-foot .navbar.button .navbar-dropdown a.navbar-item.is-active {
+  .navbar.is-light .navbar-dropdown a.navbar-item.is-active {
     background-color: #EFF8FA;
     color: rgba(0, 0, 0, 0.7);
   }
@@ -6957,16 +6957,16 @@ a.navbar-item:focus, a.navbar-item:focus-within, a.navbar-item:hover, a.navbar-i
   margin-bottom: 1.5rem;
 }
 
-.panel.is-white .panel-heading {
+.panel.is-white .panel-heading, .dialog .modal-card .modal-card-foot .panel.button:not([class*="is-"]) .panel-heading {
   background-color: white;
   color: #0a0a0a;
 }
 
-.panel.is-white .panel-tabs a.is-active {
+.panel.is-white .panel-tabs a.is-active, .dialog .modal-card .modal-card-foot .panel.button:not([class*="is-"]) .panel-tabs a.is-active {
   border-bottom-color: white;
 }
 
-.panel.is-white .panel-block.is-active .panel-icon {
+.panel.is-white .panel-block.is-active .panel-icon, .dialog .modal-card .modal-card-foot .panel.button:not([class*="is-"]) .panel-block.is-active .panel-icon {
   color: white;
 }
 
@@ -6983,16 +6983,16 @@ a.navbar-item:focus, a.navbar-item:focus-within, a.navbar-item:hover, a.navbar-i
   color: #0a0a0a;
 }
 
-.panel.is-light .panel-heading, .dialog .modal-card .modal-card-foot .panel.button .panel-heading {
+.panel.is-light .panel-heading {
   background-color: #EFF8FA;
   color: rgba(0, 0, 0, 0.7);
 }
 
-.panel.is-light .panel-tabs a.is-active, .dialog .modal-card .modal-card-foot .panel.button .panel-tabs a.is-active {
+.panel.is-light .panel-tabs a.is-active {
   border-bottom-color: #EFF8FA;
 }
 
-.panel.is-light .panel-block.is-active .panel-icon, .dialog .modal-card .modal-card-foot .panel.button .panel-block.is-active .panel-icon {
+.panel.is-light .panel-block.is-active .panel-icon {
   color: #EFF8FA;
 }
 
@@ -9748,7 +9748,7 @@ a.has-text-primary-light-dark:hover, a.has-text-primary-light-dark:focus {
   align-items: stretch !important;
 }
 
-.is-align-items-flex-start {
+.is-align-items-flex-start, .panel .panel-block.is-form {
   align-items: flex-start !important;
 }
 
@@ -11272,81 +11272,86 @@ a.has-text-primary-light-dark:hover, a.has-text-primary-light-dark:focus {
   border-bottom: none;
 }
 
-.hero.is-white {
+.hero.is-white, .dialog .modal-card .modal-card-foot .hero.button:not([class*="is-"]) {
   background-color: white;
   color: #0a0a0a;
 }
 
-.hero.is-white a:not(.button):not(.dropdown-item):not(.tag):not(.pagination-link.is-current),
-.hero.is-white strong {
+.hero.is-white a:not(.button):not(.dropdown-item):not(.tag):not(.pagination-link.is-current), .dialog .modal-card .modal-card-foot .hero.button:not([class*="is-"]) a:not(.button):not(.dropdown-item):not(.tag):not(.pagination-link.is-current),
+.hero.is-white strong,
+.dialog .modal-card .modal-card-foot .hero.button:not([class*="is-"]) strong {
   color: inherit;
 }
 
-.hero.is-white .title {
+.hero.is-white .title, .dialog .modal-card .modal-card-foot .hero.button:not([class*="is-"]) .title {
   color: #0a0a0a;
 }
 
-.hero.is-white .subtitle {
+.hero.is-white .subtitle, .dialog .modal-card .modal-card-foot .hero.button:not([class*="is-"]) .subtitle {
   color: rgba(10, 10, 10, 0.9);
 }
 
-.hero.is-white .subtitle a:not(.button),
-.hero.is-white .subtitle strong {
+.hero.is-white .subtitle a:not(.button), .dialog .modal-card .modal-card-foot .hero.button:not([class*="is-"]) .subtitle a:not(.button),
+.hero.is-white .subtitle strong,
+.dialog .modal-card .modal-card-foot .hero.button:not([class*="is-"]) .subtitle strong {
   color: #0a0a0a;
 }
 
 @media screen and (max-width: 1023px) {
-  .hero.is-white .navbar-menu {
+  .hero.is-white .navbar-menu, .dialog .modal-card .modal-card-foot .hero.button:not([class*="is-"]) .navbar-menu {
     background-color: white;
   }
 }
 
-.hero.is-white .navbar-item,
-.hero.is-white .navbar-link {
+.hero.is-white .navbar-item, .dialog .modal-card .modal-card-foot .hero.button:not([class*="is-"]) .navbar-item,
+.hero.is-white .navbar-link,
+.dialog .modal-card .modal-card-foot .hero.button:not([class*="is-"]) .navbar-link {
   color: rgba(10, 10, 10, 0.7);
 }
 
-.hero.is-white a.navbar-item:hover, .hero.is-white a.navbar-item.is-active,
+.hero.is-white a.navbar-item:hover, .dialog .modal-card .modal-card-foot .hero.button:not([class*="is-"]) a.navbar-item:hover, .hero.is-white a.navbar-item.is-active, .dialog .modal-card .modal-card-foot .hero.button:not([class*="is-"]) a.navbar-item.is-active,
 .hero.is-white .navbar-link:hover,
-.hero.is-white .navbar-link.is-active {
+.dialog .modal-card .modal-card-foot .hero.button:not([class*="is-"]) .navbar-link:hover,
+.hero.is-white .navbar-link.is-active,
+.dialog .modal-card .modal-card-foot .hero.button:not([class*="is-"]) .navbar-link.is-active {
   background-color: #f2f2f2;
   color: #0a0a0a;
 }
 
-.hero.is-white .tabs a {
+.hero.is-white .tabs a, .dialog .modal-card .modal-card-foot .hero.button:not([class*="is-"]) .tabs a {
   color: #0a0a0a;
   opacity: 0.9;
 }
 
-.hero.is-white .tabs a:hover {
+.hero.is-white .tabs a:hover, .dialog .modal-card .modal-card-foot .hero.button:not([class*="is-"]) .tabs a:hover {
   opacity: 1;
 }
 
-.hero.is-white .tabs li.is-active a {
+.hero.is-white .tabs li.is-active a, .dialog .modal-card .modal-card-foot .hero.button:not([class*="is-"]) .tabs li.is-active a {
   color: white !important;
   opacity: 1;
 }
 
-.hero.is-white .tabs.is-boxed a, .hero.is-white .tabs.is-toggle a {
+.hero.is-white .tabs.is-boxed a, .dialog .modal-card .modal-card-foot .hero.button:not([class*="is-"]) .tabs.is-boxed a, .hero.is-white .tabs.is-toggle a, .dialog .modal-card .modal-card-foot .hero.button:not([class*="is-"]) .tabs.is-toggle a {
   color: #0a0a0a;
 }
 
-.hero.is-white .tabs.is-boxed a:hover, .hero.is-white .tabs.is-toggle a:hover {
+.hero.is-white .tabs.is-boxed a:hover, .dialog .modal-card .modal-card-foot .hero.button:not([class*="is-"]) .tabs.is-boxed a:hover, .hero.is-white .tabs.is-toggle a:hover, .dialog .modal-card .modal-card-foot .hero.button:not([class*="is-"]) .tabs.is-toggle a:hover {
   background-color: rgba(10, 10, 10, 0.1);
 }
 
-.hero.is-white .tabs.is-boxed li.is-active a, .hero.is-white .tabs.is-boxed li.is-active a:hover, .hero.is-white .tabs.is-toggle li.is-active a, .hero.is-white .tabs.is-toggle li.is-active a:hover {
+.hero.is-white .tabs.is-boxed li.is-active a, .dialog .modal-card .modal-card-foot .hero.button:not([class*="is-"]) .tabs.is-boxed li.is-active a, .hero.is-white .tabs.is-boxed li.is-active a:hover, .dialog .modal-card .modal-card-foot .hero.button:not([class*="is-"]) .tabs.is-boxed li.is-active a:hover, .hero.is-white .tabs.is-toggle li.is-active a, .dialog .modal-card .modal-card-foot .hero.button:not([class*="is-"]) .tabs.is-toggle li.is-active a, .hero.is-white .tabs.is-toggle li.is-active a:hover, .dialog .modal-card .modal-card-foot .hero.button:not([class*="is-"]) .tabs.is-toggle li.is-active a:hover {
   background-color: #0a0a0a;
   border-color: #0a0a0a;
   color: white;
 }
 
-.hero.is-white.is-bold {
+.hero.is-white.is-bold, .dialog .modal-card .modal-card-foot .hero.is-bold.button:not([class*="is-"]) {
   background-image: linear-gradient(141deg, #e6e6e6 0%, white 71%, white 100%);
 }
 
 @media screen and (max-width: 768px) {
-  .hero.is-white.is-bold .navbar-menu {
+  .hero.is-white.is-bold .navbar-menu, .dialog .modal-card .modal-card-foot .hero.is-bold.button:not([class*="is-"]) .navbar-menu {
     background-image: linear-gradient(141deg, #e6e6e6 0%, white 71%, white 100%);
   }
 }
@@ -11430,86 +11435,81 @@ a.has-text-primary-light-dark:hover, a.has-text-primary-light-dark:focus {
   }
 }
 
-.hero.is-light, .dialog .modal-card .modal-card-foot .hero.button {
+.hero.is-light {
   background-color: #EFF8FA;
   color: rgba(0, 0, 0, 0.7);
 }
 
-.hero.is-light a:not(.button):not(.dropdown-item):not(.tag):not(.pagination-link.is-current), .dialog .modal-card .modal-card-foot .hero.button a:not(.button):not(.dropdown-item):not(.tag):not(.pagination-link.is-current),
-.hero.is-light strong,
-.dialog .modal-card .modal-card-foot .hero.button strong {
+.hero.is-light a:not(.button):not(.dropdown-item):not(.tag):not(.pagination-link.is-current),
+.hero.is-light strong {
   color: inherit;
 }
 
-.hero.is-light .title, .dialog .modal-card .modal-card-foot .hero.button .title {
+.hero.is-light .title {
   color: rgba(0, 0, 0, 0.7);
 }
 
-.hero.is-light .subtitle, .dialog .modal-card .modal-card-foot .hero.button .subtitle {
+.hero.is-light .subtitle {
   color: rgba(0, 0, 0, 0.9);
 }
 
-.hero.is-light .subtitle a:not(.button), .dialog .modal-card .modal-card-foot .hero.button .subtitle a:not(.button),
-.hero.is-light .subtitle strong,
-.dialog .modal-card .modal-card-foot .hero.button .subtitle strong {
+.hero.is-light .subtitle a:not(.button),
+.hero.is-light .subtitle strong {
   color: rgba(0, 0, 0, 0.7);
 }
 
 @media screen and (max-width: 1023px) {
-  .hero.is-light .navbar-menu, .dialog .modal-card .modal-card-foot .hero.button .navbar-menu {
+  .hero.is-light .navbar-menu {
     background-color: #EFF8FA;
   }
 }
 
-.hero.is-light .navbar-item, .dialog .modal-card .modal-card-foot .hero.button .navbar-item,
-.hero.is-light .navbar-link,
-.dialog .modal-card .modal-card-foot .hero.button .navbar-link {
+.hero.is-light .navbar-item,
+.hero.is-light .navbar-link {
   color: rgba(0, 0, 0, 0.7);
 }
 
-.hero.is-light a.navbar-item:hover, .dialog .modal-card .modal-card-foot .hero.button a.navbar-item:hover, .hero.is-light a.navbar-item.is-active, .dialog .modal-card .modal-card-foot .hero.button a.navbar-item.is-active,
+.hero.is-light a.navbar-item:hover, .hero.is-light a.navbar-item.is-active,
 .hero.is-light .navbar-link:hover,
-.dialog .modal-card .modal-card-foot .hero.button .navbar-link:hover,
-.hero.is-light .navbar-link.is-active,
-.dialog .modal-card .modal-card-foot .hero.button .navbar-link.is-active {
+.hero.is-light .navbar-link.is-active {
   background-color: #dcf0f4;
   color: rgba(0, 0, 0, 0.7);
 }
 
-.hero.is-light .tabs a, .dialog .modal-card .modal-card-foot .hero.button .tabs a {
+.hero.is-light .tabs a {
   color: rgba(0, 0, 0, 0.7);
   opacity: 0.9;
 }
 
-.hero.is-light .tabs a:hover, .dialog .modal-card .modal-card-foot .hero.button .tabs a:hover {
+.hero.is-light .tabs a:hover {
   opacity: 1;
 }
 
-.hero.is-light .tabs li.is-active a, .dialog .modal-card .modal-card-foot .hero.button .tabs li.is-active a {
+.hero.is-light .tabs li.is-active a {
   color: #EFF8FA !important;
   opacity: 1;
 }
 
-.hero.is-light .tabs.is-boxed a, .dialog .modal-card .modal-card-foot .hero.button .tabs.is-boxed a, .hero.is-light .tabs.is-toggle a, .dialog .modal-card .modal-card-foot .hero.button .tabs.is-toggle a {
+.hero.is-light .tabs.is-boxed a, .hero.is-light .tabs.is-toggle a {
   color: rgba(0, 0, 0, 0.7);
 }
 
-.hero.is-light .tabs.is-boxed a:hover, .dialog .modal-card .modal-card-foot .hero.button .tabs.is-boxed a:hover, .hero.is-light .tabs.is-toggle a:hover, .dialog .modal-card .modal-card-foot .hero.button .tabs.is-toggle a:hover {
+.hero.is-light .tabs.is-boxed a:hover, .hero.is-light .tabs.is-toggle a:hover {
   background-color: rgba(10, 10, 10, 0.1);
 }
 
-.hero.is-light .tabs.is-boxed li.is-active a, .dialog .modal-card .modal-card-foot .hero.button .tabs.is-boxed li.is-active a, .hero.is-light .tabs.is-boxed li.is-active a:hover, .dialog .modal-card .modal-card-foot .hero.button .tabs.is-boxed li.is-active a:hover, .hero.is-light .tabs.is-toggle li.is-active a, .dialog .modal-card .modal-card-foot .hero.button .tabs.is-toggle li.is-active a, .hero.is-light .tabs.is-toggle li.is-active a:hover, .dialog .modal-card .modal-card-foot .hero.button .tabs.is-toggle li.is-active a:hover {
+.hero.is-light .tabs.is-boxed li.is-active a, .hero.is-light .tabs.is-boxed li.is-active a:hover, .hero.is-light .tabs.is-toggle li.is-active a, .hero.is-light .tabs.is-toggle li.is-active a:hover {
   background-color: rgba(0, 0, 0, 0.7);
   border-color: rgba(0, 0, 0, 0.7);
   color: #EFF8FA;
 }
 
-.hero.is-light.is-bold, .dialog .modal-card .modal-card-foot .hero.is-bold.button {
+.hero.is-light.is-bold {
   background-image: linear-gradient(141deg, #c5f1f1 0%, #EFF8FA 71%, white 100%);
 }
 
 @media screen and (max-width: 768px) {
-  .hero.is-light.is-bold .navbar-menu, .dialog .modal-card .modal-card-foot .hero.is-bold.button .navbar-menu {
+  .hero.is-light.is-bold .navbar-menu {
     background-image: linear-gradient(141deg, #c5f1f1 0%, #EFF8FA 71%, white 100%);
   }
 }
@@ -12773,7 +12773,7 @@ a.has-text-primary-light-dark:hover, a.has-text-primary-light-dark:focus {
   border-color: #5Eb2CE;
 }
 
-.b-checkbox.checkbox input[type=checkbox]:checked + .check.is-white {
+.b-checkbox.checkbox input[type=checkbox]:checked + .check.is-white, .b-checkbox.checkbox .dialog .modal-card .modal-card-foot input[type=checkbox]:checked + .check.button:not([class*="is-"]), .dialog .modal-card .modal-card-foot .b-checkbox.checkbox input[type=checkbox]:checked + .check.button:not([class*="is-"]) {
   background: white url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3Cpath style='fill:%230a0a0a' d='M 0.04038059,0.6267767 0.14644661,0.52071068 0.42928932,0.80355339 0.3232233,0.90961941 z M 0.21715729,0.80355339 0.85355339,0.16715729 0.95961941,0.2732233 0.3232233,0.90961941 z'%3E%3C/path%3E%3C/svg%3E") no-repeat center center;
   border-color: white;
 }
@@ -12783,7 +12783,7 @@ a.has-text-primary-light-dark:hover, a.has-text-primary-light-dark:focus {
   border-color: #0a0a0a;
 }
 
-.b-checkbox.checkbox input[type=checkbox]:checked + .check.is-light, .b-checkbox.checkbox .dialog .modal-card .modal-card-foot input[type=checkbox]:checked + .check.button, .dialog .modal-card .modal-card-foot .b-checkbox.checkbox input[type=checkbox]:checked + .check.button {
+.b-checkbox.checkbox input[type=checkbox]:checked + .check.is-light {
   background: #EFF8FA url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3Cpath style='fill:rgba(0, 0, 0, 0.7)' d='M 0.04038059,0.6267767 0.14644661,0.52071068 0.42928932,0.80355339 0.3232233,0.90961941 z M 0.21715729,0.80355339 0.85355339,0.16715729 0.95961941,0.2732233 0.3232233,0.90961941 z'%3E%3C/path%3E%3C/svg%3E") no-repeat center center;
   border-color: #EFF8FA;
 }
@@ -12833,7 +12833,7 @@ a.has-text-primary-light-dark:hover, a.has-text-primary-light-dark:focus {
   border-color: #5Eb2CE;
 }
 
-.b-checkbox.checkbox input[type=checkbox]:indeterminate + .check.is-white {
+.b-checkbox.checkbox input[type=checkbox]:indeterminate + .check.is-white, .b-checkbox.checkbox .dialog .modal-card .modal-card-foot input[type=checkbox]:indeterminate + .check.button:not([class*="is-"]), .dialog .modal-card .modal-card-foot .b-checkbox.checkbox input[type=checkbox]:indeterminate + .check.button:not([class*="is-"]) {
   background: white url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3Crect style='fill:%230a0a0a' width='0.7' height='0.2' x='.15' y='.4'%3E%3C/rect%3E%3C/svg%3E") no-repeat center center;
   border-color: white;
 }
@@ -12843,7 +12843,7 @@ a.has-text-primary-light-dark:hover, a.has-text-primary-light-dark:focus {
   border-color: #0a0a0a;
 }
 
-.b-checkbox.checkbox input[type=checkbox]:indeterminate + .check.is-light, .b-checkbox.checkbox .dialog .modal-card .modal-card-foot input[type=checkbox]:indeterminate + .check.button, .dialog .modal-card .modal-card-foot .b-checkbox.checkbox input[type=checkbox]:indeterminate + .check.button {
+.b-checkbox.checkbox input[type=checkbox]:indeterminate + .check.is-light {
   background: #EFF8FA url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3Crect style='fill:rgba(0, 0, 0, 0.7)' width='0.7' height='0.2' x='.15' y='.4'%3E%3C/rect%3E%3C/svg%3E") no-repeat center center;
   border-color: #EFF8FA;
 }
@@ -12896,7 +12896,7 @@ a.has-text-primary-light-dark:hover, a.has-text-primary-light-dark:focus {
   box-shadow: 0 0 0.5em rgba(94, 178, 206, 0.8);
 }
 
-.b-checkbox.checkbox input[type=checkbox]:focus:checked + .check.is-white {
+.b-checkbox.checkbox input[type=checkbox]:focus:checked + .check.is-white, .b-checkbox.checkbox .dialog .modal-card .modal-card-foot input[type=checkbox]:focus:checked + .check.button:not([class*="is-"]), .dialog .modal-card .modal-card-foot .b-checkbox.checkbox input[type=checkbox]:focus:checked + .check.button:not([class*="is-"]) {
   box-shadow: 0 0 0.5em rgba(255, 255, 255, 0.8);
 }
 
@@ -12904,7 +12904,7 @@ a.has-text-primary-light-dark:hover, a.has-text-primary-light-dark:focus {
   box-shadow: 0 0 0.5em rgba(10, 10, 10, 0.8);
 }
 
-.b-checkbox.checkbox input[type=checkbox]:focus:checked + .check.is-light, .b-checkbox.checkbox .dialog .modal-card .modal-card-foot input[type=checkbox]:focus:checked + .check.button, .dialog .modal-card .modal-card-foot .b-checkbox.checkbox input[type=checkbox]:focus:checked + .check.button {
+.b-checkbox.checkbox input[type=checkbox]:focus:checked + .check.is-light {
   box-shadow: 0 0 0.5em rgba(239, 248, 250, 0.8);
 }
 
@@ -12956,7 +12956,7 @@ a.has-text-primary-light-dark:hover, a.has-text-primary-light-dark:focus {
   border-color: #5Eb2CE;
 }
 
-.b-checkbox.checkbox:hover input[type=checkbox]:not(:disabled) + .check.is-white {
+.b-checkbox.checkbox:hover input[type=checkbox]:not(:disabled) + .check.is-white, .b-checkbox.checkbox:hover .dialog .modal-card .modal-card-foot input[type=checkbox]:not(:disabled) + .check.button:not([class*="is-"]), .dialog .modal-card .modal-card-foot .b-checkbox.checkbox:hover input[type=checkbox]:not(:disabled) + .check.button:not([class*="is-"]) {
   border-color: white;
 }
 
@@ -12964,7 +12964,7 @@ a.has-text-primary-light-dark:hover, a.has-text-primary-light-dark:focus {
   border-color: #0a0a0a;
 }
 
-.b-checkbox.checkbox:hover input[type=checkbox]:not(:disabled) + .check.is-light, .b-checkbox.checkbox:hover .dialog .modal-card .modal-card-foot input[type=checkbox]:not(:disabled) + .check.button, .dialog .modal-card .modal-card-foot .b-checkbox.checkbox:hover input[type=checkbox]:not(:disabled) + .check.button {
+.b-checkbox.checkbox:hover input[type=checkbox]:not(:disabled) + .check.is-light {
   border-color: #EFF8FA;
 }
 
@@ -13032,21 +13032,21 @@ a.has-text-primary-light-dark:hover, a.has-text-primary-light-dark:focus {
   color: #fff;
 }
 
-.b-clockpicker.is-white .card-header {
+.b-clockpicker.is-white .card-header, .dialog .modal-card .modal-card-foot .b-clockpicker.button:not([class*="is-"]) .card-header {
   background-color: white;
   color: #0a0a0a;
 }
 
-.b-clockpicker.is-white .b-clockpicker-face:after {
+.b-clockpicker.is-white .b-clockpicker-face:after, .dialog .modal-card .modal-card-foot .b-clockpicker.button:not([class*="is-"]) .b-clockpicker-face:after {
   background-color: white;
 }
 
-.b-clockpicker.is-white .b-clockpicker-face-hand {
+.b-clockpicker.is-white .b-clockpicker-face-hand, .dialog .modal-card .modal-card-foot .b-clockpicker.button:not([class*="is-"]) .b-clockpicker-face-hand {
   background-color: white;
   border-color: white;
 }
 
-.b-clockpicker.is-white .b-clockpicker-face-number.active {
+.b-clockpicker.is-white .b-clockpicker-face-number.active, .dialog .modal-card .modal-card-foot .b-clockpicker.button:not([class*="is-"]) .b-clockpicker-face-number.active {
   background-color: white;
   color: #0a0a0a;
 }
@@ -13070,21 +13070,21 @@ a.has-text-primary-light-dark:hover, a.has-text-primary-light-dark:focus {
   color: white;
 }
 
-.b-clockpicker.is-light .card-header, .dialog .modal-card .modal-card-foot .b-clockpicker.button .card-header {
+.b-clockpicker.is-light .card-header {
   background-color: #EFF8FA;
   color: rgba(0, 0, 0, 0.7);
 }
 
-.b-clockpicker.is-light .b-clockpicker-face:after, .dialog .modal-card .modal-card-foot .b-clockpicker.button .b-clockpicker-face:after {
+.b-clockpicker.is-light .b-clockpicker-face:after {
   background-color: #EFF8FA;
 }
 
-.b-clockpicker.is-light .b-clockpicker-face-hand, .dialog .modal-card .modal-card-foot .b-clockpicker.button .b-clockpicker-face-hand {
+.b-clockpicker.is-light .b-clockpicker-face-hand {
   background-color: #EFF8FA;
   border-color: #EFF8FA;
 }
 
-.b-clockpicker.is-light .b-clockpicker-face-number.active, .dialog .modal-card .modal-card-foot .b-clockpicker.button .b-clockpicker-face-number.active {
+.b-clockpicker.is-light .b-clockpicker-face-number.active {
   background-color: #EFF8FA;
   color: rgba(0, 0, 0, 0.7);
 }
@@ -13664,7 +13664,7 @@ a.has-text-primary-light-dark:hover, a.has-text-primary-light-dark:focus {
   width: 100%;
 }
 
-.datepicker .datepicker-table .datepicker-body.has-events .datepicker-cell.has-event .events .event.is-white {
+.datepicker .datepicker-table .datepicker-body.has-events .datepicker-cell.has-event .events .event.is-white, .datepicker .datepicker-table .datepicker-body.has-events .datepicker-cell.has-event .events .dialog .modal-card .modal-card-foot .event.button:not([class*="is-"]), .dialog .modal-card .modal-card-foot .datepicker .datepicker-table .datepicker-body.has-events .datepicker-cell.has-event .events .event.button:not([class*="is-"]) {
   background-color: white;
 }
 
@@ -13672,7 +13672,7 @@ a.has-text-primary-light-dark:hover, a.has-text-primary-light-dark:focus {
   background-color: #0a0a0a;
 }
 
-.datepicker .datepicker-table .datepicker-body.has-events .datepicker-cell.has-event .events .event.is-light, .datepicker .datepicker-table .datepicker-body.has-events .datepicker-cell.has-event .events .dialog .modal-card .modal-card-foot .event.button, .dialog .modal-card .modal-card-foot .datepicker .datepicker-table .datepicker-body.has-events .datepicker-cell.has-event .events .event.button {
+.datepicker .datepicker-table .datepicker-body.has-events .datepicker-cell.has-event .events .event.is-light {
   background-color: #EFF8FA;
 }
 
@@ -14367,7 +14367,7 @@ a.has-text-primary-light-dark:hover, a.has-text-primary-light-dark:focus {
   opacity: 1;
 }
 
-.notices .toast.is-white {
+.notices .toast.is-white, .notices .dialog .modal-card .modal-card-foot .toast.button:not([class*="is-"]), .dialog .modal-card .modal-card-foot .notices .toast.button:not([class*="is-"]) {
   color: #0a0a0a;
   background: white;
 }
@@ -14377,7 +14377,7 @@ a.has-text-primary-light-dark:hover, a.has-text-primary-light-dark:focus {
   background: #0a0a0a;
 }
 
-.notices .toast.is-light, .notices .dialog .modal-card .modal-card-foot .toast.button, .dialog .modal-card .modal-card-foot .notices .toast.button {
+.notices .toast.is-light {
   color: rgba(0, 0, 0, 0.7);
   background: #EFF8FA;
 }
@@ -14461,7 +14461,7 @@ a.has-text-primary-light-dark:hover, a.has-text-primary-light-dark:focus {
   background: #202f35;
 }
 
-.notices .snackbar .action.is-white .button {
+.notices .snackbar .action.is-white .button, .notices .snackbar .dialog .modal-card .modal-card-foot .action.button:not([class*="is-"]) .button, .dialog .modal-card .modal-card-foot .notices .snackbar .action.button:not([class*="is-"]) .button {
   color: white;
 }
 
@@ -14469,7 +14469,7 @@ a.has-text-primary-light-dark:hover, a.has-text-primary-light-dark:focus {
   color: #0a0a0a;
 }
 
-.notices .snackbar .action.is-light .button, .notices .snackbar .dialog .modal-card .modal-card-foot .action.button .button, .dialog .modal-card .modal-card-foot .notices .snackbar .action.button .button {
+.notices .snackbar .action.is-light .button {
   color: #EFF8FA;
 }
 
@@ -14696,7 +14696,7 @@ a.has-text-primary-light-dark:hover, a.has-text-primary-light-dark:focus {
   color: #fff;
 }
 
-.progress-wrapper .progress.is-more-than-half.is-white + .progress-value, .progress-wrapper .is-more-than-half.is-white.progress-wrapper.is-not-native + .progress-value, .progress-wrapper .progress-bar.is-more-than-half.is-white + .progress-value {
+.progress-wrapper .progress.is-more-than-half.is-white + .progress-value, .progress-wrapper .is-more-than-half.is-white.progress-wrapper.is-not-native + .progress-value, .progress-wrapper .dialog .modal-card .modal-card-foot .is-more-than-half.progress-wrapper.is-not-native.button:not([class*="is-"]) + .progress-value, .dialog .modal-card .modal-card-foot .progress-wrapper .is-more-than-half.progress-wrapper.is-not-native.button:not([class*="is-"]) + .progress-value, .progress-wrapper .dialog .modal-card .modal-card-foot .progress.is-more-than-half.button:not([class*="is-"]) + .progress-value, .dialog .modal-card .modal-card-foot .progress-wrapper .progress.is-more-than-half.button:not([class*="is-"]) + .progress-value, .progress-wrapper .progress-bar.is-more-than-half.is-white + .progress-value, .progress-wrapper .dialog .modal-card .modal-card-foot .progress-bar.is-more-than-half.button:not([class*="is-"]) + .progress-value, .dialog .modal-card .modal-card-foot .progress-wrapper .progress-bar.is-more-than-half.button:not([class*="is-"]) + .progress-value {
   color: #0a0a0a;
 }
 
@@ -14704,7 +14704,7 @@ a.has-text-primary-light-dark:hover, a.has-text-primary-light-dark:focus {
   color: white;
 }
 
-.progress-wrapper .progress.is-more-than-half.is-light + .progress-value, .progress-wrapper .is-more-than-half.is-light.progress-wrapper.is-not-native + .progress-value, .progress-wrapper .dialog .modal-card .modal-card-foot .is-more-than-half.progress-wrapper.is-not-native.button + .progress-value, .dialog .modal-card .modal-card-foot .progress-wrapper .is-more-than-half.progress-wrapper.is-not-native.button + .progress-value, .progress-wrapper .dialog .modal-card .modal-card-foot .progress.is-more-than-half.button + .progress-value, .dialog .modal-card .modal-card-foot .progress-wrapper .progress.is-more-than-half.button + .progress-value, .progress-wrapper .progress-bar.is-more-than-half.is-light + .progress-value, .progress-wrapper .dialog .modal-card .modal-card-foot .progress-bar.is-more-than-half.button + .progress-value, .dialog .modal-card .modal-card-foot .progress-wrapper .progress-bar.is-more-than-half.button + .progress-value {
+.progress-wrapper .progress.is-more-than-half.is-light + .progress-value, .progress-wrapper .is-more-than-half.is-light.progress-wrapper.is-not-native + .progress-value, .progress-wrapper .progress-bar.is-more-than-half.is-light + .progress-value {
   color: rgba(0, 0, 0, 0.7);
 }
 
@@ -14758,11 +14758,11 @@ a.has-text-primary-light-dark:hover, a.has-text-primary-light-dark:focus {
   color: #fff;
 }
 
-.progress-wrapper.is-not-native .progress-bar.is-white {
+.progress-wrapper.is-not-native .progress-bar.is-white, .progress-wrapper.is-not-native .dialog .modal-card .modal-card-foot .progress-bar.button:not([class*="is-"]), .dialog .modal-card .modal-card-foot .progress-wrapper.is-not-native .progress-bar.button:not([class*="is-"]) {
   background-color: white;
 }
 
-.progress-wrapper.is-not-native .progress-bar.is-white .progress-value {
+.progress-wrapper.is-not-native .progress-bar.is-white .progress-value, .progress-wrapper.is-not-native .dialog .modal-card .modal-card-foot .progress-bar.button:not([class*="is-"]) .progress-value, .dialog .modal-card .modal-card-foot .progress-wrapper.is-not-native .progress-bar.button:not([class*="is-"]) .progress-value {
   color: #0a0a0a;
 }
 
@@ -14774,11 +14774,11 @@ a.has-text-primary-light-dark:hover, a.has-text-primary-light-dark:focus {
   color: white;
 }
 
-.progress-wrapper.is-not-native .progress-bar.is-light, .progress-wrapper.is-not-native .dialog .modal-card .modal-card-foot .progress-bar.button, .dialog .modal-card .modal-card-foot .progress-wrapper.is-not-native .progress-bar.button {
+.progress-wrapper.is-not-native .progress-bar.is-light {
   background-color: #EFF8FA;
 }
 
-.progress-wrapper.is-not-native .progress-bar.is-light .progress-value, .progress-wrapper.is-not-native .dialog .modal-card .modal-card-foot .progress-bar.button .progress-value, .dialog .modal-card .modal-card-foot .progress-wrapper.is-not-native .progress-bar.button .progress-value {
+.progress-wrapper.is-not-native .progress-bar.is-light .progress-value {
   color: rgba(0, 0, 0, 0.7);
 }
 
@@ -14900,7 +14900,7 @@ a.has-text-primary-light-dark:hover, a.has-text-primary-light-dark:focus {
   background-color: #5Eb2CE;
 }
 
-.b-radio.radio input[type=radio] + .check.is-white:before {
+.b-radio.radio input[type=radio] + .check.is-white:before, .b-radio.radio .dialog .modal-card .modal-card-foot input[type=radio] + .check.button:not([class*="is-"]):before, .dialog .modal-card .modal-card-foot .b-radio.radio input[type=radio] + .check.button:not([class*="is-"]):before {
   background: white;
 }
 
@@ -14908,7 +14908,7 @@ a.has-text-primary-light-dark:hover, a.has-text-primary-light-dark:focus {
   background: #0a0a0a;
 }
 
-.b-radio.radio input[type=radio] + .check.is-light:before, .b-radio.radio .dialog .modal-card .modal-card-foot input[type=radio] + .check.button:before, .dialog .modal-card .modal-card-foot .b-radio.radio input[type=radio] + .check.button:before {
+.b-radio.radio input[type=radio] + .check.is-light:before {
   background: #EFF8FA;
 }
 
@@ -14948,7 +14948,7 @@ a.has-text-primary-light-dark:hover, a.has-text-primary-light-dark:focus {
   border-color: #5Eb2CE;
 }
 
-.b-radio.radio input[type=radio]:checked + .check.is-white {
+.b-radio.radio input[type=radio]:checked + .check.is-white, .b-radio.radio .dialog .modal-card .modal-card-foot input[type=radio]:checked + .check.button:not([class*="is-"]), .dialog .modal-card .modal-card-foot .b-radio.radio input[type=radio]:checked + .check.button:not([class*="is-"]) {
   border-color: white;
 }
 
@@ -14956,7 +14956,7 @@ a.has-text-primary-light-dark:hover, a.has-text-primary-light-dark:focus {
   border-color: #0a0a0a;
 }
 
-.b-radio.radio input[type=radio]:checked + .check.is-light, .b-radio.radio .dialog .modal-card .modal-card-foot input[type=radio]:checked + .check.button, .dialog .modal-card .modal-card-foot .b-radio.radio input[type=radio]:checked + .check.button {
+.b-radio.radio input[type=radio]:checked + .check.is-light {
   border-color: #EFF8FA;
 }
 
@@ -15004,7 +15004,7 @@ a.has-text-primary-light-dark:hover, a.has-text-primary-light-dark:focus {
   box-shadow: 0 0 0.5em rgba(94, 178, 206, 0.8);
 }
 
-.b-radio.radio input[type=radio]:focus:checked + .check.is-white {
+.b-radio.radio input[type=radio]:focus:checked + .check.is-white, .b-radio.radio .dialog .modal-card .modal-card-foot input[type=radio]:focus:checked + .check.button:not([class*="is-"]), .dialog .modal-card .modal-card-foot .b-radio.radio input[type=radio]:focus:checked + .check.button:not([class*="is-"]) {
   box-shadow: 0 0 0.5em rgba(255, 255, 255, 0.8);
 }
 
@@ -15012,7 +15012,7 @@ a.has-text-primary-light-dark:hover, a.has-text-primary-light-dark:focus {
   box-shadow: 0 0 0.5em rgba(10, 10, 10, 0.8);
 }
 
-.b-radio.radio input[type=radio]:focus:checked + .check.is-light, .b-radio.radio .dialog .modal-card .modal-card-foot input[type=radio]:focus:checked + .check.button, .dialog .modal-card .modal-card-foot .b-radio.radio input[type=radio]:focus:checked + .check.button {
+.b-radio.radio input[type=radio]:focus:checked + .check.is-light {
   box-shadow: 0 0 0.5em rgba(239, 248, 250, 0.8);
 }
 
@@ -15068,7 +15068,7 @@ a.has-text-primary-light-dark:hover, a.has-text-primary-light-dark:focus {
   border-color: #5Eb2CE;
 }
 
-.b-radio.radio:hover input[type=radio]:not(:disabled) + .check.is-white {
+.b-radio.radio:hover input[type=radio]:not(:disabled) + .check.is-white, .b-radio.radio:hover .dialog .modal-card .modal-card-foot input[type=radio]:not(:disabled) + .check.button:not([class*="is-"]), .dialog .modal-card .modal-card-foot .b-radio.radio:hover input[type=radio]:not(:disabled) + .check.button:not([class*="is-"]) {
   border-color: white;
 }
 
@@ -15076,7 +15076,7 @@ a.has-text-primary-light-dark:hover, a.has-text-primary-light-dark:focus {
   border-color: #0a0a0a;
 }
 
-.b-radio.radio:hover input[type=radio]:not(:disabled) + .check.is-light, .b-radio.radio:hover .dialog .modal-card .modal-card-foot input[type=radio]:not(:disabled) + .check.button, .dialog .modal-card .modal-card-foot .b-radio.radio:hover input[type=radio]:not(:disabled) + .check.button {
+.b-radio.radio:hover input[type=radio]:not(:disabled) + .check.is-light {
   border-color: #EFF8FA;
 }
 
@@ -15324,7 +15324,7 @@ a.has-text-primary-light-dark:hover, a.has-text-primary-light-dark:focus {
   z-index: 39;
 }
 
-.b-sidebar .sidebar-content.is-white {
+.b-sidebar .sidebar-content.is-white, .b-sidebar .dialog .modal-card .modal-card-foot .sidebar-content.button:not([class*="is-"]), .dialog .modal-card .modal-card-foot .b-sidebar .sidebar-content.button:not([class*="is-"]) {
   background-color: white;
 }
 
@@ -15332,7 +15332,7 @@ a.has-text-primary-light-dark:hover, a.has-text-primary-light-dark:focus {
   background-color: #0a0a0a;
 }
 
-.b-sidebar .sidebar-content.is-light, .b-sidebar .dialog .modal-card .modal-card-foot .sidebar-content.button, .dialog .modal-card .modal-card-foot .b-sidebar .sidebar-content.button {
+.b-sidebar .sidebar-content.is-light {
   background-color: #EFF8FA;
 }
 
@@ -15632,7 +15632,7 @@ a.has-text-primary-light-dark:hover, a.has-text-primary-light-dark:focus {
   transform: translateX(-50%);
 }
 
-.b-slider.is-white .b-slider-fill {
+.b-slider.is-white .b-slider-fill, .dialog .modal-card .modal-card-foot .b-slider.button:not([class*="is-"]) .b-slider-fill {
   background: white !important;
 }
 
@@ -15640,7 +15640,7 @@ a.has-text-primary-light-dark:hover, a.has-text-primary-light-dark:focus {
   background: #0a0a0a !important;
 }
 
-.b-slider.is-light .b-slider-fill, .dialog .modal-card .modal-card-foot .b-slider.button .b-slider-fill {
+.b-slider.is-light .b-slider-fill {
   background: #EFF8FA !important;
 }
 
@@ -15732,28 +15732,28 @@ MIT (https://github.com/Wikiki/bulma-steps/blob/master/LICENSE)
   overflow: hidden;
 }
 
-.b-steps .steps .step-items .step-item.is-white::before, .b-steps .steps .step-items .step-item.is-white::after {
+.b-steps .steps .step-items .step-item.is-white::before, .b-steps .steps .step-items .dialog .modal-card .modal-card-foot .step-item.button:not([class*="is-"])::before, .dialog .modal-card .modal-card-foot .b-steps .steps .step-items .step-item.button:not([class*="is-"])::before, .b-steps .steps .step-items .step-item.is-white::after, .b-steps .steps .step-items .dialog .modal-card .modal-card-foot .step-item.button:not([class*="is-"])::after, .dialog .modal-card .modal-card-foot .b-steps .steps .step-items .step-item.button:not([class*="is-"])::after {
   background: linear-gradient(to left, #dbdbdb 50%, white 50%);
   background-size: 200% 100%;
   background-position: right bottom;
 }
 
-.b-steps .steps .step-items .step-item.is-white.is-active .step-marker {
+.b-steps .steps .step-items .step-item.is-white.is-active .step-marker, .b-steps .steps .step-items .dialog .modal-card .modal-card-foot .step-item.is-active.button:not([class*="is-"]) .step-marker, .dialog .modal-card .modal-card-foot .b-steps .steps .step-items .step-item.is-active.button:not([class*="is-"]) .step-marker {
   background-color: white;
   border-color: white;
   color: white;
 }
 
-.b-steps .steps .step-items .step-item.is-white.is-active::before, .b-steps .steps .step-items .step-item.is-white.is-active::after {
+.b-steps .steps .step-items .step-item.is-white.is-active::before, .b-steps .steps .step-items .dialog .modal-card .modal-card-foot .step-item.is-active.button:not([class*="is-"])::before, .dialog .modal-card .modal-card-foot .b-steps .steps .step-items .step-item.is-active.button:not([class*="is-"])::before, .b-steps .steps .step-items .step-item.is-white.is-active::after, .b-steps .steps .step-items .dialog .modal-card .modal-card-foot .step-item.is-active.button:not([class*="is-"])::after, .dialog .modal-card .modal-card-foot .b-steps .steps .step-items .step-item.is-active.button:not([class*="is-"])::after {
   background-position: left bottom;
 }
 
-.b-steps .steps .step-items .step-item.is-white.is-previous .step-marker {
+.b-steps .steps .step-items .step-item.is-white.is-previous .step-marker, .b-steps .steps .step-items .dialog .modal-card .modal-card-foot .step-item.is-previous.button:not([class*="is-"]) .step-marker, .dialog .modal-card .modal-card-foot .b-steps .steps .step-items .step-item.is-previous.button:not([class*="is-"]) .step-marker {
   color: #0a0a0a;
   background-color: white;
 }
 
-.b-steps .steps .step-items .step-item.is-white.is-previous::before, .b-steps .steps .step-items .step-item.is-white.is-previous::after {
+.b-steps .steps .step-items .step-item.is-white.is-previous::before, .b-steps .steps .step-items .dialog .modal-card .modal-card-foot .step-item.is-previous.button:not([class*="is-"])::before, .dialog .modal-card .modal-card-foot .b-steps .steps .step-items .step-item.is-previous.button:not([class*="is-"])::before, .b-steps .steps .step-items .step-item.is-white.is-previous::after, .b-steps .steps .step-items .dialog .modal-card .modal-card-foot .step-item.is-previous.button:not([class*="is-"])::after, .dialog .modal-card .modal-card-foot .b-steps .steps .step-items .step-item.is-previous.button:not([class*="is-"])::after {
   background-position: left bottom;
 }
 
@@ -15782,28 +15782,28 @@ MIT (https://github.com/Wikiki/bulma-steps/blob/master/LICENSE)
   background-position: left bottom;
 }
 
-.b-steps .steps .step-items .step-item.is-light::before, .b-steps .steps .step-items .dialog .modal-card .modal-card-foot .step-item.button::before, .dialog .modal-card .modal-card-foot .b-steps .steps .step-items .step-item.button::before, .b-steps .steps .step-items .step-item.is-light::after, .b-steps .steps .step-items .dialog .modal-card .modal-card-foot .step-item.button::after, .dialog .modal-card .modal-card-foot .b-steps .steps .step-items .step-item.button::after {
+.b-steps .steps .step-items .step-item.is-light::before, .b-steps .steps .step-items .step-item.is-light::after {
   background: linear-gradient(to left, #dbdbdb 50%, #EFF8FA 50%);
   background-size: 200% 100%;
   background-position: right bottom;
 }
 
-.b-steps .steps .step-items .step-item.is-light.is-active .step-marker, .b-steps .steps .step-items .dialog .modal-card .modal-card-foot .step-item.is-active.button .step-marker, .dialog .modal-card .modal-card-foot .b-steps .steps .step-items .step-item.is-active.button .step-marker {
+.b-steps .steps .step-items .step-item.is-light.is-active .step-marker {
   background-color: white;
   border-color: #EFF8FA;
   color: #EFF8FA;
 }
 
-.b-steps .steps .step-items .step-item.is-light.is-active::before, .b-steps .steps .step-items .dialog .modal-card .modal-card-foot .step-item.is-active.button::before, .dialog .modal-card .modal-card-foot .b-steps .steps .step-items .step-item.is-active.button::before, .b-steps .steps .step-items .step-item.is-light.is-active::after, .b-steps .steps .step-items .dialog .modal-card .modal-card-foot .step-item.is-active.button::after, .dialog .modal-card .modal-card-foot .b-steps .steps .step-items .step-item.is-active.button::after {
+.b-steps .steps .step-items .step-item.is-light.is-active::before, .b-steps .steps .step-items .step-item.is-light.is-active::after {
   background-position: left bottom;
 }
 
-.b-steps .steps .step-items .step-item.is-light.is-previous .step-marker, .b-steps .steps .step-items .dialog .modal-card .modal-card-foot .step-item.is-previous.button .step-marker, .dialog .modal-card .modal-card-foot .b-steps .steps .step-items .step-item.is-previous.button .step-marker {
+.b-steps .steps .step-items .step-item.is-light.is-previous .step-marker {
   color: rgba(0, 0, 0, 0.7);
   background-color: #EFF8FA;
 }
 
-.b-steps .steps .step-items .step-item.is-light.is-previous::before, .b-steps .steps .step-items .dialog .modal-card .modal-card-foot .step-item.is-previous.button::before, .dialog .modal-card .modal-card-foot .b-steps .steps .step-items .step-item.is-previous.button::before, .b-steps .steps .step-items .step-item.is-light.is-previous::after, .b-steps .steps .step-items .dialog .modal-card .modal-card-foot .step-item.is-previous.button::after, .dialog .modal-card .modal-card-foot .b-steps .steps .step-items .step-item.is-previous.button::after {
+.b-steps .steps .step-items .step-item.is-light.is-previous::before, .b-steps .steps .step-items .step-item.is-light.is-previous::after {
   background-position: left bottom;
 }
 
@@ -16356,7 +16356,7 @@ MIT (https://github.com/Wikiki/bulma-steps/blob/master/LICENSE)
   background-position: left bottom;
 }
 
-.b-steps.is-vertical > .steps .step-items .step-item.is-white::before, .b-steps.is-vertical > .steps .step-items .step-item.is-white::after {
+.b-steps.is-vertical > .steps .step-items .step-item.is-white::before, .b-steps.is-vertical > .steps .step-items .dialog .modal-card .modal-card-foot .step-item.button:not([class*="is-"])::before, .dialog .modal-card .modal-card-foot .b-steps.is-vertical > .steps .step-items .step-item.button:not([class*="is-"])::before, .b-steps.is-vertical > .steps .step-items .step-item.is-white::after, .b-steps.is-vertical > .steps .step-items .dialog .modal-card .modal-card-foot .step-item.button:not([class*="is-"])::after, .dialog .modal-card .modal-card-foot .b-steps.is-vertical > .steps .step-items .step-item.button:not([class*="is-"])::after {
   background: linear-gradient(to top, #dbdbdb 50%, white 50%);
   background-size: 100% 200%;
   background-position: left bottom;
@@ -16368,7 +16368,7 @@ MIT (https://github.com/Wikiki/bulma-steps/blob/master/LICENSE)
   background-position: left bottom;
 }
 
-.b-steps.is-vertical > .steps .step-items .step-item.is-light::before, .b-steps.is-vertical > .steps .step-items .dialog .modal-card .modal-card-foot .step-item.button::before, .dialog .modal-card .modal-card-foot .b-steps.is-vertical > .steps .step-items .step-item.button::before, .b-steps.is-vertical > .steps .step-items .step-item.is-light::after, .b-steps.is-vertical > .steps .step-items .dialog .modal-card .modal-card-foot .step-item.button::after, .dialog .modal-card .modal-card-foot .b-steps.is-vertical > .steps .step-items .step-item.button::after {
+.b-steps.is-vertical > .steps .step-items .step-item.is-light::before, .b-steps.is-vertical > .steps .step-items .step-item.is-light::after {
   background: linear-gradient(to top, #dbdbdb 50%, #EFF8FA 50%);
   background-size: 100% 200%;
   background-position: left bottom;
@@ -16635,7 +16635,7 @@ MIT (https://github.com/Wikiki/bulma-steps/blob/master/LICENSE)
   background: #5Eb2CE;
 }
 
-.switch input[type=checkbox]:checked + .check.is-white {
+.switch input[type=checkbox]:checked + .check.is-white, .switch .dialog .modal-card .modal-card-foot input[type=checkbox]:checked + .check.button:not([class*="is-"]), .dialog .modal-card .modal-card-foot .switch input[type=checkbox]:checked + .check.button:not([class*="is-"]) {
   background: white;
 }
 
@@ -16643,7 +16643,7 @@ MIT (https://github.com/Wikiki/bulma-steps/blob/master/LICENSE)
   background: #0a0a0a;
 }
 
-.switch input[type=checkbox]:checked + .check.is-light, .switch .dialog .modal-card .modal-card-foot input[type=checkbox]:checked + .check.button, .dialog .modal-card .modal-card-foot .switch input[type=checkbox]:checked + .check.button {
+.switch input[type=checkbox]:checked + .check.is-light {
   background: #EFF8FA;
 }
 
@@ -16743,7 +16743,7 @@ MIT (https://github.com/Wikiki/bulma-steps/blob/master/LICENSE)
   box-shadow: 0 0 0.5em rgba(94, 178, 206, 0.8);
 }
 
-.switch input[type=checkbox]:focus:checked + .check.is-white, .switch input[type=checkbox]:active:checked + .check.is-white {
+.switch input[type=checkbox]:focus:checked + .check.is-white, .switch .dialog .modal-card .modal-card-foot input[type=checkbox]:focus:checked + .check.button:not([class*="is-"]), .dialog .modal-card .modal-card-foot .switch input[type=checkbox]:focus:checked + .check.button:not([class*="is-"]), .switch input[type=checkbox]:active:checked + .check.is-white, .switch .dialog .modal-card .modal-card-foot input[type=checkbox]:active:checked + .check.button:not([class*="is-"]), .dialog .modal-card .modal-card-foot .switch input[type=checkbox]:active:checked + .check.button:not([class*="is-"]) {
   box-shadow: 0 0 0.5em rgba(255, 255, 255, 0.8);
 }
 
@@ -16751,7 +16751,7 @@ MIT (https://github.com/Wikiki/bulma-steps/blob/master/LICENSE)
   box-shadow: 0 0 0.5em rgba(10, 10, 10, 0.8);
 }
 
-.switch input[type=checkbox]:focus:checked + .check.is-light, .switch .dialog .modal-card .modal-card-foot input[type=checkbox]:focus:checked + .check.button, .dialog .modal-card .modal-card-foot .switch input[type=checkbox]:focus:checked + .check.button, .switch input[type=checkbox]:active:checked + .check.is-light, .switch .dialog .modal-card .modal-card-foot input[type=checkbox]:active:checked + .check.button, .dialog .modal-card .modal-card-foot .switch input[type=checkbox]:active:checked + .check.button {
+.switch input[type=checkbox]:focus:checked + .check.is-light, .switch input[type=checkbox]:active:checked + .check.is-light {
   box-shadow: 0 0 0.5em rgba(239, 248, 250, 0.8);
 }
 
@@ -16851,7 +16851,7 @@ MIT (https://github.com/Wikiki/bulma-steps/blob/master/LICENSE)
   background: rgba(94, 178, 206, 0.9);
 }
 
-.switch:hover input[type=checkbox]:checked + .check.is-white {
+.switch:hover input[type=checkbox]:checked + .check.is-white, .switch:hover .dialog .modal-card .modal-card-foot input[type=checkbox]:checked + .check.button:not([class*="is-"]), .dialog .modal-card .modal-card-foot .switch:hover input[type=checkbox]:checked + .check.button:not([class*="is-"]) {
   background: rgba(255, 255, 255, 0.9);
 }
 
@@ -16859,7 +16859,7 @@ MIT (https://github.com/Wikiki/bulma-steps/blob/master/LICENSE)
   background: rgba(10, 10, 10, 0.9);
 }
 
-.switch:hover input[type=checkbox]:checked + .check.is-light, .switch:hover .dialog .modal-card .modal-card-foot input[type=checkbox]:checked + .check.button, .dialog .modal-card .modal-card-foot .switch:hover input[type=checkbox]:checked + .check.button {
+.switch:hover input[type=checkbox]:checked + .check.is-light {
   background: rgba(239, 248, 250, 0.9);
 }
 
@@ -17053,12 +17053,12 @@ MIT (https://github.com/Wikiki/bulma-steps/blob/master/LICENSE)
   border-color: #5Eb2CE;
 }
 
-.switch.is-outlined input[type=checkbox]:checked + .check.is-white {
+.switch.is-outlined input[type=checkbox]:checked + .check.is-white, .switch.is-outlined .dialog .modal-card .modal-card-foot input[type=checkbox]:checked + .check.button:not([class*="is-"]), .dialog .modal-card .modal-card-foot .switch.is-outlined input[type=checkbox]:checked + .check.button:not([class*="is-"]) {
   background: transparent;
   border-color: white;
 }
 
-.switch.is-outlined input[type=checkbox]:checked + .check.is-white:before {
+.switch.is-outlined input[type=checkbox]:checked + .check.is-white:before, .switch.is-outlined .dialog .modal-card .modal-card-foot input[type=checkbox]:checked + .check.button:not([class*="is-"]):before, .dialog .modal-card .modal-card-foot .switch.is-outlined input[type=checkbox]:checked + .check.button:not([class*="is-"]):before {
   background: white;
 }
 
@@ -17071,12 +17071,12 @@ MIT (https://github.com/Wikiki/bulma-steps/blob/master/LICENSE)
   background: #0a0a0a;
 }
 
-.switch.is-outlined input[type=checkbox]:checked + .check.is-light, .switch.is-outlined .dialog .modal-card .modal-card-foot input[type=checkbox]:checked + .check.button, .dialog .modal-card .modal-card-foot .switch.is-outlined input[type=checkbox]:checked + .check.button {
+.switch.is-outlined input[type=checkbox]:checked + .check.is-light {
   background: transparent;
   border-color: #EFF8FA;
 }
 
-.switch.is-outlined input[type=checkbox]:checked + .check.is-light:before, .switch.is-outlined .dialog .modal-card .modal-card-foot input[type=checkbox]:checked + .check.button:before, .dialog .modal-card .modal-card-foot .switch.is-outlined input[type=checkbox]:checked + .check.button:before {
+.switch.is-outlined input[type=checkbox]:checked + .check.is-light:before {
   background: #EFF8FA;
 }
 
@@ -17166,7 +17166,7 @@ MIT (https://github.com/Wikiki/bulma-steps/blob/master/LICENSE)
   border-color: rgba(94, 178, 206, 0.9);
 }
 
-.switch.is-outlined:hover input[type=checkbox]:checked + .check.is-white {
+.switch.is-outlined:hover input[type=checkbox]:checked + .check.is-white, .switch.is-outlined:hover .dialog .modal-card .modal-card-foot input[type=checkbox]:checked + .check.button:not([class*="is-"]), .dialog .modal-card .modal-card-foot .switch.is-outlined:hover input[type=checkbox]:checked + .check.button:not([class*="is-"]) {
   border-color: rgba(255, 255, 255, 0.9);
 }
 
@@ -17174,7 +17174,7 @@ MIT (https://github.com/Wikiki/bulma-steps/blob/master/LICENSE)
   border-color: rgba(10, 10, 10, 0.9);
 }
 
-.switch.is-outlined:hover input[type=checkbox]:checked + .check.is-light, .switch.is-outlined:hover .dialog .modal-card .modal-card-foot input[type=checkbox]:checked + .check.button, .dialog .modal-card .modal-card-foot .switch.is-outlined:hover input[type=checkbox]:checked + .check.button {
+.switch.is-outlined:hover input[type=checkbox]:checked + .check.is-light {
   border-color: rgba(239, 248, 250, 0.9);
 }
 
@@ -17728,11 +17728,11 @@ MIT (https://github.com/Wikiki/bulma-steps/blob/master/LICENSE)
   text-overflow: ellipsis;
 }
 
-.tag .delete.is-white, .tag.is-delete.is-white, .tag.has-delete-icon.is-white {
+.tag .delete.is-white, .tag .dialog .modal-card .modal-card-foot .delete.button:not([class*="is-"]), .dialog .modal-card .modal-card-foot .tag .delete.button:not([class*="is-"]), .tag.is-delete.is-white, .dialog .modal-card .modal-card-foot .tag.is-delete.button:not([class*="is-"]), .tag.has-delete-icon.is-white, .dialog .modal-card .modal-card-foot .tag.has-delete-icon.button:not([class*="is-"]) {
   background: white;
 }
 
-.tag .delete.is-white:hover, .tag.is-delete.is-white:hover, .tag.has-delete-icon.is-white:hover {
+.tag .delete.is-white:hover, .tag .dialog .modal-card .modal-card-foot .delete.button:hover:not([class*="is-"]), .dialog .modal-card .modal-card-foot .tag .delete.button:hover:not([class*="is-"]), .tag.is-delete.is-white:hover, .dialog .modal-card .modal-card-foot .tag.is-delete.button:hover:not([class*="is-"]), .tag.has-delete-icon.is-white:hover, .dialog .modal-card .modal-card-foot .tag.has-delete-icon.button:hover:not([class*="is-"]) {
   background-color: #e6e6e6;
   text-decoration: none;
 }
@@ -17746,11 +17746,11 @@ MIT (https://github.com/Wikiki/bulma-steps/blob/master/LICENSE)
   text-decoration: none;
 }
 
-.tag .delete.is-light, .tag .dialog .modal-card .modal-card-foot .delete.button, .dialog .modal-card .modal-card-foot .tag .delete.button, .tag.is-delete.is-light, .dialog .modal-card .modal-card-foot .tag.is-delete.button, .tag.has-delete-icon.is-light, .dialog .modal-card .modal-card-foot .tag.has-delete-icon.button {
+.tag .delete.is-light, .tag.is-delete.is-light, .tag.has-delete-icon.is-light {
   background: #EFF8FA;
 }
 
-.tag .delete.is-light:hover, .tag .dialog .modal-card .modal-card-foot .delete.button:hover, .dialog .modal-card .modal-card-foot .tag .delete.button:hover, .tag.is-delete.is-light:hover, .dialog .modal-card .modal-card-foot .tag.is-delete.button:hover, .tag.has-delete-icon.is-light:hover, .dialog .modal-card .modal-card-foot .tag.has-delete-icon.button:hover {
+.tag .delete.is-light:hover, .tag.is-delete.is-light:hover, .tag.has-delete-icon.is-light:hover {
   background-color: #c8e7ee;
   text-decoration: none;
 }
@@ -18024,7 +18024,7 @@ MIT (https://github.com/Wikiki/bulma-steps/blob/master/LICENSE)
   border-left: 5px solid transparent;
 }
 
-.b-tooltip.is-top.is-white .tooltip-content::before {
+.b-tooltip.is-top.is-white .tooltip-content::before, .dialog .modal-card .modal-card-foot .b-tooltip.is-top.button:not([class*="is-"]) .tooltip-content::before {
   border-top-color: white;
 }
 
@@ -18032,7 +18032,7 @@ MIT (https://github.com/Wikiki/bulma-steps/blob/master/LICENSE)
   border-top-color: #0a0a0a;
 }
 
-.b-tooltip.is-top.is-light .tooltip-content::before, .dialog .modal-card .modal-card-foot .b-tooltip.is-top.button .tooltip-content::before {
+.b-tooltip.is-top.is-light .tooltip-content::before {
   border-top-color: #EFF8FA;
 }
 
@@ -18044,7 +18044,7 @@ MIT (https://github.com/Wikiki/bulma-steps/blob/master/LICENSE)
   border-top-color: #5Eb2CE;
 }
 
-.b-tooltip.is-top.is-primary.is-light .tooltip-content::before, .dialog .modal-card .modal-card-foot .b-tooltip.is-top.is-primary.button .tooltip-content::before {
+.b-tooltip.is-top.is-primary.is-light .tooltip-content::before {
   border-top-color: #ADD8E6;
 }
 
@@ -18052,7 +18052,7 @@ MIT (https://github.com/Wikiki/bulma-steps/blob/master/LICENSE)
   border-top-color: #5Eb2CE;
 }
 
-.b-tooltip.is-top.is-link.is-light .tooltip-content::before, .dialog .modal-card .modal-card-foot .b-tooltip.is-top.is-link.button .tooltip-content::before {
+.b-tooltip.is-top.is-link.is-light .tooltip-content::before {
   border-top-color: #eff8fa;
 }
 
@@ -18060,7 +18060,7 @@ MIT (https://github.com/Wikiki/bulma-steps/blob/master/LICENSE)
   border-top-color: #ADD8E6;
 }
 
-.b-tooltip.is-top.is-info.is-light .tooltip-content::before, .dialog .modal-card .modal-card-foot .b-tooltip.is-top.is-info.button .tooltip-content::before {
+.b-tooltip.is-top.is-info.is-light .tooltip-content::before {
   border-top-color: #eff8fa;
 }
 
@@ -18068,7 +18068,7 @@ MIT (https://github.com/Wikiki/bulma-steps/blob/master/LICENSE)
   border-top-color: #B0DB43;
 }
 
-.b-tooltip.is-top.is-success.is-light .tooltip-content::before, .dialog .modal-card .modal-card-foot .b-tooltip.is-top.is-success.button .tooltip-content::before {
+.b-tooltip.is-top.is-success.is-light .tooltip-content::before {
   border-top-color: #f8fcee;
 }
 
@@ -18076,7 +18076,7 @@ MIT (https://github.com/Wikiki/bulma-steps/blob/master/LICENSE)
   border-top-color: #F49E4C;
 }
 
-.b-tooltip.is-top.is-warning.is-light .tooltip-content::before, .dialog .modal-card .modal-card-foot .b-tooltip.is-top.is-warning.button .tooltip-content::before {
+.b-tooltip.is-top.is-warning.is-light .tooltip-content::before {
   border-top-color: #fef5ec;
 }
 
@@ -18084,7 +18084,7 @@ MIT (https://github.com/Wikiki/bulma-steps/blob/master/LICENSE)
   border-top-color: #AB3428;
 }
 
-.b-tooltip.is-top.is-danger.is-light .tooltip-content::before, .dialog .modal-card .modal-card-foot .b-tooltip.is-top.is-danger.button .tooltip-content::before {
+.b-tooltip.is-top.is-danger.is-light .tooltip-content::before {
   border-top-color: #fbf0ee;
 }
 
@@ -18092,7 +18092,7 @@ MIT (https://github.com/Wikiki/bulma-steps/blob/master/LICENSE)
   border-top-color: #ADD8E6;
 }
 
-.b-tooltip.is-top.is-primary-light.is-light .tooltip-content::before, .dialog .modal-card .modal-card-foot .b-tooltip.is-top.is-primary-light.button .tooltip-content::before {
+.b-tooltip.is-top.is-primary-light.is-light .tooltip-content::before {
   border-top-color: #eff8fa;
 }
 
@@ -18115,7 +18115,7 @@ MIT (https://github.com/Wikiki/bulma-steps/blob/master/LICENSE)
   border-bottom: 5px solid transparent;
 }
 
-.b-tooltip.is-right.is-white .tooltip-content::before {
+.b-tooltip.is-right.is-white .tooltip-content::before, .dialog .modal-card .modal-card-foot .b-tooltip.is-right.button:not([class*="is-"]) .tooltip-content::before {
   border-right-color: white;
 }
 
@@ -18123,7 +18123,7 @@ MIT (https://github.com/Wikiki/bulma-steps/blob/master/LICENSE)
   border-right-color: #0a0a0a;
 }
 
-.b-tooltip.is-right.is-light .tooltip-content::before, .dialog .modal-card .modal-card-foot .b-tooltip.is-right.button .tooltip-content::before {
+.b-tooltip.is-right.is-light .tooltip-content::before {
   border-right-color: #EFF8FA;
 }
 
@@ -18135,7 +18135,7 @@ MIT (https://github.com/Wikiki/bulma-steps/blob/master/LICENSE)
   border-right-color: #5Eb2CE;
 }
 
-.b-tooltip.is-right.is-primary.is-light .tooltip-content::before, .dialog .modal-card .modal-card-foot .b-tooltip.is-right.is-primary.button .tooltip-content::before {
+.b-tooltip.is-right.is-primary.is-light .tooltip-content::before {
   border-right-color: #ADD8E6;
 }
 
@@ -18143,7 +18143,7 @@ MIT (https://github.com/Wikiki/bulma-steps/blob/master/LICENSE)
   border-right-color: #5Eb2CE;
 }
 
-.b-tooltip.is-right.is-link.is-light .tooltip-content::before, .dialog .modal-card .modal-card-foot .b-tooltip.is-right.is-link.button .tooltip-content::before {
+.b-tooltip.is-right.is-link.is-light .tooltip-content::before {
   border-right-color: #eff8fa;
 }
 
@@ -18151,7 +18151,7 @@ MIT (https://github.com/Wikiki/bulma-steps/blob/master/LICENSE)
   border-right-color: #ADD8E6;
 }
 
-.b-tooltip.is-right.is-info.is-light .tooltip-content::before, .dialog .modal-card .modal-card-foot .b-tooltip.is-right.is-info.button .tooltip-content::before {
+.b-tooltip.is-right.is-info.is-light .tooltip-content::before {
   border-right-color: #eff8fa;
 }
 
@@ -18159,7 +18159,7 @@ MIT (https://github.com/Wikiki/bulma-steps/blob/master/LICENSE)
   border-right-color: #B0DB43;
 }
 
-.b-tooltip.is-right.is-success.is-light .tooltip-content::before, .dialog .modal-card .modal-card-foot .b-tooltip.is-right.is-success.button .tooltip-content::before {
+.b-tooltip.is-right.is-success.is-light .tooltip-content::before {
   border-right-color: #f8fcee;
 }
 
@@ -18167,7 +18167,7 @@ MIT (https://github.com/Wikiki/bulma-steps/blob/master/LICENSE)
   border-right-color: #F49E4C;
 }
 
-.b-tooltip.is-right.is-warning.is-light .tooltip-content::before, .dialog .modal-card .modal-card-foot .b-tooltip.is-right.is-warning.button .tooltip-content::before {
+.b-tooltip.is-right.is-warning.is-light .tooltip-content::before {
   border-right-color: #fef5ec;
 }
 
@@ -18175,7 +18175,7 @@ MIT (https://github.com/Wikiki/bulma-steps/blob/master/LICENSE)
   border-right-color: #AB3428;
 }
 
-.b-tooltip.is-right.is-danger.is-light .tooltip-content::before, .dialog .modal-card .modal-card-foot .b-tooltip.is-right.is-danger.button .tooltip-content::before {
+.b-tooltip.is-right.is-danger.is-light .tooltip-content::before {
   border-right-color: #fbf0ee;
 }
 
@@ -18183,7 +18183,7 @@ MIT (https://github.com/Wikiki/bulma-steps/blob/master/LICENSE)
   border-right-color: #ADD8E6;
 }
 
-.b-tooltip.is-right.is-primary-light.is-light .tooltip-content::before, .dialog .modal-card .modal-card-foot .b-tooltip.is-right.is-primary-light.button .tooltip-content::before {
+.b-tooltip.is-right.is-primary-light.is-light .tooltip-content::before {
   border-right-color: #eff8fa;
 }
 
@@ -18206,7 +18206,7 @@ MIT (https://github.com/Wikiki/bulma-steps/blob/master/LICENSE)
   border-left: 5px solid transparent;
 }
 
-.b-tooltip.is-bottom.is-white .tooltip-content::before {
+.b-tooltip.is-bottom.is-white .tooltip-content::before, .dialog .modal-card .modal-card-foot .b-tooltip.is-bottom.button:not([class*="is-"]) .tooltip-content::before {
   border-bottom-color: white;
 }
 
@@ -18214,7 +18214,7 @@ MIT (https://github.com/Wikiki/bulma-steps/blob/master/LICENSE)
   border-bottom-color: #0a0a0a;
 }
 
-.b-tooltip.is-bottom.is-light .tooltip-content::before, .dialog .modal-card .modal-card-foot .b-tooltip.is-bottom.button .tooltip-content::before {
+.b-tooltip.is-bottom.is-light .tooltip-content::before {
   border-bottom-color: #EFF8FA;
 }
 
@@ -18226,7 +18226,7 @@ MIT (https://github.com/Wikiki/bulma-steps/blob/master/LICENSE)
   border-bottom-color: #5Eb2CE;
 }
 
-.b-tooltip.is-bottom.is-primary.is-light .tooltip-content::before, .dialog .modal-card .modal-card-foot .b-tooltip.is-bottom.is-primary.button .tooltip-content::before {
+.b-tooltip.is-bottom.is-primary.is-light .tooltip-content::before {
   border-bottom-color: #ADD8E6;
 }
 
@@ -18234,7 +18234,7 @@ MIT (https://github.com/Wikiki/bulma-steps/blob/master/LICENSE)
   border-bottom-color: #5Eb2CE;
 }
 
-.b-tooltip.is-bottom.is-link.is-light .tooltip-content::before, .dialog .modal-card .modal-card-foot .b-tooltip.is-bottom.is-link.button .tooltip-content::before {
+.b-tooltip.is-bottom.is-link.is-light .tooltip-content::before {
   border-bottom-color: #eff8fa;
 }
 
@@ -18242,7 +18242,7 @@ MIT (https://github.com/Wikiki/bulma-steps/blob/master/LICENSE)
   border-bottom-color: #ADD8E6;
 }
 
-.b-tooltip.is-bottom.is-info.is-light .tooltip-content::before, .dialog .modal-card .modal-card-foot .b-tooltip.is-bottom.is-info.button .tooltip-content::before {
+.b-tooltip.is-bottom.is-info.is-light .tooltip-content::before {
   border-bottom-color: #eff8fa;
 }
 
@@ -18250,7 +18250,7 @@ MIT (https://github.com/Wikiki/bulma-steps/blob/master/LICENSE)
   border-bottom-color: #B0DB43;
 }
 
-.b-tooltip.is-bottom.is-success.is-light .tooltip-content::before, .dialog .modal-card .modal-card-foot .b-tooltip.is-bottom.is-success.button .tooltip-content::before {
+.b-tooltip.is-bottom.is-success.is-light .tooltip-content::before {
   border-bottom-color: #f8fcee;
 }
 
@@ -18258,7 +18258,7 @@ MIT (https://github.com/Wikiki/bulma-steps/blob/master/LICENSE)
   border-bottom-color: #F49E4C;
 }
 
-.b-tooltip.is-bottom.is-warning.is-light .tooltip-content::before, .dialog .modal-card .modal-card-foot .b-tooltip.is-bottom.is-warning.button .tooltip-content::before {
+.b-tooltip.is-bottom.is-warning.is-light .tooltip-content::before {
   border-bottom-color: #fef5ec;
 }
 
@@ -18266,7 +18266,7 @@ MIT (https://github.com/Wikiki/bulma-steps/blob/master/LICENSE)
   border-bottom-color: #AB3428;
 }
 
-.b-tooltip.is-bottom.is-danger.is-light .tooltip-content::before, .dialog .modal-card .modal-card-foot .b-tooltip.is-bottom.is-danger.button .tooltip-content::before {
+.b-tooltip.is-bottom.is-danger.is-light .tooltip-content::before {
   border-bottom-color: #fbf0ee;
 }
 
@@ -18274,7 +18274,7 @@ MIT (https://github.com/Wikiki/bulma-steps/blob/master/LICENSE)
   border-bottom-color: #ADD8E6;
 }
 
-.b-tooltip.is-bottom.is-primary-light.is-light .tooltip-content::before, .dialog .modal-card .modal-card-foot .b-tooltip.is-bottom.is-primary-light.button .tooltip-content::before {
+.b-tooltip.is-bottom.is-primary-light.is-light .tooltip-content::before {
   border-bottom-color: #eff8fa;
 }
 
@@ -18297,7 +18297,7 @@ MIT (https://github.com/Wikiki/bulma-steps/blob/master/LICENSE)
   border-left: 5px solid #5Eb2CE;
 }
 
-.b-tooltip.is-left.is-white .tooltip-content::before {
+.b-tooltip.is-left.is-white .tooltip-content::before, .dialog .modal-card .modal-card-foot .b-tooltip.is-left.button:not([class*="is-"]) .tooltip-content::before {
   border-left-color: white;
 }
 
@@ -18305,7 +18305,7 @@ MIT (https://github.com/Wikiki/bulma-steps/blob/master/LICENSE)
   border-left-color: #0a0a0a;
 }
 
-.b-tooltip.is-left.is-light .tooltip-content::before, .dialog .modal-card .modal-card-foot .b-tooltip.is-left.button .tooltip-content::before {
+.b-tooltip.is-left.is-light .tooltip-content::before {
   border-left-color: #EFF8FA;
 }
 
@@ -18317,7 +18317,7 @@ MIT (https://github.com/Wikiki/bulma-steps/blob/master/LICENSE)
   border-left-color: #5Eb2CE;
 }
 
-.b-tooltip.is-left.is-primary.is-light .tooltip-content::before, .dialog .modal-card .modal-card-foot .b-tooltip.is-left.is-primary.button .tooltip-content::before {
+.b-tooltip.is-left.is-primary.is-light .tooltip-content::before {
   border-left-color: #ADD8E6;
 }
 
@@ -18325,7 +18325,7 @@ MIT (https://github.com/Wikiki/bulma-steps/blob/master/LICENSE)
   border-left-color: #5Eb2CE;
 }
 
-.b-tooltip.is-left.is-link.is-light .tooltip-content::before, .dialog .modal-card .modal-card-foot .b-tooltip.is-left.is-link.button .tooltip-content::before {
+.b-tooltip.is-left.is-link.is-light .tooltip-content::before {
   border-left-color: #eff8fa;
 }
 
@@ -18333,7 +18333,7 @@ MIT (https://github.com/Wikiki/bulma-steps/blob/master/LICENSE)
   border-left-color: #ADD8E6;
 }
 
-.b-tooltip.is-left.is-info.is-light .tooltip-content::before, .dialog .modal-card .modal-card-foot .b-tooltip.is-left.is-info.button .tooltip-content::before {
+.b-tooltip.is-left.is-info.is-light .tooltip-content::before {
   border-left-color: #eff8fa;
 }
 
@@ -18341,7 +18341,7 @@ MIT (https://github.com/Wikiki/bulma-steps/blob/master/LICENSE)
   border-left-color: #B0DB43;
 }
 
-.b-tooltip.is-left.is-success.is-light .tooltip-content::before, .dialog .modal-card .modal-card-foot .b-tooltip.is-left.is-success.button .tooltip-content::before {
+.b-tooltip.is-left.is-success.is-light .tooltip-content::before {
   border-left-color: #f8fcee;
 }
 
@@ -18349,7 +18349,7 @@ MIT (https://github.com/Wikiki/bulma-steps/blob/master/LICENSE)
   border-left-color: #F49E4C;
 }
 
-.b-tooltip.is-left.is-warning.is-light .tooltip-content::before, .dialog .modal-card .modal-card-foot .b-tooltip.is-left.is-warning.button .tooltip-content::before {
+.b-tooltip.is-left.is-warning.is-light .tooltip-content::before {
   border-left-color: #fef5ec;
 }
 
@@ -18357,7 +18357,7 @@ MIT (https://github.com/Wikiki/bulma-steps/blob/master/LICENSE)
   border-left-color: #AB3428;
 }
 
-.b-tooltip.is-left.is-danger.is-light .tooltip-content::before, .dialog .modal-card .modal-card-foot .b-tooltip.is-left.is-danger.button .tooltip-content::before {
+.b-tooltip.is-left.is-danger.is-light .tooltip-content::before {
   border-left-color: #fbf0ee;
 }
 
@@ -18365,7 +18365,7 @@ MIT (https://github.com/Wikiki/bulma-steps/blob/master/LICENSE)
   border-left-color: #ADD8E6;
 }
 
-.b-tooltip.is-left.is-primary-light.is-light .tooltip-content::before, .dialog .modal-card .modal-card-foot .b-tooltip.is-left.is-primary-light.button .tooltip-content::before {
+.b-tooltip.is-left.is-primary-light.is-light .tooltip-content::before {
   border-left-color: #eff8fa;
 }
 
@@ -18392,7 +18392,7 @@ MIT (https://github.com/Wikiki/bulma-steps/blob/master/LICENSE)
   width: 100%;
 }
 
-.b-tooltip.is-white .tooltip-content {
+.b-tooltip.is-white .tooltip-content, .dialog .modal-card .modal-card-foot .b-tooltip.button:not([class*="is-"]) .tooltip-content {
   background: white;
   color: #0a0a0a;
 }
@@ -18402,7 +18402,7 @@ MIT (https://github.com/Wikiki/bulma-steps/blob/master/LICENSE)
   color: white;
 }
 
-.b-tooltip.is-light .tooltip-content, .dialog .modal-card .modal-card-foot .b-tooltip.button .tooltip-content {
+.b-tooltip.is-light .tooltip-content {
   background: #EFF8FA;
   color: rgba(0, 0, 0, 0.7);
 }
@@ -18417,7 +18417,7 @@ MIT (https://github.com/Wikiki/bulma-steps/blob/master/LICENSE)
   color: #fff;
 }
 
-.b-tooltip.is-primary.is-light .tooltip-content, .dialog .modal-card .modal-card-foot .b-tooltip.is-primary.button .tooltip-content {
+.b-tooltip.is-primary.is-light .tooltip-content {
   background: #ADD8E6;
   color: #276b81;
 }
@@ -18427,7 +18427,7 @@ MIT (https://github.com/Wikiki/bulma-steps/blob/master/LICENSE)
   color: #fff;
 }
 
-.b-tooltip.is-link.is-light .tooltip-content, .dialog .modal-card .modal-card-foot .b-tooltip.is-link.button .tooltip-content {
+.b-tooltip.is-link.is-light .tooltip-content {
   background: #eff8fa;
   color: #276b81;
 }
@@ -18437,7 +18437,7 @@ MIT (https://github.com/Wikiki/bulma-steps/blob/master/LICENSE)
   color: rgba(0, 0, 0, 0.7);
 }
 
-.b-tooltip.is-info.is-light .tooltip-content, .dialog .modal-card .modal-card-foot .b-tooltip.is-info.button .tooltip-content {
+.b-tooltip.is-info.is-light .tooltip-content {
   background: #eff8fa;
   color: #235e71;
 }
@@ -18447,7 +18447,7 @@ MIT (https://github.com/Wikiki/bulma-steps/blob/master/LICENSE)
   color: rgba(0, 0, 0, 0.7);
 }
 
-.b-tooltip.is-success.is-light .tooltip-content, .dialog .modal-card .modal-card-foot .b-tooltip.is-success.button .tooltip-content {
+.b-tooltip.is-success.is-light .tooltip-content {
   background: #f8fcee;
   color: #607c18;
 }
@@ -18457,7 +18457,7 @@ MIT (https://github.com/Wikiki/bulma-steps/blob/master/LICENSE)
   color: #fff;
 }
 
-.b-tooltip.is-warning.is-light .tooltip-content, .dialog .modal-card .modal-card-foot .b-tooltip.is-warning.button .tooltip-content {
+.b-tooltip.is-warning.is-light .tooltip-content {
   background: #fef5ec;
   color: #954d09;
 }
@@ -18467,7 +18467,7 @@ MIT (https://github.com/Wikiki/bulma-steps/blob/master/LICENSE)
   color: #fff;
 }
 
-.b-tooltip.is-danger.is-light .tooltip-content, .dialog .modal-card .modal-card-foot .b-tooltip.is-danger.button .tooltip-content {
+.b-tooltip.is-danger.is-light .tooltip-content {
   background: #fbf0ee;
   color: #cb3e2f;
 }
@@ -18477,7 +18477,7 @@ MIT (https://github.com/Wikiki/bulma-steps/blob/master/LICENSE)
   color: rgba(0, 0, 0, 0.7);
 }
 
-.b-tooltip.is-primary-light.is-light .tooltip-content, .dialog .modal-card .modal-card-foot .b-tooltip.is-primary-light.button .tooltip-content {
+.b-tooltip.is-primary-light.is-light .tooltip-content {
   background: #eff8fa;
   color: #235e71;
 }
@@ -18568,7 +18568,7 @@ MIT (https://github.com/Wikiki/bulma-steps/blob/master/LICENSE)
   border-width: 0.25em;
 }
 
-.upload .upload-draggable:hover.is-white, .upload .upload-draggable.is-hovered.is-white {
+.upload .upload-draggable:hover.is-white, .upload .dialog .modal-card .modal-card-foot .upload-draggable.button:hover:not([class*="is-"]), .dialog .modal-card .modal-card-foot .upload .upload-draggable.button:hover:not([class*="is-"]), .upload .upload-draggable.is-hovered.is-white, .upload .dialog .modal-card .modal-card-foot .upload-draggable.is-hovered.button:not([class*="is-"]), .dialog .modal-card .modal-card-foot .upload .upload-draggable.is-hovered.button:not([class*="is-"]) {
   border-color: white;
   background: rgba(255, 255, 255, 0.05);
 }
@@ -18578,7 +18578,7 @@ MIT (https://github.com/Wikiki/bulma-steps/blob/master/LICENSE)
   background: rgba(10, 10, 10, 0.05);
 }
 
-.upload .upload-draggable:hover.is-light, .upload .dialog .modal-card .modal-card-foot .upload-draggable.button:hover, .dialog .modal-card .modal-card-foot .upload .upload-draggable.button:hover, .upload .upload-draggable.is-hovered.is-light, .upload .dialog .modal-card .modal-card-foot .upload-draggable.is-hovered.button, .dialog .modal-card .modal-card-foot .upload .upload-draggable.is-hovered.button {
+.upload .upload-draggable:hover.is-light, .upload .upload-draggable.is-hovered.is-light {
   border-color: #EFF8FA;
   background: rgba(239, 248, 250, 0.05);
 }

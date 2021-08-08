@@ -128,6 +128,7 @@ footer {
   // Panel form
   .panel-block.is-form {
     @extend .is-flex-direction-column;
+    @extend .is-align-items-flex-start;
 
     & > .field {
       @extend .is-align-self-stretch;
@@ -151,8 +152,11 @@ footer {
 
     // Buttons in the card footer
     .button {
-      @extend .is-light;
       @extend .has-text-weight-normal;
+
+      &:not([class*="is-"]) {
+        @extend .is-white;
+      }
     }
   }
 }
