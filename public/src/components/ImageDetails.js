@@ -15,7 +15,9 @@ export default {
       <template v-if="image">
         <div class="columns">
           <div class="column is-8">
-            <b-image class="image-details-image mx-0 mb-6" :src="image.downloadUrl" :alt="image.name"></b-image>
+            <a :href="image.downloadUrl">
+              <b-image class="image-details-image mx-0 mb-6" :src="image.downloadUrl" :alt="image.name"></b-image>
+            </a>
           </div>
 
           <div class="column is-4">
