@@ -179,6 +179,26 @@ export default class Client
     return new User(response);
   }
 
+  // Update the email of a user
+  async updateUserEmail(userId, email, currentPassword)
+  {
+    const response = await this.rest.post(`/api/v1/users/${userId}/email`, {email, currentPassword});
+    return new User(response);
+  }
+
+  // Update the password of a user
+  async updateUserPassword(userId, password, currentPassword)
+  {
+    const response = await this.rest.post(`/api/v1/users/${userId}/password`, {password, currentPassword});
+    return new User(response);
+  }
+
+  // Delete a user
+  async deleteUser(userId, currentPassword)
+  {
+    await this.rest.delete(`/api/v1/user/${userId}`, {currentPassword});
+  }
+
   // Get all images owned by a user
   async getUserImages(userId, query = {})
   {
@@ -200,6 +220,28 @@ export default class Client
     const response = await this.rest.patch(`/api/v1/me`, fields);
     return new User(response);
   }
+
+  // Update the email of the authenticated user
+  async updateMeEmail(email, currentPassword)
+  {
+    const response = await this.rest.post(`/api/v1/me/email`, {email, currentPassword});
+    return new User(response);
+  }
+
+  // Update the password of the authenticated user
+  async updateMePassword(password, currentPassword)
+  {
+    const response = await this.rest.post(`/api/v1/me/password`, {password, currentPassword});
+    return new User(response);
+  }
+
+  // Delete the authenticated user
+  async deleteMe(currentPassword)
+  {
+    await this.rest.delete(`/api/v1/me`, {currentPassword});
+  }
+
+
   // Get all images owned by the authenticated user
   async getMeImages(query = {})
   {
