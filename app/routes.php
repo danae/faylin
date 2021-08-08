@@ -87,30 +87,63 @@ return function(App $app)
         ->add(AuthorizationMiddleware::class)
         ->setName('users.patch');
 
+      // Update the email address of the user and return the user as a JSON response
+      $group->post('/{id:[A-Za-z0-9-_]+}/email', [UserController::class, 'updateEmail'])
+        ->add(UserResolverMiddleware::class)
+        ->add(AuthorizationMiddleware::class)
+        ->setName('users.updateEmail');
+
+      // Update the password of the user and return the user as a JSON response
+      $group->post('/{id:[A-Za-z0-9-_]+}/password', [UserController::class, 'updatePassword'])
+        ->add(UserResolverMiddleware::class)
+        ->add(AuthorizationMiddleware::class)
+        ->setName('users.updatePassword');
+
+      // Delete a user
+      $group->delete('/{id:[A-Za-z0-9-_]+}', [UserController::class, 'delete'])
+        ->add(UserResolverMiddleware::class)
+        ->add(AuthorizationMiddleware::class)
+        ->setName('users.delete');
+
       // Return all images owned by a user as a JSON response
       $group->get('/{id:[A-Za-z0-9-_]+}/images/', [UserController::class, 'images'])
         ->add(UserResolverMiddleware::class)
         ->add(AuthorizationOptionalMiddleware::class)
-        ->setName('users.images.get');
+        ->setName('users.images');
     });
 
     // Authorized user routes
     $group->group('/me', function(RouteCollectorProxy $group)
     {
       // Get the authorized user as a JSON response
-      $group->get('', [UserController::class, 'getMe'])
+      $group->get('', [UserController::class, 'getAuthorized'])
         ->add(AuthorizationMiddleware::class)
         ->setName('me.get');
 
       // Patch the authorized user and return the user as a JSON response
-      $group->patch('', [UserController::class, 'patchMe'])
+      $group->patch('', [UserController::class, 'patchAuthorized'])
         ->add(AuthorizationMiddleware::class)
         ->setName('me.patch');
 
-      // Return all images owned by the authorized user as a JSON response
-      $group->get('/images/', [UserController::class, 'imagesMe'])
+      // Update the email address of the authorized user and return the user as a JSON response
+      $group->post('/email', [UserController::class, 'updateEmailAuthorized'])
         ->add(AuthorizationMiddleware::class)
-        ->setName('me.images.get');
+        ->setName('me.updateEmail');
+
+      // Update the password of the authorized user and return the user as a JSON response
+      $group->post('/password', [UserController::class, 'updatePasswordAuthorized'])
+        ->add(AuthorizationMiddleware::class)
+        ->setName('me.updatePassword');
+
+      // Delete the authorized user
+      $group->delete('', [UserController::class, 'deleteAuthorized'])
+        ->add(AuthorizationMiddleware::class)
+        ->setName('me.delete');
+
+      // Return all images owned by the authorized user as a JSON response
+      $group->get('/images/', [UserController::class, 'imagesAuthorized'])
+        ->add(AuthorizationMiddleware::class)
+        ->setName('me.images');
     });
   });
 
@@ -121,6 +154,7 @@ return function(App $app)
     $group->get('/', [FrontendController::class, 'render']);
     $group->get('/login', [FrontendController::class, 'render']);
     $group->get('/logout', [FrontendController::class, 'render']);
+    $group->get('/settings', [FrontendController::class, 'render']);
     $group->get('/users', [FrontendController::class, 'render']);
     $group->get('/users/{id:[A-Za-z0-9-_]+}', [FrontendController::class, 'render']);
     $group->get('/images', [FrontendController::class, 'render']);
