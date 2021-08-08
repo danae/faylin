@@ -9,12 +9,11 @@ const router = new VueRouter({
 });
 
 // Add a redirect for authentication
-router.beforeEach((to, from, next) =>
-{
-  if (to.matched.some(record => record.meta.requiresAuth))
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requireLoggedIn))
   {
     // Check if a token is saved
-    if (localStorage.getItem('token') === null)
+    if (localStorage.getItem('accessToken') === null)
       next({path: '/login', query: {redirect: to.fullPath}});
     else
       next();
