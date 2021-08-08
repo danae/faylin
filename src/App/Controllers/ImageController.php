@@ -98,7 +98,7 @@ final class ImageController extends AbstractController
     // Get and validate the query parameters
     $query = (new Validator())
       ->withOptional('dl', 'bool:true', false)
-      ->validate($request->getQueryParams(), true)
+      ->validate($request->getQueryParams(), ['allowExtraFields' => true])
       ->resultOrThrowBadRequest($request);
 
     // Read the file stream

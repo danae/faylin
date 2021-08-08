@@ -55,13 +55,20 @@ final class Validator
   }
 
   // Validate an input array
-  public function validate(array $array, bool $allowExtraFields = false): ValidatorResult
+  public function validate($array, array $options = []): ValidatorResult
   {
     $keys = [];
     $errors = [];
 
+    // Set the default options
+    $options['allowExtraFields'] ??= false;
+
+    // Check if the array is an array
+    if (!is_array($array))
+      return new ValidatorResult([], ["Validation data is not an array"]);
+
     // Iterate over the keys
-    foreach ($this->rules as $key => $options)
+    foreach ($this->rules as $key => $keyOptions)
     {
       // Add the key to the keys array
       $keys[] = $key;
@@ -70,8 +77,8 @@ final class Validator
       if (!array_key_exists($key, $array))
       {
         // Check if the key is required
-        if (array_key_exists('default', $options))
-          $array[$key] = $options['default'];
+        if (array_key_exists('default', $keyOptions))
+          $array[$key] = $keyOptions['default'];
         else
           $errors[] = "Field \"{$key}\" is required";
       }
@@ -81,7 +88,7 @@ final class Validator
         $value = $array[$key];
 
         // Iterate over the rules
-        foreach($options['rules'] as $rule)
+        foreach($keyOptions['rules'] as $rule)
         {
           // Check if the rule is valid
           if (!$rule->validate($value))
@@ -91,9 +98,12 @@ final class Validator
     }
 
     // Check for extra fields
-    $extraKeys = array_diff(array_keys($array), $keys);
-    if (!$allowExtraFields && !empty($extraKeys))
-      $errors[] = "Array contains extra fields " . implode(', ', array_map(fn($key) => "\"$key\"", $extraKeys));
+    if (!$options['allowExtraFields'])
+    {
+      $extraKeys = array_diff(array_keys($array), $keys);
+      if (!empty($extraKeys))
+        $errors[] = "Array contains extra fields " . implode(', ', array_map(fn($key) => "\"$key\"", $extraKeys));
+    }
 
     // Return the result
     return new ValidatorResult($array, $errors);

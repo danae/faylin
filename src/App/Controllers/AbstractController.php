@@ -74,7 +74,7 @@ abstract class AbstractController
       ->withOptional('sort', 'string')
       ->withOptional('page', 'int:true|min:0', 0)
       ->withOptional('perPage', 'int:true|min:0')
-      ->validate(array_merge($defaults, $request->getQueryParams()), true)
+      ->validate(array_merge($defaults, $request->getQueryParams()), ['allowExtraFields' => true])
       ->resultOrThrowBadRequest($request);
 
     // Check for sorting
