@@ -69,7 +69,7 @@ export default {
 
         <div class="panel-block is-form">
           <b-field label="Email address" label-position="on-border">
-            <b-input v-model="clientUserEmail" type="email" name="email" icon-pack="fas" icon="envelope"></b-input>
+            <b-input v-model="clientUserEmail" type="email" name="email"></b-input>
           </b-field>
         </div>
 

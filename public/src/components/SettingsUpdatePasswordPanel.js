@@ -60,11 +60,11 @@ export default {
 
         <div class="panel-block is-form">
           <b-field label="New password" label-position="on-border">
-            <b-input type="password" name="password" icon-pack="fas" icon="key"></b-input>
+            <b-input type="password" name="password"></b-input>
           </b-field>
 
           <b-field label="Repeat new password" label-position="on-border">
-            <b-input type="password" name="passwordRepeat" icon-pack="fas" icon="key"></b-input>
+            <b-input type="password" name="passwordRepeat"></b-input>
           </b-field>
         </div>
 

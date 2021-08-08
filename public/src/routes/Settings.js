@@ -22,27 +22,23 @@ export default {
           <div class="column is-3">
             <b-menu>
               <b-menu-list label="User settings">
-                <b-menu-item label="Account" @click="settings = 'user/account'"></b-menu-item>
-                <b-menu-item label="Profile" @click="settings = 'user/profile'"></b-menu-item>
+                <b-menu-item label="Account" :active="settings == 'user/account'" @click="settings = 'user/account'"></b-menu-item>
+                <b-menu-item label="Profile" :active="settings == 'user/profile'" @click="settings = 'user/profile'"></b-menu-item>
+              </b-menu-list>
+
+              <b-menu-list label="Actions">
+                <b-menu-item label="Log out" tag="router-link" :to="{name: 'logout'}">Log out</b-menu-item>
               </b-menu-list>
             </b-menu>
           </div>
 
           <div class="column is-9 content">
             <template v-if="settings == 'user/account'">
-              <h3 class="mb-0">Account</h3>
-              <p>Change how you log in to your user account.</p>
-
-              <settings-update-email-form></settings-update-email-form>
-              <settings-update-password-form></settings-update-password-form>
-              <settings-delete-account-form></settings-delete-account-form>
+              <settings-user-account></settings-user-account>
             </template>
 
             <template v-if="settings == 'user/profile'">
-              <h3 class="mb-0">Profile</h3>
-              <p>Change the appearance of your user account.</p>
-
-              <settings-update-profile-form></settings-update-profile-form>
+              <settings-user-profile></settings-user-profile>
             </template>
           </div>
         </div>

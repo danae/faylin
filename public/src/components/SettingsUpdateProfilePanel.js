@@ -20,10 +20,10 @@ export default {
 
         <div class="panel-block is-form">
           <b-field label="Name" label-position="on-border">
-            <b-input v-model="$root.clientUser.name" type="text" name="name" icon-pack="fas" icon="user"></b-input>
+            <b-input v-model="$root.clientUser.name" type="text" name="name"></b-input>
           </b-field>
         </div>
-        
+
         <a class="panel-block" @click="$refs.form.requestSubmit()">
           <b-icon icon="save" pack="fas" class="panel-icon"></b-icon> Save profile
         </a>

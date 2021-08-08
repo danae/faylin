@@ -3,10 +3,12 @@ import ImageDetailsEditPanel from './components/ImageDetailsEditPanel.js';
 import ImageDetailsSharePanel from './components/ImageDetailsSharePanel.js';
 import ImageThumbnail from './components/ImageThumbnail.js';
 import ImageThumbnailList from './components/ImageThumbnailList.js';
-import SettingsDeleteAccountForm from './components/SettingsDeleteAccountForm.js';
-import SettingsUpdateEmailForm from './components/SettingsUpdateEmailForm.js';
-import SettingsUpdatePasswordForm from './components/SettingsUpdatePasswordForm.js';
-import SettingsUpdateProfileForm from './components/SettingsUpdateProfileForm.js';
+import SettingsDeleteAccountPanel from './components/SettingsDeleteAccountPanel.js';
+import SettingsUpdateEmailPanel from './components/SettingsUpdateEmailPanel.js';
+import SettingsUpdatePasswordPanel from './components/SettingsUpdatePasswordPanel.js';
+import SettingsUpdateProfilePanel from './components/SettingsUpdateProfilePanel.js';
+import SettingsUserAccount from './components/SettingsUserAccount.js';
+import SettingsUserProfile from './components/SettingsUserProfile.js';
 import UploadForm from './components/UploadForm.js';
 import UserDetails from './components/UserDetails.js';
 import UserThumbnail from './components/UserThumbnail.js';
@@ -20,10 +22,12 @@ const components =  {
   ImageDetailsSharePanel,
   ImageThumbnail,
   ImageThumbnailList,
-  SettingsDeleteAccountForm,
-  SettingsUpdateEmailForm,
-  SettingsUpdatePasswordForm,
-  SettingsUpdateProfileForm,
+  SettingsDeleteAccountPanel,
+  SettingsUpdateEmailPanel,
+  SettingsUpdatePasswordPanel,
+  SettingsUpdateProfilePanel,
+  SettingsUserAccount,
+  SettingsUserProfile,
   UploadForm,
   UserDetails,
   UserThumbnail,
