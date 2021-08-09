@@ -20,14 +20,14 @@ export default {
             </a>
           </div>
 
-          <div class="column is-4">
+          <div class="column is-4 content">
             <h2 class="image-details-name mb-0">{{ image.name }}</h2>
-            <p class="image-details-user-name">by <router-link :to="{name: 'userView', params: {userId: image.user.id }}">{{ image.user.name }}</router-link></p>
+            <p class="image-details-user-name">by <router-link :to="{name: 'user', params: {userId: image.user.id }}">{{ image.user.name }}</router-link></p>
 
-            <image-details-share-panel :image="image" class="mb-4"></image-details-share-panel>
+            <image-share-panel :image="image" class="mb-4"></image-share-panel>
 
             <template v-if="$root.clientUser && $root.clientUser.id == image.user.id">
-              <image-details-edit-panel :image="image" :replace="image.id" class="mb-4"></image-details-edit-panel>
+              <image-edit-panel :image="image" :replace="image.id" class="mb-4"></image-edit-panel>
             </template>
           </div>
         </div>

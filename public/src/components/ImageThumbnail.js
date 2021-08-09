@@ -12,9 +12,9 @@ export default {
 
   // The template for the component
   template: `
-    <div class="image-thumbnail">
+    <div class="image-thumbnail content">
       <template v-if="image">
-        <router-link :to="{name: 'imageView', params: {imageId: image.id}}">
+        <router-link :to="{name: 'image', params: {imageId: image.id}}">
           <b-image class="image-thumbnail-image" :src="image.downloadUrl" :alt="image.name"></b-image>
         </router-link>
 
@@ -23,7 +23,7 @@ export default {
         </template>
 
         <template v-if="displayUserName">
-          <p class="image-thumbnail-user-name mb-0">by <router-link :to="{name: 'userView', params: {userId: image.user.id}}">{{ image.user.name }}</router-link></p>
+          <p class="image-thumbnail-user-name mb-0">by <router-link :to="{name: 'user', params: {userId: image.user.id}}">{{ image.user.name }}</router-link></p>
         </template>
       </template>
 

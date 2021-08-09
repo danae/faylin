@@ -21,7 +21,7 @@ export default {
   // The template for the route
   template: `
     <div class="user-view-page">
-      <section class="section content">
+      <section class="section">
         <user-details :user="user"></user-details>
       </section>
     </div>

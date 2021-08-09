@@ -1,6 +1,6 @@
 import ImageDetails from './components/ImageDetails.js';
-import ImageDetailsEditPanel from './components/ImageDetailsEditPanel.js';
-import ImageDetailsSharePanel from './components/ImageDetailsSharePanel.js';
+import ImageEditPanel from './components/ImageEditPanel.js';
+import ImageSharePanel from './components/ImageSharePanel.js';
 import ImageThumbnail from './components/ImageThumbnail.js';
 import ImageThumbnailList from './components/ImageThumbnailList.js';
 import SettingsDeleteAccountPanel from './components/SettingsDeleteAccountPanel.js';
@@ -18,8 +18,8 @@ import UserThumbnailList from './components/UserThumbnailList.js';
 // Create the components
 const components =  {
   ImageDetails,
-  ImageDetailsEditPanel,
-  ImageDetailsSharePanel,
+  ImageEditPanel,
+  ImageSharePanel,
   ImageThumbnail,
   ImageThumbnailList,
   SettingsDeleteAccountPanel,

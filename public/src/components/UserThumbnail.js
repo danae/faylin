@@ -24,10 +24,10 @@ export default {
 
   // The template for the component
   template: `
-    <div class="user-thumbnail">
+    <div class="user-thumbnail content">
       <template v-if="user">
         <div class="box is-primary">
-          <router-link :to="{name: 'userView', params: {userId: user.id}}">
+          <router-link :to="{name: 'user', params: {userId: user.id}}">
             <h4 class="user-thumbnail-name mb-0">{{ user.name }}</h4>
           </router-link>
 

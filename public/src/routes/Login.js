@@ -52,7 +52,7 @@ export default {
   // The template for the route
   template: `
     <div class="login-page">
-      <section class="section content">
+      <section class="section">
         <div class="columns is-centered">
           <div class="column is-half">
             <div class="box is-primary">

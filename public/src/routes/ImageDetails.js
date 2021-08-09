@@ -21,7 +21,7 @@ export default {
   // The template for the route
   template: `
     <div class="image-view-page">
-      <section class="section content">
+      <section class="section">
         <image-details :image="image"></image-details>
       </section>
     </div>

@@ -47,7 +47,7 @@ export default {
 
   // The template for the component
   template: `
-    <div class="image-details-share-panel">
+    <div class="image-share-panel">
       <template v-if="image">
         <div class="panel is-primary">
           <p class="panel-heading">Share image</p>

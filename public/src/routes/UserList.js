@@ -20,7 +20,7 @@ export default {
   // The template for the route
   template: `
     <div class="home-page">
-      <section class="section content">
+      <section class="section">
         <user-thumbnail-list :users="users"></user-thumbnail-list>
       </section>
     </div>

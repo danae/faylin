@@ -110,7 +110,7 @@ export default {
 
   // The template for the component
   template: `
-    <div class="image-details-edit-panel">
+    <div class="image-edit-panel">
       <template v-if="image">
         <form @submit.prevent="patchImage()">
           <div class="panel is-primary">

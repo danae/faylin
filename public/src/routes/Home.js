@@ -21,12 +21,12 @@ export default {
   template: `
     <div class="home-page">
       <template v-if="$root.clientLoggedIn">
-        <section class="section content">
+        <section class="section">
           <upload-form></upload-form>
         </section>
       </template>
 
-      <section class="section content">
+      <section class="section">
         <image-thumbnail-list :images="images"></image-thumbnail-list>
       </section>
     </div>

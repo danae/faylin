@@ -74,7 +74,7 @@ export default {
       this.$displayMessage('Uploaded succesfully');
 
       // Redirect to the newly created image
-      this.$router.push({name: 'imageView', params: {imageId: image.id}});
+      this.$router.push({name: 'image', params: {imageId: image.id}});
     },
 
     // Event handler for when the upload is unsuccessful
