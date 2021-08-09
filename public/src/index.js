@@ -5,6 +5,40 @@ import ClientErrorCaptureMixin from './mixins/ClientErrorCaptureMixin.js';
 import ClientMixin from './mixins/ClientMixin.js';
 
 
+// Add the client error capture mixin to all components
+Vue.mixin(ClientErrorCaptureMixin);
+
+// Register a global method to return an icon text span
+Vue.prototype.$iconText = function(icon, message) {
+  return `<span class="icon-text"><span class="icon"><i class="fas fa-${icon}"></i></span><span>${message}</span></span>`;
+}
+
+// Register a global method to display a message
+Vue.prototype.$displayMessage = function(message, type = 'is-primary', duration = 2000) {
+  console.log('%c info %c ' + message, 'color: white; background: black; padding: 1px; border-radius: 3px', 'background: transparent');
+
+  this.$buefy.toast.open({message: message, type, duration});
+}
+
+// Register a global method to display a warning
+Vue.prototype.$displayWarning = function(error) {
+  console.groupCollapsed('%c warning %c %c' + error.message, 'color: white; background: #f4bd00; padding: 1px; border-radius: 3px', 'background: transparent', 'color: #5c3c00');
+  console.warn(error);
+  console.groupEnd();
+
+  this.$buefy.toast.open({message: error.message, type: 'is-warning', position: 'is-top', duration: 5000});
+}
+
+// Register a global method to display an error
+Vue.prototype.$displayError = function(error) {
+  console.groupCollapsed('%c error %c %c' + error.message, 'color:white; background:#ff0000; padding: 1px; border-radius: 3px', 'background: transparent', 'color: #ff0000');
+  console.error(error);
+  console.groupEnd();
+
+  this.$buefy.toast.open({message: error.message, type: 'is-danger', position: 'is-top', duration: 5000});
+}
+
+
 // Create the Vue app
 const app = new Vue({
   el: '#app',
@@ -60,40 +94,7 @@ const app = new Vue({
       this.$logout();
 
       // Redirect to the login page
-      this.$router.replace({name: 'login'});
+      this.$router.replace({name: 'login', query: {redirect: this.$route.path}});
     },
   },
 });
-
-// Add the client error capture mixin to all components
-Vue.mixin(ClientErrorCaptureMixin);
-
-// Register a global method to return an icon text span
-Vue.prototype.$iconText = function(icon, message) {
-  return `<span class="icon-text"><span class="icon"><i class="fas fa-${icon}"></i></span><span>${message}</span></span>`;
-}
-
-// Register a global method to display a message
-Vue.prototype.$displayMessage = function(message, type = 'is-primary', duration = 2000) {
-  console.log('%c info %c ' + message, 'color: white; background: black; padding: 1px; border-radius: 3px', 'background: transparent');
-
-  this.$buefy.toast.open({message: message, type, duration});
-}
-
-// Register a global method to display a warning
-Vue.prototype.$displayWarning = function(error) {
-  console.groupCollapsed('%c warning %c %c' + error.message, 'color: white; background: #f4bd00; padding: 1px; border-radius: 3px', 'background: transparent', 'color: #5c3c00');
-  console.warn(error);
-  console.groupEnd();
-
-  this.$buefy.toast.open({message: error.message, type: 'is-warning', position: 'is-top', duration: 5000});
-}
-
-// Register a global method to display an error
-Vue.prototype.$displayError = function(error) {
-  console.groupCollapsed('%c error %c %c' + error.message, 'color:white; background:#ff0000; padding: 1px; border-radius: 3px', 'background: transparent', 'color: #ff0000');
-  console.error(error);
-  console.groupEnd();
-
-  this.$buefy.toast.open({message: error.message, type: 'is-danger', position: 'is-top', duration: 5000});
-}
