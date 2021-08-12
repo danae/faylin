@@ -51,12 +51,24 @@ final class ImageController extends AbstractController
     // Get and validate the body parameters
     $params = (new Validator())
       ->withOptional('name', 'string|notempty|maxlength:256')
+      ->withOptional('description', 'string|maxlength:256')
+      ->withOptional('tags', 'array')
+      ->withOptional('public', 'bool')
+      ->withOptional('nsfw', 'bool')
       ->validate($request->getParsedBody())
       ->resultOrThrowBadRequest($request);
 
     // Modify the user
     if ($params['name'] !== null)
       $image->setName($params['name']);
+    if ($params['description'] !== null)
+      $image->setDescription($params['description']);
+    if ($params['tags'] !== null)
+      $image->setTags($params['tags']);
+    if ($params['public'] !== null)
+      $image->setNsfw($params['public']);
+    if ($params['nsfw'] !== null)
+      $image->setNsfw($params['nsfw']);
     $image->setUpdatedAt($now);
 
     // Update the image in the repository

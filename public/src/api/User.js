@@ -1,3 +1,6 @@
+import Image from './Image.js';
+
+
 // Class that defines a user
 export default class User
 {
@@ -11,8 +14,11 @@ export default class User
   update(data)
   {
     this.id = data.id;
-    this.name = data.name;
     this.email = data.email;
+    this.name = data.name;
+    this.description = data.description;
+    this.public = data.public;
+    this.avatar = data.avatar;
     this.createdAt = data.createdAt instanceof Date ? data.createdAt : new Date(data.createdAt);
     this.updatedAt = data.updatedAt instanceof Date ? data.updatedAt : new Date(data.updatedAt);
   }

@@ -21,6 +21,7 @@ final class Validator
     $this->rules = [];
 
     // Define the standard rules
+    $this->defineRule('array', Rules\ArrayRule::class);
     $this->defineRule('bool', Rules\BoolRule::class);
     $this->defineRule('email', Rules\EmailRule::class);
     $this->defineRule('float', Rules\FloatRule::class);

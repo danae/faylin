@@ -27,6 +27,10 @@ final class ImageRepository extends Repository
 
     $this->field('id', 'string', ['length' => 256]);
     $this->field('name', 'string', ['length' => 256]);
+    $this->field('description', 'string', ['length' => 256]);
+    $this->field('tags', 'simple_array');
+    $this->field('public', 'boolean', ['default' => true]);
+    $this->field('nsfw', 'boolean', ['default' => false]);
     $this->field('contentType', 'string', ['length' => 256]);
     $this->field('contentLength', 'integer');
     $this->field('userId', 'string', ['length' => 256]);

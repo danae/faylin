@@ -18,7 +18,7 @@ supportedContentTypes | array of strings | An array of supported content types f
 supportedSize | integer | The maximal supported file size for an upload in bytes.
 
 
-### Get Capabilities
+### Get capabilities
 
 `GET /api/v1/capabilities`
 
@@ -36,8 +36,10 @@ A user represents a user account along with its associated metadata. Users can o
 Field | Type | Description
 --- | --- | ---
 id | string | The id of the user.
-name | string | The name of the user.
-email | string | The email address of the user.
+name | string | The name of the user. Maximal 32 characters long and can contain [A-Za-z0-9_] only.
+description | string | The description of the user. Maximal 256 characters long.
+public | boolean | Indicates if the user is listed publicly.
+avatar | image? | The avatar of the user, or null if the user doesn't have an avatar.
 createdAt | datetime | The date the user was created.
 updatedAt | datetime | The date the user was last updated.
 
@@ -73,12 +75,9 @@ Fetches the user for the given id. Returns:
 
 ### Get the authorized user
 
-`GET /api/v1/users/me`
+`GET /api/v1/me`
 
-Fetches the user that is currently authorized. Returns:
-- `200 OK` with the fetched user object as body on success;
-- `401 Unauthorized` if the request doesn't contain authorization;
-- `403 Forbidden` if the authorized user is not allowed to fetch the user.
+Fetches the user that is currently authorized. This endpoint behaves exactly like the `GET /api/v1/users/{user.id}` endpoint.
 
 
 ### Modify a user
@@ -92,23 +91,97 @@ Modify the metadata of a user. Returns:
 - `403 Forbidden` if the authorized user is not allowed to modify the user;
 - `404 Not Found` if no user with the given id exists.
 
+#### Body parameters
+
+Field | Type | Description
+--- | --- | ---
+name | string | The name of the user. Maximal 32 characters long and can contain [A-Za-z0-9_] only.
+description | string | The description of the user. Maximal 256 characters long.
+public | boolean | Indicates if the user is listed publicly.
+avatarId | string? | The id of the avatar of the user, or null if the user doesn't have an avatar.
+
 
 ### Modify the authorized user
 
-`PATCH /api/v1/users/me`
+`PATCH /api/v1/me`
 
-Modify the metadata of the user that is currently authorized. Returns:
+Modify the metadata of the user that is currently authorized. This endpoint behaves exactly like the `PATCH /api/v1/users/{user.id}` endpoint.
+
+
+### Update the email address of a user
+
+`POST /api/v1/users/{user.id}/email`
+
+Modify the email address of a user. Returns:
 - `200 OK` with the updated image object as body on success;
 - `400 Bad Request` if the body parameters are invalid;
 - `401 Unauthorized` if the request doesn't contain authorization;
-- `403 Forbidden` if the authorized user is not allowed to modify the user.
+- `403 Forbidden` if the authorized user is not allowed to modify the user;
+- `404 Not Found` if no user with the given id exists.
 
 #### Body parameters
 
 Field | Type | Description
 --- | --- | ---
-name | string | The name of the user.
-email | string | The email address of the user.
+email | email | The email address of the user.
+currentPassword | string | The current password of the user to confirm the action.
+
+
+### Update the email address of the authorized user
+
+`POST /api/v1/me/email`
+
+Modify the email address of the user that is currently authorized. This endpoint behaves exactly like the `POST /api/v1/users/{user.id}/email` endpoint.
+
+
+### Update the password of a user
+
+`POST /api/v1/users/{user.id}/email`
+
+Modify the password of a user. Returns:
+- `200 OK` with the updated image object as body on success;
+- `400 Bad Request` if the body parameters are invalid;
+- `401 Unauthorized` if the request doesn't contain authorization;
+- `403 Forbidden` if the authorized user is not allowed to modify the user;
+- `404 Not Found` if no user with the given id exists.
+
+#### Body parameters
+
+Field | Type | Description
+--- | --- | ---
+password | string | The new password of the user.
+currentPassword | string | The current password of the user to confirm the action.
+
+
+### Update the password of the authorized user
+
+`POST /api/v1/me/email`
+
+Modify the password of the user that is currently authorized. This endpoint behaves exactly like the `POST /api/v1/users/{user.id}/email` endpoint.
+
+
+### Delete a user
+
+`DELETE /api/v1/users/{users.id}`
+
+Delete a user and all associated images permanently. This action is irreversible! Returns:
+- `204 No Content` on success;
+- `401 Unauthorized` if the request doesn't contain authorization;
+- `403 Forbidden` if the authorized user is not allowed to delete the user;
+- `404 Not Found` if no user with the given id exists.
+
+#### Body parameters
+
+Field | Type | Description
+--- | --- | ---
+currentPassword | string | The current password of the user to confirm the action.
+
+
+### Delete the authorized user
+
+`DELETE /api/v1/me`
+
+Delete the user that is currently authorized and all associated images permanently. This action is irreversible! This endpoint behaves exactly like the `DELETE /api/v1/users/{user.id}` endpoint.
 
 
 ## Images
@@ -120,13 +193,17 @@ An image represents an uploaded image file along with its associated metadata.
 Field | Type | Description
 --- | --- | ---
 id | string | The id of the image.
-name | string | The name of the image.
+name | string | The name of the image. Maximal 64 characters.
+description | string | The description of the image. Maximal 256 characters long.
+tags | array | The tags of the image.
+public | boolean | Indicates if the image is listed publicly.
+nsfw | boolean | Indicates if the image should be hidden for users with the NSFW filter turned on.
 contentType | string | The content type of the image as a MIME type.
 contentLength | integer | The content size of the image in bytes.
-user | user | Representation of the user that owns the image.
+user | user | The user that owns the image.
 createdAt | datetime | The date the image was created.
 updatedAt | datetime | The date the image was last updated.
-redirectUrl | url | URL specifying where to get the contents of the image.
+downloadUrl | url | URL specifying where to get the contents of the image.
 
 
 ### List images
@@ -165,7 +242,7 @@ The query parameters for this request are the same as the `GET /api/v1/images/` 
 
 ### List images that are owned by the authorized user
 
-`GET /api/v1/users/me/images/`
+`GET /api/v1/me/images/`
 
 Fetches all images that are owned by the user that is currently authorized. Returns:
 - `200 OK` with an array of the fetched images on success;
@@ -204,19 +281,23 @@ Modify the metadata of an image. Returns:
 
 Field | Type | Description
 --- | --- | ---
-name | string | The name of the image.
+name | string | The name of the image. Maximal 64 characters long.
+description | string | The description of the image. Maximal 256 characters long.
+tags | array | The tags of the image.
+public | boolean | Indicates if the image is listed publicly.
+nsfw | boolean | Indicates if the image should be hidden for users with the NSFW filter turned on.
 
 
 ### Delete an image
 
 `DELETE /api/v1/images/{image.id}`
 
-Delete an image permanently. Returns:
-Modify the metadata of an image. Returns:
+Delete an image permanently. This action is irreversible! Returns:
 - `204 No Content` on success;
 - `401 Unauthorized` if the request doesn't contain authorization;
 - `403 Forbidden` if the authorized user is not allowed to delete the image;
 - `404 Not Found` if no image with the given id exists.
+
 
 ### Upload a new image
 

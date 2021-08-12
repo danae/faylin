@@ -22,6 +22,18 @@ final class Image implements NormalizableInterface
   // The name of the image (read-write)
   private $name;
 
+  // The description of the image (read-write)
+  private $description;
+
+  // The tags of the image (read-write)
+  private $tags;
+
+  // The public state of the image (read-write)
+  private $public;
+
+  // The NSFW state of the image (read-write)
+  private $nsfw;
+
   // The content type of the image (read-only)
   private $contentType;
 
@@ -34,6 +46,10 @@ final class Image implements NormalizableInterface
   {
     $this->id = null;
     $this->name = "";
+    $this->description = "";
+    $this->tags = [];
+    $this->public = true;
+    $this->nsfw = false;
     $this->contentType = "";
     $this->contentLength = 0;
     $this->userId = null;
@@ -51,6 +67,58 @@ final class Image implements NormalizableInterface
   public function setName(string $name): self
   {
     $this->name = $name;
+    return $this;
+  }
+
+  // Get the description of the image
+  public function getDescription(): string
+  {
+    return $this->description;
+  }
+
+  // Set the description of the image
+  public function setDescription(string $description): self
+  {
+    $this->description = $description;
+    return $this;
+  }
+
+  // Get the tags of the image
+  public function getTags(): array
+  {
+    return $this->tags;
+  }
+
+  // Set the tags of the image
+  public function setTags(array $tags): self
+  {
+    $this->tags = $tags;
+    return $this;
+  }
+
+  // Get the public state of the image
+  public function getPublic(): bool
+  {
+    return $this->public;
+  }
+
+  // Set the public state of the image
+  public function setPublic(bool $public): self
+  {
+    $this->public = $public;
+    return $this;
+  }
+
+  // Get the NSFW state of the image
+  public function getNsfw(): bool
+  {
+    return $this->nsfw;
+  }
+
+  // Set the NSFW state of the image
+  public function setNsfw(bool $nsfw): self
+  {
+    $this->nsfw = $nsfw;
     return $this;
   }
 
@@ -89,6 +157,10 @@ final class Image implements NormalizableInterface
 
       // Read-write class fields
       'name' => $this->getName(),
+      'description' => $this->getDescription(),
+      'tags' => $this->getTags(),
+      'public' => $this->getPublic(),
+      'nsfw' => $this->getNsfw(),
 
       // Read-only class fields
       'contentType' => $this->getContentType(),

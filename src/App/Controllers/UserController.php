@@ -43,13 +43,22 @@ final class UserController extends AbstractController
 
     // Get and validate the parameters
     $params = (new Validator())
-      ->withOptional('name', 'string|notempty|maxlength:32', null)
+      ->withOptional('name', 'string|notempty|maxlength:32')
+      ->withOptional('description', 'string|maxlength:256', '')
+      ->withOptional('public', 'boolean')
+      ->withOptional('avatarId', 'string|maxlength:256')
       ->validate($request->getParsedBody())
       ->resultOrThrowBadRequest($request);
 
     // Modify the user
     if ($params['name'] !== null)
       $user->setName($params['name']);
+    if ($params['description'] !== null)
+      $user->setDescription($params['description']);
+    if ($params['public'] !== null)
+      $user->setAvatarId($params['public']);
+    if ($params['avatarId'] !== null)
+      $user->setAvatarId($params['avatarId']);
     $user->setUpdatedAt(new \DateTime());
 
     // Update the user in the repository

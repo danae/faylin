@@ -15,6 +15,10 @@ export default class Image
   {
     this.id = data.id;
     this.name = data.name;
+    this.description = data.description;
+    this.tags = data.tags;
+    this.public = data.public;
+    this.nsfw = data.nsfw;
     this.contentType = data.contentType;
     this.contentLength = data.contentLength;
     this.user = data.user instanceof User ? data.user : new User(data.user);
