@@ -132,7 +132,11 @@ footer {
 
     & > .field {
       @extend .is-align-self-stretch;
-      @extend .my-2;
+      @extend .mb-2;
+
+      &.is-floating-label {
+        @extend .mt-2;
+      }
     }
   }
 
@@ -161,6 +165,10 @@ footer {
   }
 }
 
+.icon-text {
+  @extend .is-flex-wrap-nowrap;
+}
+
 // Page components styling
 .page {
   // Image details styling
@@ -169,6 +177,7 @@ footer {
     &-name {
       @extend .is-size-4;
       @extend .has-text-weight-bold;
+      @extend .mt-0;
     }
 
     // User name text for the image thumbnail

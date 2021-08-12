@@ -9652,7 +9652,7 @@ a.has-text-primary-light-dark:hover, a.has-text-primary-light-dark:focus {
   flex-direction: column-reverse !important;
 }
 
-.is-flex-wrap-nowrap {
+.is-flex-wrap-nowrap, .icon-text {
   flex-wrap: nowrap !important;
 }
 
@@ -9899,7 +9899,7 @@ a.has-text-primary-light-dark:hover, a.has-text-primary-light-dark:focus {
   margin: 0 !important;
 }
 
-.mt-0 {
+.mt-0, .page .image-details-name {
   margin-top: 0 !important;
 }
 
@@ -9959,7 +9959,7 @@ a.has-text-primary-light-dark:hover, a.has-text-primary-light-dark:focus {
   margin: 0.5rem !important;
 }
 
-.mt-2 {
+.mt-2, .panel .panel-block.is-form > .field.is-floating-label {
   margin-top: 0.5rem !important;
 }
 
@@ -9967,7 +9967,7 @@ a.has-text-primary-light-dark:hover, a.has-text-primary-light-dark:focus {
   margin-right: 0.5rem !important;
 }
 
-.mb-2, .page .image-thumbnail-image {
+.mb-2, .panel .panel-block.is-form > .field, .page .image-thumbnail-image {
   margin-bottom: 0.5rem !important;
 }
 
@@ -9980,7 +9980,7 @@ a.has-text-primary-light-dark:hover, a.has-text-primary-light-dark:focus {
   margin-right: 0.5rem !important;
 }
 
-.my-2, .panel .panel-block.is-form > .field {
+.my-2 {
   margin-top: 0.5rem !important;
   margin-bottom: 0.5rem !important;
 }
