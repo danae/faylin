@@ -8,6 +8,14 @@ export default {
     }
   },
 
+  // The computed data for the route
+  computed: {
+    // Indicate if the client user is the owner of the image
+    owner: function() {
+      return this.$root.clientUser && this.$root.clientUser.id == this.image.user.id;
+    },
+  },
+
   // Hook when the component is created
   created: async function() {
     // Set the document title
@@ -20,10 +28,16 @@ export default {
 
   // The template for the route
   template: `
-    <div class="image-view-page">
-      <section class="section">
-        <image-details :image="image"></image-details>
-      </section>
+    <div class="image-details-page">
+      <template v-if="image">
+        <section class="section">
+          <image-details :image="image" :owner="owner"></image-details>
+        </section>
+      </template>
+
+      <template v-else>
+        <b-loading active></b-loading>
+      </template>
     </div>
   `
 };

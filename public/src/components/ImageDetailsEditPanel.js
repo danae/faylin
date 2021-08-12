@@ -39,47 +39,28 @@ export default {
     // Patch the image
     patchImage: async function() {
       // Send a patch request
-      const image = await this.$root.client.patchImage(this.image.id, {name: this.image.name});
+      const image = await this.$root.client.patchImage(this.image.id, {
+        name: this.image.name,
+        description: this.image.description,
+        tags: this.image.tags,
+        public: this.image.public,
+        nsfw: this.image.nsfw,
+      });
 
       // Display a success message
       this.$displayMessage('Image updated succesfully');
 
       // Update the image
       this.image.update(image);
+
+      // Emit the close event
+      this.$emit('close');
     },
 
     // Replace the image
     replaceImage: function() {
       // Click the file input to select a file
       this.$file.click();
-    },
-
-    // Delete the image
-    deleteImage: async function() {
-      // Show the confirmation dialog
-      this.$buefy.dialog.confirm({
-        type: 'is-danger',
-        hasIcon: true,
-        icon: 'trash-alt',
-        iconPack: 'fas',
-        trapFocus: true,
-        message: `Are you sure you want to delete <b>${this.image.name}</b>? All associated data and links to the image will stop working forever, which is a long time!`,
-        confirmText: 'Delete',
-        cancelText: 'Cancel',
-        onConfirm: await this.deleteImageConfirmed.bind(this),
-      });
-    },
-
-    // Delete the image after confirmation
-    deleteImageConfirmed: async function() {
-      // Send a delete request
-      await this.$root.client.deleteImage(this.image.id);
-
-      // Display a success message
-      this.$displayMessage('Image deleted succesfully');
-
-      // Redirect to the previous page
-      this.$router.back();
     },
 
     // Event handler for when the upload starts
@@ -118,20 +99,41 @@ export default {
 
             <div class="panel-block is-form">
               <b-field label="Name" label-for="name" label-position="on-border">
-                <b-input v-model="image.name" type="text" name="name" id="name"></b-input>
+                <b-input v-model="image.name" type="text" name="name"></b-input>
+              </b-field>
+
+              <b-field label="Description" label-for="description" label-position="on-border">
+                <b-input v-model="image.description" type="textarea" name="description"></b-input>
+              </b-field>
+
+              <b-field label="Tags" label-for="tags" label-position="on-border">
+                <b-taginput v-model="image.tags" maxlength="32" maxtags="10" :has-counter="false" type="is-light" close-type="is-light" attached></b-taginput>
+              </b-field>
+            </div>
+
+            <div class="panel-block is-form">
+              <p class="menu-label">
+                <span class="icon-text">
+                  <b-icon icon="eye" pack="fas"></b-icon>
+                  <span>Visibility settings</span>
+                </span>
+              </p>
+
+              <b-field>
+                <b-switch v-model="image.public" size="is-small">Public</b-switch>
+              </b-field>
+
+              <b-field>
+                <b-switch v-model="image.nsfw" size="is-small">Mature content</b-switch>
               </b-field>
             </div>
 
             <a class="panel-block" @click="patchImage()">
-              <b-icon icon="save" pack="fas" class="panel-icon"></b-icon> Save
+              <b-icon icon="save" pack="fas" class="panel-icon"></b-icon> Save image
             </a>
 
             <a class="panel-block" @click="replaceImage()">
-              <b-icon icon="upload" pack="fas" class="panel-icon"></b-icon> Replace
-            </a>
-
-            <a class="panel-block has-text-danger" @click="deleteImage()">
-              <b-icon icon="trash-alt" pack="fas" type="is-danger" class="panel-icon"></b-icon> Delete
+              <b-icon icon="upload" pack="fas" class="panel-icon"></b-icon> Replace image
             </a>
           </div>
         </form>
