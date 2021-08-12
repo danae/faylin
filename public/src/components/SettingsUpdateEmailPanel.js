@@ -68,7 +68,7 @@ export default {
         <p class="panel-heading">Update email address</p>
 
         <div class="panel-block is-form">
-          <b-field label="Email address" label-position="on-border">
+          <b-field label="Email address" custom-class="is-small">
             <b-input v-model="clientUserEmail" type="email" name="email"></b-input>
           </b-field>
         </div>

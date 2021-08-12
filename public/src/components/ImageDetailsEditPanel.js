@@ -98,15 +98,15 @@ export default {
             <p class="panel-heading">Edit image</p>
 
             <div class="panel-block is-form">
-              <b-field label="Name" label-for="name" label-position="on-border">
+              <b-field label="Name" label-for="name" custom-class="is-small">
                 <b-input v-model="image.name" type="text" name="name"></b-input>
               </b-field>
 
-              <b-field label="Description" label-for="description" label-position="on-border">
+              <b-field label="Description" label-for="description" custom-class="is-small">
                 <b-input v-model="image.description" type="textarea" name="description"></b-input>
               </b-field>
 
-              <b-field label="Tags" label-for="tags" label-position="on-border">
+              <b-field label="Tags" label-for="tags" custom-class="is-small">
                 <b-taginput v-model="image.tags" maxlength="32" maxtags="10" :has-counter="false" type="is-light" close-type="is-light" attached></b-taginput>
               </b-field>
             </div>

@@ -59,11 +59,11 @@ export default {
         <p class="panel-heading">Update password</p>
 
         <div class="panel-block is-form">
-          <b-field label="New password" label-position="on-border">
+          <b-field label="New password" custom-class="is-small">
             <b-input type="password" name="password"></b-input>
           </b-field>
 
-          <b-field label="Repeat new password" label-position="on-border">
+          <b-field label="Repeat new password" custom-class="is-small">
             <b-input type="password" name="passwordRepeat"></b-input>
           </b-field>
         </div>

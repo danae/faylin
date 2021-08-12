@@ -9959,7 +9959,7 @@ a.has-text-primary-light-dark:hover, a.has-text-primary-light-dark:focus {
   margin: 0.5rem !important;
 }
 
-.mt-2, .panel .panel-block.is-form > .field.is-floating-label {
+.mt-2 {
   margin-top: 0.5rem !important;
 }
 

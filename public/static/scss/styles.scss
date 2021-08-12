@@ -133,10 +133,6 @@ footer {
     & > .field {
       @extend .is-align-self-stretch;
       @extend .mb-2;
-
-      &.is-floating-label {
-        @extend .mt-2;
-      }
     }
   }
 

@@ -19,7 +19,7 @@ export default {
         <p class="panel-heading">Update profile</p>
 
         <div class="panel-block is-form">
-          <b-field label="Name" label-position="on-border">
+          <b-field label="Name" custom-class="is-small">
             <b-input v-model="$root.clientUser.name" type="text" name="name"></b-input>
           </b-field>
         </div>
