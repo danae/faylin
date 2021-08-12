@@ -26,7 +26,7 @@ final class ImageController extends AbstractController
   {
     // Get the images
     $options = $this->createSelectOptions($request, ['sort' => '-createdAt']);
-    $images = $this->imageRepository->select([], $options);
+    $images = $this->imageRepository->select(['public' => true], $options);
 
     // Return the response
     return $this->serialize($request, $response, $images);
@@ -66,7 +66,7 @@ final class ImageController extends AbstractController
     if ($params['tags'] !== null)
       $image->setTags($params['tags']);
     if ($params['public'] !== null)
-      $image->setNsfw($params['public']);
+      $image->setPublic($params['public']);
     if ($params['nsfw'] !== null)
       $image->setNsfw($params['nsfw']);
     $image->setUpdatedAt($now);

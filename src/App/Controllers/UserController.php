@@ -19,7 +19,7 @@ final class UserController extends AbstractController
   {
     // Get the images
     $options = $this->createSelectOptions($request, ['sort' => '-createdAt']);
-    $users = $this->userRepository->select([], $options);
+    $users = $this->userRepository->select(['public' => true], $options);
 
     // Return the response
     return $this->serialize($request, $response, $users)
@@ -56,7 +56,7 @@ final class UserController extends AbstractController
     if ($params['description'] !== null)
       $user->setDescription($params['description']);
     if ($params['public'] !== null)
-      $user->setAvatarId($params['public']);
+      $user->setPublic($params['public']);
     if ($params['avatarId'] !== null)
       $user->setAvatarId($params['avatarId']);
     $user->setUpdatedAt(new \DateTime());
