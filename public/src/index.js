@@ -8,6 +8,24 @@ import ClientMixin from './mixins/ClientMixin.js';
 // Add the client error capture mixin to all components
 Vue.mixin(ClientErrorCaptureMixin);
 
+Vue.mixin({
+  // Hook for when the app is mounted
+  mounted: function() {
+    // Parse the body through Twemoji
+    this.$nextTick(function() {
+      twemoji.parse(document.body);
+    });
+  },
+
+  // Hook for when the app is updated
+  updated: function() {
+    // Parse the body through Twemoji
+    this.$nextTick(function() {
+      twemoji.parse(document.body);
+    });
+  },
+});
+
 // Register a global method to return an icon text span
 Vue.prototype.$iconText = function(icon, message) {
   return `<span class="icon-text"><span class="icon"><i class="fas fa-${icon}"></i></span><span>${message}</span></span>`;
@@ -59,22 +77,6 @@ const app = new Vue({
     // Unregister event handlers for client errors
     this.$off('client-error', this.onClientError.bind(this));
     this.$off('client-unauthorized', this.onClientUnauthorized.bind(this));
-  },
-
-  // Hook for when the app is mounted
-  mounted: function() {
-    // Parse the body through Twemoji
-    this.$nextTick(function() {
-      twemoji.parse(document.body);
-    });
-  },
-
-  // Hook for when the app is updated
-  updated: function() {
-    // Parse the body through Twemoji
-    this.$nextTick(function() {
-      twemoji.parse(document.body);
-    });
   },
 
   // The methods for the app
