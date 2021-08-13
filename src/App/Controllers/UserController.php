@@ -69,102 +69,6 @@ final class UserController extends AbstractController
       ->withStatus(200);
   }
 
-  // Update the email address of a user and return the user as a JSON response
-  public function updateEmail(Request $request, Response $response, User $user, User $authUser)
-  {
-    // Check if the authorized user owns this user
-    if ($authUser->getId() !== $user->getId())
-      throw new HttpForbiddenException($request, "The current authorized user is not allowed to modify the user with id \"{$user->getId()}\"");
-
-    // Get and validate the parameters
-    $params = (new Validator())
-      ->withRequired('email', 'email|notempty|maxlength:256')
-      ->withRequired('currentPassword', 'string|notempty|maxlength:256')
-      ->validate($request->getParsedBody())
-      ->resultOrThrowBadRequest($request);
-
-    // Check if the password matches
-    if (!$user->verifyPassword($params['currentPassword']))
-      throw new HttpBadRequestException($request, "The password is incorrect");
-
-    // Modify the user
-    $user
-      ->setEmail($params['email'])
-      ->setUpdatedAt(new \DateTime());
-
-    // Update the user in the repository
-    $this->userRepository->update($user);
-
-    // Return the response
-    return $this->serialize($request, $response, $user)
-      ->withStatus(200);
-  }
-
-  // Update the password of a user and return the user as a JSON response
-  public function updatePassword(Request $request, Response $response, User $user, User $authUser)
-  {
-    // Check if the authorized user owns this user
-    if ($authUser->getId() !== $user->getId())
-      throw new HttpForbiddenException($request, "The current authorized user is not allowed to modify the user with id \"{$user->getId()}\"");
-
-    // Get and validate the parameters
-    $params = (new Validator())
-      ->withRequired('password', 'string|notempty|maxlength:256')
-      ->withRequired('currentPassword', 'string|notempty|maxlength:256')
-      ->validate($request->getParsedBody())
-      ->resultOrThrowBadRequest($request);
-
-    // Check if the password matches
-    if (!$user->verifyPassword($params['currentPassword']))
-      throw new HttpBadRequestException($request, "The password is incorrect");
-
-    // Modify the user
-    $user
-      ->hashPassword($params['password'])
-      ->setUpdatedAt(new \DateTime());
-
-    // Update the user in the repository
-    $this->userRepository->update($user);
-
-    // Return the response
-    return $this->serialize($request, $response, $user)
-      ->withStatus(200);
-  }
-
-  // Delete a user
-  public function delete(Request $request, Response $response, User $user, User $authUser)
-  {
-    // Check if the authorized user owns this user
-    if ($authUser->getId() !== $user->getId())
-      throw new HttpForbiddenException($request, "The current authorized user is not allowed to modify the user with id \"{$user->getId()}\"");
-
-    // Get and validate the parameters
-    $params = (new Validator())
-      ->withRequired('currentPassword', 'string|notempty|maxlength:256')
-      ->validate($request->getParsedBody())
-      ->resultOrThrowBadRequest($request);
-
-    // Check if the password matches
-    if (!$user->verifyPassword($params['currentPassword']))
-      throw new HttpBadRequestException($request, "The password is incorrect");
-
-    // Remove all images owned by the user
-    $images = $this->imageRepository->select(['userId' => $user->getId()]);
-    foreach ($images as $image)
-    {
-      // Delete the image from the repository
-      $this->imageRepository->delete($image);
-      $this->imageRepository->deleteFile($image);
-    }
-
-    // Remove the user from the repository
-    $this->userRepository->delete($user);
-
-    // Return the response
-    return $response
-      ->withStatus(204);
-  }
-
   // Return all images owned by a user as a JSON response
   public function images(Request $request, Response $response, User $user)
   {
@@ -194,22 +98,85 @@ final class UserController extends AbstractController
   // Update the email address of the authorized user and return the user as a JSON response
   public function updateEmailAuthorized(Request $request, Response $response, User $authUser)
   {
+    // Get and validate the parameters
+    $params = (new Validator())
+      ->withRequired('email', 'email|notempty|maxlength:256')
+      ->withRequired('currentPassword', 'string|notempty|maxlength:256')
+      ->validate($request->getParsedBody())
+      ->resultOrThrowBadRequest($request);
+
+    // Check if the password matches
+    if (!$authUser->verifyPassword($params['currentPassword']))
+      throw new HttpBadRequestException($request, "The password is incorrect");
+
+    // Modify the user
+    $authUser
+      ->setEmail($params['email'])
+      ->setUpdatedAt(new \DateTime());
+
+    // Update the user in the repository
+    $this->userRepository->update($authUser);
+
     // Return the response
-    return $this->updateEmail($request, $response, $authUser, $authUser);
+    return $this->serialize($request, $response, $authUser)
+      ->withStatus(200);
   }
 
   // Update the password of the authorized user and return the user as a JSON response
   public function updatePasswordAuthorized(Request $request, Response $response, User $authUser)
   {
+    // Get and validate the parameters
+    $params = (new Validator())
+      ->withRequired('password', 'string|notempty|maxlength:256')
+      ->withRequired('currentPassword', 'string|notempty|maxlength:256')
+      ->validate($request->getParsedBody())
+      ->resultOrThrowBadRequest($request);
+
+    // Check if the password matches
+    if (!$authUser->verifyPassword($params['currentPassword']))
+      throw new HttpBadRequestException($request, "The password is incorrect");
+
+    // Modify the user
+    $authUser
+      ->hashPassword($params['password'])
+      ->setUpdatedAt(new \DateTime());
+
+    // Update the user in the repository
+    $this->userRepository->update($authUser);
+
     // Return the response
-    return $this->updatePassword($request, $response, $authUser, $authUser);
+    return $this->serialize($request, $response, $authUser)
+      ->withStatus(200);
   }
 
   // Delete the authorized user
   public function deleteAuthorized(Request $request, Response $response, User $authUser)
   {
+    // Get and validate the parameters
+    $params = (new Validator())
+      ->withRequired('currentPassword', 'string|notempty|maxlength:256')
+      ->validate($request->getParsedBody())
+      ->resultOrThrowBadRequest($request);
+
+    // Check if the password matches
+    if (!$authUser->verifyPassword($params['currentPassword']))
+      throw new HttpBadRequestException($request, "The password is incorrect");
+
+    // Remove all images owned by the user
+    $images = $this->imageRepository->select(['userId' => $authUser->getId()]);
+    foreach ($images as $image)
+    {
+      // Delete the image from the repository
+      $this->imageRepository->delete($image);
+      $this->imageRepository->deleteFile($image);
+    }
+
+    // Remove the user from the repository
+    $this->userRepository->delete($authUser);
+
     // Return the response
-    return $this->delete($request, $response, $authUser, $authUser);
+    return $response
+      ->withStatus(204);
   }
 
   // Return all images owned by the authorized user as a JSON response
