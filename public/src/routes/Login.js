@@ -56,14 +56,14 @@ export default {
         <div class="columns is-centered">
           <div class="column is-half">
             <div class="box is-primary">
-              <p>Log in to fayl.in to be able to upload and organize your images.</p>
+              <p class="mb-4">Log in to fayl.in to be able to upload and organize your images.</p>
 
               <form @submit.prevent="onSubmit">
-                <b-field label="Email address" label-position="on-border">
+                <b-field label="Email address" custom-class="is-small">
                   <b-input v-model="username" type="email" name="username" id="username" icon-pack="fas" icon="envelope" autofocus></b-input>
                 </b-field>
 
-                <b-field label="Password" label-position="on-border">
+                <b-field label="Password" custom-class="is-small">
                   <b-input v-model="password" type="password" name="password" id="password" icon-pack="fas" icon="key"></b-input>
                 </b-field>
 
