@@ -45,7 +45,7 @@ final class UserController extends AbstractController
     $params = (new Validator())
       ->withOptional('name', 'string|notempty|maxlength:32')
       ->withOptional('description', 'string|maxlength:256', '')
-      ->withOptional('public', 'boolean')
+      ->withOptional('public', 'bool')
       ->withOptional('avatarId', 'string|maxlength:256')
       ->validate($request->getParsedBody())
       ->resultOrThrowBadRequest($request);

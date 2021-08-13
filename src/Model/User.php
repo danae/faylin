@@ -146,6 +146,9 @@ final class User implements NormalizableInterface
       // Identifier
       'id' => $this->getId(),
 
+      // Internal class fields
+      'email' => $this->getEmail(),
+
       // Read-write class fields
       'name' => $this->getName(),
       'description' => $this->getDescription(),
