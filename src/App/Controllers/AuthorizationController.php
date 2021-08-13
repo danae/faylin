@@ -37,7 +37,7 @@ final class AuthorizationController extends AbstractController
     $token = (new Token())
       ->setId($snowflake->generateBase64String())
       ->setUserId($user->getId())
-      ->setIssuedAt(new \DateTime())
+      ->setCreatedAt(new \DateTime())
       ->setExpiresAt(new \DateTime('60 minutes'));
 
     // Encode the token

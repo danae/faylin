@@ -20,12 +20,6 @@ final class Token implements NormalizableInterface, DenormalizableInterface
   use CreatedAtEntityTrait;
 
 
-  // The issuer of the token
-  private $issuer;
-
-  // The audience of the token
-  private $audience;
-
   // The date when the token will become expired
   private $expiresAt;
 
@@ -35,65 +29,10 @@ final class Token implements NormalizableInterface, DenormalizableInterface
   {
     $this->id = null;
     $this->userId = null;
-    $this->userAgent = null;
-    $this->userIpAddress = null;
-    $this->issuer = null;
-    $this->audience = null;
     $this->createdAt = new \DateTime();
     $this->expiresAt = null;
   }
 
-  // Get the user agent of the token
-  public function getUserAgent(): string
-  {
-    return $this->userAgent;
-  }
-
-  // Set the user agent of the token
-  public function setUserAgent(string $userAgent): self
-  {
-    $this->userAgent = $userAgent;
-    return $this;
-  }
-
-  // Get the user address of the token
-  public function getUserIpAddress(): string
-  {
-    return $this->userIpAddress;
-  }
-
-  // Set the user address of the token
-  public function setUserIpAddress(string $userIpAddress): self
-  {
-    $this->userIpAddress = $userIpAddress;
-    return $this;
-  }
-
-  // Get the issuer of the token
-  public function getIssuer(): ?string
-  {
-    return $this->issuer;
-  }
-
-  // Set the issuer of the token
-  public function setIssuer(?string $issuer): self
-  {
-    $this->issuer = $issuer;
-    return $this;
-  }
-
-  // Get the audience of the token
-  public function getAudience(): ?array
-  {
-    return $this->audience;
-  }
-
-  // Set the audience of the token
-  public function setAudience(?array $audience): self
-  {
-    $this->audience = $audience;
-    return $this;
-  }
 
   // Get the date when the token will become expired
   public function getExpiresAt(): ?\DateTime
@@ -117,10 +56,6 @@ final class Token implements NormalizableInterface, DenormalizableInterface
     $data['jti'] = $this->getId();
     $data['sub'] = $this->getUserId();
 
-    if ($this->getIssuer() != null)
-      $data['iss'] = $this->getIssuer();
-    if ($this->getAudience() !== null)
-      $data['aud'] = $this->getAudience();
     if ($this->getCreatedAt() !== null)
       $data['iat'] = $this->getCreatedAt()->getTimestamp();
     if ($this->getExpiresAt() !== null)
@@ -138,10 +73,6 @@ final class Token implements NormalizableInterface, DenormalizableInterface
     $this->setId($data['jti']);
     $this->setUserId($data['sub']);
 
-    if (isset($data['iss']))
-      $this->setIssuer($data['iss']);
-    if (isset($data['aud']))
-      $this->setAudience($data['aud']);
     if (isset($data['iat']))
       $this->setCreatedAt((new \DateTime())->setTimestamp($data['iat']));
     if (isset($data['exp']))
