@@ -87,24 +87,6 @@ return function(App $app)
         ->add(AuthorizationMiddleware::class)
         ->setName('users.patch');
 
-      // Update the email address of the user and return the user as a JSON response
-      $group->post('/{id:[A-Za-z0-9-_]+}/email', [UserController::class, 'updateEmail'])
-        ->add(UserResolverMiddleware::class)
-        ->add(AuthorizationMiddleware::class)
-        ->setName('users.updateEmail');
-
-      // Update the password of the user and return the user as a JSON response
-      $group->post('/{id:[A-Za-z0-9-_]+}/password', [UserController::class, 'updatePassword'])
-        ->add(UserResolverMiddleware::class)
-        ->add(AuthorizationMiddleware::class)
-        ->setName('users.updatePassword');
-
-      // Delete a user
-      $group->delete('/{id:[A-Za-z0-9-_]+}', [UserController::class, 'delete'])
-        ->add(UserResolverMiddleware::class)
-        ->add(AuthorizationMiddleware::class)
-        ->setName('users.delete');
-
       // Return all images owned by a user as a JSON response
       $group->get('/{id:[A-Za-z0-9-_]+}/images/', [UserController::class, 'images'])
         ->add(UserResolverMiddleware::class)

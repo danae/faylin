@@ -73,13 +73,6 @@ Fetches the user for the given id. Returns:
 - `404 Not Found` if no user with the given id exists.
 
 
-### Get the authorized user
-
-`GET /api/v1/me`
-
-Fetches the user that is currently authorized. This endpoint behaves exactly like the `GET /api/v1/users/{user.id}` endpoint.
-
-
 ### Modify a user
 
 `PATCH /api/v1/users/{user.id}`
@@ -101,6 +94,13 @@ public | boolean | Indicates if the user is listed publicly.
 avatarId | string? | The id of the avatar of the user, or null if the user doesn't have an avatar.
 
 
+### Get the authorized user
+
+`GET /api/v1/me`
+
+Fetches the user that is currently authorized. This endpoint behaves exactly like the `GET /api/v1/users/{user.id}` endpoint.
+
+
 ### Modify the authorized user
 
 `PATCH /api/v1/me`
@@ -108,15 +108,14 @@ avatarId | string? | The id of the avatar of the user, or null if the user doesn
 Modify the metadata of the user that is currently authorized. This endpoint behaves exactly like the `PATCH /api/v1/users/{user.id}` endpoint.
 
 
-### Update the email address of a user
+### Update the email address of the authorized user
 
-`POST /api/v1/users/{user.id}/email`
+`POST /api/v1/me/email`
 
-Modify the email address of a user. Returns:
+Modify the email address of the user that is currently authorized. Returns:
 - `200 OK` with the updated image object as body on success;
 - `400 Bad Request` if the body parameters are invalid;
 - `401 Unauthorized` if the request doesn't contain authorization;
-- `403 Forbidden` if the authorized user is not allowed to modify the user;
 - `404 Not Found` if no user with the given id exists.
 
 #### Body parameters
@@ -127,22 +126,14 @@ email | email | The email address of the user.
 currentPassword | string | The current password of the user to confirm the action.
 
 
-### Update the email address of the authorized user
+### Update the password of the authorized user
 
 `POST /api/v1/me/email`
 
-Modify the email address of the user that is currently authorized. This endpoint behaves exactly like the `POST /api/v1/users/{user.id}/email` endpoint.
-
-
-### Update the password of a user
-
-`POST /api/v1/users/{user.id}/email`
-
-Modify the password of a user. Returns:
+Modify the password of the user that is currently authorized. Returns:
 - `200 OK` with the updated image object as body on success;
 - `400 Bad Request` if the body parameters are invalid;
 - `401 Unauthorized` if the request doesn't contain authorization;
-- `403 Forbidden` if the authorized user is not allowed to modify the user;
 - `404 Not Found` if no user with the given id exists.
 
 #### Body parameters
@@ -153,18 +144,11 @@ password | string | The new password of the user.
 currentPassword | string | The current password of the user to confirm the action.
 
 
-### Update the password of the authorized user
+### Delete the authorized user
 
-`POST /api/v1/me/email`
+`DELETE /api/v1/me`
 
-Modify the password of the user that is currently authorized. This endpoint behaves exactly like the `POST /api/v1/users/{user.id}/email` endpoint.
-
-
-### Delete a user
-
-`DELETE /api/v1/users/{users.id}`
-
-Delete a user and all associated images permanently. This action is irreversible! Returns:
+Delete the user that is currently authorized and all associated images permanently. This action is irreversible! Returns:
 - `204 No Content` on success;
 - `401 Unauthorized` if the request doesn't contain authorization;
 - `403 Forbidden` if the authorized user is not allowed to delete the user;
@@ -175,13 +159,6 @@ Delete a user and all associated images permanently. This action is irreversible
 Field | Type | Description
 --- | --- | ---
 currentPassword | string | The current password of the user to confirm the action.
-
-
-### Delete the authorized user
-
-`DELETE /api/v1/me`
-
-Delete the user that is currently authorized and all associated images permanently. This action is irreversible! This endpoint behaves exactly like the `DELETE /api/v1/users/{user.id}` endpoint.
 
 
 ## Images
