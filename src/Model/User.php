@@ -4,15 +4,17 @@ namespace Danae\Faylin\Model;
 use Symfony\Component\Serializer\Normalizer\NormalizableInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
+use Danae\Faylin\Model\Traits\CreatedAtEntityTrait;
 use Danae\Faylin\Model\Traits\EntityTrait;
-use Danae\Faylin\Model\Traits\DatedEntityTrait;
+use Danae\Faylin\Model\Traits\UpdatedAtEntityTrait;
 
 
 // Class that defines a user object
 final class User implements NormalizableInterface
 {
   use EntityTrait;
-  use DatedEntityTrait;
+  use CreatedAtEntityTrait;
+  use UpdatedAtEntityTrait;
 
 
   // The email address of the user (internal)

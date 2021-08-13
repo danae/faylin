@@ -4,9 +4,10 @@ namespace Danae\Faylin\Model;
 use Symfony\Component\Serializer\Normalizer\NormalizableInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
+use Danae\Faylin\Model\Traits\CreatedAtEntityTrait;
 use Danae\Faylin\Model\Traits\EntityTrait;
+use Danae\Faylin\Model\Traits\UpdatedAtEntityTrait;
 use Danae\Faylin\Model\Traits\UserOwnedEntityTrait;
-use Danae\Faylin\Model\Traits\DatedEntityTrait;
 use Danae\Faylin\Utils\Traits\RouteContextTrait;
 
 
@@ -15,7 +16,8 @@ final class Image implements NormalizableInterface
 {
   use EntityTrait;
   use UserOwnedEntityTrait;
-  use DatedEntityTrait;
+  use CreatedAtEntityTrait;
+  use UpdatedAtEntityTrait;
   use RouteContextTrait;
 
 

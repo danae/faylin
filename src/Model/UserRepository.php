@@ -13,13 +13,13 @@ final class UserRepository extends Repository
   {
     parent::__construct($database, $table, User::class);
 
-    $this->field('id', 'string', ['length' => 256]);
+    $this->field('id', 'string', ['length' => 64]);
     $this->field('email', 'string', ['length' => 256]);
     $this->field('passwordHash', 'string', ['length' => 256]);
     $this->field('name', 'string', ['length' => 32]);
-    $this->field('description', 'string', ['length' => 256]);
+    $this->field('description', 'string', ['length' => 512]);
     $this->field('public', 'boolean', ['default' => true]);
-    $this->field('avatarId', 'string', ['length' => 256, 'notnull' => false, 'default' => null]);
+    $this->field('avatarId', 'string', ['length' => 64, 'notnull' => false, 'default' => null]);
     $this->field('createdAt', 'datetime');
     $this->field('updatedAt', 'datetime');
 

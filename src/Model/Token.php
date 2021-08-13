@@ -7,6 +7,7 @@ use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizableInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
+use Danae\Faylin\Model\Traits\CreatedAtEntityTrait;
 use Danae\Faylin\Model\Traits\EntityTrait;
 use Danae\Faylin\Model\Traits\UserOwnedEntityTrait;
 
@@ -16,6 +17,7 @@ final class Token implements NormalizableInterface, DenormalizableInterface
 {
   use EntityTrait;
   use UserOwnedEntityTrait;
+  use CreatedAtEntityTrait;
 
 
   // The issuer of the token
@@ -23,12 +25,6 @@ final class Token implements NormalizableInterface, DenormalizableInterface
 
   // The audience of the token
   private $audience;
-
-  // The date when the token was issued
-  private $issuedAt;
-
-  // The date when the token will become valid
-  private $validAt;
 
   // The date when the token will become expired
   private $expiresAt;
@@ -39,11 +35,38 @@ final class Token implements NormalizableInterface, DenormalizableInterface
   {
     $this->id = null;
     $this->userId = null;
+    $this->userAgent = null;
+    $this->userIpAddress = null;
     $this->issuer = null;
     $this->audience = null;
-    $this->issuedAt = new \DateTime();
-    $this->validAt = null;
+    $this->createdAt = new \DateTime();
     $this->expiresAt = null;
+  }
+
+  // Get the user agent of the token
+  public function getUserAgent(): string
+  {
+    return $this->userAgent;
+  }
+
+  // Set the user agent of the token
+  public function setUserAgent(string $userAgent): self
+  {
+    $this->userAgent = $userAgent;
+    return $this;
+  }
+
+  // Get the user address of the token
+  public function getUserIpAddress(): string
+  {
+    return $this->userIpAddress;
+  }
+
+  // Set the user address of the token
+  public function setUserIpAddress(string $userIpAddress): self
+  {
+    $this->userIpAddress = $userIpAddress;
+    return $this;
   }
 
   // Get the issuer of the token
@@ -72,32 +95,6 @@ final class Token implements NormalizableInterface, DenormalizableInterface
     return $this;
   }
 
-  // Get the date when the token was issued
-  public function getIssuedAt(): ?\DateTime
-  {
-    return $this->issuedAt;
-  }
-
-  // Set the date when the token was issued
-  public function setIssuedAt(?\DateTime $issuedAt): self
-  {
-    $this->issuedAt = $issuedAt;
-    return $this;
-  }
-
-  // Get the date when the token will become valid
-  public function getValidAt(): ?\DateTime
-  {
-    return $this->validAt;
-  }
-
-  // Set the date when the token will become valid
-  public function setValidAt(?\DateTime $validAt): self
-  {
-    $this->validAt = $validAt;
-    return $this;
-  }
-
   // Get the date when the token will become expired
   public function getExpiresAt(): ?\DateTime
   {
@@ -117,18 +114,15 @@ final class Token implements NormalizableInterface, DenormalizableInterface
   {
     $data = [];
 
-    if ($this->getId() !== null)
-      $data['jti'] = $this->getId();
-    if ($this->getUserId() !== null)
-      $data['sub'] = $this->getUserId();
+    $data['jti'] = $this->getId();
+    $data['sub'] = $this->getUserId();
+
     if ($this->getIssuer() != null)
       $data['iss'] = $this->getIssuer();
     if ($this->getAudience() !== null)
       $data['aud'] = $this->getAudience();
-    if ($this->getIssuedAt() !== null)
-      $data['iat'] = $this->getIssuedAt()->getTimestamp();
-    if ($this->getValidAt() !== null)
-      $data['nbf'] = $this->getValidAt()->getTimestamp();
+    if ($this->getCreatedAt() !== null)
+      $data['iat'] = $this->getCreatedAt()->getTimestamp();
     if ($this->getExpiresAt() !== null)
       $data['exp'] = $this->getExpiresAt()->getTimestamp();
 
@@ -141,18 +135,15 @@ final class Token implements NormalizableInterface, DenormalizableInterface
     if (!is_array($data))
       throw new NotNormalizableValueException("Data must be an array");
 
-    if (isset($data['jti']))
-      $this->setId($data['jti']);
-    if (isset($data['sub']))
-      $this->setUserId($data['sub']);
+    $this->setId($data['jti']);
+    $this->setUserId($data['sub']);
+
     if (isset($data['iss']))
       $this->setIssuer($data['iss']);
     if (isset($data['aud']))
       $this->setAudience($data['aud']);
     if (isset($data['iat']))
-      $this->setIssuedAt((new \DateTime())->setTimestamp($data['iat']));
-    if (isset($data['nbf']))
-      $this->setValidAt((new \DateTime())->setTimestamp($data['nbf']));
+      $this->setCreatedAt((new \DateTime())->setTimestamp($data['iat']));
     if (isset($data['exp']))
       $this->setExpiresAt((new \DateTime())->setTimestamp($data['exp']));
   }
