@@ -126,19 +126,19 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/dbal.git",
-                "reference": "f3a70f3c919d8393e1a1ec28a756bb888c349a0c"
+                "reference": "0fbec8b0707f600547bf193e186c9d2d9892e5c8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/f3a70f3c919d8393e1a1ec28a756bb888c349a0c",
-                "reference": "f3a70f3c919d8393e1a1ec28a756bb888c349a0c",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/0fbec8b0707f600547bf193e186c9d2d9892e5c8",
+                "reference": "0fbec8b0707f600547bf193e186c9d2d9892e5c8",
                 "shasum": ""
             },
             "require": {
                 "composer/package-versions-deprecated": "^1.11.99",
                 "doctrine/deprecations": "^0.5.3",
                 "doctrine/event-manager": "^1.0",
-                "php": "^7.3 || ^8.0",
+                "php": "^7.4 || ^8.0",
                 "psr/cache": "^1|^2|^3"
             },
             "require-dev": {
@@ -228,7 +228,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-07-23T21:21:33+00:00"
+            "time": "2021-08-03T16:09:56+00:00"
         },
         {
             "name": "doctrine/deprecations",
