@@ -26,6 +26,7 @@ use Danae\Faylin\App\Controllers\FrontendController;
 use Danae\Faylin\App\Controllers\ImageController;
 use Danae\Faylin\App\Controllers\UserController;
 use Danae\Faylin\Model\ImageRepository;
+use Danae\Faylin\Model\TokenRepository;
 use Danae\Faylin\Model\UserRepository;
 use Danae\Faylin\Utils\Snowflake;
 
@@ -60,6 +61,9 @@ return function(ContainerBuilder $containerBuilder)
     // Repositories
     ImageRepository::class => DI\autowire()
       ->constructorParameter('table', DI\get('database.table.images'))
+      ->method('create'),
+    TokenRepository::class => DI\autowire()
+      ->constructorParameter('table', DI\get('database.table.tokens'))
       ->method('create'),
     UserRepository::class => DI\autowire()
       ->constructorParameter('table', DI\get('database.table.users'))

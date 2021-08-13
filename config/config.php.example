@@ -18,6 +18,9 @@ $settings['database.url'] = '<database url>';
 // The name of the table where images are stored, specified as a string
 $settings['database.table.images'] = 'images';
 
+// The name of the table where tokens are stored, specified as a string
+$settings['database.table.tokens'] = 'tokens';
+
 // The name of the table where users are stored, specified as a string
 $settings['database.table.users'] = 'users';
 

@@ -8,6 +8,7 @@ use Slim\Views\Twig;
 use Symfony\Component\Serializer\Serializer;
 
 use Danae\Faylin\Model\ImageRepository;
+use Danae\Faylin\Model\TokenRepository;
 use Danae\Faylin\Model\UserRepository;
 use Danae\Faylin\Utils\Snowflake;
 use Danae\Faylin\Validator\Validator;
@@ -18,6 +19,9 @@ abstract class AbstractController
 {
   // The image repository to use with the controller
   protected $imageRepository;
+
+  // The token repository to use with the controller
+  protected $tokenRepository;
 
   // The user repository to use with the controller
   protected $userRepository;
@@ -33,9 +37,10 @@ abstract class AbstractController
 
 
   // Constructor
-  public function __construct(ImageRepository $imageRepository, UserRepository $userRepository, Serializer $serializer)
+  public function __construct(ImageRepository $imageRepository, TokenRepository $tokenRepository, UserRepository $userRepository, Serializer $serializer)
   {
     $this->imageRepository = $imageRepository;
+    $this->tokenRepository = $tokenRepository;
     $this->userRepository = $userRepository;
     $this->serializer = $serializer;
   }
