@@ -13,7 +13,6 @@ return function(ContainerBuilder $containerBuilder)
 
   $settings['database.url'] = '';
   $settings['database.table.images'] = 'images';
-  $settings['database.table.tokens'] = 'tokens';
   $settings['database.table.users'] = 'users';
 
   $settings['authorization.signKey'] = '';
