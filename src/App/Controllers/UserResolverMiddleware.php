@@ -31,7 +31,7 @@ final class UserResolverMiddleware implements MiddlewareInterface
   public function process(Request $request, RequestHandler $handler): Response
   {
     // Get the identifier from the route
-    $id = $this->getRoute($request)->getArgument('id');
+    $id = $this->getRoute($request)->getArgument('userId');
 
     // Get the user from the repository
     $user = $this->userRepository->get($id);

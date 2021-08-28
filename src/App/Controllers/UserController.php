@@ -15,7 +15,7 @@ use Danae\Faylin\Validator\Validator;
 final class UserController extends AbstractController
 {
   // Return all users as a JSON response
-  public function index(Request $request, Response $response)
+  public function getUsers(Request $request, Response $response)
   {
     // Get the images
     $options = $this->createSelectOptions($request, ['sort' => '-createdAt']);
@@ -27,7 +27,7 @@ final class UserController extends AbstractController
   }
 
   // Get a user as a JSON response
-  public function get(Request $request, Response $response, User $user)
+  public function getUser(Request $request, Response $response, User $user)
   {
     // Return the response
     return $this->serialize($request, $response, $user)
@@ -35,7 +35,7 @@ final class UserController extends AbstractController
   }
 
   // Patch a user and return the user as a JSON response
-  public function patch(Request $request, Response $response, User $user, User $authUser)
+  public function patchUser(Request $request, Response $response, User $user, User $authUser)
   {
     // Check if the authorized user owns this user
     if ($authUser->getId() !== $user->getId())
@@ -70,7 +70,7 @@ final class UserController extends AbstractController
   }
 
   // Return all collections owned by a user as a JSON response
-  public function collections(Request $request, Response $response, User $user)
+  public function getUserCollections(Request $request, Response $response, User $user)
   {
     // Get the collections
     $options = $this->createSelectOptions($request, ['sort' => '-createdAt']);
@@ -82,7 +82,7 @@ final class UserController extends AbstractController
   }
 
   // Return all images owned by a user as a JSON response
-  public function images(Request $request, Response $response, User $user)
+  public function getUserImages(Request $request, Response $response, User $user)
   {
     // Get the images
     $options = $this->createSelectOptions($request, ['sort' => '-createdAt']);
@@ -94,21 +94,21 @@ final class UserController extends AbstractController
   }
 
   // Get the authorized user as a JSON response
-  public function getAuthorized(Request $request, Response $response, User $authUser)
+  public function getAuthorizedUser(Request $request, Response $response, User $authUser)
   {
     // Return the response
-    return $this->get($request, $response, $authUser);
+    return $this->getUser($request, $response, $authUser);
   }
 
   // Patch the authorized user and return the user as a JSON response
-  public function patchAuthorized(Request $request, Response $response, User $authUser)
+  public function patchAuthorizedUser(Request $request, Response $response, User $authUser)
   {
     // Return the response
-    return $this->patch($request, $response, $authUser, $authUser);
+    return $this->patchUser($request, $response, $authUser, $authUser);
   }
 
   // Update the email address of the authorized user and return the user as a JSON response
-  public function updateEmailAuthorized(Request $request, Response $response, User $authUser)
+  public function updateAuthorizedUserEmail(Request $request, Response $response, User $authUser)
   {
     // Get and validate the parameters
     $params = (new Validator())
@@ -135,7 +135,7 @@ final class UserController extends AbstractController
   }
 
   // Update the password of the authorized user and return the user as a JSON response
-  public function updatePasswordAuthorized(Request $request, Response $response, User $authUser)
+  public function updateAuthorizedUserPassword(Request $request, Response $response, User $authUser)
   {
     // Get and validate the parameters
     $params = (new Validator())
@@ -162,7 +162,7 @@ final class UserController extends AbstractController
   }
 
   // Delete the authorized user
-  public function deleteAuthorized(Request $request, Response $response, User $authUser)
+  public function deleteAuthorizedUser(Request $request, Response $response, User $authUser)
   {
     // Get and validate the parameters
     $params = (new Validator())
@@ -192,16 +192,16 @@ final class UserController extends AbstractController
   }
 
   // Return all collections owned by the authorized user as a JSON response
-  public function collectionsAuthorized(Request $request, Response $response, User $authUser)
+  public function getAuthorizedUserCollections(Request $request, Response $response, User $authUser)
   {
     // Return the response
-    return $this->collections($request, $response, $authUser);
+    return $this->getUserCollections($request, $response, $authUser);
   }
 
   // Return all images owned by the authorized user as a JSON response
-  public function imagesAuthorized(Request $request, Response $response, User $authUser)
+  public function getAuthorizedUserImages(Request $request, Response $response, User $authUser)
   {
     // Return the response
-    return $this->images($request, $response, $authUser);
+    return $this->getUserImages($request, $response, $authUser);
   }
 }

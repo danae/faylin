@@ -35,73 +35,73 @@ return function(App $app)
     $group->group('/collections', function(RouteCollectorProxy $group)
     {
       // Return all collections as a JSON response
-      $group->get('/', [CollectionController::class, 'index'])
+      $group->get('/', [CollectionController::class, 'getCollections'])
         ->add(AuthorizationOptionalMiddleware::class)
         ->setName('collections.index');
 
       // Post a new collection and return the collection as a JSON response
-      $group->post('/', [CollectionController::class, 'post'])
+      $group->post('/', [CollectionController::class, 'postCollection'])
         ->add(AuthorizationMiddleware::class)
         ->setName('collections.post');
 
       // Get a collection as a JSON response
-      $group->get('/{id:[A-Za-z0-9-_]+}', [CollectionController::class, 'get'])
+      $group->get('/{collectionId:[A-Za-z0-9-_]+}', [CollectionController::class, 'getCollection'])
         ->add(CollectionResolverMiddleware::class)
         ->add(AuthorizationOptionalMiddleware::class)
         ->setName('collections.get');
 
       // Patch a collection and return the collection as a JSON response
-      $group->patch('/{id:[A-Za-z0-9-_]+}', [CollectionController::class, 'patch'])
+      $group->patch('/{collectionId:[A-Za-z0-9-_]+}', [CollectionController::class, 'patchCollection'])
         ->add(CollectionResolverMiddleware::class)
         ->add(AuthorizationMiddleware::class)
         ->setName('collections.patch');
 
       // Delete a collection
-      $group->delete('/{id:[A-Za-z0-9-_]+}', [CollectionController::class, 'delete'])
+      $group->delete('/{collectionId:[A-Za-z0-9-_]+}', [CollectionController::class, 'deleteCollection'])
         ->add(CollectionResolverMiddleware::class)
         ->add(AuthorizationMiddleware::class)
         ->setName('collections.delete');
 
       // Get all images in a collection as a JSON response
-      $group->get('/{id:[A-Za-z0-9-_]+}/images/', [CollectionController::class, 'images'])
+      $group->get('/{collectionId:[A-Za-z0-9-_]+}/images/', [CollectionController::class, 'getCollectionImages'])
         ->add(CollectionResolverMiddleware::class)
         ->add(AuthorizationOptionalMiddleware::class)
-        ->setName('collections.images');
+        ->setName('collections.images.index');
     });
 
     // Image controller routes
     $group->group('/images', function(RouteCollectorProxy $group)
     {
       // Return all images as a JSON response
-      $group->get('/', [ImageController::class, 'index'])
+      $group->get('/', [ImageController::class, 'getImages'])
         ->add(AuthorizationOptionalMiddleware::class)
         ->setName('images.index');
 
       // Get an image as a JSON response
-      $group->get('/{id:[A-Za-z0-9-_]+}', [ImageController::class, 'get'])
+      $group->get('/{imageId:[A-Za-z0-9-_]+}', [ImageController::class, 'getImage'])
         ->add(ImageResolverMiddleware::class)
         ->add(AuthorizationOptionalMiddleware::class)
         ->setName('images.get');
 
       // Patch an image and return the image as a JSON response
-      $group->patch('/{id:[A-Za-z0-9-_]+}', [ImageController::class, 'patch'])
+      $group->patch('/{imageId:[A-Za-z0-9-_]+}', [ImageController::class, 'patchImage'])
         ->add(ImageResolverMiddleware::class)
         ->add(AuthorizationMiddleware::class)
         ->setName('images.patch');
 
       // Delete an image
-      $group->delete('/{id:[A-Za-z0-9-_]+}', [ImageController::class, 'delete'])
+      $group->delete('/{imageId:[A-Za-z0-9-_]+}', [ImageController::class, 'deleteImage'])
         ->add(ImageResolverMiddleware::class)
         ->add(AuthorizationMiddleware::class)
         ->setName('images.delete');
 
       // Upload an image
-      $group->post('/upload', [ImageController::class, 'upload'])
+      $group->post('/upload', [ImageController::class, 'uploadImage'])
         ->add(AuthorizationMiddleware::class)
         ->setName('images.upload');
 
       // Replace an image
-      $group->post('/{id:[A-Za-z0-9-_]+}/upload', [ImageController::class, 'replace'])
+      $group->post('/{imageId:[A-Za-z0-9-_]+}/upload', [ImageController::class, 'replaceImage'])
         ->add(ImageResolverMiddleware::class)
         ->add(AuthorizationMiddleware::class)
         ->setName('images.replace');
@@ -111,72 +111,72 @@ return function(App $app)
     $group->group('/users', function(RouteCollectorProxy $group)
     {
       // Return all users as a JSON response
-      $group->get('/', [UserController::class, 'index'])
+      $group->get('/', [UserController::class, 'getUsers'])
         ->add(AuthorizationOptionalMiddleware::class)
         ->setName('users.index');
 
       // Get a user as a JSON response
-      $group->get('/{id:[A-Za-z0-9-_]+}', [UserController::class, 'get'])
+      $group->get('/{userId:[A-Za-z0-9-_]+}', [UserController::class, 'getUser'])
         ->add(UserResolverMiddleware::class)
         ->add(AuthorizationOptionalMiddleware::class)
         ->setName('users.get');
 
       // Patch a user and return the user as a JSON response
-      $group->patch('/{id:[A-Za-z0-9-_]+}', [UserController::class, 'patch'])
+      $group->patch('/{userId:[A-Za-z0-9-_]+}', [UserController::class, 'patchUser'])
         ->add(UserResolverMiddleware::class)
         ->add(AuthorizationMiddleware::class)
         ->setName('users.patch');
 
       // Return all collections owned by a user as a JSON response
-      $group->get('/{id:[A-Za-z0-9-_]+}/collections/', [UserController::class, 'collections'])
+      $group->get('/{userId:[A-Za-z0-9-_]+}/collections/', [UserController::class, 'getUserCollections'])
         ->add(UserResolverMiddleware::class)
         ->add(AuthorizationOptionalMiddleware::class)
-        ->setName('users.collections');
+        ->setName('users.collections.index');
 
       // Return all images owned by a user as a JSON response
-      $group->get('/{id:[A-Za-z0-9-_]+}/images/', [UserController::class, 'images'])
+      $group->get('/{userId:[A-Za-z0-9-_]+}/images/', [UserController::class, 'getUserImages'])
         ->add(UserResolverMiddleware::class)
         ->add(AuthorizationOptionalMiddleware::class)
-        ->setName('users.images');
+        ->setName('users.images.index');
     });
 
     // Authorized user routes
     $group->group('/me', function(RouteCollectorProxy $group)
     {
       // Get the authorized user as a JSON response
-      $group->get('', [UserController::class, 'getAuthorized'])
+      $group->get('', [UserController::class, 'getAuthorizedUser'])
         ->add(AuthorizationMiddleware::class)
         ->setName('me.get');
 
       // Patch the authorized user and return the user as a JSON response
-      $group->patch('', [UserController::class, 'patchAuthorized'])
+      $group->patch('', [UserController::class, 'patchAuthorizedUser'])
         ->add(AuthorizationMiddleware::class)
         ->setName('me.patch');
 
       // Update the email address of the authorized user and return the user as a JSON response
-      $group->post('/email', [UserController::class, 'updateEmailAuthorized'])
+      $group->post('/email', [UserController::class, 'updateAuthorizedUserEmail'])
         ->add(AuthorizationMiddleware::class)
         ->setName('me.updateEmail');
 
       // Update the password of the authorized user and return the user as a JSON response
-      $group->post('/password', [UserController::class, 'updatePasswordAuthorized'])
+      $group->post('/password', [UserController::class, 'updateAuthorizedUserPassword'])
         ->add(AuthorizationMiddleware::class)
         ->setName('me.updatePassword');
 
       // Delete the authorized user
-      $group->delete('', [UserController::class, 'deleteAuthorized'])
+      $group->delete('', [UserController::class, 'deleteAuthorizedUser'])
         ->add(AuthorizationMiddleware::class)
         ->setName('me.delete');
 
       // Return all collections owned by the authorized user as a JSON response
-      $group->get('/collections/', [UserController::class, 'collectionsAuthorized'])
+      $group->get('/collections/', [UserController::class, 'getAuthorizedUserCollections'])
         ->add(AuthorizationMiddleware::class)
-        ->setName('me.collections');
+        ->setName('me.collections.index');
 
       // Return all images owned by the authorized user as a JSON response
-      $group->get('/images/', [UserController::class, 'imagesAuthorized'])
+      $group->get('/images/', [UserController::class, 'getAuthorizedUserImages'])
         ->add(AuthorizationMiddleware::class)
-        ->setName('me.images');
+        ->setName('me.images.index');
     });
   });
 
@@ -194,7 +194,7 @@ return function(App $app)
     $group->get('/images/{id:[A-Za-z0-9-_]+}', [FrontendController::class, 'render']);
 
     // Download the contents of an image
-    $group->get('/{id:[A-Za-z0-9-_]+}[.{extension}]', [ImageController::class, 'download'])
+    $group->get('/{imageId:[A-Za-z0-9-_]+}[.{extension}]', [ImageController::class, 'downloadImage'])
       ->add(ImageResolverMiddleware::class)
       ->setName('images.download');
   });

@@ -16,9 +16,9 @@ use Danae\Faylin\Validator\Validator;
 final class CollectionController extends AbstractController
 {
   // Return all collections as a JSON response
-  public function index(Request $request, Response $response)
+  public function getCollections(Request $request, Response $response)
   {
-    // Get the images
+    // Get the collections
     $options = $this->createSelectOptions($request, ['sort' => '-createdAt']);
     $collections = $this->collectionRepository->select(['public' => true], $options);
 
@@ -27,7 +27,7 @@ final class CollectionController extends AbstractController
   }
 
   // Post a new collection and return the collection as a JSON response
-  public function post(Request $request, Response $response, User $authUser, Snowflake $snowflake)
+  public function postCollection(Request $request, Response $response, User $authUser, Snowflake $snowflake)
   {
     $now = new \DateTime();
 
@@ -58,14 +58,14 @@ final class CollectionController extends AbstractController
   }
 
   // Get a collection as a JSON response
-  public function get(Request $request, Response $response, Collection $collection)
+  public function getCollection(Request $request, Response $response, Collection $collection)
   {
     // Return the response
     return $this->serialize($request, $response, $collection);
   }
 
   // Patch a collection and return the collection as a JSON response
-  public function patch(Request $request, Response $response, Collection $collection, User $authUser)
+  public function patchCollection(Request $request, Response $response, Collection $collection, User $authUser)
   {
     $now = new \DateTime();
 
@@ -98,7 +98,7 @@ final class CollectionController extends AbstractController
   }
 
   // Delete a collection
-  public function delete(Request $request, Response $response, Collection $collection, User $authUser)
+  public function deleteCollection(Request $request, Response $response, Collection $collection, User $authUser)
   {
     // Check if the authorized user owns this collection
     if ($authUser->getId() !== $collection->getUserId())

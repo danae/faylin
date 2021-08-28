@@ -22,7 +22,7 @@ use Danae\Faylin\Validator\Validator;
 final class ImageController extends AbstractController
 {
   // Return all images as a JSON response
-  public function index(Request $request, Response $response)
+  public function getImages(Request $request, Response $response)
   {
     // Get the images
     $options = $this->createSelectOptions($request, ['sort' => '-createdAt']);
@@ -33,14 +33,14 @@ final class ImageController extends AbstractController
   }
 
   // Get an image as a JSON response
-  public function get(Request $request, Response $response, Image $image)
+  public function getImage(Request $request, Response $response, Image $image)
   {
     // Return the response
     return $this->serialize($request, $response, $image);
   }
 
   // Patch an image and return the image as a JSON response
-  public function patch(Request $request, Response $response, Image $image, User $authUser)
+  public function patchImage(Request $request, Response $response, Image $image, User $authUser)
   {
     $now = new \DateTime();
 
@@ -79,7 +79,7 @@ final class ImageController extends AbstractController
   }
 
   // Delete an image
-  public function delete(Request $request, Response $response, Image $image, User $authUser)
+  public function deleteImage(Request $request, Response $response, Image $image, User $authUser)
   {
     // Check if the authorized user owns this image
     if ($authUser->getId() !== $image->getUserId())
@@ -94,8 +94,68 @@ final class ImageController extends AbstractController
       ->withStatus(204);
   }
 
+  // Upload an image
+  public function uploadImage(Request $request, Response $response, User $authUser, Snowflake $snowflake)
+  {
+    $now = new \DateTime();
+
+    // Get the uploaded file
+    $file = $this->getUploadedFile($request, 'file');
+    $fileStream = $file->getStream();
+
+    // Create the image
+    $image = (new Image())
+      ->setId($snowflake->generateBase64String())
+      ->setUserId($authUser->getId())
+      ->setName($this->getUploadedFileNameWithoutExtension($file))
+      ->setContentType($file->getClientMediaType())
+      ->setContentLength($file->getSize())
+      ->setCreatedAt($now)
+      ->setUpdatedAt($now);
+
+    // Write the file stream
+    $this->writeFile($image, $fileStream);
+
+    // Create the image in the repository
+    $this->imageRepository->insert($image);
+
+    // Return the response
+    return $this->serialize($request, $response, $image)
+      ->withStatus(201);
+  }
+
+  // Replace an image
+  public function replaceImage(Request $request, Response $response, Image $image, User $authUser)
+  {
+    $now = new \DateTime();
+
+    // Check if the image is owned by the authorized user
+    if ($authUser->getId() !== $image->getUserId())
+      throw new HttpForbiddenException($request, "The current authorized user is not allowed to replace the image with id \"{$id->getId()}\"");
+
+    // Get the uploaded file
+    $file = $this->getUploadedFile($request, 'file');
+    $fileStream = $file->getStream();
+
+    // Update the image
+    $image
+      ->setContentType($file->getClientMediaType())
+      ->setContentLength($file->getSize())
+      ->setUpdatedAt($now);
+
+    // Write the file stream
+    $this->writeFile($image, $fileStream);
+
+    // Update the image in the repository
+    $this->imageRepository->update($image);
+
+    // Return the response
+    return $this->serialize($request, $response, $image)
+      ->withStatus(201);
+  }
+
   // Download the contents of an image
-  public function download(Request $request, Response $response, Image $image, string $extension = '')
+  public function downloadImage(Request $request, Response $response, Image $image, string $extension = '')
   {
     // Get the content name
     $contentExtension = $this->supportedContentTypes[$image->getContentType()] ?? null;
@@ -128,66 +188,6 @@ final class ImageController extends AbstractController
       ->withHeader('Content-Length', $image->getContentLength())
       ->withHeader('Content-Disposition', $contentDisposition)
       ->withBody($fileStream);
-  }
-
-  // Upload an image
-  public function upload(Request $request, Response $response, User $authUser, Snowflake $snowflake)
-  {
-    $now = new \DateTime();
-
-    // Get the uploaded file
-    $file = $this->getUploadedFile($request, 'file');
-    $fileStream = $file->getStream();
-
-    // Create the image
-    $image = (new Image())
-      ->setId($snowflake->generateBase64String())
-      ->setUserId($authUser->getId())
-      ->setName($this->getUploadedFileNameWithoutExtension($file))
-      ->setContentType($file->getClientMediaType())
-      ->setContentLength($file->getSize())
-      ->setCreatedAt($now)
-      ->setUpdatedAt($now);
-
-    // Write the file stream
-    $this->writeFile($image, $fileStream);
-
-    // Create the image in the repository
-    $this->imageRepository->insert($image);
-
-    // Return the response
-    return $this->serialize($request, $response, $image)
-      ->withStatus(201);
-  }
-
-  // Replace an image
-  public function replace(Request $request, Response $response, Image $image, User $authUser)
-  {
-    $now = new \DateTime();
-
-    // Check if the image is owned by the authorized user
-    if ($authUser->getId() !== $image->getUserId())
-      throw new HttpForbiddenException($request, "The current authorized user is not allowed to replace the image with id \"{$id->getId()}\"");
-
-    // Get the uploaded file
-    $file = $this->getUploadedFile($request, 'file');
-    $fileStream = $file->getStream();
-
-    // Update the image
-    $image
-      ->setContentType($file->getClientMediaType())
-      ->setContentLength($file->getSize())
-      ->setUpdatedAt($now);
-
-    // Write the file stream
-    $this->writeFile($image, $fileStream);
-
-    // Update the image in the repository
-    $this->imageRepository->update($image);
-
-    // Return the response
-    return $this->serialize($request, $response, $image)
-      ->withStatus(201);
   }
 
 
