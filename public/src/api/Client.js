@@ -1,4 +1,5 @@
 import ClientError from './ClientError.js';
+import Collection from './Collection.js';
 import Image from './Image.js';
 import Rest from './Rest.js';
 import User from './User.js';
@@ -104,6 +105,45 @@ export default class Client
     return response;
   }
 
+  // Get all collections
+  async getCollections(query = {})
+  {
+    const response = await this.rest.get(`/api/v1/collections/`, {query: query});
+    return response.map(data => new Collection(data));
+  }
+
+  // Get a collection
+  async getCollection(collectionId)
+  {
+    const response = await this.rest.get(`/api/v1/collections/${collectionId}`);
+    return new Collection(response);
+  }
+
+  // Patch a collection
+  async patchCollection(collectionId, fields)
+  {
+    const response = await this.rest.patch(`/api/v1/collections/${collectionId}`, fields);
+    return new Collection(response);
+  }
+
+  // Delete a collection
+  async deleteCollection(collectionId)
+  {
+    await this.rest.delete(`/api/v1/collections/${collectionId}`);
+  }
+
+  // Put an image in a collection
+  async putCollectionImage(collectionId, imageId)
+  {
+    await this.rest.put(`/api/v1/collections/${collectionId}/images/${imageId}`);
+  }
+
+  // Delete an image in a collection
+  async deleteCollectionImage(collectionId, imageId)
+  {
+    await this.rest.delete(`/api/v1/collections/${collectionId}/images/${imageId}`);
+  }
+
   // Get all images
   async getImages(query = {})
   {
@@ -131,13 +171,6 @@ export default class Client
     await this.rest.delete(`/api/v1/images/${imageId}`);
   }
 
-  // Download an image
-  async downloadImage(imageId, query = {})
-  {
-    const response = await this.rest.get(`/api/v1/images/${imageId}/download`, {query: query});
-    return response;
-  }
-
   // Upload an image
   async uploadImage(file)
   {
@@ -156,6 +189,13 @@ export default class Client
 
     const response = await this.rest.post(`/api/v1/images/${imageId}/upload`, body);
     return new Image(response);
+  }
+
+  // Download an image
+  async downloadImage(imageId, query = {})
+  {
+    const response = await this.rest.get(`/api/v1/images/${imageId}/download`, {query: query});
+    return response;
   }
 
   // Get all users
@@ -179,24 +219,11 @@ export default class Client
     return new User(response);
   }
 
-  // Update the email of a user
-  async updateUserEmail(userId, email, currentPassword)
+  // Get all collections owned by a user
+  async getUserCollections(userId, query = {})
   {
-    const response = await this.rest.post(`/api/v1/users/${userId}/email`, {email, currentPassword});
-    return new User(response);
-  }
-
-  // Update the password of a user
-  async updateUserPassword(userId, password, currentPassword)
-  {
-    const response = await this.rest.post(`/api/v1/users/${userId}/password`, {password, currentPassword});
-    return new User(response);
-  }
-
-  // Delete a user
-  async deleteUser(userId, currentPassword)
-  {
-    await this.rest.delete(`/api/v1/user/${userId}`, {currentPassword});
+    const response = await this.rest.get(`/api/v1/users/${userId}/collections/`, {query: query});
+    return response.map(data => new Collection(data));
   }
 
   // Get all images owned by a user
@@ -206,43 +233,48 @@ export default class Client
     return response.map(data => new Image(data));
   }
 
-
-  // Get the current authenticated user
+  // Get the authorized user
   async getMe()
   {
     const response = await this.rest.get(`/api/v1/me`);
     return new User(response);
   }
 
-  // Patch the authenticated user
+  // Patch the authorized user
   async patchMe(fields)
   {
     const response = await this.rest.patch(`/api/v1/me`, fields);
     return new User(response);
   }
 
-  // Update the email of the authenticated user
+  // Update the email of the authorized user
   async updateMeEmail(email, currentPassword)
   {
     const response = await this.rest.post(`/api/v1/me/email`, {email, currentPassword});
     return new User(response);
   }
 
-  // Update the password of the authenticated user
+  // Update the password of the authorized user
   async updateMePassword(password, currentPassword)
   {
     const response = await this.rest.post(`/api/v1/me/password`, {password, currentPassword});
     return new User(response);
   }
 
-  // Delete the authenticated user
+  // Delete the authorized user
   async deleteMe(currentPassword)
   {
     await this.rest.delete(`/api/v1/me`, {currentPassword});
   }
 
+  // Get all collections owned by the authorized user
+  async getMeCollections(query = {})
+  {
+    const response = await this.rest.get(`/api/v1/me/collections/`, {query: query});
+    return response.map(data => new Image(data));
+  }
 
-  // Get all images owned by the authenticated user
+  // Get all images owned by the authorized user
   async getMeImages(query = {})
   {
     const response = await this.rest.get(`/api/v1/me/images/`, {query: query});
