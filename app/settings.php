@@ -12,6 +12,8 @@ return function(ContainerBuilder $containerBuilder)
   $settings['app.basePath'] = '/';
 
   $settings['database.url'] = '';
+  $settings['database.table.collections'] = 'collections';
+  $settings['database.table.collection_images'] = 'collection_images';
   $settings['database.table.images'] = 'images';
   $settings['database.table.users'] = 'users';
 

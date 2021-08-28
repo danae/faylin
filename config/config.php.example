@@ -15,6 +15,12 @@ $settings['app.basePath'] = '';
 // See https://www.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/configuration.html#connecting-using-a-url
 $settings['database.url'] = '<database url>';
 
+// The name of the table where collections are stored, specified as a string
+$settings['database.table.collections'] = 'collections';
+
+// The name of the table where images in collections are stored, specified as a string
+$settings['database.table.collection_images'] = 'collection_images';
+
 // The name of the table where images are stored, specified as a string
 $settings['database.table.images'] = 'images';
 

@@ -22,9 +22,12 @@ use Danae\Faylin\App\Authorization\Jwt\JwtAuthorizationContext;
 use Danae\Faylin\App\Authorization\Jwt\JwtAuthorizationStrategy;
 use Danae\Faylin\App\Controllers\AuthorizationController;
 use Danae\Faylin\App\Controllers\BackendController;
+use Danae\Faylin\App\Controllers\CollectionController;
 use Danae\Faylin\App\Controllers\FrontendController;
 use Danae\Faylin\App\Controllers\ImageController;
 use Danae\Faylin\App\Controllers\UserController;
+use Danae\Faylin\Model\CollectionRepository;
+use Danae\Faylin\Model\CollectionImageRepository;
 use Danae\Faylin\Model\ImageRepository;
 use Danae\Faylin\Model\UserRepository;
 use Danae\Faylin\Utils\Snowflake;
@@ -58,6 +61,12 @@ return function(ContainerBuilder $containerBuilder)
     StreamFactoryInterface::class => DI\autowire(StreamFactory::class),
 
     // Repositories
+    CollectionRepository::class => DI\autowire()
+      ->constructorParameter('table', DI\get('database.table.collections'))
+      ->method('create'),
+    CollectionImageRepository::class => DI\autowire()
+      ->constructorParameter('table', DI\get('database.table.collection_images'))
+      ->method('create'),
     ImageRepository::class => DI\autowire()
       ->constructorParameter('table', DI\get('database.table.images'))
       ->method('create'),
@@ -88,6 +97,9 @@ return function(ContainerBuilder $containerBuilder)
       ->property('supportedSize', DI\get('uploads.supportedSize'))
       ->property('authorizationContext', DI\get(JwtAuthorizationContext::class)),
     BackendController::class => DI\autowire()
+      ->property('supportedContentTypes', DI\get('uploads.supportedContentTypes'))
+      ->property('supportedSize', DI\get('uploads.supportedSize')),
+    CollectionController::class => DI\autowire()
       ->property('supportedContentTypes', DI\get('uploads.supportedContentTypes'))
       ->property('supportedSize', DI\get('uploads.supportedSize')),
     ImageController::class => DI\autowire()

@@ -9,6 +9,8 @@ use Danae\Faylin\App\Authorization\AuthorizationMiddleware;
 use Danae\Faylin\App\Authorization\AuthorizationOptionalMiddleware;
 use Danae\Faylin\App\Controllers\AuthorizationController;
 use Danae\Faylin\App\Controllers\BackendController;
+use Danae\Faylin\App\Controllers\CollectionController;
+use Danae\Faylin\App\Controllers\CollectionResolverMiddleware;
 use Danae\Faylin\App\Controllers\FrontendController;
 use Danae\Faylin\App\Controllers\ImageController;
 use Danae\Faylin\App\Controllers\ImageResolverMiddleware;
@@ -28,6 +30,44 @@ return function(App $app)
     // Return the capabilities of the API
     $group->get('/capabilities', [BackendController::class, 'capabilities'])
       ->setName('capabilities');
+
+    // Collection controller routes
+    $group->group('/collections', function(RouteCollectorProxy $group)
+    {
+      // Return all collections as a JSON response
+      $group->get('/', [CollectionController::class, 'index'])
+        ->add(AuthorizationOptionalMiddleware::class)
+        ->setName('collections.index');
+
+      // Post a new collection and return the collection as a JSON response
+      $group->post('/', [CollectionController::class, 'post'])
+        ->add(AuthorizationMiddleware::class)
+        ->setName('collections.post');
+
+      // Get a collection as a JSON response
+      $group->get('/{id:[A-Za-z0-9-_]+}', [CollectionController::class, 'get'])
+        ->add(CollectionResolverMiddleware::class)
+        ->add(AuthorizationOptionalMiddleware::class)
+        ->setName('collections.get');
+
+      // Patch a collection and return the collection as a JSON response
+      $group->patch('/{id:[A-Za-z0-9-_]+}', [CollectionController::class, 'patch'])
+        ->add(CollectionResolverMiddleware::class)
+        ->add(AuthorizationMiddleware::class)
+        ->setName('collections.patch');
+
+      // Delete a collection
+      $group->delete('/{id:[A-Za-z0-9-_]+}', [CollectionController::class, 'delete'])
+        ->add(CollectionResolverMiddleware::class)
+        ->add(AuthorizationMiddleware::class)
+        ->setName('collections.delete');
+
+      // Get all images in a collection as a JSON response
+      $group->get('/{id:[A-Za-z0-9-_]+}/images/', [CollectionController::class, 'images'])
+        ->add(CollectionResolverMiddleware::class)
+        ->add(AuthorizationOptionalMiddleware::class)
+        ->setName('collections.images');
+    });
 
     // Image controller routes
     $group->group('/images', function(RouteCollectorProxy $group)
@@ -87,6 +127,12 @@ return function(App $app)
         ->add(AuthorizationMiddleware::class)
         ->setName('users.patch');
 
+      // Return all collections owned by a user as a JSON response
+      $group->get('/{id:[A-Za-z0-9-_]+}/collections/', [UserController::class, 'collections'])
+        ->add(UserResolverMiddleware::class)
+        ->add(AuthorizationOptionalMiddleware::class)
+        ->setName('users.collections');
+
       // Return all images owned by a user as a JSON response
       $group->get('/{id:[A-Za-z0-9-_]+}/images/', [UserController::class, 'images'])
         ->add(UserResolverMiddleware::class)
@@ -121,6 +167,11 @@ return function(App $app)
       $group->delete('', [UserController::class, 'deleteAuthorized'])
         ->add(AuthorizationMiddleware::class)
         ->setName('me.delete');
+
+      // Return all collections owned by the authorized user as a JSON response
+      $group->get('/collections/', [UserController::class, 'collectionsAuthorized'])
+        ->add(AuthorizationMiddleware::class)
+        ->setName('me.collections');
 
       // Return all images owned by the authorized user as a JSON response
       $group->get('/images/', [UserController::class, 'imagesAuthorized'])

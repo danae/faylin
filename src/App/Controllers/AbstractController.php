@@ -7,6 +7,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Views\Twig;
 use Symfony\Component\Serializer\Serializer;
 
+use Danae\Faylin\Model\CollectionRepository;
 use Danae\Faylin\Model\ImageRepository;
 use Danae\Faylin\Model\UserRepository;
 use Danae\Faylin\Utils\Snowflake;
@@ -16,6 +17,9 @@ use Danae\Faylin\Validator\Validator;
 // Base class for controllers
 abstract class AbstractController
 {
+  // The collection repository to use with the controller
+  protected $collectionRepository;
+
   // The image repository to use with the controller
   protected $imageRepository;
 
@@ -33,8 +37,9 @@ abstract class AbstractController
 
 
   // Constructor
-  public function __construct(ImageRepository $imageRepository, UserRepository $userRepository, Serializer $serializer)
+  public function __construct(CollectionRepository $collectionRepository, ImageRepository $imageRepository, UserRepository $userRepository, Serializer $serializer)
   {
+    $this->collectionRepository = $collectionRepository;
     $this->imageRepository = $imageRepository;
     $this->userRepository = $userRepository;
     $this->serializer = $serializer;
@@ -54,6 +59,7 @@ abstract class AbstractController
     return [
       'request' => $request,
       'response' => $response,
+      'collectionRepository' => $this->collectionRepository,
       'imageRepository' => $this->imageRepository,
       'userRepository' => $this->userRepository,
       'supportedContentTypes' => $this->supportedContentTypes,

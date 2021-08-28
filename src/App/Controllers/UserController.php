@@ -69,6 +69,18 @@ final class UserController extends AbstractController
       ->withStatus(200);
   }
 
+  // Return all collections owned by a user as a JSON response
+  public function collections(Request $request, Response $response, User $user)
+  {
+    // Get the collections
+    $options = $this->createSelectOptions($request, ['sort' => '-createdAt']);
+    $collections = $this->collectionRepository->select(['userId' => $user->getId()], $options);
+
+    // Return the response
+    return $this->serialize($request, $response, $collections)
+      ->withStatus(200);
+  }
+
   // Return all images owned by a user as a JSON response
   public function images(Request $request, Response $response, User $user)
   {
@@ -177,6 +189,13 @@ final class UserController extends AbstractController
     // Return the response
     return $response
       ->withStatus(204);
+  }
+
+  // Return all collections owned by the authorized user as a JSON response
+  public function collectionsAuthorized(Request $request, Response $response, User $authUser)
+  {
+    // Return the response
+    return $this->collections($request, $response, $authUser);
   }
 
   // Return all images owned by the authorized user as a JSON response
