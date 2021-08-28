@@ -19,7 +19,7 @@ $settings['database.url'] = '<database url>';
 $settings['database.table.collections'] = 'collections';
 
 // The name of the table where images in collections are stored, specified as a string
-$settings['database.table.collection_images'] = 'collection_images';
+$settings['database.table.collections_images'] = 'collections_images';
 
 // The name of the table where images are stored, specified as a string
 $settings['database.table.images'] = 'images';

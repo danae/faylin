@@ -65,7 +65,7 @@ return function(ContainerBuilder $containerBuilder)
       ->constructorParameter('table', DI\get('database.table.collections'))
       ->method('create'),
     CollectionImageRepository::class => DI\autowire()
-      ->constructorParameter('table', DI\get('database.table.collection_images'))
+      ->constructorParameter('table', DI\get('database.table.collections_images'))
       ->method('create'),
     ImageRepository::class => DI\autowire()
       ->constructorParameter('table', DI\get('database.table.images'))
