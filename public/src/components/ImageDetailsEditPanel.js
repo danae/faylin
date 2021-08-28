@@ -9,15 +9,12 @@ export default {
 
   // The properties for the component
   props: {
-    // The image to reference in the component
+    // The image that is referenced in the component
     image: {type: Image},
   },
 
   // Hook when the component is created
   created: function() {
-    // Set the referenced image
-    this.image = this.image;
-
     // Register upload event handlers
     this.$on('upload-start', this.onUploadStart.bind(this));
     this.$on('upload-end', this.onUploadEnd.bind(this));

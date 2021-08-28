@@ -112,6 +112,13 @@ export default class Client
     return response.map(data => new Collection(data));
   }
 
+  // Post a new collection
+  async postCollection(fields = {})
+  {
+    const response = await this.rest.post(`/api/v1/collections/`, fields);
+    return new Collection(response);
+  }
+
   // Get a collection
   async getCollection(collectionId)
   {
@@ -234,48 +241,48 @@ export default class Client
   }
 
   // Get the authorized user
-  async getMe()
+  async getAuthorizedUser()
   {
     const response = await this.rest.get(`/api/v1/me`);
     return new User(response);
   }
 
   // Patch the authorized user
-  async patchMe(fields)
+  async patchAuthorizedUser(fields)
   {
     const response = await this.rest.patch(`/api/v1/me`, fields);
     return new User(response);
   }
 
   // Update the email of the authorized user
-  async updateMeEmail(email, currentPassword)
+  async updateAuthorizedUserEmail(email, currentPassword)
   {
     const response = await this.rest.post(`/api/v1/me/email`, {email, currentPassword});
     return new User(response);
   }
 
   // Update the password of the authorized user
-  async updateMePassword(password, currentPassword)
+  async updateAuthorizedUserPassword(password, currentPassword)
   {
     const response = await this.rest.post(`/api/v1/me/password`, {password, currentPassword});
     return new User(response);
   }
 
   // Delete the authorized user
-  async deleteMe(currentPassword)
+  async deleteAuthorizedUser(currentPassword)
   {
     await this.rest.delete(`/api/v1/me`, {currentPassword});
   }
 
   // Get all collections owned by the authorized user
-  async getMeCollections(query = {})
+  async getAuthorizedUserCollections(query = {})
   {
     const response = await this.rest.get(`/api/v1/me/collections/`, {query: query});
-    return response.map(data => new Image(data));
+    return response.map(data => new Collection(data));
   }
 
   // Get all images owned by the authorized user
-  async getMeImages(query = {})
+  async getAuthorizedUserImages(query = {})
   {
     const response = await this.rest.get(`/api/v1/me/images/`, {query: query});
     return response.map(data => new Image(data));

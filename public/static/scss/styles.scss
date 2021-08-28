@@ -199,8 +199,8 @@ footer {
     }
   }
 
-  // Image thumbnail styling
-  .image-thumbnail {
+  // Image and collection thumbnail styling
+  .image-thumbnail, .collection-thumbnail {
     @extend .has-text-centered;
 
     // Name text for the image thumbnail
@@ -232,8 +232,8 @@ footer {
     }
   }
 
-  // Image thumbnail list styling
-  .image-thumbnail-list {
+  // Image and collection thumbnail list styling
+  .image-thumbnail-list, .collection-thumbnail-list {
     // Columns for the image thumbnail list
     .columns {
       @extend .is-multiline;

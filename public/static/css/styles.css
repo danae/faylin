@@ -94,7 +94,7 @@ fieldset[disabled] .pagination-ellipsis {
   width: 0.625em;
 }
 
-.box:not(:last-child), .page .image-details-image img:not(:last-child), .page .image-thumbnail-image img:not(:last-child), .content:not(:last-child), .notification:not(:last-child), .progress:not(:last-child), .progress-wrapper.is-not-native:not(:last-child), .table:not(:last-child), .table-container:not(:last-child), .title:not(:last-child),
+.box:not(:last-child), .page .image-details-image img:not(:last-child), .page .image-thumbnail-image img:not(:last-child), .page .collection-thumbnail-image img:not(:last-child), .content:not(:last-child), .notification:not(:last-child), .progress:not(:last-child), .progress-wrapper.is-not-native:not(:last-child), .table:not(:last-child), .table-container:not(:last-child), .title:not(:last-child),
 .subtitle:not(:last-child), .block:not(:last-child), .breadcrumb:not(:last-child), .level:not(:last-child), .message:not(:last-child), .pagination:not(:last-child), .tabs:not(:last-child) {
   margin-bottom: 1.5rem;
 }
@@ -461,7 +461,7 @@ table th {
 }
 
 /* Bulma Elements */
-.box, .page .image-details-image img, .page .image-thumbnail-image img {
+.box, .page .image-details-image img, .page .image-thumbnail-image img, .page .collection-thumbnail-image img {
   background-color: white;
   border-radius: 6px;
   box-shadow: 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.1), 0 0px 0 1px rgba(10, 10, 10, 0.02);
@@ -7398,7 +7398,7 @@ label.panel-block:hover {
   width: 66.6666%;
 }
 
-.columns.is-mobile > .column.is-half, .page .image-thumbnail-list .columns.is-mobile > .column, .page .user-thumbnail-list .image-thumbnail-list .columns > .column, .page .user-thumbnail-list .columns > .column {
+.columns.is-mobile > .column.is-half, .page .image-thumbnail-list .columns.is-mobile > .column, .page .user-thumbnail-list .image-thumbnail-list .columns > .column, .page .collection-thumbnail-list .columns.is-mobile > .column, .page .user-thumbnail-list .collection-thumbnail-list .columns > .column, .page .user-thumbnail-list .columns > .column {
   flex: none;
   width: 50%;
 }
@@ -7768,7 +7768,7 @@ label.panel-block:hover {
     flex: none;
     width: 66.6666%;
   }
-  .column.is-half, .page .image-thumbnail-list .columns .column, .page .user-thumbnail-list .columns .column, .column.is-half-tablet {
+  .column.is-half, .page .image-thumbnail-list .columns .column, .page .collection-thumbnail-list .columns .column, .page .user-thumbnail-list .columns .column, .column.is-half-tablet {
     flex: none;
     width: 50%;
   }
@@ -8102,7 +8102,7 @@ label.panel-block:hover {
     flex: none;
     width: 50%;
   }
-  .column.is-one-third-desktop, .page .image-thumbnail-list .columns .column {
+  .column.is-one-third-desktop, .page .image-thumbnail-list .columns .column, .page .collection-thumbnail-list .columns .column {
     flex: none;
     width: 33.3333%;
   }
@@ -8271,7 +8271,7 @@ label.panel-block:hover {
     flex: none;
     width: 33.3333%;
   }
-  .column.is-one-quarter-widescreen, .page .image-thumbnail-list .columns .column {
+  .column.is-one-quarter-widescreen, .page .image-thumbnail-list .columns .column, .page .collection-thumbnail-list .columns .column {
     flex: none;
     width: 25%;
   }
@@ -8440,7 +8440,7 @@ label.panel-block:hover {
     flex: none;
     width: 25%;
   }
-  .column.is-one-fifth-fullhd, .page .image-thumbnail-list .columns .column {
+  .column.is-one-fifth-fullhd, .page .image-thumbnail-list .columns .column, .page .collection-thumbnail-list .columns .column {
     flex: none;
     width: 20%;
   }
@@ -8617,7 +8617,7 @@ label.panel-block:hover {
   display: flex;
 }
 
-.columns.is-multiline, .page .image-thumbnail-list .columns, .page .user-thumbnail-list .columns {
+.columns.is-multiline, .page .image-thumbnail-list .columns, .page .collection-thumbnail-list .columns, .page .user-thumbnail-list .columns {
   flex-wrap: wrap;
 }
 
@@ -9879,7 +9879,7 @@ a.has-text-primary-light-dark:hover, a.has-text-primary-light-dark:focus {
   pointer-events: all !important;
 }
 
-.is-clipped, .page .image-thumbnail-list .columns .column {
+.is-clipped, .page .image-thumbnail-list .columns .column, .page .collection-thumbnail-list .columns .column {
   overflow: hidden !important;
 }
 
@@ -9915,7 +9915,7 @@ a.has-text-primary-light-dark:hover, a.has-text-primary-light-dark:focus {
   margin-left: 0 !important;
 }
 
-.mx-0, .content .image, .page .image-thumbnail-image {
+.mx-0, .content .image, .page .image-thumbnail-image, .page .collection-thumbnail-image {
   margin-left: 0 !important;
   margin-right: 0 !important;
 }
@@ -9967,7 +9967,7 @@ a.has-text-primary-light-dark:hover, a.has-text-primary-light-dark:focus {
   margin-right: 0.5rem !important;
 }
 
-.mb-2, .panel .panel-block.is-form > .field, .page .image-thumbnail-image {
+.mb-2, .panel .panel-block.is-form > .field, .page .image-thumbnail-image, .page .collection-thumbnail-image {
   margin-bottom: 0.5rem !important;
 }
 
@@ -10125,7 +10125,7 @@ a.has-text-primary-light-dark:hover, a.has-text-primary-light-dark:focus {
   margin-left: auto !important;
 }
 
-.mx-auto, .page .image-details-image img, .page .image-thumbnail-image img {
+.mx-auto, .page .image-details-image img, .page .image-thumbnail-image img, .page .collection-thumbnail-image img {
   margin-left: auto !important;
   margin-right: auto !important;
 }
@@ -10135,7 +10135,7 @@ a.has-text-primary-light-dark:hover, a.has-text-primary-light-dark:focus {
   margin-bottom: auto !important;
 }
 
-.p-0, .page .image-details-image img, .page .image-thumbnail-image img {
+.p-0, .page .image-details-image img, .page .image-thumbnail-image img, .page .collection-thumbnail-image img {
   padding: 0 !important;
 }
 
@@ -10395,11 +10395,11 @@ a.has-text-primary-light-dark:hover, a.has-text-primary-light-dark:focus {
   font-size: 1.25rem !important;
 }
 
-.is-size-6, .page .image-details-user-name, .page .image-thumbnail-name {
+.is-size-6, .page .image-details-user-name, .page .image-thumbnail-name, .page .collection-thumbnail-name {
   font-size: 1rem !important;
 }
 
-.is-size-7, footer, .page .image-thumbnail-user-name {
+.is-size-7, footer, .page .image-thumbnail-user-name, .page .collection-thumbnail-user-name {
   font-size: 0.75rem !important;
 }
 
@@ -10547,7 +10547,7 @@ a.has-text-primary-light-dark:hover, a.has-text-primary-light-dark:focus {
   }
 }
 
-.has-text-centered, footer, .hero, .page .image-thumbnail {
+.has-text-centered, footer, .hero, .page .image-thumbnail, .page .collection-thumbnail {
   text-align: center !important;
 }
 
@@ -10815,7 +10815,7 @@ a.has-text-primary-light-dark:hover, a.has-text-primary-light-dark:focus {
   font-weight: 600 !important;
 }
 
-.has-text-weight-bold, .page .image-details-name, .page .image-thumbnail-name {
+.has-text-weight-bold, .page .image-details-name, .page .image-thumbnail-name, .page .collection-thumbnail-name {
   font-weight: 700 !important;
 }
 
@@ -15170,6 +15170,8 @@ a.has-text-primary-light-dark:hover, a.has-text-primary-light-dark:focus {
 .rate .rate-item.set-half .is-half,
 .rate .rate-item.set-half .page .image-thumbnail-list .columns .column,
 .page .image-thumbnail-list .columns .rate .rate-item.set-half .column,
+.rate .rate-item.set-half .page .collection-thumbnail-list .columns .column,
+.page .collection-thumbnail-list .columns .rate .rate-item.set-half .column,
 .rate .rate-item.set-half .page .user-thumbnail-list .columns .column,
 .page .user-thumbnail-list .columns .rate .rate-item.set-half .column {
   color: #f39134;
@@ -15179,6 +15181,8 @@ a.has-text-primary-light-dark:hover, a.has-text-primary-light-dark:focus {
 .rate .rate-item.set-half .is-half,
 .rate .rate-item.set-half .page .image-thumbnail-list .columns .column,
 .page .image-thumbnail-list .columns .rate .rate-item.set-half .column,
+.rate .rate-item.set-half .page .collection-thumbnail-list .columns .column,
+.page .collection-thumbnail-list .columns .rate .rate-item.set-half .column,
 .rate .rate-item.set-half .page .user-thumbnail-list .columns .column,
 .page .user-thumbnail-list .columns .rate .rate-item.set-half .column {
   position: absolute;
@@ -15194,7 +15198,7 @@ a.has-text-primary-light-dark:hover, a.has-text-primary-light-dark:focus {
   width: inherit;
 }
 
-.rate .is-half > i, .rate .page .image-thumbnail-list .columns .column > i, .page .image-thumbnail-list .columns .rate .column > i, .rate .page .user-thumbnail-list .columns .column > i, .page .user-thumbnail-list .columns .rate .column > i {
+.rate .is-half > i, .rate .page .image-thumbnail-list .columns .column > i, .page .image-thumbnail-list .columns .rate .column > i, .rate .page .collection-thumbnail-list .columns .column > i, .page .collection-thumbnail-list .columns .rate .column > i, .rate .page .user-thumbnail-list .columns .column > i, .page .user-thumbnail-list .columns .rate .column > i {
   position: absolute;
   left: 0;
 }
@@ -17716,7 +17720,7 @@ MIT (https://github.com/Wikiki/bulma-steps/blob/master/LICENSE)
   border-left-color: transparent !important;
 }
 
-.b-tabs.is-multiline > .tabs ul, .page .image-thumbnail-list .b-tabs.columns > .tabs ul, .page .user-thumbnail-list .b-tabs.columns > .tabs ul {
+.b-tabs.is-multiline > .tabs ul, .page .image-thumbnail-list .b-tabs.columns > .tabs ul, .page .collection-thumbnail-list .b-tabs.columns > .tabs ul, .page .user-thumbnail-list .b-tabs.columns > .tabs ul {
   flex-wrap: wrap;
   flex-shrink: 1;
 }
@@ -18488,21 +18492,21 @@ MIT (https://github.com/Wikiki/bulma-steps/blob/master/LICENSE)
   visibility: visible;
 }
 
-.b-tooltip.is-multiline .tooltip-content, .page .image-thumbnail-list .b-tooltip.columns .tooltip-content, .page .user-thumbnail-list .b-tooltip.columns .tooltip-content {
+.b-tooltip.is-multiline .tooltip-content, .page .image-thumbnail-list .b-tooltip.columns .tooltip-content, .page .collection-thumbnail-list .b-tooltip.columns .tooltip-content, .page .user-thumbnail-list .b-tooltip.columns .tooltip-content {
   display: flex-block;
   text-align: center;
   white-space: normal;
 }
 
-.b-tooltip.is-multiline.is-small .tooltip-content, .page .image-thumbnail-list .b-tooltip.is-small.columns .tooltip-content, .page .user-thumbnail-list .b-tooltip.is-small.columns .tooltip-content {
+.b-tooltip.is-multiline.is-small .tooltip-content, .page .image-thumbnail-list .b-tooltip.is-small.columns .tooltip-content, .page .collection-thumbnail-list .b-tooltip.is-small.columns .tooltip-content, .page .user-thumbnail-list .b-tooltip.is-small.columns .tooltip-content {
   width: 180px;
 }
 
-.b-tooltip.is-multiline.is-medium .tooltip-content, .page .image-thumbnail-list .b-tooltip.is-medium.columns .tooltip-content, .page .user-thumbnail-list .b-tooltip.is-medium.columns .tooltip-content {
+.b-tooltip.is-multiline.is-medium .tooltip-content, .page .image-thumbnail-list .b-tooltip.is-medium.columns .tooltip-content, .page .collection-thumbnail-list .b-tooltip.is-medium.columns .tooltip-content, .page .user-thumbnail-list .b-tooltip.is-medium.columns .tooltip-content {
   width: 240px;
 }
 
-.b-tooltip.is-multiline.is-large .tooltip-content, .page .image-thumbnail-list .b-tooltip.is-large.columns .tooltip-content, .page .user-thumbnail-list .b-tooltip.is-large.columns .tooltip-content {
+.b-tooltip.is-multiline.is-large .tooltip-content, .page .image-thumbnail-list .b-tooltip.is-large.columns .tooltip-content, .page .collection-thumbnail-list .b-tooltip.is-large.columns .tooltip-content, .page .user-thumbnail-list .b-tooltip.is-large.columns .tooltip-content {
   width: 300px;
 }
 
@@ -18682,31 +18686,31 @@ main {
   max-height: 15rem;
 }
 
-.box.dark, .page .image-details-image img.dark, .page .image-thumbnail-image img.dark {
+.box.dark, .page .image-details-image img.dark, .page .image-thumbnail-image img.dark, .page .collection-thumbnail-image img.dark {
   border: 2px #2A3D45 solid;
 }
 
-.box.is-primary, .page .image-details-image img.is-primary, .page .image-thumbnail-image img.is-primary {
+.box.is-primary, .page .image-details-image img.is-primary, .page .image-thumbnail-image img.is-primary, .page .collection-thumbnail-image img.is-primary {
   border: 2px #5Eb2CE solid;
 }
 
-.box.is-link, .page .image-details-image img.is-link, .page .image-thumbnail-image img.is-link {
+.box.is-link, .page .image-details-image img.is-link, .page .image-thumbnail-image img.is-link, .page .collection-thumbnail-image img.is-link {
   border: 2px #5Eb2CE solid;
 }
 
-.box.is-info, .page .image-details-image img.is-info, .page .image-thumbnail-image img.is-info {
+.box.is-info, .page .image-details-image img.is-info, .page .image-thumbnail-image img.is-info, .page .collection-thumbnail-image img.is-info {
   border: 2px #ADD8E6 solid;
 }
 
-.box.is-success, .page .image-details-image img.is-success, .page .image-thumbnail-image img.is-success {
+.box.is-success, .page .image-details-image img.is-success, .page .image-thumbnail-image img.is-success, .page .collection-thumbnail-image img.is-success {
   border: 2px #B0DB43 solid;
 }
 
-.box.is-warning, .page .image-details-image img.is-warning, .page .image-thumbnail-image img.is-warning {
+.box.is-warning, .page .image-details-image img.is-warning, .page .image-thumbnail-image img.is-warning, .page .collection-thumbnail-image img.is-warning {
   border: 2px #F49E4C solid;
 }
 
-.box.is-danger, .page .image-details-image img.is-danger, .page .image-thumbnail-image img.is-danger {
+.box.is-danger, .page .image-details-image img.is-danger, .page .image-thumbnail-image img.is-danger, .page .collection-thumbnail-image img.is-danger {
   border: 2px #AB3428 solid;
 }
 
@@ -18725,7 +18729,7 @@ main {
   }
 }
 
-.page .image-thumbnail-image img {
+.page .image-thumbnail-image img, .page .collection-thumbnail-image img {
   width: auto;
   height: 10rem;
   max-width: 100%;

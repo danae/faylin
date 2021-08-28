@@ -45,7 +45,7 @@ export default {
     // Event handler when the password is confirmed
     onPasswordConfirmed: async function(password, currentPassword) {
       // Send an update email request
-      await this.$root.client.updateMePassword(password, currentPassword);
+      await this.$root.client.updateAuthorizedUserPassword(password, currentPassword);
 
       // Display a success message
       this.$displayMessage('Password updated successfully');

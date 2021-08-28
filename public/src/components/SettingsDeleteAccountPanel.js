@@ -46,7 +46,7 @@ export default {
     // Event handler when the password is confirmed
     onPasswordConfirmed: async function(currentPassword) {
       // Send an update email request
-      await this.$root.client.deleteMe(currentPassword);
+      await this.$root.client.deleteAuthorizedUser(currentPassword);
 
       // Display a success message
       this.$displayMessage('User deleted successfully');

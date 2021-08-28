@@ -1,7 +1,11 @@
+import CollectionDetails from './components/CollectionDetails.js';
+import CollectionDetailsButtons from './components/CollectionDetailsButtons.js';
+import CollectionDetailsEditPanel from './components/CollectionDetailsEditPanel.js';
+import CollectionThumbnail from './components/CollectionThumbnail.js';
+import CollectionThumbnailList from './components/CollectionThumbnailList.js';
 import ImageDetails from './components/ImageDetails.js';
+import ImageDetailsButtons from './components/ImageDetailsButtons.js';
 import ImageDetailsEditPanel from './components/ImageDetailsEditPanel.js';
-import ImageDetailsSidebar from './components/ImageDetailsSidebar.js';
-import ImageDetailsSidebarButtons from './components/ImageDetailsSidebarButtons.js';
 import ImageThumbnail from './components/ImageThumbnail.js';
 import ImageThumbnailList from './components/ImageThumbnailList.js';
 import SettingsDeleteAccountPanel from './components/SettingsDeleteAccountPanel.js';
@@ -18,10 +22,14 @@ import UserThumbnailList from './components/UserThumbnailList.js';
 
 // Create the components
 const components =  {
+  CollectionDetails,
+  CollectionDetailsButtons,
+  CollectionDetailsEditPanel,
+  CollectionThumbnail,
+  CollectionThumbnailList,
   ImageDetails,
+  ImageDetailsButtons,
   ImageDetailsEditPanel,
-  ImageDetailsSidebar,
-  ImageDetailsSidebarButtons,
   ImageThumbnail,
   ImageThumbnailList,
   SettingsDeleteAccountPanel,

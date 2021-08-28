@@ -1,18 +1,29 @@
 import Image from '../api/Image.js';
 
 
-// Image details sidebar buttons component
+// Image details buttons component
 export default {
   // The properties for the component
   props: {
     // The image to reference in the component
     image: {type: Image},
 
+    // The collections the image can be added to
+    collections: {type: Array, default: () => []},
+
     // If the image is owned by the client user
     owner: {type: Boolean, default: false},
 
     // If the image is currently being edited
     editing: {type: Boolean, default: false},
+  },
+
+  // The data for the component
+  data: function() {
+    return {
+      // The name for a new collection to add the image to
+      newCollectionName: "",
+    };
   },
 
   // The template for the component
@@ -25,6 +36,38 @@ export default {
               <b-tooltip label="Share">
                 <b-button type="is-text" icon-left="share-alt" icon-pack="fas" @click="$emit('share')"></b-button>
               </b-tooltip>
+            </div>
+
+            <div class="level-item mx-0">
+              <b-dropdown>
+                <template #trigger>
+                  <b-tooltip label="Add to collection">
+                    <b-button type="is-text" icon-left="plus" icon-pack="fas"></b-button>
+                  </b-tooltip>
+                </template>
+
+                <template #default>
+                  <template v-if="collections && collections.length > 0">
+                    <b-dropdown-item v-for="collection in collections" :key="collection.id" @click="$emit('add', collection)">
+                      {{ collection.name }}
+                    </b-dropdown-item>
+
+                    <hr class="dropdown-divider">
+                  </template>
+
+                  <b-dropdown-item custom>
+                    <form @submit.prevent="$emit('add-new', newCollectionName)">
+                        <b-field label="New collection" label-for="name" custom-class="is-small">
+                          <b-input v-model="newCollectionName" expanded type="text" name="name"></b-input>
+
+                          <p class="control">
+                            <b-button type="is-primary" icon-left="plus" icon-pack="fas" @click="$emit('add-new', newCollectionName)"></b-button>
+                          </p>
+                        </b-field>
+                    </form>
+                  </b-dropdown-item>
+                </template>
+              </b-dropdown>
             </div>
 
             <div class="level-item mx-0">

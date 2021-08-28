@@ -51,7 +51,7 @@ export default {
 
     // Get the client user
     if (this.clientAccessToken)
-      this.clientUser = await this.client.getMe();
+      this.clientUser = await this.client.getAuthorizedUser();
   },
 
   // The watchers for the mixin
@@ -70,7 +70,7 @@ export default {
 // Register a global method to log in and set the access token
 Vue.prototype.$login = async function(username, password) {
   this.$root.clientAccessToken = await this.$root.client.authorizeWithUserCredentials(username, password);
-  this.$root.clientUser = await this.$root.client.getMe();
+  this.$root.clientUser = await this.$root.client.getAuthorizedUser();
 }
 
 // Register a global method to log out and reset the access token
