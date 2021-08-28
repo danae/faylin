@@ -100,6 +100,7 @@ final class Collection implements NormalizableInterface
       'public' => $this->getPublic(),
 
       // Entity fields
+      'images' => $normalizer->normalize($context['collectionRepository']->getImages($this->getId()), $format, $context),
       'user' => $normalizer->normalize($context['userRepository']->get($this->getUserId()), $format, $context),
       'createdAt' => $normalizer->normalize($this->getCreatedAt(), $format, $context),
       'updatedAt' => $normalizer->normalize($this->getUpdatedAt(), $format, $context),

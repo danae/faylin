@@ -118,16 +118,12 @@ final class CollectionController extends AbstractController
   // Get all images in a collection as a JSON response
   public function getCollectionImages(Request $request, Response $response, Collection $collection)
   {
-    // Get the collection images
-    $options = $this->createSelectOptions($request);
-    $collectionImages = $this->collectionRepository->getImages($collection->getId(), $options);
-
     // Get the images
-    $images = $this->imageRepository->select();
-    $collectionImages = array_map(fn($c) => ArrayUtils::find($images, fn($i) => $c->getImageId() === $i->getId()), $collectionImages);
+    $options = $this->createSelectOptions($request);
+    $images = $this->collectionRepository->getImages($collection->getId(), $options);
 
     // Return the response
-    return $this->serialize($request, $response, $collectionImages);
+    return $this->serialize($request, $response, $images);
   }
 
   // Put an image in a collection
@@ -139,7 +135,7 @@ final class CollectionController extends AbstractController
 
     // Check if the image is already in the collection
     $collectionImages = $this->collectionRepository->getImages($collection->getId());
-    if (ArrayUtils::any($collectionImages, fn($c) => $c->getImageId() == $image->getId()))
+    if (ArrayUtils::any($collectionImages, fn($i) => $i->getId() == $image->getId()))
       throw new HttpBadRequestException($request, "The collection with id \"{$collection->getId()}\" already contains the image with id \"{$image->getId()}\"");
 
     // Put the image in the collection
@@ -159,7 +155,7 @@ final class CollectionController extends AbstractController
 
     // Check if the image is not in the collection
     $collectionImages = $this->collectionRepository->getImages($collection->getId());
-    if (!ArrayUtils::any($collectionImages, fn($c) => $c->getImageId() == $image->getId()))
+    if (!ArrayUtils::any($collectionImages, fn($i) => $i->getId() == $image->getId()))
       throw new HttpBadRequestException($request, "The collection with id \"{$collection->getId()}\" does not contain the image with id \"{$image->getId()}\"");
 
     // Delete the image in the collection
