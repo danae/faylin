@@ -52,7 +52,6 @@ final class ImageController extends AbstractController
     $params = (new Validator())
       ->withOptional('name', 'string|notempty|maxlength:256')
       ->withOptional('description', 'string|maxlength:256')
-      ->withOptional('tags', 'array')
       ->withOptional('public', 'bool')
       ->withOptional('nsfw', 'bool')
       ->validate($request->getParsedBody())
@@ -63,8 +62,6 @@ final class ImageController extends AbstractController
       $image->setName($params['name']);
     if ($params['description'] !== null)
       $image->setDescription($params['description']);
-    if ($params['tags'] !== null)
-      $image->setTags($params['tags']);
     if ($params['public'] !== null)
       $image->setPublic($params['public']);
     if ($params['nsfw'] !== null)

@@ -42,7 +42,6 @@ export default {
       const image = await this.$root.client.patchImage(this.image.id, {
         name: this.image.name,
         description: this.image.description,
-        tags: this.image.tags,
         public: this.image.public,
         nsfw: this.image.nsfw,
       });
@@ -104,10 +103,6 @@ export default {
 
               <b-field label="Description" label-for="description" custom-class="is-small">
                 <b-input v-model="image.description" type="textarea" name="description"></b-input>
-              </b-field>
-
-              <b-field label="Tags" label-for="tags" custom-class="is-small">
-                <b-taginput v-model="image.tags" maxlength="32" maxtags="10" :has-counter="false" type="is-light" close-type="is-light" attached></b-taginput>
               </b-field>
             </div>
 

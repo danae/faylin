@@ -27,9 +27,6 @@ final class Image implements NormalizableInterface
   // The description of the image (read-write)
   private $description;
 
-  // The tags of the image (read-write)
-  private $tags;
-
   // The public state of the image (read-write)
   private $public;
 
@@ -49,7 +46,6 @@ final class Image implements NormalizableInterface
     $this->id = null;
     $this->name = "";
     $this->description = "";
-    $this->tags = [];
     $this->public = true;
     $this->nsfw = false;
     $this->contentType = "";
@@ -82,19 +78,6 @@ final class Image implements NormalizableInterface
   public function setDescription(string $description): self
   {
     $this->description = $description;
-    return $this;
-  }
-
-  // Get the tags of the image
-  public function getTags(): array
-  {
-    return $this->tags;
-  }
-
-  // Set the tags of the image
-  public function setTags(array $tags): self
-  {
-    $this->tags = $tags;
     return $this;
   }
 
@@ -160,7 +143,6 @@ final class Image implements NormalizableInterface
       // Read-write class fields
       'name' => $this->getName(),
       'description' => $this->getDescription(),
-      'tags' => $this->getTags(),
       'public' => $this->getPublic(),
       'nsfw' => $this->getNsfw(),
 

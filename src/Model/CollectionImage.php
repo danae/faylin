@@ -3,7 +3,7 @@ namespace Danae\Faylin\Model;
 
 
 // Class that defines a collection image object
-final class Collection
+final class CollectionImage
 {
   // The identifier of the collection
   private $collectionId;

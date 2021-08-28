@@ -67,6 +67,20 @@ return function(App $app)
         ->add(CollectionResolverMiddleware::class)
         ->add(AuthorizationOptionalMiddleware::class)
         ->setName('collections.images.index');
+
+      // Put an image in a collection
+      $group->put('/{collectionId:[A-Za-z0-9-_]+}/images/{imageId:[A-Za-z0-9-_]+}', [CollectionController::class, 'putCollectionImage'])
+        ->add(ImageResolverMiddleware::class)
+        ->add(CollectionResolverMiddleware::class)
+        ->add(AuthorizationOptionalMiddleware::class)
+        ->setName('collections.images.put');
+
+      // Delete an image in a collection
+      $group->delete('/{collectionId:[A-Za-z0-9-_]+}/images/{imageId:[A-Za-z0-9-_]+}', [CollectionController::class, 'deleteCollectionImage'])
+        ->add(ImageResolverMiddleware::class)
+        ->add(CollectionResolverMiddleware::class)
+        ->add(AuthorizationOptionalMiddleware::class)
+        ->setName('collections.images.delete');
     });
 
     // Image controller routes

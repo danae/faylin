@@ -116,14 +116,6 @@ export default {
           <template v-if="image.description">
             <p>{{ image.description }}</p>
           </template>
-
-          <template v-if="image.tags.length > 0">
-            <div class="tags">
-              <a v-for="tag in image.tags" :key="tag" class="tag is-light">
-                {{ tag }}
-              </a>
-            </div>
-          </template>
         </template>
       </template>
 
