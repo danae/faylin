@@ -39,7 +39,7 @@ final class CollectionImage
   // Get the image identifier of the collection image
   public function getImageId(): string
   {
-    return $this->collectionId;
+    return $this->imageId;
   }
 
   // Set the image identifier of the collection image

@@ -3,11 +3,14 @@ namespace Danae\Faylin\App\Controllers;
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Slim\Exception\HttpBadRequestException;
 use Slim\Exception\HttpForbiddenException;
 use Symfony\Component\Serializer\Serializer;
 
 use Danae\Faylin\Model\Collection;
+use Danae\Faylin\Model\Image;
 use Danae\Faylin\Model\User;
+use Danae\Faylin\Utils\ArrayUtils;
 use Danae\Faylin\Utils\Snowflake;
 use Danae\Faylin\Validator\Validator;
 
@@ -106,6 +109,61 @@ final class CollectionController extends AbstractController
 
     // Delete the collection from the repository
     $this->collectionRepository->delete($collection);
+
+    // Return the response
+    return $response
+      ->withStatus(204);
+  }
+
+  // Get all images in a collection as a JSON response
+  public function getCollectionImages(Request $request, Response $response, Collection $collection)
+  {
+    // Get the collection images
+    $options = $this->createSelectOptions($request);
+    $collectionImages = $this->collectionRepository->getImages($collection->getId(), $options);
+
+    // Get the images
+    $images = $this->imageRepository->select();
+    $collectionImages = array_map(fn($c) => ArrayUtils::find($images, fn($i) => $c->getImageId() === $i->getId()), $collectionImages);
+
+    // Return the response
+    return $this->serialize($request, $response, $collectionImages);
+  }
+
+  // Put an image in a collection
+  public function putCollectionImage(Request $request, Response $response, Collection $collection, Image $image, User $authUser)
+  {
+    // Check if the authorized user owns this collection
+    if ($authUser->getId() !== $collection->getUserId())
+      throw new HttpForbiddenException($request, "The current authorized user is not allowed to modify the collection with id \"{$collection->getId()}\"");
+
+    // Check if the image is already in the collection
+    $collectionImages = $this->collectionRepository->getImages($collection->getId());
+    if (ArrayUtils::any($collectionImages, fn($c) => $c->getImageId() == $image->getId()))
+      throw new HttpBadRequestException($request, "The collection with id \"{$collection->getId()}\" already contains the image with id \"{$image->getId()}\"");
+
+    // Put the image in the collection
+    $this->collectionRepository->putImage($collection->getId(), $image->getId());
+
+    // Return the response
+    return $response
+      ->withStatus(204);
+  }
+
+  // Delete an image in a collection
+  public function deleteCollectionImage(Request $request, Response $response, Collection $collection, Image $image, User $authUser)
+  {
+    // Check if the authorized user owns this collection
+    if ($authUser->getId() !== $collection->getUserId())
+      throw new HttpForbiddenException($request, "The current authorized user is not allowed to modify the collection with id \"{$collection->getId()}\"");
+
+    // Check if the image is not in the collection
+    $collectionImages = $this->collectionRepository->getImages($collection->getId());
+    if (!ArrayUtils::any($collectionImages, fn($c) => $c->getImageId() == $image->getId()))
+      throw new HttpBadRequestException($request, "The collection with id \"{$collection->getId()}\" does not contain the image with id \"{$image->getId()}\"");
+
+    // Delete the image in the collection
+    $this->collectionRepository->deleteImage($collection->getId(), $image->getId());
 
     // Return the response
     return $response

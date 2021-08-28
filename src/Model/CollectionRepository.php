@@ -8,18 +8,14 @@ use Danae\Astral\Repository;
 // Class that defines a database repository of collections
 final class CollectionRepository extends Repository
 {
-  // The image repository to use with the collection repository
-  private $imageRepository;
-
   // The collection image repository to use with the collection repository
   private $collectionImageRepository;
 
 
   // Constructor
-  public function __construct(Database $database, string $table, ImageRepository $imageRepository, CollectionImageRepository $collectionImageRepository)
+  public function __construct(Database $database, string $table, CollectionImageRepository $collectionImageRepository)
   {
     parent::__construct($database, $table, Collection::class);
-    $this->imageRepository = $imageRepository;
     $this->collectionImageRepository = $collectionImageRepository;
 
     $this->field('id', 'string', ['length' => 64]);
@@ -40,9 +36,28 @@ final class CollectionRepository extends Repository
   }
 
   // Return the images in a collection for an identifier
-  public function getImages(string $id): array
+  public function getImages(string $id, array $options = []): array
   {
-    $images = $this->collectionImageRepository->select(['collectionId' => $id], ['order_by' => ['order']]);
-    return array_map(fn($image) => $this->imageRepository->get($image->getImageId()), $images);
+    return $this->collectionImageRepository->select(['collectionId' => $id], $options);
+  }
+
+  // Put an image in a collection
+  public function putImage(string $id, string $imageId): void
+  {
+    $image = (new CollectionImage)
+      ->setCollectionId($id)
+      ->setImageId($imageId);
+
+    $this->collectionImageRepository->insert($image);
+  }
+
+  // Delete an image in a collection
+  public function deleteImage(string $id, string $imageId): void
+  {
+    $image = (new CollectionImage)
+      ->setCollectionId($id)
+      ->setImageId($imageId);
+
+    $this->collectionImageRepository->delete($image);
   }
 }
