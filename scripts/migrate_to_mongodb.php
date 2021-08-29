@@ -1,8 +1,7 @@
 <?php
-// This script imports images from a legacy fayl.in instance.
-// First the script creates anonymous users for every share address found, second the script imports the images. Note that you need to copy the actual image contents manually to the new instance.
+// This script migrates the fayl.in database from Doctrine ORM to MongoDB.
 
-// Usage: php import_legacy.php [database_url]
+// Usage: php migrate_to_mongodb.php [mongodb_database_url] [database_url]
 // The database URL is specified as a Doctrine DBAL connection URL. See https://www.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/configuration.html#connecting-using-a-url
 
 require(__DIR__ . "/../vendor/autoload.php");
@@ -12,51 +11,14 @@ use Danae\Astral\Repository;
 use DI\ContainerBuilder;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DriverManager;
+use League\Flysystem\Filesystem;
+use MongoDB\Client;
+use Psr\Http\Message\StreamFactoryInterface;
 
-use Danae\Faylin\Model\Image;
-use Danae\Faylin\Model\ImageRepository;
-use Danae\Faylin\Model\User;
-use Danae\Faylin\Model\UserRepository;
-use Danae\Faylin\Utils\Snowflake;
-
-
-// Class that defines a legacy image
-class LegacyImage
-{
-  public $id;
-  public $user_id;
-  public $alias;
-  public $location;
-  public $file_name;
-  public $file_mime_type;
-  public $file_size;
-  public $private;
-  public $share_addr;
-  public $share_date;
-}
-
-
-// Class that defines a legacy image repository
-class LegacyImageRepository extends Repository
-{
-  public function __construct(database $database, string $table)
-  {
-    parent::__construct($database, $table, LegacyImage::class);
-
-    $this->field('id', 'integer', ['autoincrement' => true]);
-    $this->field('user_id', 'integer');
-    $this->field('alias', 'string');
-    $this->field('location', 'string');
-    $this->field('file_name', 'string');
-    $this->field('file_mime_type', 'string');
-    $this->field('file_size', 'integer');
-    $this->field('private', 'boolean');
-    $this->field('share_addr', 'string');
-    $this->field('share_date', 'datetime');
-
-    $this->primary('id');
-  }
-}
+use Danae\Faylin\Legacy\ImageRepository as LegacyImageRepository;
+use Danae\Faylin\Legacy\UserRepository as LegacyUserRepository;
+use Danae\Faylin\Model\ImageRepositoryInterface;
+use Danae\Faylin\Model\UserRepositoryInterface;
 
 
 // Function that builds the container
@@ -72,41 +34,14 @@ function buildContainer()
   $dependencies($containerBuilder);
 
   // Create the container
-  return  $containerBuilder->build();
-}
-
-
-// Function that creates a user
-function createUser(Snowflake $snowflake, string $address)
-{
-  $address = base_convert(strval(ip2long($address)), 10, 36);
-
-  return (new User)
-    ->setId($snowflake->generateBase64String())
-    ->setName('anonymous_' . $address)
-    ->setEmail('anonymous_' . $address . "@fayl.in")
-    ->hashPassword($address);
-}
-
-
-// Function that creates an image
-function createImage(LegacyImage $file, user $user)
-{
-  return (new Image)
-    ->setId($file->alias)
-    ->setName($file->file_name)
-    ->setContentType($file->file_mime_type)
-    ->setContentLength($file->file_size)
-    ->setCreatedAt($file->share_date)
-    ->setUserId($user->getId());
+  return $containerBuilder->build();
 }
 
 
 // Main function
 function main(array $args)
 {
-  printf("This script imports images from a legacy fayl.in instance.\n");
-  printf("First the script creates anonymous users for every share address found, second the script imports the images. Note that you need to copy the actual image contents manually to the new instance.\n\n");
+  printf("This script migrates the fayl.in database from Doctrine ORM to MongoDB.\n\n");
   printf("Usage: php %s [database_url]\n", $args[0]);
   printf("The database URL is specified as a Doctrine DBAL connection URL. See https://www.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/configuration.html#connecting-using-a-url\n\n");
 
@@ -119,16 +54,42 @@ function main(array $args)
   // Create the container
   $container = buildContainer();
 
+  // Drop the MongoDB database
+  printf("Dropping the MongoDB database...\n");
+  $container->get(Client::class)->dropDatabase($container->get('mongodb.database'));
+
   // Create the legacy database
   printf("Connecting to the database...\n", $databaseUrl);
   $legacyDatabaseConnection = DriverManager::getConnection(['url' => $databaseUrl]);
   $legacyDatabase = new Database($legacyDatabaseConnection);
 
-  // Create the legacy repository
-  printf("Creating the repository...\n");
-  $legacyRepository = new LegacyImageRepository($legacyDatabase, 'files');
+  // Create the legacy repositories
+  printf("Creating the repositories...\n");
+  $userRepository = $container->get(UserRepositoryInterface::class);
+  $imageRepository = $container->get(ImageRepositoryInterface::class);
 
-  // Fetch the images
+  $legacyUserRepository = new LegacyUserRepository($legacyDatabase, 'users');
+  $legacyImageRepository = new LegacyImageRepository($legacyDatabase, 'images', $userRepository, $container->get(Filesystem::class), $container->get(StreamFactoryInterface::class));
+
+  // Migrate the users
+  printf("Fetching the users...\n");
+  foreach ($legacyUserRepository->select() as $user)
+  {
+    // Insert the user in the new repository
+    printf("Migrating user '%s' with name '%s'...\n", $user->getId(), $user->getName());
+    $userRepository->insert($user);
+  }
+
+  // Migrate the images
+  printf("Fetching the images...\n");
+  foreach ($legacyImageRepository->select() as $image)
+  {
+    // Insert the user in the new repository
+    printf("Migrating image '%s' with name '%s'...\n", $image->getId(), $image->getName());
+    $imageRepository->insert($image);
+  }
+
+  /*// Fetch the images
   printf("Fetching the files...\n");
   $files = $legacyRepository->select();
 
@@ -172,7 +133,7 @@ function main(array $args)
   {
     printf("Creating image '%s' with name '%s'\n", $image->getId(), $image->getName());
     $imageRepository->insert($image);
-  }
+  }*/
 }
 
 // Execute the main function

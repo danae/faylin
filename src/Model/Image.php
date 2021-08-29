@@ -4,20 +4,14 @@ namespace Danae\Faylin\Model;
 use Symfony\Component\Serializer\Normalizer\NormalizableInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
-use Danae\Faylin\Model\Traits\CreatedAtEntityTrait;
-use Danae\Faylin\Model\Traits\EntityTrait;
-use Danae\Faylin\Model\Traits\UpdatedAtEntityTrait;
-use Danae\Faylin\Model\Traits\UserOwnedEntityTrait;
 use Danae\Faylin\Utils\Traits\RouteContextTrait;
 
 
 // Class that defines an image object
 final class Image implements NormalizableInterface
 {
-  use EntityTrait;
-  use UserOwnedEntityTrait;
-  use CreatedAtEntityTrait;
-  use UpdatedAtEntityTrait;
+  use Traits\EntityTrait;
+  use Traits\UserOwnedEntityTrait;
   use RouteContextTrait;
 
 
@@ -44,15 +38,15 @@ final class Image implements NormalizableInterface
   public function __construct()
   {
     $this->id = null;
+    $this->createdAt = new \DateTime();
+    $this->updatedAt = new \DateTime();
+    $this->userId = null;
     $this->name = "";
     $this->description = "";
     $this->public = true;
     $this->nsfw = false;
     $this->contentType = "";
     $this->contentLength = 0;
-    $this->userId = null;
-    $this->createdAt = new \DateTime();
-    $this->updatedAt = new \DateTime();
   }
 
   // Get the name of the image
@@ -133,12 +127,16 @@ final class Image implements NormalizableInterface
     return $this;
   }
 
+
   // Normalize an image and return the normalized array
   public function normalize(NormalizerInterface $normalizer, string $format = null, array $context = []): array
   {
     return [
-      // Identifier
+      // Entity fields
       'id' => $this->getId(),
+      'createdAt' => $normalizer->normalize($this->getCreatedAt(), $format, $context),
+      'updatedAt' => $normalizer->normalize($this->getUpdatedAt(), $format, $context),
+      'user' => $normalizer->normalize($this->getUser(), $format, $context),
 
       // Read-write class fields
       'name' => $this->getName(),
@@ -149,11 +147,6 @@ final class Image implements NormalizableInterface
       // Read-only class fields
       'contentType' => $this->getContentType(),
       'contentLength' => $this->getContentLength(),
-
-      // Entity fields
-      'user' => $normalizer->normalize($context['userRepository']->get($this->getUserId()), $format, $context),
-      'createdAt' => $normalizer->normalize($this->getCreatedAt(), $format, $context),
-      'updatedAt' => $normalizer->normalize($this->getUpdatedAt(), $format, $context),
 
       // Additional fields
       'downloadUrl' => $this->fullUrlFor($context['request'], 'images.download', ['imageId' => $this->getId(), 'extension' => $context['supportedContentTypes'][$this->getContentType()]]),

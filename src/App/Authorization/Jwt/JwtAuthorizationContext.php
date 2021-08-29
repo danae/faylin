@@ -8,9 +8,9 @@ use Firebase\JWT\SignatureInvalidException;
 use Symfony\Component\Serializer\Serializer;
 
 use Danae\Faylin\App\Authorization\AuthorizationException;
-use Danae\Faylin\Model\Token;
 use Danae\Faylin\Model\User;
-use Danae\Faylin\Model\UserRepository;
+use Danae\Faylin\Model\UserRepositoryInterface;
+use Danae\Faylin\Model\Authorization\Token;
 
 
 // Class that defines an authorization context for JWT (JSON Web Tokens)
@@ -30,7 +30,7 @@ final class JwtAuthorizationContext
 
 
   // Constructor
-  public function __construct(UserRepository $userRepository, Serializer $serializer, string $key, string $algorithm = 'HS256')
+  public function __construct(UserRepositoryInterface $userRepository, Serializer $serializer, string $key, string $algorithm = 'HS256')
   {
     $this->userRepository = $userRepository;
     $this->serializer = $serializer;
@@ -67,10 +67,10 @@ final class JwtAuthorizationContext
         throw new AuthorizationException("No JWT ID has been provided in the token");
 
       // Denormalize the token
-      $token = $this->serializer->denormalize((array)$token, Token::class);
+      $token = $this->serializer->denormalize((array)$token, Token::class, null, ['userRepository' => $this->userRepository]);
 
       // Check the token subject
-      if ($this->user($token) === null)
+      if ($token->getUser() === null)
         throw new AuthorizationException("The subject of the token is invalid");
 
       // Return the denormalized token
@@ -92,11 +92,5 @@ final class JwtAuthorizationContext
     {
       throw new AuthorizationException("Could not decode the token: {$ex->getMessage()}", $ex);
     }
-  }
-
-  // Return the associated user for a token
-  public function user(Token $token): ?User
-  {
-    return $this->userRepository->get($token->getUserId());
   }
 }

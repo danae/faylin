@@ -1,5 +1,5 @@
 <?php
-namespace Danae\Faylin\Model;
+namespace Danae\Faylin\Model\Authorization;
 
 use Symfony\Component\Serializer\Exception\NotNormalizableValueException;
 use Symfony\Component\Serializer\Normalizer\DenormalizableInterface;
@@ -7,7 +7,6 @@ use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizableInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
-use Danae\Faylin\Model\Traits\CreatedAtEntityTrait;
 use Danae\Faylin\Model\Traits\EntityTrait;
 use Danae\Faylin\Model\Traits\UserOwnedEntityTrait;
 
@@ -17,7 +16,6 @@ final class Token implements NormalizableInterface, DenormalizableInterface
 {
   use EntityTrait;
   use UserOwnedEntityTrait;
-  use CreatedAtEntityTrait;
 
 
   // The date when the token will become expired
@@ -54,7 +52,7 @@ final class Token implements NormalizableInterface, DenormalizableInterface
     $data = [];
 
     $data['jti'] = $this->getId();
-    $data['sub'] = $this->getUserId();
+    $data['sub'] = $this->getUser()->getId();
 
     if ($this->getCreatedAt() !== null)
       $data['iat'] = $this->getCreatedAt()->getTimestamp();
@@ -71,7 +69,7 @@ final class Token implements NormalizableInterface, DenormalizableInterface
       throw new NotNormalizableValueException("Data must be an array");
 
     $this->setId($data['jti']);
-    $this->setUserId($data['sub']);
+    $this->setUser($context['userRepository']->find($data['sub']));
 
     if (isset($data['iat']))
       $this->setCreatedAt((new \DateTime())->setTimestamp($data['iat']));

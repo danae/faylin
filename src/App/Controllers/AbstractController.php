@@ -7,9 +7,9 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Views\Twig;
 use Symfony\Component\Serializer\Serializer;
 
-use Danae\Faylin\Model\CollectionRepository;
-use Danae\Faylin\Model\ImageRepository;
-use Danae\Faylin\Model\UserRepository;
+use Danae\Faylin\Model\CollectionRepositoryInterface;
+use Danae\Faylin\Model\ImageRepositoryInterface;
+use Danae\Faylin\Model\UserRepositoryInterface;
 use Danae\Faylin\Utils\Snowflake;
 use Danae\Faylin\Validator\Validator;
 
@@ -37,7 +37,7 @@ abstract class AbstractController
 
 
   // Constructor
-  public function __construct(CollectionRepository $collectionRepository, ImageRepository $imageRepository, UserRepository $userRepository, Serializer $serializer)
+  public function __construct(CollectionRepositoryInterface $collectionRepository, ImageRepositoryInterface $imageRepository, UserRepositoryInterface $userRepository, Serializer $serializer)
   {
     $this->collectionRepository = $collectionRepository;
     $this->imageRepository = $imageRepository;
@@ -99,8 +99,8 @@ abstract class AbstractController
     // Check for pagination
     if ($query['perPage'] !== null)
     {
-      $options['offset'] = $query['page'] * $query['perPage'];
-      $options['limit'] = $query['perPage'];
+      $options['offset'] = (int)$query['page'] * (int)$query['perPage'];
+      $options['limit'] = (int)$query['perPage'];
     }
 
     // Return the options array

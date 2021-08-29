@@ -4,17 +4,11 @@ namespace Danae\Faylin\Model;
 use Symfony\Component\Serializer\Normalizer\NormalizableInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
-use Danae\Faylin\Model\Traits\CreatedAtEntityTrait;
-use Danae\Faylin\Model\Traits\EntityTrait;
-use Danae\Faylin\Model\Traits\UpdatedAtEntityTrait;
-
 
 // Class that defines a user object
 final class User implements NormalizableInterface
 {
-  use EntityTrait;
-  use CreatedAtEntityTrait;
-  use UpdatedAtEntityTrait;
+  use Traits\EntityTrait;
 
 
   // The email address of the user (internal)
@@ -32,22 +26,18 @@ final class User implements NormalizableInterface
   // The public state of the user (read-write)
   private $public;
 
-  // The avatar image identifier of the user (read-write)
-  private $avatarId;
-
 
   // Constructor
   public function __construct()
   {
     $this->id = null;
+    $this->createdAt = new \DateTime();
+    $this->updatedAt = new \DateTime();
     $this->email = "";
     $this->passwordHash = "";
     $this->name = "";
     $this->description = "";
     $this->public = true;
-    $this->avatarId = null;
-    $this->createdAt = new \DateTime();
-    $this->updatedAt = new \DateTime();
   }
 
   // Get the email address of the user
@@ -128,25 +118,15 @@ final class User implements NormalizableInterface
     return $this;
   }
 
-  // Get the avatar image identifier of the user
-  public function getAvatarId(): ?string
-  {
-    return $this->avatarId;
-  }
-
-  // Set the avatar image identifier of the user
-  public function setAvatarId(?string $avatarId): self
-  {
-    $this->avatarId = $avatarId;
-    return $this;
-  }
 
   // Normalize a user and return the normalized array
   public function normalize(NormalizerInterface $normalizer, string $format = null, array $context = []): array
   {
     return [
-      // Identifier
+      // Entity fields
       'id' => $this->getId(),
+      'createdAt' => $normalizer->normalize($this->getCreatedAt(), $format, $context),
+      'updatedAt' => $normalizer->normalize($this->getUpdatedAt(), $format, $context),
 
       // Internal class fields
       'email' => $this->getEmail(),
@@ -155,11 +135,6 @@ final class User implements NormalizableInterface
       'name' => $this->getName(),
       'description' => $this->getDescription(),
       'public' => $this->getPublic(),
-      'avatar' => $this->getAvatarId() !== null ? $normalizer->normalize($context['imageRepository']->get($this->getAvatarId()), $format, $context) : null,
-
-      // Entity fields
-      'createdAt' => $normalizer->normalize($this->getCreatedAt(), $format, $context),
-      'updatedAt' => $normalizer->normalize($this->getUpdatedAt(), $format, $context),
     ];
   }
 }

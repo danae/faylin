@@ -7,7 +7,7 @@ use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
 use Slim\Exception\HttpNotFoundException;
 
-use Danae\Faylin\Model\CollectionRepository;
+use Danae\Faylin\Model\CollectionRepositoryInterface;
 use Danae\Faylin\Utils\Traits\RouteContextTrait;
 
 
@@ -22,7 +22,7 @@ final class CollectionResolverMiddleware implements MiddlewareInterface
 
 
   // Constructor
-  public function __construct(CollectionRepository $collectionRepository)
+  public function __construct(CollectionRepositoryInterface $collectionRepository)
   {
     $this->collectionRepository = $collectionRepository;
   }
@@ -34,7 +34,7 @@ final class CollectionResolverMiddleware implements MiddlewareInterface
     $id = $this->getRoute($request)->getArgument('collectionId');
 
     // Get the collection from the repository
-    $collection = $this->collectionRepository->get($id);
+    $collection = $this->collectionRepository->find($id);
     if ($collection == null)
       throw new HttpNotFoundException($request, "A collection with id \"{$id}\" coud not be found");
 

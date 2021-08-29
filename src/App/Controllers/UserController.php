@@ -19,7 +19,7 @@ final class UserController extends AbstractController
   {
     // Get the images
     $options = $this->createSelectOptions($request, ['sort' => '-createdAt']);
-    $users = $this->userRepository->select(['public' => true], $options);
+    $users = $this->userRepository->findManyBy(['public' => true], $options);
 
     // Return the response
     return $this->serialize($request, $response, $users)
@@ -74,7 +74,7 @@ final class UserController extends AbstractController
   {
     // Get the collections
     $options = $this->createSelectOptions($request, ['sort' => '-createdAt']);
-    $collections = $this->collectionRepository->select(['userId' => $user->getId()], $options);
+    $collections = $this->collectionRepository->findManyBy(['user' => $user->getId()], $options);
 
     // Return the response
     return $this->serialize($request, $response, $collections)
@@ -86,7 +86,7 @@ final class UserController extends AbstractController
   {
     // Get the images
     $options = $this->createSelectOptions($request, ['sort' => '-createdAt']);
-    $images = $this->imageRepository->select(['userId' => $user->getId()], $options);
+    $images = $this->imageRepository->findManyBy(['user' => $user->getId()], $options);
 
     // Return the response
     return $this->serialize($request, $response, $images)
@@ -175,12 +175,20 @@ final class UserController extends AbstractController
       throw new HttpBadRequestException($request, "The password is incorrect");
 
     // Remove all images owned by the user
-    $images = $this->imageRepository->select(['userId' => $authUser->getId()]);
+    $images = $this->imageRepository->findManyBy(['user' => $authUser->getId()]);
     foreach ($images as $image)
     {
       // Delete the image from the repository
       $this->imageRepository->delete($image);
       $this->imageRepository->deleteFile($image);
+    }
+
+    // Remove all collections owned by the user
+    $collections = $this->collectionRepository->findManyBy(['user' => $authUser->getId()]);
+    foreach ($collections as $collection)
+    {
+      // Delete the collection from the repository
+      $this->collectionRepository->delete($collection);
     }
 
     // Remove the user from the repository

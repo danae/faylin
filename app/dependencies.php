@@ -1,8 +1,7 @@
 <?php
 use DI\ContainerBuilder;
-use Doctrine\DBAL\Connection;
-use Doctrine\DBAL\DriverManager;
 use League\Flysystem\Filesystem;
+use MongoDB\Client as MongoDBClient;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\StreamFactoryInterface;
 use Slim\App;
@@ -26,10 +25,12 @@ use Danae\Faylin\App\Controllers\CollectionController;
 use Danae\Faylin\App\Controllers\FrontendController;
 use Danae\Faylin\App\Controllers\ImageController;
 use Danae\Faylin\App\Controllers\UserController;
-use Danae\Faylin\Model\CollectionRepository;
-use Danae\Faylin\Model\CollectionImageRepository;
-use Danae\Faylin\Model\ImageRepository;
-use Danae\Faylin\Model\UserRepository;
+use Danae\Faylin\Implementation\MongoDB\CollectionRepository;
+use Danae\Faylin\Implementation\MongoDB\ImageRepository;
+use Danae\Faylin\Implementation\MongoDB\UserRepository;
+use Danae\Faylin\Model\CollectionRepositoryInterface;
+use Danae\Faylin\Model\ImageRepositoryInterface;
+use Danae\Faylin\Model\UserRepositoryInterface;
 use Danae\Faylin\Utils\Snowflake;
 
 
@@ -38,12 +39,9 @@ return function(ContainerBuilder $containerBuilder)
 {
   // Add definitions to the container
   $containerBuilder->addDefinitions([
-    // Database connection
-    Connection::class => function(ContainerInterface $container) {
-      return DriverManager::getConnection([
-        'url' => $container->get('database.url')
-      ]);
-    },
+    // MongoDB client
+    MongoDBClient::class => DI\autowire()
+      ->constructorParameter('uri', DI\get('mongodb.uri')),
 
     // Filesystem
     Filesystem::class => DI\autowire()
@@ -61,18 +59,15 @@ return function(ContainerBuilder $containerBuilder)
     StreamFactoryInterface::class => DI\autowire(StreamFactory::class),
 
     // Repositories
-    CollectionRepository::class => DI\autowire()
-      ->constructorParameter('table', DI\get('database.table.collections'))
-      ->method('create'),
-    CollectionImageRepository::class => DI\autowire()
-      ->constructorParameter('table', DI\get('database.table.collections_images'))
-      ->method('create'),
-    ImageRepository::class => DI\autowire()
-      ->constructorParameter('table', DI\get('database.table.images'))
-      ->method('create'),
-    UserRepository::class => DI\autowire()
-      ->constructorParameter('table', DI\get('database.table.users'))
-      ->method('create'),
+    CollectionRepositoryInterface::class => DI\autowire(CollectionRepository::class)
+      ->constructorParameter('databaseName', DI\get('mongodb.database'))
+      ->constructorParameter('collectionName', DI\get('mongodb.collection.collections')),
+    ImageRepositoryInterface::class => DI\autowire(ImageRepository::class)
+      ->constructorParameter('databaseName', DI\get('mongodb.database'))
+      ->constructorParameter('collectionName', DI\get('mongodb.collection.images')),
+    UserRepositoryInterface::class => DI\autowire(UserRepository::class)
+      ->constructorParameter('databaseName', DI\get('mongodb.database'))
+      ->constructorParameter('collectionName', DI\get('mongodb.collection.users')),
 
     // Authorization
     JwtAuthorizationContext::class => DI\autowire()

@@ -11,21 +11,21 @@ $settings['app.basePath'] = '';
 
 // DATABASE SETTINGS
 
-// The database connection of the application, specified as a string representing a Doctrine DBAL connection URL
-// See https://www.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/configuration.html#connecting-using-a-url
-$settings['database.url'] = '<database url>';
+// The MongoDB connection of the application, specified as a string representing a MongoDB connection URI
+// See https://docs.mongodb.com/manual/reference/connection-string/
+$settings['mongodb.uri'] = '<uri>';
 
-// The name of the table where collections are stored, specified as a string
-$settings['database.table.collections'] = 'collections';
+// The name of the MongoDB database, specified as a string
+$settings['mongodb.database'] = 'faylin';
 
-// The name of the table where images in collections are stored, specified as a string
-$settings['database.table.collections_images'] = 'collections_images';
+// The name of the MongoDB collection where collections are stored, specified as a string
+$settings['mongodb.collection.collections'] = 'collections';
 
-// The name of the table where images are stored, specified as a string
-$settings['database.table.images'] = 'images';
+// The name of the MongoDB collection where images are stored, specified as a string
+$settings['mongodb.collection.images'] = 'images';
 
-// The name of the table where users are stored, specified as a string
-$settings['database.table.users'] = 'users';
+// The name of the MongoDB collection where users are stored, specified as a string
+$settings['mongodb.collection.users'] = 'users';
 
 
 // AUTHORIZATION SETTINGS

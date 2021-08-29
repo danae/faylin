@@ -26,7 +26,7 @@ final class ImageController extends AbstractController
   {
     // Get the images
     $options = $this->createSelectOptions($request, ['sort' => '-createdAt']);
-    $images = $this->imageRepository->select(['public' => true], $options);
+    $images = $this->imageRepository->findManyBy(['public' => true], $options);
 
     // Return the response
     return $this->serialize($request, $response, $images);
@@ -45,7 +45,7 @@ final class ImageController extends AbstractController
     $now = new \DateTime();
 
     // Check if the authorized user owns this image
-    if ($authUser->getId() !== $image->getUserId())
+    if ($authUser->getId() !== $image->getUser()->getId())
       throw new HttpForbiddenException($request, "The current authorized user is not allowed to modify the image with id \"{$image->getId()}\"");
 
     // Get and validate the body parameters
@@ -79,7 +79,7 @@ final class ImageController extends AbstractController
   public function deleteImage(Request $request, Response $response, Image $image, User $authUser)
   {
     // Check if the authorized user owns this image
-    if ($authUser->getId() !== $image->getUserId())
+    if ($authUser->getId() !== $image->getUser()->getId())
       throw new HttpForbiddenException($request, "The current authorized user is not allowed to delete the image with id \"{$image->getId()}\"");
 
     // Delete the image from the repository
@@ -103,7 +103,7 @@ final class ImageController extends AbstractController
     // Create the image
     $image = (new Image())
       ->setId($snowflake->generateBase64String())
-      ->setUserId($authUser->getId())
+      ->setUser($authUser)
       ->setName($this->getUploadedFileNameWithoutExtension($file))
       ->setContentType($file->getClientMediaType())
       ->setContentLength($file->getSize())
@@ -127,7 +127,7 @@ final class ImageController extends AbstractController
     $now = new \DateTime();
 
     // Check if the image is owned by the authorized user
-    if ($authUser->getId() !== $image->getUserId())
+    if ($authUser->getId() !== $image->getUser()->getId())
       throw new HttpForbiddenException($request, "The current authorized user is not allowed to replace the image with id \"{$id->getId()}\"");
 
     // Get the uploaded file

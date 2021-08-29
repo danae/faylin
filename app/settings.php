@@ -11,11 +11,11 @@ return function(ContainerBuilder $containerBuilder)
   // Include the default settings
   $settings['app.basePath'] = '/';
 
-  $settings['database.url'] = '';
-  $settings['database.table.collections'] = 'collections';
-  $settings['database.table.collections_images'] = 'collections_images';
-  $settings['database.table.images'] = 'images';
-  $settings['database.table.users'] = 'users';
+  $settings['mongodb.uri'] = 'mongodb://localhost:27017';
+  $settings['mongodb.database'] = 'faylin';
+  $settings['mongodb.collection.collections'] = 'collections';
+  $settings['mongodb.collection.images'] = 'images';
+  $settings['mongodb.collection.users'] = 'users';
 
   $settings['authorization.signKey'] = '';
 

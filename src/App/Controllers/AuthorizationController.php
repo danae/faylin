@@ -5,8 +5,8 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Exception\HttpBadRequestException;
 
-use Danae\Faylin\Model\Token;
 use Danae\Faylin\Model\User;
+use Danae\Faylin\Model\Authorization\Token;
 use Danae\Faylin\Utils\Snowflake;
 use Danae\Faylin\Validator\Validator;
 
@@ -36,7 +36,7 @@ final class AuthorizationController extends AbstractController
     // Create a token
     $token = (new Token())
       ->setId($snowflake->generateBase64String())
-      ->setUserId($user->getId())
+      ->setUser($user)
       ->setCreatedAt(new \DateTime())
       ->setExpiresAt(new \DateTime('60 minutes'));
 

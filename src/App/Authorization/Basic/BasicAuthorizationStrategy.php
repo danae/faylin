@@ -7,7 +7,7 @@ use Slim\Exception\HttpUnauthorizedException;
 use Danae\Faylin\App\Authorization\AuthorizationException;
 use Danae\Faylin\App\Authorization\AuthorizationStrategyInterface;
 use Danae\Faylin\Model\User;
-use Danae\Faylin\Model\UserRepository;
+use Danae\Faylin\Model\UserRepositoryInterface;
 
 
 // Authorization strategy that uses basic authorization
@@ -18,7 +18,7 @@ final class BasicAuthorizationStrategy implements AuthorizationStrategyInterface
 
 
   // Constructor
-  public function __construct(UserRepository $userRepository)
+  public function __construct(UserRepositoryInterface $userRepository)
   {
     $this->userRepository = $userRepository;
   }

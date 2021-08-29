@@ -50,13 +50,12 @@ final class JwtAuthorizationStrategy implements AuthorizationStrategyInterface
 
     // Get the token and its associated user
     $token = $this->context->decode($token);
-    $user = $this->context->user($token);
 
     // Set the token as attribute on the request
     $request = $request->withAttribute('authToken', $token);
 
     // Return the user
-    return $user;
+    return $token->getUser();
   }
 
 

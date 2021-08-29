@@ -7,7 +7,7 @@ use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
 use Slim\Exception\HttpNotFoundException;
 
-use Danae\Faylin\Model\UserRepository;
+use Danae\Faylin\Model\UserRepositoryInterface;
 use Danae\Faylin\Utils\Traits\RouteContextTrait;
 
 
@@ -22,7 +22,7 @@ final class UserResolverMiddleware implements MiddlewareInterface
 
 
   // Constructor
-  public function __construct(UserRepository $userRepository)
+  public function __construct(UserRepositoryInterface $userRepository)
   {
     $this->userRepository = $userRepository;
   }
@@ -34,7 +34,7 @@ final class UserResolverMiddleware implements MiddlewareInterface
     $id = $this->getRoute($request)->getArgument('userId');
 
     // Get the user from the repository
-    $user = $this->userRepository->get($id);
+    $user = $this->userRepository->find($id);
     if ($user == null)
       throw new HttpNotFoundException($request, "A user with id \"{$id}\" coud not be found");
 

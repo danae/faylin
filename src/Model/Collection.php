@@ -4,31 +4,22 @@ namespace Danae\Faylin\Model;
 use Symfony\Component\Serializer\Normalizer\NormalizableInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
-use Danae\Faylin\Model\Traits\CreatedAtEntityTrait;
-use Danae\Faylin\Model\Traits\EntityTrait;
-use Danae\Faylin\Model\Traits\UpdatedAtEntityTrait;
-use Danae\Faylin\Model\Traits\UserOwnedEntityTrait;
-use Danae\Faylin\Utils\Traits\RouteContextTrait;
-
 
 // Class that defines a collection object
 final class Collection implements NormalizableInterface
 {
-  use EntityTrait;
-  use UserOwnedEntityTrait;
-  use CreatedAtEntityTrait;
-  use UpdatedAtEntityTrait;
-  use RouteContextTrait;
+  use Traits\EntityTrait;
+  use Traits\UserOwnedEntityTrait;
 
+
+  // The images of the collection
+  private $images;
 
   // The name of the collection (read-write)
   private $name;
 
   // The description of the collection (read-write)
   private $description;
-
-  // The tags of the collection (read-write)
-  private $tags;
 
   // The public state of the collection (read-write)
   private $public;
@@ -38,14 +29,40 @@ final class Collection implements NormalizableInterface
   public function __construct()
   {
     $this->id = null;
-    $this->name = "";
-    $this->description = "";
-    $this->tags = [];
-    $this->public = true;
-    $this->nsfw = false;
-    $this->userId = null;
     $this->createdAt = new \DateTime();
     $this->updatedAt = new \DateTime();
+    $this->user = null;
+    $this->images = [];
+    $this->name = "";
+    $this->description = "";
+    $this->public = true;
+  }
+
+  // Get the images of the collection
+  public function getImages(): array
+  {
+    return $this->images;
+  }
+
+  // Set the images of the collection
+  public function setImages(array $images): self
+  {
+    $this->images = $images;
+    return $this;
+  }
+
+  // Add an image to the collection
+  public function addImage(Image $imageToAdd): self
+  {
+    $this->images[] = $imageToAdd;
+    return $this;
+  }
+
+  // Remove an image from the collection
+  public function removeImage(Image $imageToRemove): self
+  {
+    $this->images = array_filter($this->images, fn($image) => $image->getId() !== $imageToRemove->getId());
+    return $this;
   }
 
   // Get the name of the collection
@@ -91,19 +108,17 @@ final class Collection implements NormalizableInterface
   public function normalize(NormalizerInterface $normalizer, string $format = null, array $context = []): array
   {
     return [
-      // Identifier
+      // Entity fields
       'id' => $this->getId(),
+      'createdAt' => $normalizer->normalize($this->getCreatedAt(), $format, $context),
+      'updatedAt' => $normalizer->normalize($this->getUpdatedAt(), $format, $context),
+      'user' => $normalizer->normalize($this->getUser(), $format, $context),
 
       // Read-write class fields
+      'images' => $normalizer->normalize($this->getImages(), $format, $context),
       'name' => $this->getName(),
       'description' => $this->getDescription(),
       'public' => $this->getPublic(),
-
-      // Entity fields
-      'images' => $normalizer->normalize($context['collectionRepository']->getImages($this->getId()), $format, $context),
-      'user' => $normalizer->normalize($context['userRepository']->get($this->getUserId()), $format, $context),
-      'createdAt' => $normalizer->normalize($this->getCreatedAt(), $format, $context),
-      'updatedAt' => $normalizer->normalize($this->getUpdatedAt(), $format, $context),
     ];
   }
 }

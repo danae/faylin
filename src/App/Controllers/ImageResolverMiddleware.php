@@ -7,7 +7,7 @@ use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
 use Slim\Exception\HttpNotFoundException;
 
-use Danae\Faylin\Model\ImageRepository;
+use Danae\Faylin\Model\ImageRepositoryInterface;
 use Danae\Faylin\Utils\Traits\RouteContextTrait;
 
 
@@ -22,7 +22,7 @@ final class ImageResolverMiddleware implements MiddlewareInterface
 
 
   // Constructor
-  public function __construct(ImageRepository $imageRepository)
+  public function __construct(ImageRepositoryInterface $imageRepository)
   {
     $this->imageRepository = $imageRepository;
   }
@@ -34,7 +34,7 @@ final class ImageResolverMiddleware implements MiddlewareInterface
     $id = $this->getRoute($request)->getArgument('imageId');
 
     // Get the image from the repository
-    $image = $this->imageRepository->get($id);
+    $image = $this->imageRepository->find($id);
     if ($image == null)
       throw new HttpNotFoundException($request, "An image with id \"{$id}\" coud not be found");
 

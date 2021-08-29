@@ -1,8 +1,10 @@
 <?php
-namespace Danae\Faylin\Model;
+namespace Danae\Faylin\Legacy;
 
 use Danae\Astral\Database;
 use Danae\Astral\Repository;
+
+use Danae\Faylin\Model\User;
 
 
 // Class that defines a database repository of users
@@ -14,23 +16,17 @@ final class UserRepository extends Repository
     parent::__construct($database, $table, User::class);
 
     $this->field('id', 'string', ['length' => 64]);
+    $this->field('createdAt', 'datetime');
+    $this->field('updatedAt', 'datetime');
     $this->field('email', 'string', ['length' => 256]);
     $this->field('passwordHash', 'string', ['length' => 256]);
     $this->field('name', 'string', ['length' => 32]);
     $this->field('description', 'string', ['length' => 512]);
     $this->field('public', 'boolean', ['default' => true]);
-    $this->field('avatarId', 'string', ['length' => 64, 'notnull' => false, 'default' => null]);
-    $this->field('createdAt', 'datetime');
-    $this->field('updatedAt', 'datetime');
 
     $this->primary('id');
   }
 
-  // Return a user for an identifier
-  public function get(string $id): ?User
-  {
-    return $this->selectOne(['id' => $id]);
-  }
 
   // Validate a user for an email address and password
   public function validate(string $email, string $password): ?User

@@ -23,7 +23,7 @@ final class CollectionController extends AbstractController
   {
     // Get the collections
     $options = $this->createSelectOptions($request, ['sort' => '-createdAt']);
-    $collections = $this->collectionRepository->select(['public' => true], $options);
+    $collections = $this->collectionRepository->findManyBy(['public' => true], $options);
 
     // Return the response
     return $this->serialize($request, $response, $collections);
@@ -45,7 +45,7 @@ final class CollectionController extends AbstractController
     // Create the collection
     $collection = (new Collection())
       ->setId($snowflake->generateBase64String())
-      ->setUserId($authUser->getId())
+      ->setUser($authUser)
       ->setName($params['name'])
       ->setDescription($params['description'])
       ->setPublic($params['public'])
@@ -73,7 +73,7 @@ final class CollectionController extends AbstractController
     $now = new \DateTime();
 
     // Check if the authorized user owns this collection
-    if ($authUser->getId() !== $collection->getUserId())
+    if ($authUser->getId() !== $collection->getUser()->getId())
       throw new HttpForbiddenException($request, "The current authorized user is not allowed to modify the collection with id \"{$collection->getId()}\"");
 
     // Get and validate the body parameters
@@ -104,7 +104,7 @@ final class CollectionController extends AbstractController
   public function deleteCollection(Request $request, Response $response, Collection $collection, User $authUser)
   {
     // Check if the authorized user owns this collection
-    if ($authUser->getId() !== $collection->getUserId())
+    if ($authUser->getId() !== $collection->getUser()->getId())
       throw new HttpForbiddenException($request, "The current authorized user is not allowed to delete the collection with id \"{$collection->getId()}\"");
 
     // Delete the collection from the repository
@@ -118,28 +118,29 @@ final class CollectionController extends AbstractController
   // Get all images in a collection as a JSON response
   public function getCollectionImages(Request $request, Response $response, Collection $collection)
   {
-    // Get the images
-    $options = $this->createSelectOptions($request);
-    $images = $this->collectionRepository->getImages($collection->getId(), $options);
-
     // Return the response
-    return $this->serialize($request, $response, $images);
+    return $this->serialize($request, $response, $collection->getImages());
   }
 
   // Put an image in a collection
   public function putCollectionImage(Request $request, Response $response, Collection $collection, Image $image, User $authUser)
   {
+    $now = new \DateTime();
+
     // Check if the authorized user owns this collection
-    if ($authUser->getId() !== $collection->getUserId())
+    if ($authUser->getId() !== $collection->getUser()->getId())
       throw new HttpForbiddenException($request, "The current authorized user is not allowed to modify the collection with id \"{$collection->getId()}\"");
 
     // Check if the image is already in the collection
-    $collectionImages = $this->collectionRepository->getImages($collection->getId());
-    if (ArrayUtils::any($collectionImages, fn($i) => $i->getId() == $image->getId()))
+    if (ArrayUtils::any($collection->getImages(), fn($i) => $i->getId() == $image->getId()))
       throw new HttpBadRequestException($request, "The collection with id \"{$collection->getId()}\" already contains the image with id \"{$image->getId()}\"");
 
-    // Put the image in the collection
-    $this->collectionRepository->putImage($collection->getId(), $image->getId());
+    // Add the image to the collection
+    $collection->addImage($image);
+    $collection->setUpdatedAt($now);
+
+    // Update the collection in the repository
+    $this->collectionRepository->update($collection);
 
     // Return the response
     return $response
@@ -149,17 +150,22 @@ final class CollectionController extends AbstractController
   // Delete an image in a collection
   public function deleteCollectionImage(Request $request, Response $response, Collection $collection, Image $image, User $authUser)
   {
+    $now = new \DateTime();
+
     // Check if the authorized user owns this collection
-    if ($authUser->getId() !== $collection->getUserId())
+    if ($authUser->getId() !== $collection->getUser()->getId())
       throw new HttpForbiddenException($request, "The current authorized user is not allowed to modify the collection with id \"{$collection->getId()}\"");
 
     // Check if the image is not in the collection
-    $collectionImages = $this->collectionRepository->getImages($collection->getId());
-    if (!ArrayUtils::any($collectionImages, fn($i) => $i->getId() == $image->getId()))
+    if (!ArrayUtils::any($collection->getImages(), fn($i) => $i->getId() == $image->getId()))
       throw new HttpBadRequestException($request, "The collection with id \"{$collection->getId()}\" does not contain the image with id \"{$image->getId()}\"");
 
-    // Delete the image in the collection
-    $this->collectionRepository->deleteImage($collection->getId(), $image->getId());
+    // Remove the image from the collection
+    $collection->removeImage($image);
+    $collection->setUpdatedAt($now);
+
+    // Update the collection in the repository
+    $this->collectionRepository->update($collection);
 
     // Return the response
     return $response
