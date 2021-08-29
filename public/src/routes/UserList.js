@@ -19,10 +19,14 @@ export default {
 
   // The template for the route
   template: `
-    <div class="home-page">
-      <section class="section">
-        <user-thumbnail-list :users="users"></user-thumbnail-list>
-      </section>
+    <div class="user-list-page">
+      <hr class="bar">
+
+      <div class="container">
+        <section class="section">
+          <user-thumbnail-list :users="users"></user-thumbnail-list>
+        </section>
+      </div>
     </div>
   `
 };

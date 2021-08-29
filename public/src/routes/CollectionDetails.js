@@ -28,10 +28,16 @@ export default {
 
   // The template for the route
   template: `
-    <div class="collection-view-page">
-      <section class="section">
+    <div class="collection-details-page">
+      <hr class="bar">
+
+      <template v-if="collection">
         <collection-details :collection="collection" :owner="owner"></collection-details>
-      </section>
+      </template>
+
+      <template v-else>
+        <b-loading active></b-loading>
+      </template>
     </div>
   `
 };

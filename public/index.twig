@@ -26,7 +26,7 @@
     <!-- Application root -->
     <div id="app">
       <!-- Navigation -->
-      <b-navbar fixed-top type="is-dark" wrapper-class="container">
+      <b-navbar type="is-white" wrapper-class="container">
         <!-- Navbar brand and burger button -->
         <template #brand>
           <b-navbar-item tag="router-link" :to="{name: 'home'}" class="has-text-primary-light">
@@ -60,13 +60,6 @@
                 <span>Settings</span>
               </span>
             </b-navbar-item>
-
-            <b-navbar-item tag="router-link" :to="{name: 'logout'}" key="logout">
-              <span class="icon-text">
-                <b-icon pack="fas" icon="sign-out-alt"></b-icon>
-                <span>Log out</span>
-              </span>
-            </b-navbar-item>
           </template>
 
           <template v-else>
@@ -82,15 +75,13 @@
 
       <!-- Main -->
       <main>
-        <div class="container">
-          <router-view class="page"></router-view>
-        </div>
+        <router-view class="page"></router-view>
       </main>
 
       <!-- Footer -->
       <footer>
         <div class="container">
-          <p class="mb-0">fayl.in was created by <a target="_blank" href="https://github.com/danae">Danae</a> &middot; made with <a target="_blank" href="https://vuejs.org/">Vue.js</a> &middot; <a target="_blank" href="https://bulma.io/">Bulma</a> &middot; <a target="_blank" href="https://fontawesome.com/">Font Awesome</a> &middot; <a target="_blank" href="https://twemoji.twitter.com/">Twemoji</a>
+          <p class="mb-0">fayl.in was created by <a target="_blank" href="https://github.com/danae">Danae</a>
         </div>
       </footer>
     </div>

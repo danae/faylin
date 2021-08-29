@@ -37,43 +37,47 @@ export default {
   template: `
     <div class="user-details">
       <template v-if="user">
-        <section class="hero is-primary mb-6">
-          <div class="hero-body">
+        <div class="hero is-primary mb-4">
+          <div class="hero-body container">
             <p class="title mb-0">{{ user.name }}</p>
           </div>
-        </section>
+        </div>
 
-        <b-tabs position="is-centered" :animated="false">
-          <b-tab-item>
-            <template #header>
-              <span>
-                Images
-                <template v-if="userImages && userImages.length > 0">
-                  <b-tag type="is-light" class="ml-2">{{ userImages.length }}</b-tag>
+        <div class="container">
+          <section class="section">
+            <b-tabs position="is-centered" :animated="false">
+              <b-tab-item>
+                <template #header>
+                  <span>
+                    Images
+                    <template v-if="userImages && userImages.length > 0">
+                      <b-tag type="is-light" class="ml-2">{{ userImages.length }}</b-tag>
+                    </template>
+                  </span>
                 </template>
-              </span>
-            </template>
 
-            <template #default>
-              <image-thumbnail-list :images="userImages" :display-user-name="false"></image-thumbnail-list>
-            </template>
-          </b-tab-item>
-
-          <b-tab-item label="Collections">
-            <template #header>
-              <span>
-                Collections
-                <template v-if="userCollections && userCollections.length > 0">
-                  <b-tag type="is-light" class="ml-2">{{ userCollections.length }}</b-tag>
+                <template #default>
+                  <image-thumbnail-list :images="userImages" :display-user-name="false"></image-thumbnail-list>
                 </template>
-              </span>
-            </template>
+              </b-tab-item>
 
-            <template #default>
-              <collection-thumbnail-list :collections="userCollections" :display-user-name="false"></collection-thumbnail-list>
-            </template>
-          </b-tab-item>
-        </b-tabs>
+              <b-tab-item label="Collections">
+                <template #header>
+                  <span>
+                    Collections
+                    <template v-if="userCollections && userCollections.length > 0">
+                      <b-tag type="is-light" class="ml-2">{{ userCollections.length }}</b-tag>
+                    </template>
+                  </span>
+                </template>
+
+                <template #default>
+                  <collection-thumbnail-list :collections="userCollections" :display-user-name="false"></collection-thumbnail-list>
+                </template>
+              </b-tab-item>
+            </b-tabs>
+          </section>
+        </div>
       </template>
 
       <template v-else>

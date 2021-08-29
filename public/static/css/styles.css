@@ -9296,7 +9296,7 @@ a.has-text-light:hover, a.has-text-light:focus {
   color: #c8e7ee !important;
 }
 
-.has-background-light {
+.has-background-light, .bar {
   background-color: #EFF8FA !important;
 }
 
@@ -9312,11 +9312,11 @@ a.has-text-dark:hover, a.has-text-dark:focus {
   background-color: #2A3D45 !important;
 }
 
-.has-text-primary {
+.has-text-primary, .navbar .navbar-item {
   color: #5Eb2CE !important;
 }
 
-a.has-text-primary:hover, a.has-text-primary:focus {
+a.has-text-primary:hover, .navbar a.navbar-item:hover, a.has-text-primary:focus, .navbar a.navbar-item:focus {
   color: #3a9ebf !important;
 }
 
@@ -9870,7 +9870,7 @@ a.has-text-primary-light-dark:hover, a.has-text-primary-light-dark:focus {
   border-radius: 0 !important;
 }
 
-.is-shadowless {
+.is-shadowless, .page .image-thumbnail-image img, .page .collection-thumbnail-image img {
   box-shadow: none !important;
 }
 
@@ -9895,7 +9895,7 @@ a.has-text-primary-light-dark:hover, a.has-text-primary-light-dark:focus {
   padding: 0 !important;
 }
 
-.m-0 {
+.m-0, .bar {
   margin: 0 !important;
 }
 
@@ -10799,7 +10799,7 @@ a.has-text-primary-light-dark:hover, a.has-text-primary-light-dark:focus {
   text-decoration: underline !important;
 }
 
-.has-text-weight-light, .navbar .navbar-brand {
+.has-text-weight-light {
   font-weight: 300 !important;
 }
 

@@ -66,27 +66,31 @@ export default {
   template: `
     <div class="collection-details">
       <template v-if="collection">
-        <div class="columns">
-          <div class="column is-8">
-            <image-thumbnail-list :images="collection.images"></image-thumbnail-list>
-          </div>
+        <div class="container">
+          <section class="section">
+            <div class="columns">
+              <div class="column is-8">
+                <image-thumbnail-list :images="collection.images"></image-thumbnail-list>
+              </div>
 
-          <div class="column is-4 content">
-            <collection-details-buttons :collection="collection" :owner="owner" :editing="editing" class="mb-3" @share="shareCollection()" @edit="toggleEditing()" @delete="deleteCollection"></collection-details-buttons>
+              <div class="column is-4 content">
+                <collection-details-buttons :collection="collection" :owner="owner" :editing="editing" class="mb-3" @share="shareCollection()" @edit="toggleEditing()" @delete="deleteCollection"></collection-details-buttons>
 
-            <template v-if="editing">
-              <collection-details-edit-panel :collection="collection" @close="toggleEditing()"></collection-details-edit-panel>
-            </template>
+                <template v-if="editing">
+                  <collection-details-edit-panel :collection="collection" @close="toggleEditing()"></collection-details-edit-panel>
+                </template>
 
-            <template v-else>
-              <h2 class="image-details-name mb-0">{{ collection.name }}</h2>
-              <p class="image-details-user-name">by <router-link :to="{name: 'user', params: {userId: collection.user.id }}">{{ collection.user.name }}</router-link></p>
+                <template v-else>
+                  <h2 class="image-details-name mb-0">{{ collection.name }}</h2>
+                  <p class="image-details-user-name">by <router-link :to="{name: 'user', params: {userId: collection.user.id }}">{{ collection.user.name }}</router-link></p>
 
-              <template v-if="collection.description">
-                <p>{{ collection.description }}</p>
-              </template>
-            </template>
-          </div>
+                  <template v-if="collection.description">
+                    <p>{{ collection.description }}</p>
+                  </template>
+                </template>
+              </div>
+            </div>
+          </section>
         </div>
       </template>
 

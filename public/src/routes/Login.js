@@ -52,35 +52,39 @@ export default {
   // The template for the route
   template: `
     <div class="login-page">
-      <section class="section">
-        <div class="columns is-centered">
-          <div class="column is-half">
-            <div class="box is-primary">
-              <p class="mb-4">Log in to fayl.in to be able to upload and organize your images.</p>
+      <hr class="bar">
 
-              <form @submit.prevent="onSubmit">
-                <b-field label="Email address" custom-class="is-small">
-                  <b-input v-model="username" type="email" name="username" id="username" icon-pack="fas" icon="envelope" autofocus></b-input>
-                </b-field>
+      <div class="container">
+        <section class="section">
+          <div class="columns is-centered">
+            <div class="column is-half">
+              <div class="box is-primary">
+                <p class="mb-4">Log in to fayl.in to be able to upload and organize your images.</p>
 
-                <b-field label="Password" custom-class="is-small">
-                  <b-input v-model="password" type="password" name="password" id="password" icon-pack="fas" icon="key"></b-input>
-                </b-field>
+                <form @submit.prevent="onSubmit">
+                  <b-field label="Email address" custom-class="is-small">
+                    <b-input v-model="username" type="email" name="username" id="username" icon-pack="fas" icon="envelope" autofocus></b-input>
+                  </b-field>
 
-                <b-field grouped>
-                  <div class="control">
-                    <b-button type="is-primary" icon-pack="fas" icon-left="check" native-type="submit">Sign in</b-button>
-                  </div>
+                  <b-field label="Password" custom-class="is-small">
+                    <b-input v-model="password" type="password" name="password" id="password" icon-pack="fas" icon="key"></b-input>
+                  </b-field>
 
-                  <div class="control">
-                    <b-button type="is-light" @click="onCancel">Cancel</b-button>
-                  </div>
-                </b-field>
-              </form>
+                  <b-field grouped>
+                    <div class="control">
+                      <b-button type="is-primary" icon-pack="fas" icon-left="check" native-type="submit">Sign in</b-button>
+                    </div>
+
+                    <div class="control">
+                      <b-button type="is-light" @click="onCancel">Cancel</b-button>
+                    </div>
+                  </b-field>
+                </form>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </div>
     </div>
   `
 };

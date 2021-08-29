@@ -16,33 +16,37 @@ export default {
 
   // The template for the route
   template: `
-    <div class="image-view-page">
-      <section class="section">
-        <div class="columns">
-          <div class="column is-3">
-            <b-menu>
-              <b-menu-list label="User settings">
-                <b-menu-item label="Account" :active="settings == 'user/account'" @click="settings = 'user/account'"></b-menu-item>
-                <b-menu-item label="Profile" :active="settings == 'user/profile'" @click="settings = 'user/profile'"></b-menu-item>
-              </b-menu-list>
+    <div class="settings-page">
+      <hr class="bar">
 
-              <b-menu-list label="Actions">
-                <b-menu-item label="Log out" tag="router-link" :to="{name: 'logout'}">Log out</b-menu-item>
-              </b-menu-list>
-            </b-menu>
+      <div class="container">
+        <section class="section">
+          <div class="columns">
+            <div class="column is-3">
+              <b-menu>
+                <b-menu-list label="User settings">
+                  <b-menu-item label="Account" :active="settings == 'user/account'" @click="settings = 'user/account'"></b-menu-item>
+                  <b-menu-item label="Profile" :active="settings == 'user/profile'" @click="settings = 'user/profile'"></b-menu-item>
+                </b-menu-list>
+
+                <b-menu-list label="Actions">
+                  <b-menu-item label="Log out" tag="router-link" :to="{name: 'logout'}">Log out</b-menu-item>
+                </b-menu-list>
+              </b-menu>
+            </div>
+
+            <div class="column is-9 content">
+              <template v-if="settings == 'user/account'">
+                <settings-user-account></settings-user-account>
+              </template>
+
+              <template v-if="settings == 'user/profile'">
+                <settings-user-profile></settings-user-profile>
+              </template>
+            </div>
           </div>
-
-          <div class="column is-9 content">
-            <template v-if="settings == 'user/account'">
-              <settings-user-account></settings-user-account>
-            </template>
-
-            <template v-if="settings == 'user/profile'">
-              <settings-user-profile></settings-user-profile>
-            </template>
-          </div>
-        </div>
-      </section>
+        </section>
+      </div>
     </div>
   `
 };

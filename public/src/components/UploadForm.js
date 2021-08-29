@@ -104,21 +104,19 @@ export default {
 
   // The template for the component
   template: `
-    <div class="upload-form">
-      <div class="box is-primary has-text-centered" @dragenter.prevent @dragover.prevent @drop.prevent="onFileDrop">
-        <div class="mb-3">
-          <template v-if="image">
-            <img class="is-uploading" :src="image">
-          </template>
+    <div class="upload-form" @dragenter.prevent @dragover.prevent @drop.prevent="onFileDrop">
+      <div class="content my-0">
+        <template v-if="image">
+          <img class="is-uploading" :src="image">
+        </template>
 
-          <template v-else>
-            <a class="is-borderless" @click.prevent="$refs.fileInput.click()">
-              <b-icon pack="fas" icon="upload fa-3x" size="is-large"></b-icon>
-            </a>
-          </template>
-        </div>
+        <template v-else>
+          <a class="is-borderless" @click.prevent="$refs.fileInput.click()">
+            <b-icon pack="fas" icon="upload fa-3x" size="is-large"></b-icon>
+          </a>
+        </template>
 
-        <p class="has-text-primary" v-html="message"></p>
+        <p class="is-size-5 mt-3 mb-0" v-html="message"></p>
       </div>
 
       <input ref="fileInput" id="file" type="file" class="is-hidden" @change.prevent="onFileInput">

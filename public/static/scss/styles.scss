@@ -82,7 +82,11 @@ footer {
   .navbar-brand {
     @extend .is-family-secondary;
     @extend .is-size-5;
-    @extend .has-text-weight-light;
+  }
+
+  // Navbar item
+  .navbar-item {
+    @extend .has-text-primary;
   }
 }
 
@@ -90,6 +94,12 @@ footer {
 .hero {
   @extend .is-family-secondary;
   @extend .has-text-centered;
+}
+
+// Bar styling
+.bar {
+  @extend .has-background-light;
+  @extend .m-0;
 }
 
 // Box styling
@@ -222,6 +232,7 @@ footer {
       // Image element
       img {
         @extend .box;
+        @extend .is-shadowless;
         @extend .mx-auto;
         @extend .p-0;
 

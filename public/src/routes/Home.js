@@ -21,14 +21,22 @@ export default {
   template: `
     <div class="home-page">
       <template v-if="$root.clientLoggedIn">
-        <section class="section">
-          <upload-form></upload-form>
-        </section>
+        <div class="hero is-primary mb-4">
+          <div class="hero-body container">
+            <upload-form></upload-form>
+          </div>
+        </div>
       </template>
 
-      <section class="section">
-        <image-thumbnail-list :images="images"></image-thumbnail-list>
-      </section>
+      <template v-else>
+        <hr class="bar">
+      </template>
+
+      <div class="container">
+        <section class="section">
+          <image-thumbnail-list :images="images"></image-thumbnail-list>
+        </section>
+      </div>
     </div>
   `
 };

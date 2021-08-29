@@ -36,10 +36,10 @@ export default {
   // The template for the route
   template: `
     <div class="image-details-page">
+      <hr class="bar">
+
       <template v-if="image">
-        <section class="section">
-          <image-details :image="image" :collections="collections" :owner="owner"></image-details>
-        </section>
+        <image-details :image="image" :collections="collections" :owner="owner"></image-details>
       </template>
 
       <template v-else>

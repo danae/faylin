@@ -125,31 +125,35 @@ export default {
 
   // The template for the component
   template: `
-    <div class="image-details">
+    <div class="image-details">      
       <template v-if="image">
-        <div class="columns">
-          <div class="column is-8">
-            <a :href="image.downloadUrl">
-              <b-image class="image-details-image mx-0 mb-6" :src="image.downloadUrl" :alt="image.name"></b-image>
-            </a>
-          </div>
+        <div class="container">
+          <section class="section">
+            <div class="columns">
+              <div class="column is-8">
+                <a :href="image.downloadUrl">
+                  <b-image class="image-details-image mx-0 mb-6" :src="image.downloadUrl" :alt="image.name"></b-image>
+                </a>
+              </div>
 
-          <div class="column is-4 content">
-            <image-details-buttons :image="image" :collections="collections" :owner="owner" :editing="editing" class="mb-3" @share="shareImage()" @add="addImageToCollection" @add-new="addImageToNewCollection" @copy-link="copyImageLink()" @copy-markdown="copyImageMarkdown()" @copy-bbcode="copyImageBBCode()" @copy-html="copyImageHTML()" @edit="toggleEditing()" @delete="deleteImage"></image-details-buttons>
+              <div class="column is-4 content">
+                <image-details-buttons :image="image" :collections="collections" :owner="owner" :editing="editing" class="mb-3" @share="shareImage()" @add="addImageToCollection" @add-new="addImageToNewCollection" @copy-link="copyImageLink()" @copy-markdown="copyImageMarkdown()" @copy-bbcode="copyImageBBCode()" @copy-html="copyImageHTML()" @edit="toggleEditing()" @delete="deleteImage"></image-details-buttons>
 
-            <template v-if="editing">
-              <image-details-edit-panel :image="image" :replace="image.id" @close="toggleEditing()"></image-details-edit-panel>
-            </template>
+                <template v-if="editing">
+                  <image-details-edit-panel :image="image" :replace="image.id" @close="toggleEditing()"></image-details-edit-panel>
+                </template>
 
-            <template v-else>
-              <h2 class="image-details-name mb-0">{{ image.name }}</h2>
-              <p class="image-details-user-name">by <router-link :to="{name: 'user', params: {userId: image.user.id }}">{{ image.user.name }}</router-link></p>
+                <template v-else>
+                  <h2 class="image-details-name mb-0">{{ image.name }}</h2>
+                  <p class="image-details-user-name">by <router-link :to="{name: 'user', params: {userId: image.user.id }}">{{ image.user.name }}</router-link></p>
 
-              <template v-if="image.description">
-                <p>{{ image.description }}</p>
-              </template>
-            </template>
-          </div>
+                  <template v-if="image.description">
+                    <p>{{ image.description }}</p>
+                  </template>
+                </template>
+              </div>
+            </div>
+          </section>
         </div>
       </template>
 
