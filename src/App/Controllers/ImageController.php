@@ -111,7 +111,7 @@ final class ImageController extends AbstractController
       ->setUpdatedAt($now);
 
     // Write the file stream
-    $this->writeFile($image, $fileStream);
+    $this->writeFile($request, $image, $fileStream);
 
     // Create the image in the repository
     $this->imageRepository->insert($image);
@@ -141,7 +141,7 @@ final class ImageController extends AbstractController
       ->setUpdatedAt($now);
 
     // Write the file stream
-    $this->writeFile($image, $fileStream);
+    $this->writeFile($request, $image, $fileStream);
 
     // Update the image in the repository
     $this->imageRepository->update($image);
@@ -171,7 +171,7 @@ final class ImageController extends AbstractController
       ->resultOrThrowBadRequest($request);
 
     // Read the file stream
-    $fileStream = $this->readFile($image);
+    $fileStream = $this->readFile($request, $image);
 
     // Create the content disposition header
     if ($query['dl'])
@@ -239,7 +239,7 @@ final class ImageController extends AbstractController
   }
 
   // Read a file stream from the image repository
-  private function readFile(Image $image): Stream
+  private function readFile(Request $request, Image $image): Stream
   {
     try
     {
@@ -247,12 +247,12 @@ final class ImageController extends AbstractController
     }
     catch (FilesystemException $ex)
     {
-      throw new HttpInternalServerErrorException("Could not read the file: {$ex->getMessage()}", $ex);
+      throw new HttpInternalServerErrorException($request, "Could not read the file: {$ex->getMessage()}", $ex);
     }
   }
 
   // Write a file stream to the image repository
-  private function writeFile(Image $image, Stream $stream): void
+  private function writeFile(Request $request, Image $image, Stream $stream): void
   {
     try
     {
@@ -260,7 +260,7 @@ final class ImageController extends AbstractController
     }
     catch (FilesystemException $ex)
     {
-      throw new HttpInternalServerErrorException("Could not write the file: {$ex->getMessage()}", $ex);
+      throw new HttpInternalServerErrorException($request, "Could not write the file: {$ex->getMessage()}", $ex);
     }
   }
 }
