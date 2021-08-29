@@ -86,20 +86,20 @@ abstract class AbstractController
     // Check for sorting
     if ($query['sort'] !== null)
     {
-      $options['order_by'] = [];
+      $options['sort'] = [];
       foreach (explode(', ', $query['sort']) as $sort)
       {
         if (strpos($sort, '-') !== false)
-          $options['order_by'][substr($sort, 1)] = 'desc';
+          $options['sort'][substr($sort, 1)] = -1;
         else
-          $options['order_by'][$sort] = 'asc';
+          $options['sort'][$sort] = 1;
       }
     }
 
     // Check for pagination
     if ($query['perPage'] !== null)
     {
-      $options['offset'] = (int)$query['page'] * (int)$query['perPage'];
+      $options['skip'] = (int)$query['page'] * (int)$query['perPage'];
       $options['limit'] = (int)$query['perPage'];
     }
 
