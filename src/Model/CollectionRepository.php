@@ -4,8 +4,6 @@ namespace Danae\Faylin\Model;
 use Danae\Astral\Database;
 use Danae\Astral\Repository;
 
-use Danae\Faylin\Utils\ArrayUtils;
-
 
 // Class that defines a database repository of collections
 final class CollectionRepository extends Repository
@@ -44,10 +42,8 @@ final class CollectionRepository extends Repository
   // Return the images in a collection for an identifier
   public function getImages(string $id, array $options = []): array
   {
-    $images = $this->imageRepository->select();
-
     $collectionImages = $this->collectionImageRepository->select(['collectionId' => $id], $options);
-    $collectionImages = array_map(fn($collectionImage) => ArrayUtils::find($images, fn($image) => $image->getId() === $collectionImage->getImageId()), $collectionImages);
+    $collectionImages = array_map(fn($collectionImage) => $this->imageRepository->get($collectionImage->getImageId()), $collectionImages);
     return $collectionImages;
   }
 
