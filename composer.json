@@ -13,7 +13,8 @@
   "prefer-stable": true,
   "require": {
     "php": "^7.4",
-    "danae/astral": "^0.2",
+    "ext-mongodb": "^1.10",
+    "mongodb/mongodb": "^1.9",
     "php-di/php-di": "^6.0",
     "php-di/slim-bridge": "^3.0",
     "slim/psr7": "^1.0",
@@ -23,6 +24,9 @@
     "symfony/serializer": "^5.0",
     "league/flysystem": "^2.0",
     "firebase/php-jwt": "^5.4"
+  },
+  "require-dev": {
+    "danae/astral": "^0.3"
   },
   "autoload": {
     "psr-4": {
