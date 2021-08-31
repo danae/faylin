@@ -55,7 +55,7 @@ return function(ContainerBuilder $containerBuilder)
     Snowflake::class => DI\autowire()
       ->constructor(DI\get('snowflake.datacenter'), DI\get('snowflake.worker'), DI\get('snowflake.epoch')),
 
-    // Dependencies for repositories
+    // Stream factory
     StreamFactoryInterface::class => DI\autowire(StreamFactory::class),
 
     // Repositories
@@ -99,7 +99,8 @@ return function(ContainerBuilder $containerBuilder)
       ->property('supportedSize', DI\get('uploads.supportedSize')),
     ImageController::class => DI\autowire()
       ->property('supportedContentTypes', DI\get('uploads.supportedContentTypes'))
-      ->property('supportedSize', DI\get('uploads.supportedSize')),
+      ->property('supportedSize', DI\get('uploads.supportedSize'))
+      ->property('streamFactory', DI\get(StreamFactoryInterface::class)),
     UserController::class => DI\autowire()
       ->property('supportedContentTypes', DI\get('uploads.supportedContentTypes'))
       ->property('supportedSize', DI\get('uploads.supportedSize')),

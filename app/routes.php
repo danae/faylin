@@ -208,7 +208,7 @@ return function(App $app)
     $group->get('/users/{id:[A-Za-z0-9-_]+}', [FrontendController::class, 'render']);
 
     // Download the contents of an image
-    $group->get('/{imageId:[A-Za-z0-9-_]+}[.{extension}]', [ImageController::class, 'downloadImage'])
+    $group->get('/{imageId:[A-Za-z0-9-_]+}[.{format}]', [ImageController::class, 'downloadImage'])
       ->add(ImageResolverMiddleware::class)
       ->setName('images.download');
   });

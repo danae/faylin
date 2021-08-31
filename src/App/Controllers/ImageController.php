@@ -1,9 +1,11 @@
 <?php
 namespace Danae\Faylin\App\Controllers;
 
+use Imagecow\Image as ImagecowImage;
 use Psr\Http\Message\ResponseInterface as Response;
-use Psr\Http\Message\StreamInterface as Stream;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Psr\Http\Message\StreamFactoryInterface;
+use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UploadedFileInterface as UploadedFile;
 use League\Flysystem\FilesystemException;
 use Slim\Exception\HttpBadRequestException;
@@ -21,6 +23,10 @@ use Danae\Faylin\Validator\Validator;
 // Controller that defines routes for images
 final class ImageController extends AbstractController
 {
+  // The stream factory interface to use with the controller
+  private $streamFactory;
+
+
   // Return all images as a JSON response
   public function getImages(Request $request, Response $response)
   {
@@ -152,39 +158,33 @@ final class ImageController extends AbstractController
   }
 
   // Download the contents of an image
-  public function downloadImage(Request $request, Response $response, Image $image, string $extension = '')
+  public function downloadImage(Request $request, Response $response, Image $image, ?string $format = null)
   {
-    // Get the content name
-    $contentExtension = $this->supportedContentTypes[$image->getContentType()] ?? null;
-    $contentName = $image->getName();
-    if ($contentExtension !== null && !preg_match("/\.{$contentExtension}\$/i", $contentName))
-      $contentName .= '.' . $contentExtension;
-
-    // Check if the extension is valid
-    if (!empty($extension) && strtolower($extension) !== $contentExtension)
-      throw new HttpBadRequestException($request, "The extension of the route does not match the extension of the content");
-
     // Get and validate the query parameters
     $query = (new Validator())
+      ->withOptional('transform', 'string')
       ->withOptional('dl', 'bool:true', false)
       ->validate($request->getQueryParams(), ['allowExtraFields' => true])
       ->resultOrThrowBadRequest($request);
 
-    // Read the file stream
-    $fileStream = $this->readFile($request, $image);
+    // Create the content stream
+    $stream = $this->readFile($request, $image, $query['transform'], $format);
 
-    // Create the content disposition header
-    if ($query['dl'])
-      $contentDisposition = "attachment; filename=\"{$contentName}\"";
-    else
-      $contentDisposition = "inline; filename=\"{$contentName}\"";
+    // Create the format
+    if ($format === null)
+      $format = $this->supportedContentTypes[$image->getContentType()];
+
+    // Create the content name
+    $contentName = $image->getName();
+    if (!preg_match("/\.{$format}\$/i", $contentName))
+      $contentName .= '.' . $format;
 
     // Return the response
     return $response
-      ->withHeader('Content-Type', $image->getContentType())
-      ->withHeader('Content-Length', $image->getContentLength())
-      ->withHeader('Content-Disposition', $contentDisposition)
-      ->withBody($fileStream);
+      ->withHeader('Content-Type', array_search($format, $this->supportedContentTypes))
+      ->withHeader('Content-Length', $stream->getSize())
+      ->withHeader('Content-Disposition', ($query['dl'] ? "attachment" : "inline") . "; filename=\"{$contentName}\"")
+      ->withBody($stream);
   }
 
 
@@ -233,17 +233,45 @@ final class ImageController extends AbstractController
     $contentTypeExtension = $this->supportedContentTypes[$contentType] ?? null;
 
     if ($contentTypeExtension !== null)
-      return preg_replace("/\.{$contentTypeExtension}$/i", "", $file->getClientFilename());
+      return preg_replace("/\.{$contentTypeExtension}\$/i", "", $file->getClientFilename());
     else
       return $file->getClientFilename();
   }
 
   // Read a file stream from the image repository
-  private function readFile(Request $request, Image $image): Stream
+  private function readFile(Request $request, Image $image, ?string $transform = null, ?string $format = null): StreamInterface
   {
     try
     {
-      return $this->imageRepository->readFile($image);
+      // Read a stream containing the contents of the image
+      $stream = $this->imageRepository->readFile($image);
+
+      // Check if the image stream needs to be transformed or converted
+      if ($transform !== null || $format !== null)
+      {
+        // Check if the requested format is a supported format
+        if ($format !== null && !in_array($format, $this->supportedContentTypes))
+          throw new HttpBadRequestException($request, "The requested type is not supported, the supported types are " . implode(', ', array_keys($this->supportedContentTypes)));
+
+        // Create the image
+        $imagecow = ImagecowImage::fromString((string)$stream, ImagecowImage::LIB_IMAGICK);
+        if ($image->getContentType() === 'image/svg+xml' && $format !== null && $format !== 'svg')
+          $imagecow->format('png');
+
+        // Transform the image if applicable
+        if ($transform !== null)
+          $imagecow->transform($transform);
+
+        // Convert the image if applicable
+        if ($format !== null && $format != $this->supportedContentTypes[$image->getContentType()])
+          $imagecow->format($format);
+
+        // Adjust the content metadata
+        $stream = $this->streamFactory->createStream($imagecow->getString());
+      }
+
+      // Return the stream
+      return $stream;
     }
     catch (FilesystemException $ex)
     {
@@ -252,10 +280,11 @@ final class ImageController extends AbstractController
   }
 
   // Write a file stream to the image repository
-  private function writeFile(Request $request, Image $image, Stream $stream): void
+  private function writeFile(Request $request, Image $image, StreamInterface $stream): void
   {
     try
     {
+      // Write the contents of the image from the stream
       $this->imageRepository->writeFile($image, $stream);
     }
     catch (FilesystemException $ex)

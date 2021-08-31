@@ -110,7 +110,7 @@ final class ImageRepository implements ImageRepositoryInterface
     return $result->getDeletedCount();
   }
 
-  // Return a stream containing the contents of an image
+  // Read a stream containing the contents of an image
   public function readFile(Image $image): StreamInterface
   {
     $contents = $this->getFilesystem()->read($this->getFileName($image));
