@@ -160,6 +160,9 @@ final class ImageController extends AbstractController
   // Download the contents of an image
   public function downloadImage(Request $request, Response $response, Image $image, ?string $format = null)
   {
+    // Sanitize the format
+    $format = $format !== null ? strtolower($format) : null;
+
     // Get and validate the query parameters
     $query = (new Validator())
       ->withOptional('transform', 'string')
@@ -247,7 +250,7 @@ final class ImageController extends AbstractController
       $stream = $this->imageRepository->readFile($image);
 
       // Check if the image stream needs to be transformed or converted
-      if ($transform !== null || $format !== null)
+      if ($transform !== null || ($format !== null && $format !== $this->supportedContentTypes[$image->getContentType()]))
       {
         // Check if the requested format is a supported format
         if ($format !== null && !in_array($format, $this->supportedContentTypes))
@@ -263,7 +266,7 @@ final class ImageController extends AbstractController
           $imagecow->transform($transform);
 
         // Convert the image if applicable
-        if ($format !== null && $format != $this->supportedContentTypes[$image->getContentType()])
+        if ($format !== null && $format !== $this->supportedContentTypes[$image->getContentType()])
           $imagecow->format($format);
 
         // Adjust the content metadata
