@@ -5,7 +5,7 @@ export default {
     // Event handler when the form is submitted
     onSubmit: async function(event) {
       // Send a patch request
-      await this.$root.client.patchMe({name: this.$root.clientUser.name});
+      await this.$root.client.patchAuthorizedUser({name: this.$root.clientUser.name});
 
       // Display a success message
       this.$displayMessage('Profile updated successfully');
