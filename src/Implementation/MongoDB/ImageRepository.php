@@ -121,6 +121,8 @@ final class ImageRepository implements ImageRepositoryInterface
   // Write the contents of an image from a stream
   public function writeFile(Image $image, StreamInterface $stream): void
   {
+    $stream->rewind();
+    
     $contents = $stream->getContents();
     $contents = gzencode($contents);
     $this->getFilesystem()->write($this->getFileName($image), $contents);
@@ -165,7 +167,7 @@ final class ImageRepository implements ImageRepositoryInterface
       ->setNsfw($document['nsfw'])
       ->setContentType($document['contentType'])
       ->setContentLength($document['contentLength'])
-      ->setChecksum($document['checksum'] ?? null);
+      ->setChecksum($document['checksum']);
   }
 
   // Get the file name for an image

@@ -132,13 +132,13 @@ final class Image implements NormalizableInterface
   }
 
   // Get the checksum of the image
-  public function getChecksum(): ?string
+  public function getChecksum(): string
   {
     return $this->checksum;
   }
 
   // Set the checksum of the image
-  public function setChecksum(?string $checksum): self
+  public function setChecksum(string $checksum): self
   {
     $this->checksum = $checksum;
     return $this;
