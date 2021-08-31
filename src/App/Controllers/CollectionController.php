@@ -45,12 +45,12 @@ final class CollectionController extends AbstractController
     // Create the collection
     $collection = (new Collection())
       ->setId($snowflake->generateBase64String())
+      ->setCreatedAt($now)
+      ->setUpdatedAt($now)
       ->setUser($authUser)
       ->setName($params['name'])
       ->setDescription($params['description'])
-      ->setPublic($params['public'])
-      ->setCreatedAt($now)
-      ->setUpdatedAt($now);
+      ->setPublic($params['public']);
 
     // Create the collection in the repository
     $this->collectionRepository->insert($collection);

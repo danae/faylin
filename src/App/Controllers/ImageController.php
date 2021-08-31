@@ -109,13 +109,13 @@ final class ImageController extends AbstractController
     // Create the image
     $image = (new Image())
       ->setId($snowflake->generateBase64String())
+      ->setCreatedAt($now)
+      ->setUpdatedAt($now)
       ->setUser($authUser)
       ->setName($this->getUploadedFileNameWithoutExtension($file))
       ->setContentType($file->getClientMediaType())
-      ->setContentLength($file->getSize())
-      ->setChecksum(hash('sha256', $fileStream->getContents()))
-      ->setCreatedAt($now)
-      ->setUpdatedAt($now);
+      ->setContentLength($fileStream->getSize())
+      ->setChecksum(hash('sha256', $fileStream->getContents()));
 
     // Write the file stream
     $this->writeFile($request, $image, $fileStream);
@@ -143,10 +143,10 @@ final class ImageController extends AbstractController
 
     // Update the image
     $image
+      ->setUpdatedAt($now)
       ->setContentType($file->getClientMediaType())
-      ->setContentLength($file->getSize())
-      ->setChecksum(hash('sha256', $fileStream->getContents()))
-      ->setUpdatedAt($now);
+      ->setContentLength($fileStream->getSize())
+      ->setChecksum(hash('sha256', $fileStream->getContents()));
 
     // Write the file stream
     $this->writeFile($request, $image, $fileStream);
