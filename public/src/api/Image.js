@@ -24,6 +24,7 @@ export default class Image
     this.createdAt = data.createdAt instanceof Date ? data.createdAt : new Date(data.createdAt);
     this.updatedAt = data.updatedAt instanceof Date ? data.updatedAt : new Date(data.updatedAt);
     this.downloadUrl = data.downloadUrl;
+    this.thumbnailUrl = data.thumbnailUrl;
   }
 
   // Return the string representation of the image

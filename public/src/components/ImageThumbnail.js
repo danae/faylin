@@ -15,7 +15,7 @@ export default {
     <div class="image-thumbnail content">
       <template v-if="image">
         <router-link :to="{name: 'image', params: {imageId: image.id}}">
-          <b-image class="image-thumbnail-image" :src="image.downloadUrl" :alt="image.name"></b-image>
+          <b-image class="image-thumbnail-image" :src="image.thumbnailUrl" :alt="image.name"></b-image>
         </router-link>
 
         <template v-if="displayName">

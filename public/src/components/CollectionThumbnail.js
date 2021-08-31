@@ -16,7 +16,7 @@ export default {
       <template v-if="collection">
         <router-link :to="{name: 'collection', params: {collectionId: collection.id}}">
           <template v-if="collection.images.length > 0">
-            <b-image class="collection-thumbnail-image" :src="collection.images[0].downloadUrl" :alt="collection.images[0].name"></b-image>
+            <b-image class="collection-thumbnail-image" :src="collection.images[0].thumbnailUrl" :alt="collection.images[0].name"></b-image>
           </template>
 
           <template v-else>
