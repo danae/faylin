@@ -147,6 +147,7 @@ final class ImageRepository implements ImageRepositoryInterface
       'nsfw' => $image->getNsfw(),
       'contentType' => $image->getContentType(),
       'contentLength' => $image->getContentLength(),
+      'checksum' => $image->getChecksum(),
     ]);
   }
 
@@ -163,7 +164,7 @@ final class ImageRepository implements ImageRepositoryInterface
       ->setPublic($document['public'])
       ->setNsfw($document['nsfw'])
       ->setContentType($document['contentType'])
-      ->setContentLength($document['contentLength']);
+      ->setChecksum($document['checksum'] ?? null);
   }
 
   // Get the file name for an image

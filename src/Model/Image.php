@@ -33,6 +33,9 @@ final class Image implements NormalizableInterface
   // The content length of the image (read-only)
   private $contentLength;
 
+  // The checksum of the image (read-only)
+  private $checksum;
+
 
   // Constructor
   public function __construct()
@@ -47,6 +50,7 @@ final class Image implements NormalizableInterface
     $this->nsfw = false;
     $this->contentType = "";
     $this->contentLength = 0;
+    $this->checksum = "";
   }
 
   // Get the name of the image
@@ -127,6 +131,19 @@ final class Image implements NormalizableInterface
     return $this;
   }
 
+  // Get the checksum of the image
+  public function getChecksum(): ?string
+  {
+    return $this->checksum;
+  }
+
+  // Set the checksum of the image
+  public function setChecksum(?string $checksum): self
+  {
+    $this->checksum = $checksum;
+    return $this;
+  }
+
 
   // Normalize an image and return the normalized array
   public function normalize(NormalizerInterface $normalizer, string $format = null, array $context = []): array
@@ -147,6 +164,7 @@ final class Image implements NormalizableInterface
       // Read-only class fields
       'contentType' => $this->getContentType(),
       'contentLength' => $this->getContentLength(),
+      'checksum' => $this->getChecksum(),
 
       // Additional fields
       'downloadUrl' => $this->fullUrlFor($context['request'], 'images.download', ['imageId' => $this->getId(), 'format' => $context['supportedContentTypes'][$this->getContentType()]]),

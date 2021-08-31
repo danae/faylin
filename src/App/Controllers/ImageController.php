@@ -113,6 +113,7 @@ final class ImageController extends AbstractController
       ->setName($this->getUploadedFileNameWithoutExtension($file))
       ->setContentType($file->getClientMediaType())
       ->setContentLength($file->getSize())
+      ->setChecksum(hash('sha256', $fileStream->getContents()))
       ->setCreatedAt($now)
       ->setUpdatedAt($now);
 
@@ -144,6 +145,7 @@ final class ImageController extends AbstractController
     $image
       ->setContentType($file->getClientMediaType())
       ->setContentLength($file->getSize())
+      ->setChecksum(hash('sha256', $fileStream->getContents()))
       ->setUpdatedAt($now);
 
     // Write the file stream
