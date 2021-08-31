@@ -164,6 +164,7 @@ final class ImageRepository implements ImageRepositoryInterface
       ->setPublic($document['public'])
       ->setNsfw($document['nsfw'])
       ->setContentType($document['contentType'])
+      ->setContentLength($document['contentLength'])
       ->setChecksum($document['checksum'] ?? null);
   }
 

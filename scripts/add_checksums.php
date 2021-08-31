@@ -53,19 +53,29 @@ function main(array $args)
   $images = $imageRepository->findManyBy();
   foreach ($images as $image)
   {
-    // Check if there is a checksum
-    if (!empty($image->getChecksum()))
-      continue;
+    // Check if there is a checksum or content length
+    if (empty($image->getChecksum()) || $image->getContentLength() === 0)
+    {
+      $stream = $imageRepository->readFile($image);
 
-    // Calculate the checksum
-    printf("Calculating checksum for image '%s' with name '%s'...\n", $image->getId(), $image->getName());
-    $stream = $imageRepository->readFile($image);
-    $checksum = hash('sha256', $stream->getContents());
+      if (empty($image->getChecksum()))
+      {
+        // Calculate the checksum
+        printf("Calculating checksum for image '%s' with name '%s'...\n", $image->getId(), $image->getName());
+        $image->setChecksum(hash('sha256', $stream->getContents()));
+      }
 
-    // Save the checksum
-    printf("Saving checksum '%s'...\n", $checksum);
-    $image->setChecksum($checksum);
-    $imageRepository->update($image);
+      if ($image->getContentLength() === 0)
+      {
+        // Calculate the checksum
+        printf("Calculating conent length for image '%s' with name '%s'...\n", $image->getId(), $image->getName());
+        $image->setContentLength($stream->getSize());
+      }
+
+      // Save the image
+      printf("Saving image '%s' with name '%s'...\n", $image->getId(), $image->getName());
+      $imageRepository->update($image);
+    }
   }
 }
 
