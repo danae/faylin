@@ -114,7 +114,7 @@ final class ImageController extends AbstractController
       ->setUser($authUser)
       ->setName($this->getUploadedFileNameWithoutExtension($file))
       ->setContentType($file->getClientMediaType())
-      ->setContentLength($fileStream->getSize())
+      ->setContentLength($file->getSize())
       ->setChecksum(hash('sha256', $fileStream->getContents()));
 
     // Write the file stream
@@ -145,7 +145,7 @@ final class ImageController extends AbstractController
     $image
       ->setUpdatedAt($now)
       ->setContentType($file->getClientMediaType())
-      ->setContentLength($fileStream->getSize())
+      ->setContentLength($file->getSize())
       ->setChecksum(hash('sha256', $fileStream->getContents()));
 
     // Write the file stream
@@ -189,6 +189,7 @@ final class ImageController extends AbstractController
       ->withHeader('Content-Type', array_search($format, $this->supportedContentTypes))
       ->withHeader('Content-Length', $stream->getSize())
       ->withHeader('Content-Disposition', ($query['dl'] ? "attachment" : "inline") . "; filename=\"{$contentName}\"")
+      ->withHeader('ETag', "\"{$image->getChecksum()}\"")
       ->withBody($stream);
   }
 
