@@ -180,13 +180,13 @@ final class ImageController extends AbstractController
       // Respond with a manipulated image
       return (new ImageManipulation($image, $stream, $query['transform'], $format, $this->store))
         ->manipulate($request, $response)
-        ->respond($response);
+        ->respond($response, $query['dl']);
     }
     else
     {
       // Respond with the image as-is
       return (new ImageContentResponse($image, $stream, $image->getContentType(), $image->getContentLength(), $image->getChecksum()))
-        ->respond($response);
+        ->respond($response, $query['dl']);
     }
   }
 
