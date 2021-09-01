@@ -31,6 +31,7 @@ use Danae\Faylin\Implementation\MongoDB\UserRepository;
 use Danae\Faylin\Model\CollectionRepositoryInterface;
 use Danae\Faylin\Model\ImageRepositoryInterface;
 use Danae\Faylin\Model\UserRepositoryInterface;
+use Danae\Faylin\Store\Store;
 use Danae\Faylin\Utils\Snowflake;
 
 
@@ -43,9 +44,13 @@ return function(ContainerBuilder $containerBuilder)
     MongoDBClient::class => DI\autowire()
       ->constructorParameter('uri', DI\get('mongodb.uri')),
 
-    // Filesystem
+    // Store
     Filesystem::class => DI\autowire()
       ->constructor(DI\get('filesystem.adapter')),
+    StreamFactoryInterface::class => DI\autowire(StreamFactory::class),
+    Store::class => DI\autowire()
+      ->constructorParameter('supportedContentTypes', DI\get('uploads.supportedContentTypes'))
+      ->constructorParameter('supportedSize', DI\get('uploads.supportedSize')),
 
     // Serializer
     Serializer::class => DI\autowire()
@@ -54,9 +59,6 @@ return function(ContainerBuilder $containerBuilder)
     // Snowflake generator
     Snowflake::class => DI\autowire()
       ->constructor(DI\get('snowflake.datacenter'), DI\get('snowflake.worker'), DI\get('snowflake.epoch')),
-
-    // Stream factory
-    StreamFactoryInterface::class => DI\autowire(StreamFactory::class),
 
     // Repositories
     CollectionRepositoryInterface::class => DI\autowire(CollectionRepository::class)
@@ -99,8 +101,7 @@ return function(ContainerBuilder $containerBuilder)
       ->property('supportedSize', DI\get('uploads.supportedSize')),
     ImageController::class => DI\autowire()
       ->property('supportedContentTypes', DI\get('uploads.supportedContentTypes'))
-      ->property('supportedSize', DI\get('uploads.supportedSize'))
-      ->property('streamFactory', DI\get(StreamFactoryInterface::class)),
+      ->property('supportedSize', DI\get('uploads.supportedSize')),
     UserController::class => DI\autowire()
       ->property('supportedContentTypes', DI\get('uploads.supportedContentTypes'))
       ->property('supportedSize', DI\get('uploads.supportedSize')),

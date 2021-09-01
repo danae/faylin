@@ -10,6 +10,7 @@ use Symfony\Component\Serializer\Serializer;
 use Danae\Faylin\Model\CollectionRepositoryInterface;
 use Danae\Faylin\Model\ImageRepositoryInterface;
 use Danae\Faylin\Model\UserRepositoryInterface;
+use Danae\Faylin\Store\Store;
 use Danae\Faylin\Utils\Snowflake;
 use Danae\Faylin\Validator\Validator;
 
@@ -26,6 +27,9 @@ abstract class AbstractController
   // The user repository to use with the controller
   protected $userRepository;
 
+  // The store to use with the controller
+  protected $store;
+
   // The serializer to use with the controller
   protected $serializer;
 
@@ -37,11 +41,12 @@ abstract class AbstractController
 
 
   // Constructor
-  public function __construct(CollectionRepositoryInterface $collectionRepository, ImageRepositoryInterface $imageRepository, UserRepositoryInterface $userRepository, Serializer $serializer)
+  public function __construct(CollectionRepositoryInterface $collectionRepository, ImageRepositoryInterface $imageRepository, UserRepositoryInterface $userRepository, Store $store, Serializer $serializer)
   {
     $this->collectionRepository = $collectionRepository;
     $this->imageRepository = $imageRepository;
     $this->userRepository = $userRepository;
+    $this->store = $store;
     $this->serializer = $serializer;
   }
 
@@ -62,6 +67,7 @@ abstract class AbstractController
       'collectionRepository' => $this->collectionRepository,
       'imageRepository' => $this->imageRepository,
       'userRepository' => $this->userRepository,
+      'store' => $this->store,
       'supportedContentTypes' => $this->supportedContentTypes,
       'supportedSize' => $this->supportedSize,
       'json_encode_options' => JSON_PRETTY_PRINT | JSON_THROW_ON_ERROR,

@@ -16,6 +16,9 @@ use Symfony\Component\Serializer\Serializer;
 
 use Danae\Faylin\Model\Image;
 use Danae\Faylin\Model\User;
+use Danae\Faylin\Store\ImageContentResponse;
+use Danae\Faylin\Store\ImageManipulation;
+use Danae\Faylin\Store\Store;
 use Danae\Faylin\Utils\Snowflake;
 use Danae\Faylin\Validator\Validator;
 
@@ -23,10 +26,6 @@ use Danae\Faylin\Validator\Validator;
 // Controller that defines routes for images
 final class ImageController extends AbstractController
 {
-  // The stream factory interface to use with the controller
-  private $streamFactory;
-
-
   // Return all images as a JSON response
   public function getImages(Request $request, Response $response)
   {
@@ -175,22 +174,20 @@ final class ImageController extends AbstractController
     // Create the content stream
     $stream = $this->readFile($request, $image, $query['transform'], $format);
 
-    // Create the format
-    if ($format === null)
-      $format = $this->supportedContentTypes[$image->getContentType()];
-
-    // Create the content name
-    $contentName = $image->getName();
-    if (!preg_match("/\.{$format}\$/i", $contentName))
-      $contentName .= '.' . $format;
-
-    // Return the response
-    return $response
-      ->withHeader('Content-Type', array_search($format, $this->supportedContentTypes))
-      ->withHeader('Content-Length', $stream->getSize())
-      ->withHeader('Content-Disposition', ($query['dl'] ? "attachment" : "inline") . "; filename=\"{$contentName}\"")
-      ->withHeader('ETag', "\"{$image->getChecksum()}\"")
-      ->withBody($stream);
+    // Check if the image needs to be manipulated
+    if ($query['transform'] !== null || ($ormat !== null && $format !== $this->store->convertContentTypeToFormat($image->getContentType())))
+    {
+      // Respond with a manipulated image
+      return (new ImageManipulation($image, $stream, $query['transform'], $format, $this->store))
+        ->manipulate($request, $response)
+        ->respond($response);
+    }
+    else
+    {
+      // Respond with the image as-is
+      return (new ImageContentResponse($image, $stream, $image->getContentType(), $image->getContentLength(), $image->getChecksum()))
+        ->respond($response);
+    }
   }
 
 
@@ -250,34 +247,7 @@ final class ImageController extends AbstractController
     try
     {
       // Read a stream containing the contents of the image
-      $stream = $this->imageRepository->readFile($image);
-
-      // Check if the image stream needs to be transformed or converted
-      if ($transform !== null || ($format !== null && $format !== $this->supportedContentTypes[$image->getContentType()]))
-      {
-        // Check if the requested format is a supported format
-        if ($format !== null && !in_array($format, $this->supportedContentTypes))
-          throw new HttpBadRequestException($request, "The requested type is not supported, the supported types are " . implode(', ', array_keys($this->supportedContentTypes)));
-
-        // Create the image
-        $imagecow = ImagecowImage::fromString((string)$stream, ImagecowImage::LIB_IMAGICK);
-        if ($image->getContentType() === 'image/svg+xml' && $format !== null && $format !== 'svg')
-          $imagecow->format('png');
-
-        // Transform the image if applicable
-        if ($transform !== null)
-          $imagecow->transform($transform);
-
-        // Convert the image if applicable
-        if ($format !== null && $format !== $this->supportedContentTypes[$image->getContentType()])
-          $imagecow->format($format);
-
-        // Adjust the content metadata
-        $stream = $this->streamFactory->createStream($imagecow->getString());
-      }
-
-      // Return the stream
-      return $stream;
+      return $this->imageRepository->readFile($image);
     }
     catch (FilesystemException $ex)
     {
