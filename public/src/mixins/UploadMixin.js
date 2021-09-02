@@ -122,7 +122,7 @@ export default {
 
         // Check if the file is the correct type and size
         const capabilities = await this.$root.client.getCapabilities();
-        if (!(file.type in capabilities.supportedContentTypes))
+        if (!capabilities.supportedContentTypes.includes(file.type))
           throw new Error(`Unsupported file type, supported types are ${Object.values(capabilities.supportedContentTypes).join(', ')}`);
         if (file.size > capabilities.supportedSize)
           throw new Error(`Unsupported file size, maximal supported size is ${this.$formatBytes(capabilities.supportedSize)}`);
