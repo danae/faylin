@@ -9,14 +9,14 @@ use Psr\Http\Message\StreamInterface;
 interface ImageTransformStoreInterface
 {
   // Return if a cached image transform exists
-  public function has(Image $image, ImageTransformInterface $transform, ServerRequestInterface $request): bool;
+  public function has(Image $image, ImageTransform $transform, ServerRequestInterface $request): bool;
 
   // Read the contents of a cached image transform to a stream
-  public function read(Image $image, ImageTransformInterface $transform, ServerRequestInterface $request): StreamInterface;
+  public function read(Image $image, ImageTransform $transform, ServerRequestInterface $request): StreamInterface;
 
   // Write the contents of a cached image transform from a stream
-  public function write(Image $image, ImageTransformInterface $transform, ServerRequestInterface $request, StreamInterface $stream): void;
+  public function write(Image $image, ImageTransform $transform, ServerRequestInterface $request, StreamInterface $stream): void;
 
   // Delete the contents of a cached image transform
-  public function delete(Image $image, ImageTransformInterface $transform, ServerRequestInterface $request): void;
+  public function delete(Image $image, ImageTransform $transform, ServerRequestInterface $request): void;
 }

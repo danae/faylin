@@ -16,14 +16,8 @@ interface ImageStoreInterface
   // Read the contents of an image to a stream
   public function read(Image $image, ServerRequestInterface $request): StreamInterface;
 
-  // Read the contents of an image to a stream after transforming them
-  public function readAndTransform(Image $image, ImageTransformInterface $transform, ServerRequestInterface $request): StreamInterface;
-
   // Read the contents of an image to a response
   public function readResponse(Image $image, ServerRequestInterface $request, bool $attachment = false): ResponseInterface;
-
-  // Read the contents of an image to a response after transforming them
-  public function readAndTransformResponse(Image $image, ImageTransformInterface $transform, ServerRequestInterface $request, bool $attachment = false): ResponseInterface;
 
   // Write the contents of an image from a stream
   public function write(Image $image, ServerRequestInterface $request, StreamInterface $stream): void;
@@ -33,4 +27,7 @@ interface ImageStoreInterface
 
   // Delete the contents of an image
   public function delete(Image $image, ServerRequestInterface $request): void;
+
+  // Return the checksum of a stream
+  public function calculateChecksum(StreamInterface $stream): string;
 }

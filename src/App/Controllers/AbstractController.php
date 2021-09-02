@@ -16,11 +16,17 @@ abstract class AbstractController
   // The image repository to use with the controller
   protected $imageRepository;
 
+  // The image store to use with the controller
+  protected $imageStore;
+
+  // The image transform executor to use with the controller
+  protected $imageTransformExecutor;
+
+  // The image transform store to use with the controller
+  protected $imageTransformStore;
+
   // The user repository to use with the controller
   protected $userRepository;
-
-  // The store to use with the controller
-  protected $store;
 
   // The serializer to use with the controller
   protected $serializer;
@@ -45,8 +51,10 @@ abstract class AbstractController
       'response' => $response,
       'collectionRepository' => $this->collectionRepository,
       'imageRepository' => $this->imageRepository,
+      'imageStore' => $this->imageStore,
+      'imageTransformExecutor' => $this->imageTransformExecutor,
+      'imageTransformStore' => $this->imageTransformStore,
       'userRepository' => $this->userRepository,
-      'store' => $this->store,
       'capabilities' => $this->capabilities,
       'json_encode_options' => JSON_PRETTY_PRINT | JSON_THROW_ON_ERROR,
     ];

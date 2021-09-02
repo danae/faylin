@@ -40,16 +40,21 @@ $settings['mongodb.collection.images'] = 'images';
 $settings['mongodb.collection.users'] = 'users';
 
 
+// STORE SETTINGS
 
-
-
-// FILESYSTEM SETTINGS
-
-// The filesystem adapter of the application, specified as a function that returns a League\Flysystem\FilesystemAdapter instance
+// The store filesystem adapter of the application, specified as a function that returns a League\Flysystem\FilesystemAdapter instance
 // See https://flysystem.thephpleague.com/v2/docs/
-$settings['filesystem.adapter'] = function() {
-  return new League\Flysystem\Local\LocalFilesystemAdapter(__DIR__ . '/../uploads/');
+$settings['store.adapter'] = function() {
+  return new League\Flysystem\Local\LocalFilesystemAdapter(__DIR__ . '/../local/');
 };
+
+// The file name format for stored images, specified as a sprintf-compatible string with one %s argument
+$settings['store.imageFileNameFormat'] = 'uploads/%s.gz';
+
+// The file name format for stored images, specified as a sprintf-compatible string with one %s argument
+$settings['store.imageTransformCacheFileNameFormat'] = 'transforms/%s.gz';
+
+
 // AUTHORIZATION SETTINGS
 
 // The key used for signing JWT tokens, specified as a base64-encoded string

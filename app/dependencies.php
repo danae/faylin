@@ -3,8 +3,10 @@ use DI\ContainerBuilder;
 use League\Flysystem\Filesystem;
 use MongoDB\Client;
 use Psr\Container\ContainerInterface;
+use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\StreamFactoryInterface;
 use Slim\App;
+use Slim\Psr7\Factory\ResponseFactory;
 use Slim\Psr7\Factory\StreamFactory;
 use Slim\Views\Twig;
 use Slim\Views\TwigMiddleware;
@@ -26,13 +28,18 @@ use Danae\Faylin\App\Controllers\CollectionController;
 use Danae\Faylin\App\Controllers\FrontendController;
 use Danae\Faylin\App\Controllers\ImageController;
 use Danae\Faylin\App\Controllers\UserController;
+use Danae\Faylin\Implementation\Flysystem\ImageStore;
+use Danae\Faylin\Implementation\Flysystem\ImageTransformExecutor;
+use Danae\Faylin\Implementation\Flysystem\ImageTransformStore;
 use Danae\Faylin\Implementation\MongoDB\CollectionRepository;
 use Danae\Faylin\Implementation\MongoDB\ImageRepository;
 use Danae\Faylin\Implementation\MongoDB\UserRepository;
 use Danae\Faylin\Model\CollectionRepositoryInterface;
 use Danae\Faylin\Model\ImageRepositoryInterface;
+use Danae\Faylin\Model\ImageStoreInterface;
+use Danae\Faylin\Model\ImageTransformExecutorInterface;
+use Danae\Faylin\Model\ImageTransformStoreInterface;
 use Danae\Faylin\Model\UserRepositoryInterface;
-use Danae\Faylin\Store\Store;
 use Danae\Faylin\Utils\Snowflake;
 
 
@@ -50,14 +57,6 @@ return function(ContainerBuilder $containerBuilder)
     Client::class => DI\autowire()
       ->constructorParameter('uri', DI\get('mongodb.uri')),
 
-    // Store
-    Filesystem::class => DI\autowire()
-      ->constructor(DI\get('filesystem.adapter')),
-    StreamFactoryInterface::class => DI\autowire(StreamFactory::class),
-    Store::class => DI\autowire()
-      ->constructorParameter('supportedContentTypes', DI\get('uploads.supportedContentTypes'))
-      ->constructorParameter('supportedSize', DI\get('uploads.supportedSize')),
-
     // Serializer
     Serializer::class => DI\autowire()
       ->constructor([new DateTimeNormalizer(), new CustomNormalizer(), new PropertyNormalizer()], [new JsonEncoder()]),
@@ -72,6 +71,19 @@ return function(ContainerBuilder $containerBuilder)
     UserRepositoryInterface::class => DI\autowire(UserRepository::class)
       ->constructorParameter('databaseName', DI\get('mongodb.database'))
       ->constructorParameter('collectionName', DI\get('mongodb.collection.users')),
+
+    // Dependencies for stores
+    StreamFactoryInterface::class => DI\autowire(StreamFactory::class),
+    ResponseFactoryInterface::class => DI\autowire(ResponseFactory::class),
+
+    // Stores
+    Filesystem::class => DI\autowire()
+      ->constructor(DI\get('store.adapter')),
+    ImageStoreInterface::class => DI\autowire(ImageStore::class)
+      ->constructorParameter('fileNameFormat', DI\get('store.imageFileNameFormat')),
+    ImageTransformStoreInterface::class => DI\autowire(ImageTransformStore::class)
+      ->constructorParameter('fileNameFormat', DI\get('store.imageTransformCacheFileNameFormat')),
+    ImageTransformExecutorInterface::class => DI\autowire(ImageTransformExecutor::class),
 
     // Authorization
     JwtAuthorizationContext::class => DI\autowire()
@@ -98,6 +110,9 @@ return function(ContainerBuilder $containerBuilder)
     AuthorizationController::class => DI\autowire()
       ->property('collectionRepository', DI\get(CollectionRepositoryInterface::class))
       ->property('imageRepository', DI\get(ImageRepositoryInterface::class))
+      ->property('imageStore', DI\get(ImageStoreInterface::class))
+      ->property('imageTransformExecutor', DI\get(ImageTransformExecutorInterface::class))
+      ->property('imageTransformStore', DI\get(ImageTransformStoreInterface::class))
       ->property('userRepository', DI\get(UserRepositoryInterface::class))
       ->property('serializer', DI\get(Serializer::class))
       ->property('capabilities', DI\get(Capabilities::class))
@@ -105,24 +120,36 @@ return function(ContainerBuilder $containerBuilder)
     BackendController::class => DI\autowire()
       ->property('collectionRepository', DI\get(CollectionRepositoryInterface::class))
       ->property('imageRepository', DI\get(ImageRepositoryInterface::class))
+      ->property('imageStore', DI\get(ImageStoreInterface::class))
+      ->property('imageTransformExecutor', DI\get(ImageTransformExecutorInterface::class))
+      ->property('imageTransformStore', DI\get(ImageTransformStoreInterface::class))
       ->property('userRepository', DI\get(UserRepositoryInterface::class))
       ->property('serializer', DI\get(Serializer::class))
       ->property('capabilities', DI\get(Capabilities::class)),
     CollectionController::class => DI\autowire()
       ->property('collectionRepository', DI\get(CollectionRepositoryInterface::class))
       ->property('imageRepository', DI\get(ImageRepositoryInterface::class))
+      ->property('imageStore', DI\get(ImageStoreInterface::class))
+      ->property('imageTransformExecutor', DI\get(ImageTransformExecutorInterface::class))
+      ->property('imageTransformStore', DI\get(ImageTransformStoreInterface::class))
       ->property('userRepository', DI\get(UserRepositoryInterface::class))
       ->property('serializer', DI\get(Serializer::class))
       ->property('capabilities', DI\get(Capabilities::class)),
     ImageController::class => DI\autowire()
       ->property('collectionRepository', DI\get(CollectionRepositoryInterface::class))
       ->property('imageRepository', DI\get(ImageRepositoryInterface::class))
+      ->property('imageStore', DI\get(ImageStoreInterface::class))
+      ->property('imageTransformExecutor', DI\get(ImageTransformExecutorInterface::class))
+      ->property('imageTransformStore', DI\get(ImageTransformStoreInterface::class))
       ->property('userRepository', DI\get(UserRepositoryInterface::class))
       ->property('serializer', DI\get(Serializer::class))
       ->property('capabilities', DI\get(Capabilities::class)),
     UserController::class => DI\autowire()
       ->property('collectionRepository', DI\get(CollectionRepositoryInterface::class))
       ->property('imageRepository', DI\get(ImageRepositoryInterface::class))
+      ->property('imageStore', DI\get(ImageStoreInterface::class))
+      ->property('imageTransformExecutor', DI\get(ImageTransformExecutorInterface::class))
+      ->property('imageTransformStore', DI\get(ImageTransformStoreInterface::class))
       ->property('userRepository', DI\get(UserRepositoryInterface::class))
       ->property('serializer', DI\get(Serializer::class))
       ->property('capabilities', DI\get(Capabilities::class)),

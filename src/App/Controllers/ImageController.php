@@ -15,10 +15,8 @@ use Slim\Exception\HttpInternalServerErrorException;
 use Symfony\Component\Serializer\Serializer;
 
 use Danae\Faylin\Model\Image;
+use Danae\Faylin\Model\ImageTransform;
 use Danae\Faylin\Model\User;
-use Danae\Faylin\Store\ImageContentResponse;
-use Danae\Faylin\Store\ImageManipulation;
-use Danae\Faylin\Store\Store;
 use Danae\Faylin\Utils\Snowflake;
 use Danae\Faylin\Validator\Validator;
 
@@ -98,7 +96,6 @@ final class ImageController extends AbstractController
   {
     // Get the uploaded file
     $file = $this->getUploadedFile($request, 'file');
-    $fileStream = $file->getStream();
 
     // Create the image
     $image = new Image();
@@ -106,8 +103,8 @@ final class ImageController extends AbstractController
     $image->setUser($authUser);
     $image->setName($this->getUploadedFileNameWithoutExtension($file));
 
-    // Write the file stream
-    $this->writeFile($request, $image, $fileStream);
+    // Write the image to the store with the contents of the uploaded file
+    $this->imageStore->writeUploadedFile($image, $request, $file);
 
     // Create the image in the repository
     $this->imageRepository->insert($image);
@@ -126,17 +123,9 @@ final class ImageController extends AbstractController
 
     // Get the uploaded file
     $file = $this->getUploadedFile($request, 'file');
-    $fileStream = $file->getStream();
 
-    // Update the image
-    $image
-      ->setUpdatedAt($now)
-      ->setContentType($file->getClientMediaType())
-      ->setContentLength($file->getSize())
-      ->setChecksum(hash('sha256', $fileStream->getContents()));
-
-    // Write the file stream
-    $this->writeFile($request, $image, $fileStream);
+    // Write the image to the store with the contents of the uploaded file
+    $this->imageStore->writeUploadedFile($image, $request, $file);
 
     // Update the image in the repository
     $this->imageRepository->update($image->setUpdatedAt(new \DateTime()));
@@ -150,7 +139,7 @@ final class ImageController extends AbstractController
   public function downloadImage(Request $request, Response $response, Image $image, ?string $format = null)
   {
     // Sanitize the format
-    $format = $format !== null ? strtolower($format) : null;
+    $contentType = $format !== null ? $this->capabilities->convertContentFormatToType(strtolower($format)) : $image->getContentType();
 
     // Get and validate the query parameters
     $query = (new Validator())
@@ -159,27 +148,24 @@ final class ImageController extends AbstractController
       ->validate($request->getQueryParams(), ['allowExtraFields' => true])
       ->resultOrThrowBadRequest($request);
 
-    // Create the content stream
-    $stream = $this->readFile($request, $image, $query['transform'], $format);
-
-    // Check if the image needs to be manipulated
-    if ($query['transform'] !== null || ($ormat !== null && $format !== $this->store->convertContentTypeToFormat($image->getContentType())))
+    // Read the image from the store as a response
+    if ($query['transform'] !== null || $format !== $this->capabilities->convertContentTypeToFormat($image->getContentType()))
     {
-      // Respond with a manipulated image
-      return (new ImageManipulation($image, $stream, $query['transform'], $format, $this->store))
-        ->manipulate($request, $response)
-        ->respond($response, $query['dl']);
+      // Create the transform
+      $transform = new ImageTransform($query['transform'], $contentType);
+
+      // Return the transformed image response
+      return $this->imageTransformExecutor->transformResponse($image, $transform, $request, $query['dl']);
     }
     else
     {
-      // Respond with the image as-is
-      return (new ImageContentResponse($image, $stream, $image->getContentType(), $image->getContentLength(), $image->getChecksum()))
-        ->respond($response, $query['dl']);
+      // Return the image response
+      return $this->imageStore->readResponse($image, $request, $query['dl']);
     }
   }
 
 
-  // Return and validate an uploaded file from the request
+  // Return an uploaded file from the request
   private function getUploadedFile(Request $request, string $name): UploadedFile
   {
     // Get the file from the request
@@ -188,33 +174,6 @@ final class ImageController extends AbstractController
       throw new HttpBadRequestException($request, "No uploaded file has been provided");
 
     $file = $files[$name];
-
-    // Check if the upload succeeded
-    if ($file->getError() === UPLOAD_ERR_INI_SIZE)
-      throw new HttpException($request, "The size of the uploaded file is not supported based on the directive in the PHP configuration", 413);
-    else if ($file->getError() === UPLOAD_ERR_FORM_SIZE)
-      throw new HttpException($request, "The size of the uploaded file is not supported based on the directive in the upload form", 413);
-    else if ($file->getError() === UPLOAD_ERR_PARTIAL)
-      throw new HttpBadRequestException($request, "The uploaded file contains only partial data");
-    else if ($file->getError() === UPLOAD_ERR_NO_FILE)
-      throw new HttpBadRequestException($request, "The uploaded file does not contain any data");
-    else if ($file->getError() === UPLOAD_ERR_NO_TMP_DIR)
-      throw new HttpInternalServerErrorException($request, "Missing a temporary folder");
-    else if ($file->getError() === UPLOAD_ERR_CANT_WRITE)
-      throw new HttpInternalServerErrorException($request, "Failed to write the file to disk");
-    else if ($file->getError() === UPLOAD_ERR_EXTENSION)
-      throw new HttpInternalServerErrorException($request, "A PHP extension stopped the file upload");
-
-    // Check the type of the file
-    if (!array_key_exists($file->getClientMediaType(), $this->supportedContentTypes))
-      throw new HttpException($request, "The type of the uploaded file is not supported, the supported types are " . implode(', ', array_keys($this->supportedContentTypes)), 415);
-
-    // Check the size of the file
-    if ($file->getSize() > $this->supportedSize)
-      throw new HttpException($request, "The size of the uploaded file is not supported, the maximal supported size is {$this->supportedSize} bytes", 413);
-
-    // Return the file
-    return $file;
   }
 
   // Return the name of an uploaded file without the extension according to its content type
@@ -227,33 +186,5 @@ final class ImageController extends AbstractController
       return preg_replace("/\.{$contentTypeExtension}\$/i", "", $file->getClientFilename());
     else
       return $file->getClientFilename();
-  }
-
-  // Read a file stream from the image repository
-  private function readFile(Request $request, Image $image, ?string $transform = null, ?string $format = null): StreamInterface
-  {
-    try
-    {
-      // Read a stream containing the contents of the image
-      return $this->imageRepository->readFile($image);
-    }
-    catch (FilesystemException $ex)
-    {
-      throw new HttpInternalServerErrorException($request, "Could not read the file: {$ex->getMessage()}", $ex);
-    }
-  }
-
-  // Write a file stream to the image repository
-  private function writeFile(Request $request, Image $image, StreamInterface $stream): void
-  {
-    try
-    {
-      // Write the contents of the image from the stream
-      $this->imageRepository->writeFile($image, $stream);
-    }
-    catch (FilesystemException $ex)
-    {
-      throw new HttpInternalServerErrorException($request, "Could not write the file: {$ex->getMessage()}", $ex);
-    }
   }
 }
