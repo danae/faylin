@@ -64,6 +64,7 @@ final class HttpErrorHandler extends ErrorHandler
     else if ($this->displayErrorDetails)
     {
       $error['description'] = $exception->getMessage();
+      $error['exception'] = get_class($exception);
       $error['file'] = $exception->getFile();
       $error['line'] = $exception->getLine();
     }
