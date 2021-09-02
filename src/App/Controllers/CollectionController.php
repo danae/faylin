@@ -43,14 +43,12 @@ final class CollectionController extends AbstractController
       ->resultOrThrowBadRequest($request);
 
     // Create the collection
-    $collection = (new Collection())
-      ->setId($snowflake->generateBase64String())
-      ->setCreatedAt($now)
-      ->setUpdatedAt($now)
-      ->setUser($authUser)
-      ->setName($params['name'])
-      ->setDescription($params['description'])
-      ->setPublic($params['public']);
+    $collection = new Collection();
+    $collection->setId($snowflake->generateBase64String());
+    $collection->setUser($authUser);
+    $collection->setName($params['name']);
+    $collection->setDescription($params['description']);
+    $collection->setPublic($params['public']);
 
     // Create the collection in the repository
     $this->collectionRepository->insert($collection);
@@ -70,8 +68,6 @@ final class CollectionController extends AbstractController
   // Patch a collection and return the collection as a JSON response
   public function patchCollection(Request $request, Response $response, Collection $collection, User $authUser)
   {
-    $now = new \DateTime();
-
     // Check if the authorized user owns this collection
     if ($authUser->getId() !== $collection->getUser()->getId())
       throw new HttpForbiddenException($request, "The current authorized user is not allowed to modify the collection with id \"{$collection->getId()}\"");

@@ -47,8 +47,6 @@ final class ImageController extends AbstractController
   // Patch an image and return the image as a JSON response
   public function patchImage(Request $request, Response $response, Image $image, User $authUser)
   {
-    $now = new \DateTime();
-
     // Check if the authorized user owns this image
     if ($authUser->getId() !== $image->getUser()->getId())
       throw new HttpForbiddenException($request, "The current authorized user is not allowed to modify the image with id \"{$image->getId()}\"");
@@ -71,10 +69,9 @@ final class ImageController extends AbstractController
       $image->setPublic($params['public']);
     if ($params['nsfw'] !== null)
       $image->setNsfw($params['nsfw']);
-    $image->setUpdatedAt($now);
 
     // Update the image in the repository
-    $this->imageRepository->update($image);
+    $this->imageRepository->update($image->setUpdatedAt(new \DateTime()));
 
     // Return the response
     return $this->serialize($request, $response, $image);
@@ -106,15 +103,10 @@ final class ImageController extends AbstractController
     $fileStream = $file->getStream();
 
     // Create the image
-    $image = (new Image())
-      ->setId($snowflake->generateBase64String())
-      ->setCreatedAt($now)
-      ->setUpdatedAt($now)
-      ->setUser($authUser)
-      ->setName($this->getUploadedFileNameWithoutExtension($file))
-      ->setContentType($file->getClientMediaType())
-      ->setContentLength($file->getSize())
-      ->setChecksum(hash('sha256', $fileStream->getContents()));
+    $image = new Image();
+    $image->setId($snowflake->generateBase64String());
+    $image->setUser($authUser);
+    $image->setName($this->getUploadedFileNameWithoutExtension($file));
 
     // Write the file stream
     $this->writeFile($request, $image, $fileStream);
@@ -130,8 +122,6 @@ final class ImageController extends AbstractController
   // Replace an image
   public function replaceImage(Request $request, Response $response, Image $image, User $authUser)
   {
-    $now = new \DateTime();
-
     // Check if the image is owned by the authorized user
     if ($authUser->getId() !== $image->getUser()->getId())
       throw new HttpForbiddenException($request, "The current authorized user is not allowed to replace the image with id \"{$id->getId()}\"");
@@ -151,7 +141,7 @@ final class ImageController extends AbstractController
     $this->writeFile($request, $image, $fileStream);
 
     // Update the image in the repository
-    $this->imageRepository->update($image);
+    $this->imageRepository->update($image->setUpdatedAt(new \DateTime()));
 
     // Return the response
     return $this->serialize($request, $response, $image)

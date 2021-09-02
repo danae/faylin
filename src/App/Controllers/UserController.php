@@ -59,10 +59,9 @@ final class UserController extends AbstractController
       $user->setPublic($params['public']);
     if ($params['avatarId'] !== null)
       $user->setAvatarId($params['avatarId']);
-    $user->setUpdatedAt(new \DateTime());
 
     // Update the user in the repository
-    $this->userRepository->update($user);
+    $this->userRepository->update($user->setUpdatedAt(new \DateTime()));
 
     // Return the response
     return $this->serialize($request, $response, $user)
@@ -122,12 +121,10 @@ final class UserController extends AbstractController
       throw new HttpBadRequestException($request, "The password is incorrect");
 
     // Modify the user
-    $authUser
-      ->setEmail($params['email'])
-      ->setUpdatedAt(new \DateTime());
+    $authUser->setEmail($params['email']);
 
     // Update the user in the repository
-    $this->userRepository->update($authUser);
+    $this->userRepository->update($authUser->setUpdatedAt(new \DateTime()));
 
     // Return the response
     return $this->serialize($request, $response, $authUser)
@@ -149,12 +146,10 @@ final class UserController extends AbstractController
       throw new HttpBadRequestException($request, "The password is incorrect");
 
     // Modify the user
-    $authUser
-      ->hashPassword($params['password'])
-      ->setUpdatedAt(new \DateTime());
+    $authUser->hashPassword($params['password']);
 
     // Update the user in the repository
-    $this->userRepository->update($authUser);
+    $this->userRepository->update($authUser->setUpdatedAt(new \DateTime()));
 
     // Return the response
     return $this->serialize($request, $response, $authUser)
