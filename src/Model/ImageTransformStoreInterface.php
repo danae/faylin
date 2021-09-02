@@ -1,6 +1,7 @@
 <?php
 namespace Danae\Faylin\Model;
 
+use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\StreamInterface;
 
 
@@ -8,14 +9,14 @@ use Psr\Http\Message\StreamInterface;
 interface ImageTransformStoreInterface
 {
   // Return if a cached image transform exists
-  public function has(Image $image, ImageTransformInterface $transform): bool;
+  public function has(Image $image, ImageTransformInterface $transform, ServerRequestInterface $request): bool;
 
   // Read the contents of a cached image transform to a stream
-  public function read(Image $image, ImageTransformInterface $transform): StreamInterface;
+  public function read(Image $image, ImageTransformInterface $transform, ServerRequestInterface $request): StreamInterface;
 
   // Write the contents of a cached image transform from a stream
-  public function write(Image $image, ImageTransformInterface $transform, StreamInterface $stream): void;
+  public function write(Image $image, ImageTransformInterface $transform, ServerRequestInterface $request, StreamInterface $stream): void;
 
   // Delete the contents of a cached image transform
-  public function delete(Image $image, ImageTransformInterface $transform): void;
+  public function delete(Image $image, ImageTransformInterface $transform, ServerRequestInterface $request): void;
 }
