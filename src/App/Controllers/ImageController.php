@@ -173,7 +173,7 @@ final class ImageController extends AbstractController
     if (!isset($files[$name]))
       throw new HttpBadRequestException($request, "No uploaded file has been provided");
 
-    $file = $files[$name];
+    return $files[$name];
   }
 
   // Return the name of an uploaded file without the extension according to its content type

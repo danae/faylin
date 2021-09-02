@@ -162,7 +162,7 @@ final class ImageStore implements ImageStoreInterface
     $image->setChecksum($this->calculateChecksum($stream));
 
     // Write the file stream to the store
-    $this->write($image, $stream);
+    $this->write($image, $request, $stream);
   }
 
   // Delete the contents of an image

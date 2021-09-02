@@ -13,8 +13,8 @@ final class BackendController extends AbstractController
   {
     // Create the body
     $body = [
-      'supportedContentTypes' => $this->capabilities->supportedContentTypes,
-      'supportedSize' => $this->capabilities->supportedSize,
+      'supportedContentTypes' => $this->capabilities->getSupportedContentTypes(),
+      'supportedSize' => $this->capabilities->getSupportedSize(),
     ];
 
     // Return the response
