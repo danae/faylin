@@ -9,6 +9,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UploadedFileInterface;
+use Slim\Exception\HttpInternalServerErrorException;
 
 use Danae\Faylin\App\Capabilities;
 use Danae\Faylin\Model\Image;
