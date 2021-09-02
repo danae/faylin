@@ -223,7 +223,7 @@ final class ImageController extends AbstractController
   private function getUploadedFileNameWithoutExtension(UploadedFile $file)
   {
     $contentType = $file->getClientMediaType();
-    $contentTypeExtension = $this->supportedContentTypes[$contentType] ?? null;
+    $contentTypeExtension = $this->capabilities->convertContentTypeToFormat($contentType);
 
     if ($contentTypeExtension !== null)
       return preg_replace("/\.{$contentTypeExtension}\$/i", "", $file->getClientFilename());

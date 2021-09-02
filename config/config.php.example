@@ -8,6 +8,18 @@
 // The base path of the application
 $settings['app.basePath'] = '';
 
+// The supported upload MIME types with their default extensions, specified as an array of 'mimetype' => 'extensions' pairs
+$settings['app.supportedContentTypes'] = [
+  'image/png' => 'png',
+  'image/jpeg' => 'jpg',
+  'image/gif' => 'gif',
+  'image/webp' => 'webp',
+  'image/svg+xml' => 'svg',
+];
+
+// The supported upload size, specified as an int representing the size in bytes
+$settings['app.supportedSize'] = 5242880; // 5 MiB
+
 
 // DATABASE SETTINGS
 
@@ -53,18 +65,3 @@ $settings['snowflake.worker'] = 0;
 
 // The epoch for the snowflake generator, specfied as an int representing milliseconds since the Unix epoch
 $settings['snowflake.epoch'] = 1288834974657;
-
-
-// UPLOAD SETTINGS
-
-// The supported upload MIME types with their default extensions, specified as an array of 'mimetype' => 'extensions' pairs
-$settings['uploads.supportedContentTypes'] = [
-  'image/png' => 'png',
-  'image/jpeg' => 'jpg',
-  'image/gif' => 'gif',
-  'image/webp' => 'webp',
-  'image/svg+xml' => 'svg',
-];
-
-// The supported upload size, specified as an int representing the size in bytes
-$settings['uploads.supportedSize'] = 5242880; // 5 MiB

@@ -1,7 +1,7 @@
 <?php
 use DI\ContainerBuilder;
 use League\Flysystem\Filesystem;
-use MongoDB\Client as MongoDBClient;
+use MongoDB\Client;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\StreamFactoryInterface;
 use Slim\App;
@@ -16,6 +16,7 @@ use Symfony\Component\Serializer\Normalizer\PropertyNormalizer;
 use Twig\Loader\FilesystemLoader as TwigFilesystemLoader;
 use Twig\Loader\LoaderInterface as TwigLoaderInterface;
 
+use Danae\Faylin\App\Capabilities;
 use Danae\Faylin\App\Authorization\AuthorizationMiddleware;
 use Danae\Faylin\App\Authorization\Jwt\JwtAuthorizationContext;
 use Danae\Faylin\App\Authorization\Jwt\JwtAuthorizationStrategy;
@@ -40,8 +41,13 @@ return function(ContainerBuilder $containerBuilder)
 {
   // Add definitions to the container
   $containerBuilder->addDefinitions([
+    // Capabilities
+    Capabilities::class => DI\autowire()
+      ->constructorParameter('supportedContentTypes', DI\get('app.supportedContentTypes'))
+      ->constructorParameter('supportedSize', DI\get('app.supportedSize')),
+
     // MongoDB client
-    MongoDBClient::class => DI\autowire()
+    Client::class => DI\autowire()
       ->constructorParameter('uri', DI\get('mongodb.uri')),
 
     // Store
@@ -90,21 +96,15 @@ return function(ContainerBuilder $containerBuilder)
 
     // Backend controllers
     AuthorizationController::class => DI\autowire()
-      ->property('supportedContentTypes', DI\get('uploads.supportedContentTypes'))
-      ->property('supportedSize', DI\get('uploads.supportedSize'))
       ->property('authorizationContext', DI\get(JwtAuthorizationContext::class)),
     BackendController::class => DI\autowire()
-      ->property('supportedContentTypes', DI\get('uploads.supportedContentTypes'))
-      ->property('supportedSize', DI\get('uploads.supportedSize')),
+      ->property('capabilities', DI\get(Capabilities::class)),
     CollectionController::class => DI\autowire()
-      ->property('supportedContentTypes', DI\get('uploads.supportedContentTypes'))
-      ->property('supportedSize', DI\get('uploads.supportedSize')),
+      ->property('capabilities', DI\get(Capabilities::class)),
     ImageController::class => DI\autowire()
-      ->property('supportedContentTypes', DI\get('uploads.supportedContentTypes'))
-      ->property('supportedSize', DI\get('uploads.supportedSize')),
+      ->property('capabilities', DI\get(Capabilities::class)),
     UserController::class => DI\autowire()
-      ->property('supportedContentTypes', DI\get('uploads.supportedContentTypes'))
-      ->property('supportedSize', DI\get('uploads.supportedSize')),
+      ->property('capabilities', DI\get(Capabilities::class)),
 
     // Frontend controllers
     FrontendController::class => DI\autowire()

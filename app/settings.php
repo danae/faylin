@@ -10,6 +10,8 @@ return function(ContainerBuilder $containerBuilder)
 
   // Include the default settings
   $settings['app.basePath'] = '/';
+  $settings['app.supportedContentTypes'] = [];
+  $settings['app.supportedSize'] = 5242880; // 5 MiB
 
   $settings['mongodb.uri'] = 'mongodb://localhost:27017';
   $settings['mongodb.database'] = 'faylin';
@@ -25,8 +27,6 @@ return function(ContainerBuilder $containerBuilder)
   $settings['snowflake.worker'] = 0;
   $settings['snowflake.epoch'] = 1288834974657;
 
-  $settings['uploads.supportedContentTypes'] = [];
-  $settings['uploads.supportedSize'] = 5242880; // 5 MiB
 
 
   // Include the environment settings

@@ -87,10 +87,9 @@ final class CollectionController extends AbstractController
       $collection->setDescription($params['description']);
     if ($params['public'] !== null)
       $collection->setPublic($params['public']);
-    $collection->setUpdatedAt($now);
 
     // Update the collection in the repository
-    $this->collectionRepository->update($collection);
+    $this->collectionRepository->update($collection->setUpdatedAt(new \DateTime()));
 
     // Return the response
     return $this->serialize($request, $response, $collection);

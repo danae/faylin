@@ -33,11 +33,8 @@ abstract class AbstractController
   // The serializer to use with the controller
   protected $serializer;
 
-  // The supported content types for uploaded files
-  protected $supportedContentTypes;
-
-  // The supported size for uploaded files
-  protected $supportedSize;
+  // The capabilities to use with the controller
+  protected $capabilities;
 
 
   // Constructor
@@ -68,8 +65,7 @@ abstract class AbstractController
       'imageRepository' => $this->imageRepository,
       'userRepository' => $this->userRepository,
       'store' => $this->store,
-      'supportedContentTypes' => $this->supportedContentTypes,
-      'supportedSize' => $this->supportedSize,
+      'capabilities' => $this->capabilities,
       'json_encode_options' => JSON_PRETTY_PRINT | JSON_THROW_ON_ERROR,
     ];
   }
