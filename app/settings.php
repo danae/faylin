@@ -19,9 +19,9 @@ return function(ContainerBuilder $containerBuilder)
   $settings['mongodb.collection.images'] = 'images';
   $settings['mongodb.collection.users'] = 'users';
 
-  $settings['authorization.signKey'] = '';
 
   $settings['filesystem.adapter'] = null;
+  $settings['authorization.signKey'] = '';
 
   $settings['snowflake.datacenter'] = 0;
   $settings['snowflake.worker'] = 0;
@@ -29,7 +29,7 @@ return function(ContainerBuilder $containerBuilder)
 
 
 
-  // Include the environment settings
+  // Include the settings from the configuration file
   if (file_exists(__DIR__ . '/../config/config.php'))
     require(__DIR__ . '/../config/config.php');
 

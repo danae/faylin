@@ -40,10 +40,7 @@ $settings['mongodb.collection.images'] = 'images';
 $settings['mongodb.collection.users'] = 'users';
 
 
-// AUTHORIZATION SETTINGS
 
-// The key used for signing JWT tokens, specified as a base64-encoded string
-$settings['authorization.signKey'] = '<sign key>';
 
 
 // FILESYSTEM SETTINGS
@@ -53,6 +50,10 @@ $settings['authorization.signKey'] = '<sign key>';
 $settings['filesystem.adapter'] = function() {
   return new League\Flysystem\Local\LocalFilesystemAdapter(__DIR__ . '/../uploads/');
 };
+// AUTHORIZATION SETTINGS
+
+// The key used for signing JWT tokens, specified as a base64-encoded string
+$settings['authorization.signKey'] = '<sign key>';
 
 
 // SNOWFLAKE SETTINGS

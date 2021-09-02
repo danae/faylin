@@ -62,10 +62,6 @@ return function(ContainerBuilder $containerBuilder)
     Serializer::class => DI\autowire()
       ->constructor([new DateTimeNormalizer(), new CustomNormalizer(), new PropertyNormalizer()], [new JsonEncoder()]),
 
-    // Snowflake generator
-    Snowflake::class => DI\autowire()
-      ->constructor(DI\get('snowflake.datacenter'), DI\get('snowflake.worker'), DI\get('snowflake.epoch')),
-
     // Repositories
     CollectionRepositoryInterface::class => DI\autowire(CollectionRepository::class)
       ->constructorParameter('databaseName', DI\get('mongodb.database'))
@@ -86,6 +82,10 @@ return function(ContainerBuilder $containerBuilder)
       return new AuthorizationMiddleware([$container->get(JwtAuthorizationStrategy::class)]);
     },
 
+    // Snowflake generator
+    Snowflake::class => DI\autowire()
+      ->constructor(DI\get('snowflake.datacenter'), DI\get('snowflake.worker'), DI\get('snowflake.epoch')),
+
     // Twig
     TwigLoaderInterface::class => DI\autowire(TwigFilesystemLoader::class)
       ->constructorParameter('paths', '/'),
@@ -96,14 +96,35 @@ return function(ContainerBuilder $containerBuilder)
 
     // Backend controllers
     AuthorizationController::class => DI\autowire()
+      ->property('collectionRepository', DI\get(CollectionRepositoryInterface::class))
+      ->property('imageRepository', DI\get(ImageRepositoryInterface::class))
+      ->property('userRepository', DI\get(UserRepositoryInterface::class))
+      ->property('serializer', DI\get(Serializer::class))
+      ->property('capabilities', DI\get(Capabilities::class))
       ->property('authorizationContext', DI\get(JwtAuthorizationContext::class)),
     BackendController::class => DI\autowire()
+      ->property('collectionRepository', DI\get(CollectionRepositoryInterface::class))
+      ->property('imageRepository', DI\get(ImageRepositoryInterface::class))
+      ->property('userRepository', DI\get(UserRepositoryInterface::class))
+      ->property('serializer', DI\get(Serializer::class))
       ->property('capabilities', DI\get(Capabilities::class)),
     CollectionController::class => DI\autowire()
+      ->property('collectionRepository', DI\get(CollectionRepositoryInterface::class))
+      ->property('imageRepository', DI\get(ImageRepositoryInterface::class))
+      ->property('userRepository', DI\get(UserRepositoryInterface::class))
+      ->property('serializer', DI\get(Serializer::class))
       ->property('capabilities', DI\get(Capabilities::class)),
     ImageController::class => DI\autowire()
+      ->property('collectionRepository', DI\get(CollectionRepositoryInterface::class))
+      ->property('imageRepository', DI\get(ImageRepositoryInterface::class))
+      ->property('userRepository', DI\get(UserRepositoryInterface::class))
+      ->property('serializer', DI\get(Serializer::class))
       ->property('capabilities', DI\get(Capabilities::class)),
     UserController::class => DI\autowire()
+      ->property('collectionRepository', DI\get(CollectionRepositoryInterface::class))
+      ->property('imageRepository', DI\get(ImageRepositoryInterface::class))
+      ->property('userRepository', DI\get(UserRepositoryInterface::class))
+      ->property('serializer', DI\get(Serializer::class))
       ->property('capabilities', DI\get(Capabilities::class)),
 
     // Frontend controllers

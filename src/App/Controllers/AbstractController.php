@@ -1,17 +1,9 @@
 <?php
 namespace Danae\Faylin\App\Controllers;
 
-use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use Slim\Views\Twig;
-use Symfony\Component\Serializer\Serializer;
 
-use Danae\Faylin\Model\CollectionRepositoryInterface;
-use Danae\Faylin\Model\ImageRepositoryInterface;
-use Danae\Faylin\Model\UserRepositoryInterface;
-use Danae\Faylin\Store\Store;
-use Danae\Faylin\Utils\Snowflake;
 use Danae\Faylin\Validator\Validator;
 
 
@@ -36,16 +28,6 @@ abstract class AbstractController
   // The capabilities to use with the controller
   protected $capabilities;
 
-
-  // Constructor
-  public function __construct(CollectionRepositoryInterface $collectionRepository, ImageRepositoryInterface $imageRepository, UserRepositoryInterface $userRepository, Store $store, Serializer $serializer)
-  {
-    $this->collectionRepository = $collectionRepository;
-    $this->imageRepository = $imageRepository;
-    $this->userRepository = $userRepository;
-    $this->store = $store;
-    $this->serializer = $serializer;
-  }
 
   // Return a response with the JSON-serialized data
   protected function serialize(Request $request, Response $response, $data): Response
