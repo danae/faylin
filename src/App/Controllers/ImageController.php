@@ -96,8 +96,6 @@ final class ImageController extends AbstractController
   // Upload an image
   public function uploadImage(Request $request, Response $response, User $authUser, Snowflake $snowflake)
   {
-    $now = new \DateTime();
-
     // Get the uploaded file
     $file = $this->getUploadedFile($request, 'file');
     $fileStream = $file->getStream();
