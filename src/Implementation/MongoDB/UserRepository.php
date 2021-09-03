@@ -5,6 +5,7 @@ use MongoDB\Client;
 use MongoDB\BSON\UTCDateTime;
 use MongoDB\Model\BSONDocument;
 
+use Danae\Faylin\Model\Snowflake;
 use Danae\Faylin\Model\User;
 use Danae\Faylin\Model\UserRepositoryInterface;
 
@@ -104,7 +105,7 @@ final class UserRepository implements UserRepositoryInterface
   private function normalize(User $user): BSONDocument
   {
     return new BSONDocument([
-      '_id' => $user->getId(),
+      '_id' => $user->getId()->toBase64(),
       'name' => $user->getName(),
       'createdAt' => new UTCDateTime($user->getCreatedAt()),
       'updatedAt' => new UTCDateTime($user->getUpdatedAt()),
@@ -119,7 +120,7 @@ final class UserRepository implements UserRepositoryInterface
   private function denormalize(BSONDocument $document): User
   {
     return (new User())
-      ->setId($document['_id'])
+      ->setId(Snowflake::fromBase64($document['_id']))
       ->setName($document['name'])
       ->setCreatedAt($document['createdAt']->toDateTime())
       ->setUpdatedAt($document['updatedAt']->toDateTime())

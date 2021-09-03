@@ -39,8 +39,8 @@ use Danae\Faylin\Model\ImageRepositoryInterface;
 use Danae\Faylin\Model\ImageStoreInterface;
 use Danae\Faylin\Model\ImageTransformExecutorInterface;
 use Danae\Faylin\Model\ImageTransformStoreInterface;
+use Danae\Faylin\Model\SnowflakeGenerator;
 use Danae\Faylin\Model\UserRepositoryInterface;
-use Danae\Faylin\Utils\Snowflake;
 
 
 // Return a function that adds dependencies to the container
@@ -95,8 +95,10 @@ return function(ContainerBuilder $containerBuilder)
     },
 
     // Snowflake generator
-    Snowflake::class => DI\autowire()
-      ->constructor(DI\get('snowflake.datacenter'), DI\get('snowflake.worker'), DI\get('snowflake.epoch')),
+    SnowflakeGenerator::class => DI\autowire()
+      ->property('datacenterId', DI\get('snowflake.datacenter'))
+      ->property('workerId', DI\get('snowflake.worker'))
+      ->property('epoch', DI\get('snowflake.epoch')),
 
     // Twig
     TwigLoaderInterface::class => DI\autowire(TwigFilesystemLoader::class)

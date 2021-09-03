@@ -16,8 +16,8 @@ use Symfony\Component\Serializer\Serializer;
 
 use Danae\Faylin\Model\Image;
 use Danae\Faylin\Model\ImageTransform;
+use Danae\Faylin\Model\SnowflakeGenerator;
 use Danae\Faylin\Model\User;
-use Danae\Faylin\Utils\Snowflake;
 use Danae\Faylin\Validator\Validator;
 
 
@@ -92,14 +92,14 @@ final class ImageController extends AbstractController
   }
 
   // Upload an image
-  public function uploadImage(Request $request, Response $response, User $authUser, Snowflake $snowflake)
+  public function uploadImage(Request $request, Response $response, User $authUser, SnowflakeGenerator $snowflakeGenerator)
   {
     // Get the uploaded file
     $file = $this->getUploadedFile($request, 'file');
 
     // Create the image
     $image = new Image();
-    $image->setId($snowflake->generateBase64String());
+    $image->generateId($snowflakeGenerator);
     $image->setUser($authUser);
     $image->setName($this->getUploadedFileNameWithoutExtension($file));
 

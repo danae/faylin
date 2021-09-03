@@ -9,9 +9,9 @@ use Symfony\Component\Serializer\Serializer;
 
 use Danae\Faylin\Model\Collection;
 use Danae\Faylin\Model\Image;
+use Danae\Faylin\Model\SnowflakeGenerator;
 use Danae\Faylin\Model\User;
 use Danae\Faylin\Utils\ArrayUtils;
-use Danae\Faylin\Utils\Snowflake;
 use Danae\Faylin\Validator\Validator;
 
 
@@ -30,7 +30,7 @@ final class CollectionController extends AbstractController
   }
 
   // Post a new collection and return the collection as a JSON response
-  public function postCollection(Request $request, Response $response, User $authUser, Snowflake $snowflake)
+  public function postCollection(Request $request, Response $response, User $authUser, SnowflakeGenerator $snowflakeGenerator)
   {
     $now = new \DateTime();
 
@@ -44,7 +44,7 @@ final class CollectionController extends AbstractController
 
     // Create the collection
     $collection = new Collection();
-    $collection->setId($snowflake->generateBase64String());
+    $collection->generateId($snowflakeGenerator);
     $collection->setUser($authUser);
     $collection->setName($params['name']);
     $collection->setDescription($params['description']);

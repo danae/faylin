@@ -10,6 +10,7 @@ use Danae\Faylin\Model\Collection;
 use Danae\Faylin\Model\CollectionRepositoryInterface;
 use Danae\Faylin\Model\Image;
 use Danae\Faylin\Model\ImageRepositoryInterface;
+use Danae\Faylin\Model\Snowflake;
 use Danae\Faylin\Model\User;
 use Danae\Faylin\Model\UserRepositoryInterface;
 
@@ -102,7 +103,7 @@ final class CollectionRepository implements CollectionRepositoryInterface
   private function normalize(Collection $collection): BSONDocument
   {
     return new BSONDocument([
-      '_id' => $collection->getId(),
+      '_id' => $collection->getId()->toBase64(),
       'name' => $collection->getName(),
       'createdAt' => new UTCDateTime($collection->getCreatedAt()),
       'updatedAt' => new UTCDateTime($collection->getUpdatedAt()),
@@ -117,7 +118,7 @@ final class CollectionRepository implements CollectionRepositoryInterface
   private function denormalize(BSONDocument $document): Collection
   {
     return (new Collection())
-      ->setId($document['_id'])
+      ->setId(Snowflake::fromBase64($document['_id']))
       ->setName($document['name'])
       ->setCreatedAt($document['createdAt']->toDateTime())
       ->setUpdatedAt($document['updatedAt']->toDateTime())

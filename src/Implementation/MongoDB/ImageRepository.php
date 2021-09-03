@@ -10,6 +10,7 @@ use Psr\Http\Message\StreamInterface;
 
 use Danae\Faylin\Model\Image;
 use Danae\Faylin\Model\ImageRepositoryInterface;
+use Danae\Faylin\Model\Snowflake;
 use Danae\Faylin\Model\User;
 use Danae\Faylin\Model\UserRepositoryInterface;
 
@@ -139,7 +140,7 @@ final class ImageRepository implements ImageRepositoryInterface
   private function normalize(Image $image): BSONDocument
   {
     return new BSONDocument([
-      '_id' => $image->getId(),
+      '_id' => $image->getId()->toBase64(),
       'name' => $image->getName(),
       'createdAt' => new UTCDateTime($image->getCreatedAt()),
       'updatedAt' => new UTCDateTime($image->getUpdatedAt()),
@@ -157,7 +158,7 @@ final class ImageRepository implements ImageRepositoryInterface
   private function denormalize(BSONDocument $document): Image
   {
     return (new Image())
-      ->setId($document['_id'])
+      ->setId(Snowflake::fromBase64($document['_id']))
       ->setName($document['name'])
       ->setCreatedAt($document['createdAt']->toDateTime())
       ->setUpdatedAt($document['updatedAt']->toDateTime())

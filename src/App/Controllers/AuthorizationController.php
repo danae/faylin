@@ -7,7 +7,7 @@ use Slim\Exception\HttpBadRequestException;
 
 use Danae\Faylin\Model\User;
 use Danae\Faylin\Model\Authorization\Token;
-use Danae\Faylin\Utils\Snowflake;
+use Danae\Faylin\Model\SnowflakeGenerator;
 use Danae\Faylin\Validator\Validator;
 
 
@@ -19,7 +19,7 @@ final class AuthorizationController extends AbstractController
 
 
   // Request an access token
-  public function token(Request $request, Response $response, Snowflake $snowflake)
+  public function token(Request $request, Response $response, SnowflakeGenerator $snowflakeGenerator)
   {
     // Get and validate the parameters
     $params = (new Validator())
@@ -34,11 +34,10 @@ final class AuthorizationController extends AbstractController
       throw new HttpBadRequestException($request, "The combination of username and password is incorrect");
 
     // Create a token
-    $token = (new Token())
-      ->setId($snowflake->generateBase64String())
-      ->setUser($user)
-      ->setCreatedAt(new \DateTime())
-      ->setExpiresAt(new \DateTime('60 minutes'));
+    $token = new Token();
+    $token->generateId($snowflakeGenerator);
+    $token->setUser($user);
+    $token->setExpiresAt(new \DateTime('60 minutes'));;
 
     // Encode the token
     $token = $this->authorizationContext->encode($token);
