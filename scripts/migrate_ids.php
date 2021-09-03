@@ -98,14 +98,14 @@ function main(array $args)
 
       $imageDb->insertOne($image);
       $imageDb->deleteOne(['_id' => $previousId]);
+    }
 
-      // Check if the contents of the image exists
-      if (!$filesystem->fileExists(sprintf($imageFileNameFormat, $image['_id'])))
-      {
-        printf("Migrating contents of image '%s' with name '%s...\n'", $image['_id'], $image['name']);
-        $contents = $filesystem->read(sprintf($imageFileNameFormat, $previousId));
-        $filesystem->write(sprintf($imageFileNameFormat, $image['_id']), $contents);
-      }
+    // Check if the contents of the image exists
+    if (!$filesystem->fileExists(sprintf($imageFileNameFormat, $image['_id'])))
+    {
+      printf("Migrating contents of image '%s' with name '%s...\n'", $image['_id'], $image['name']);
+      $contents = $filesystem->read(sprintf($imageFileNameFormat, $previousId));
+      $filesystem->write(sprintf($imageFileNameFormat, $image['_id']), $contents);
     }
   }
 
