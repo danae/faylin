@@ -14,18 +14,19 @@ export default class User
   update(data)
   {
     this.id = data.id;
-    this.email = data.email;
     this.name = data.name;
+    this.createdAt = data.createdAt instanceof Date ? data.createdAt : new Date(data.createdAt);
+    this.updatedAt = data.updatedAt instanceof Date ? data.updatedAt : new Date(data.updatedAt);
+    this.email = data.email;
+    this.title = data.title;
     this.description = data.description;
     this.public = data.public;
     this.avatar = data.avatar;
-    this.createdAt = data.createdAt instanceof Date ? data.createdAt : new Date(data.createdAt);
-    this.updatedAt = data.updatedAt instanceof Date ? data.updatedAt : new Date(data.updatedAt);
   }
 
-  // Return the string representation of the image
+  // Return the string representation of the user
   toString()
   {
-    return this.name;
+    return this.title;
   }
 }

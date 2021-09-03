@@ -15,7 +15,7 @@ export default {
     patchCollection: async function() {
       // Send a patch request
       const collection = await this.$root.client.patchCollection(this.collection.id, {
-        name: this.collection.name,
+        title: this.collection.title,
         description: this.collection.description,
         public: this.collection.public,
       });
@@ -40,8 +40,8 @@ export default {
             <p class="panel-heading">Edit collection</p>
 
             <div class="panel-block is-form">
-              <b-field label="Name" label-for="name" custom-class="is-small">
-                <b-input v-model="collection.name" type="text" name="name"></b-input>
+              <b-field label="Title" label-for="title" custom-class="is-small">
+                <b-input v-model="collection.title" type="text" name="title"></b-input>
               </b-field>
 
               <b-field label="Description" label-for="description" custom-class="is-small">

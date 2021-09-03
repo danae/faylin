@@ -28,7 +28,7 @@ export default {
     // Share the image
     shareImage: async function() {
       // Share the image
-      await navigator.share({url: this.$route.fullPath, title: this.image.name, text: this.image.description});
+      await navigator.share({url: this.$route.fullPath, title: this.image.title, text: this.image.description});
     },
 
     // Add the image to an existing collection
@@ -37,16 +37,16 @@ export default {
       await this.$root.client.putCollectionImage(collection.id, this.image.id);
 
       // Display a success message
-      this.$displayMessage(`Image added succesfully to collection ${collection.name}`);
+      this.$displayMessage(`Image added succesfully to collection ${collection.title}`);
 
       // Redirect to the collection page
       this.$router.push({name: 'collection', params: {collectionId: collection.id}});
     },
 
     // Add the image to a new collection
-    addImageToNewCollection: async function(newCollectionName) {
+    addImageToNewCollection: async function(newCollectionTitle) {
       // Create a new collection
-      let collection = await this.$root.client.postCollection({name: newCollectionName});
+      let collection = await this.$root.client.postCollection({title: newCollectionTitlenewCollectionTitle});
 
       // Add the image to the collection
       this.addImageToCollection(collection);
@@ -76,7 +76,7 @@ export default {
 
     // Copy the image as Markdown to the clipboard
     copyImageMarkdown: async function() {
-      await this.copyImageLink(image => `![${image.name}](${image.downloadUrl})`);
+      await this.copyImageLink(image => `![${image.title}](${image.downloadUrl})`);
     },
 
     // Copy the image as BBCode to the clipboard
@@ -86,7 +86,7 @@ export default {
 
     // Copy the image as HTML to the clipboard
     copyImageHTML: async function() {
-      await this.copyImageLink(image => `<img src="${image.downloadUrl}" alt="${image.name}">`);
+      await this.copyImageLink(image => `<img src="${image.downloadUrl}" alt="${image.title}">`);
     },
 
     // Delete the image
@@ -98,7 +98,7 @@ export default {
         icon: 'trash-alt',
         iconPack: 'fas',
         trapFocus: true,
-        message: `Are you sure you want to delete the image <b>${this.image.name}</b>? All associated data and links to the image will stop working forever, which is a long time!`,
+        message: `Are you sure you want to delete the image <b>${this.image.title}</b>? All associated data and links to the image will stop working forever, which is a long time!`,
         confirmText: 'Delete',
         cancelText: 'Cancel',
         onConfirm: await this.deleteImageConfirmed.bind(this),
@@ -125,7 +125,7 @@ export default {
 
   // The template for the component
   template: `
-    <div class="image-details">      
+    <div class="image-details">
       <template v-if="image">
         <div class="container">
           <section class="section">
@@ -144,7 +144,7 @@ export default {
                 </template>
 
                 <template v-else>
-                  <h2 class="image-details-name mb-0">{{ image.name }}</h2>
+                  <h2 class="image-details-name mb-0">{{ image.title }}</h2>
                   <p class="image-details-user-name">by <router-link :to="{name: 'user', params: {userId: image.user.id }}">{{ image.user.name }}</router-link></p>
 
                   <template v-if="image.description">

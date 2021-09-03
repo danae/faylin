@@ -16,17 +16,18 @@ export default class Collection
   {
     this.id = data.id;
     this.name = data.name;
+    this.createdAt = data.createdAt instanceof Date ? data.createdAt : new Date(data.createdAt);
+    this.updatedAt = data.updatedAt instanceof Date ? data.updatedAt : new Date(data.updatedAt);
+    this.user = data.user instanceof User ? data.user : new User(data.user);
+    this.title = data.title;
     this.description = data.description;
     this.public = data.public;
     this.images = data.images.map(image => image instanceof Image ? image : new Image(image));
-    this.user = data.user instanceof User ? data.user : new User(data.user);
-    this.createdAt = data.createdAt instanceof Date ? data.createdAt : new Date(data.createdAt);
-    this.updatedAt = data.updatedAt instanceof Date ? data.updatedAt : new Date(data.updatedAt);
   }
 
   // Return the string representation of the image
   toString()
   {
-    return this.name;
+    return this.title;
   }
 }

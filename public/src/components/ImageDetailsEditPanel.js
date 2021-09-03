@@ -37,7 +37,7 @@ export default {
     patchImage: async function() {
       // Send a patch request
       const image = await this.$root.client.patchImage(this.image.id, {
-        name: this.image.name,
+        title: this.image.title,
         description: this.image.description,
         public: this.image.public,
         nsfw: this.image.nsfw,
@@ -94,8 +94,8 @@ export default {
             <p class="panel-heading">Edit image</p>
 
             <div class="panel-block is-form">
-              <b-field label="Name" label-for="name" custom-class="is-small">
-                <b-input v-model="image.name" type="text" name="name"></b-input>
+              <b-field label="Title" label-for="title" custom-class="is-small">
+                <b-input v-model="image.title" type="text" name="title"></b-input>
               </b-field>
 
               <b-field label="Description" label-for="description" custom-class="is-small">

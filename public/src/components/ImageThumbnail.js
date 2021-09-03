@@ -15,11 +15,11 @@ export default {
     <div class="image-thumbnail content">
       <template v-if="image">
         <router-link :to="{name: 'image', params: {imageId: image.id}}">
-          <b-image class="image-thumbnail-image" :src="image.thumbnailUrl" :alt="image.name"></b-image>
+          <b-image class="image-thumbnail-image" :src="image.thumbnailUrl" :alt="image.title"></b-image>
         </router-link>
 
         <template v-if="displayName">
-          <h4 class="image-thumbnail-name mb-0">{{ image.name }}</h4>
+          <h4 class="image-thumbnail-name mb-0">{{ image.title }}</h4>
         </template>
 
         <template v-if="displayUserName">

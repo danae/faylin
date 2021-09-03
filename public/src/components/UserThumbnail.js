@@ -28,7 +28,7 @@ export default {
       <template v-if="user">
         <div class="box is-primary">
           <router-link :to="{name: 'user', params: {userId: user.id}}">
-            <h4 class="user-thumbnail-name mb-0">{{ user.name }}</h4>
+            <h4 class="user-thumbnail-name mb-0">{{ user.title }}</h4>
           </router-link>
 
           <template v-if="userImages">

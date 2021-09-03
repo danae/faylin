@@ -39,7 +39,7 @@ export default {
       <template v-if="user">
         <div class="hero is-primary mb-4">
           <div class="hero-body container">
-            <p class="title mb-0">{{ user.name }}</p>
+            <p class="title mb-0">{{ user.title }}</p>
           </div>
         </div>
 

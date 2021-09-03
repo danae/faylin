@@ -21,8 +21,8 @@ export default {
   // The data for the component
   data: function() {
     return {
-      // The name for a new collection to add the image to
-      newCollectionName: "",
+      // The title for a new collection to add the image to
+      newCollectionTitle: "",
     };
   },
 
@@ -49,7 +49,7 @@ export default {
                 <template #default>
                   <template v-if="collections && collections.length > 0">
                     <b-dropdown-item v-for="collection in collections" :key="collection.id" @click="$emit('add', collection)">
-                      {{ collection.name }}
+                      {{ collection.title }}
                     </b-dropdown-item>
 
                     <hr class="dropdown-divider">
@@ -57,8 +57,8 @@ export default {
 
                   <b-dropdown-item custom>
                     <form @submit.prevent="$emit('add-new', newCollectionName)">
-                        <b-field label="New collection" label-for="name" custom-class="is-small">
-                          <b-input v-model="newCollectionName" expanded type="text" name="name"></b-input>
+                        <b-field label="New collection" label-for="titletitle" custom-class="is-small">
+                          <b-input v-model="newCollectionTitle" expanded type="text" name="title"></b-input>
 
                           <p class="control">
                             <b-button type="is-primary" icon-left="plus" icon-pack="fas" @click="$emit('add-new', newCollectionName)"></b-button>

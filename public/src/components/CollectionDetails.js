@@ -37,7 +37,7 @@ export default {
         icon: 'trash-alt',
         iconPack: 'fas',
         trapFocus: true,
-        message: `Are you sure you want to delete the collection <b>${this.collection.name}</b>? All associated data and links to the collection will stop working forever, which is a long time!`,
+        message: `Are you sure you want to delete the collection <b>${this.collection.title}</b>? All associated data and links to the collection will stop working forever, which is a long time!`,
         confirmText: 'Delete',
         cancelText: 'Cancel',
         onConfirm: await this.deleteCollectionConfirmed.bind(this),
@@ -81,7 +81,7 @@ export default {
                 </template>
 
                 <template v-else>
-                  <h2 class="image-details-name mb-0">{{ collection.name }}</h2>
+                  <h2 class="image-details-name mb-0">{{ collection.title }}</h2>
                   <p class="image-details-user-name">by <router-link :to="{name: 'user', params: {userId: collection.user.id }}">{{ collection.user.name }}</router-link></p>
 
                   <template v-if="collection.description">
