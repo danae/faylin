@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html prefix="og: http://ogp.me/ns#">
   <head>
     <!-- Meta-tags -->
     <meta charset="utf-8">
@@ -18,8 +18,19 @@
     <link rel="icon" href="{{ base_path() }}/static/images/icon-256px.png" sizes="256x256" type="image/png">
     <link rel="icon" href="{{ base_path() }}/static/images/icon-512px.png" sizes="512x512" type="image/png">
 
+    <!-- OpenGraph tags -->
+    {% if opengraph %}
+      {% for property, content in opengraph %}
+        <meta property="{{ property }}" content="{{ content }}">
+      {% endfor %}
+    {% endif %}
+
     <!-- Title -->
-    <title>fayl.in</title>
+    {% if title %}
+      <title>{{title}} | fayl.in</title>
+    {% else %}
+      <title>fayl.in</title>
+    {% endif %}
   </head>
 
   <body>
