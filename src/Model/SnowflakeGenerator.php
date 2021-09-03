@@ -13,7 +13,7 @@ final class SnowflakeGenerator
   private $datacenterId;
 
   // The worker identifier for generated snowflakes
-  private $workedId;
+  private $workerId;
 
   // The epoch for generated snowflakes
   private $epoch;
@@ -27,11 +27,11 @@ final class SnowflakeGenerator
     $this->epoch = self::DEFAULT_EPOCH;
 
     if ($datacenterId !== null)
-      $this->setDatacenterId($datacenterId):
+      $this->setDatacenterId($datacenterId);
     if ($workerId !== null)
-      $this->setWorkerId($workerId):
+      $this->setWorkerId($workerId);
     if ($epoch !== null)
-      $this->setEpoch($epoch):
+      $this->setEpoch($epoch);
   }
 
   // Get the datacenter identifier for generated snowflakes

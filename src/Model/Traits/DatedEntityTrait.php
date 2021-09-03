@@ -5,7 +5,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 
 
 // Trait that defines an entity that had created and updated dates
-trait EntityTrait
+trait DatedEntityTrait
 {
   // The date when the entity was created
   private $createdAt;

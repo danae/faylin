@@ -17,6 +17,7 @@ use Danae\Faylin\Model\Traits\UserOwnedEntityTrait;
 final class Token implements NormalizableInterface, DenormalizableInterface
 {
   use EntityTrait;
+  use DatedEntityTrait;
   use UserOwnedEntityTrait;
 
 
@@ -28,8 +29,9 @@ final class Token implements NormalizableInterface, DenormalizableInterface
   public function __construct()
   {
     $this->id = null;
-    $this->userId = null;
     $this->createdAt = new \DateTime();
+    $this->updatedAt = new \DateTime();
+    $this->user = null;
     $this->expiresAt = null;
   }
 
@@ -53,7 +55,7 @@ final class Token implements NormalizableInterface, DenormalizableInterface
   {
     $data = [];
 
-    $data['jti'] = $this->getId();
+    $data['jti'] = $this->getId()->toString();
     $data['sub'] = $this->getUser()->getId();
 
     if ($this->getCreatedAt() !== null)
@@ -70,7 +72,7 @@ final class Token implements NormalizableInterface, DenormalizableInterface
     if (!is_array($data))
       throw new NotNormalizableValueException("Data must be an array");
 
-    $this->setId($data['jti']);
+    $this->setId(Snowflake::fromString($data['jti']));
     $this->setUser($context['userRepository']->find($data['sub']));
 
     if (isset($data['iat']))

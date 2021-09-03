@@ -127,7 +127,7 @@ final class Snowflake
   public static function fromBase64(string $snowflake): Snowflake
   {
     $snowflake = base64_decode(str_pad(strtr($snowflake, '-_', '+/'), strlen($snowflake) % 4, '=', STR_PAD_RIGHT));
-    $snowflake = array_shift(unpack('J*', self::urlDecode($id)));
+    $snowflake = array_shift(unpack('J*', $snowflake));
     return new Snowflake($snowflake);
   }
 
