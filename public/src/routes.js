@@ -5,6 +5,7 @@ import Login from './routes/Login.js';
 import Logout from './routes/Logout.js';
 import Settings from './routes/Settings.js';
 import UserDetails from './routes/UserDetails.js';
+import UserDetailsShort from './routes/UserDetailsShort.js';
 
 
 // Create the routes
@@ -16,6 +17,7 @@ const routes = [
   {path: '/c/:collectionId', name: 'collection', component: CollectionDetails},
   {path: '/i/:imageId', name: 'image', component: ImageDetails},
   {path: '/u/:userId', name: 'user', component: UserDetails},
+  {path: '/~:userName', name: 'userShort', component: UserDetailsShort},
 ];
 
 // Export the routes

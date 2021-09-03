@@ -203,13 +203,23 @@ return function(App $app)
     $group->get('/logout', [FrontendController::class, 'render']);
     $group->get('/settings', [FrontendController::class, 'render']);
 
+    // Render a collection
     $group->get('/c/{collectionId:[0-9]+}', [FrontendController::class, 'renderCollection'])
       ->add(CollectionResolverMiddleware::class)
       ->setName('frontend.collection');
+
+    // Render an image
     $group->get('/i/{imageId:[0-9]+}', [FrontendController::class, 'renderImage'])
       ->add(ImageResolverMiddleware::class)
       ->setName('frontend.image');
+
+    // Render a user
     $group->get('/u/{userId:[0-9]+}', [FrontendController::class, 'renderUser'])
+      ->add(UserResolverMiddleware::class)
+      ->setName('frontend.user');
+
+    // Render a user with a short user name URL
+    $group->get('/~{userName:[A-Za-z0-9-_]+}', [FrontendController::class, 'renderUser'])
       ->add(UserResolverMiddleware::class)
       ->setName('frontend.user');
 
