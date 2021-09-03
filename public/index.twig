@@ -39,13 +39,6 @@
 
         <!-- Navbar menu -->
         <template #end>
-          <b-navbar-item tag="router-link" :to="{name: 'userList'}" key="browse">
-            <span class="icon-text">
-              <b-icon pack="fas" icon="folder-open"></b-icon>
-              <span>Browse</span>
-            </span>
-          </b-navbar-item>
-
           <template v-if="clientLoggedIn">
             <b-navbar-item tag="router-link" :to="{name: 'user', params: {userId: clientUser.id}}" key="profile">
               <span class="icon-text">
