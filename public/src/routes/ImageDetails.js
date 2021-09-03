@@ -26,7 +26,7 @@ export default {
 
     // Get the image
     this.image = await this.$root.client.getImage(this.$route.params.imageId);
-    document.title = `${this.image.name} by ${this.image.user.name} – fayl.in`;
+    document.title = `${this.image.title} by ${this.image.user.title} – fayl.in`;
 
     // Get the collection the image can be added to
     if (this.$root.clientUser)

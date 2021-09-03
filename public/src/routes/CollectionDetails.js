@@ -23,7 +23,7 @@ export default {
 
     // Get the collection
     this.collection = await this.$root.client.getCollection(this.$route.params.collectionId);
-    document.title = `${this.collection.name} – fayl.in`;
+    document.title = `${this.collection.title} by ${this.collection.user.title} – fayl.in`;
   },
 
   // The template for the route

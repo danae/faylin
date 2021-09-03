@@ -15,7 +15,7 @@ export default {
 
     // Get the user
     this.user = await this.$root.client.getUser(this.$route.params.userId);
-    document.title = `${this.user.name} – fayl.in`;
+    document.title = `${this.user.title} – fayl.in`;
   },
 
   // The template for the route
