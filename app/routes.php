@@ -202,10 +202,16 @@ return function(App $app)
     $group->get('/login', [FrontendController::class, 'render']);
     $group->get('/logout', [FrontendController::class, 'render']);
     $group->get('/settings', [FrontendController::class, 'render']);
-    $group->get('/images/{id:[0-9]+}', [FrontendController::class, 'render']);
-    $group->get('/collections/{id:[0-9]+}', [FrontendController::class, 'render']);
-    $group->get('/users', [FrontendController::class, 'render']);
-    $group->get('/users/{id:[0-9]+}', [FrontendController::class, 'render']);
+
+    $group->get('/c/{collectionId:[0-9]+}', [FrontendController::class, 'renderCollection'])
+      ->add(CollectionResolverMiddleware::class)
+      ->setName('frontend.collection');
+    $group->get('/i/{imageId:[0-9]+}', [FrontendController::class, 'renderImage'])
+      ->add(ImageResolverMiddleware::class)
+      ->setName('frontend.image');
+    $group->get('/u/{userId:[0-9]+}', [FrontendController::class, 'renderUser'])
+      ->add(UserResolverMiddleware::class)
+      ->setName('frontend.user');
 
     // Download the contents of an image
     $group->get('/{imageName:[A-Za-z0-9-_]+}[.{format}]', [ImageController::class, 'downloadImage'])
