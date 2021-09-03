@@ -5,6 +5,7 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
+use Slim\Exception\HttpBadRequestException;
 use Slim\Exception\HttpNotFoundException;
 
 use Danae\Faylin\Model\ImageRepositoryInterface;
@@ -30,16 +31,36 @@ final class ImageResolverMiddleware implements MiddlewareInterface
   // Process the middleware
   public function process(Request $request, RequestHandler $handler): Response
   {
+    // Get the route
+    $route = $this->getRoute($request);
+
     // Get the identifier from the route
-    $id = $this->getRoute($request)->getArgument('imageId');
+    if (($id = $route->getArgument('imageId')) !== null)
+    {
+      // Get the image from the repository
+      $image = $this->imageRepository->find($id);
+      if ($image == null)
+        throw new HttpNotFoundException($request, "An image with id \"{$id}\" coud not be found");
 
-    // Get the image from the repository
-    $image = $this->imageRepository->find($id);
-    if ($image == null)
-      throw new HttpNotFoundException($request, "An image with id \"{$id}\" coud not be found");
+      // Store the image as an attribute
+      $request = $request->withAttribute('image', $image);
+    }
 
-    // Store the image as an attribute
-    $request = $request->withAttribute('image', $image);
+    // Get the name from the route
+    else if (($name = $route->getArgument('imageName')) !== null)
+    {
+      // Get the image from the repository
+      $image = $this->imageRepository->findBy(['name' => $name]);
+      if ($image == null)
+        throw new HttpNotFoundException($request, "An image with name \"{$name}\" coud not be found");
+
+      // Store the image as an attribute
+      $request = $request->withAttribute('image', $image);
+    }
+
+    // No identifier or name is provided
+    else
+      throw new HttpBadRequestException($request, "No image id or name was provided to the route");
 
     // Handle the request
     return $handler->handle($request);
