@@ -69,7 +69,7 @@ final class CollectionController extends AbstractController
   public function patchCollection(Request $request, Response $response, Collection $collection, User $authUser)
   {
     // Check if the authorized user owns this collection
-    if ($authUser->getId() !== $collection->getUser()->getId())
+    if ($authUser->getId() != $collection->getUser()->getId())
       throw new HttpForbiddenException($request, "The current authorized user is not allowed to modify the collection with id \"{$collection->getId()}\"");
 
     // Get and validate the body parameters
@@ -99,7 +99,7 @@ final class CollectionController extends AbstractController
   public function deleteCollection(Request $request, Response $response, Collection $collection, User $authUser)
   {
     // Check if the authorized user owns this collection
-    if ($authUser->getId() !== $collection->getUser()->getId())
+    if ($authUser->getId() != $collection->getUser()->getId())
       throw new HttpForbiddenException($request, "The current authorized user is not allowed to delete the collection with id \"{$collection->getId()}\"");
 
     // Delete the collection from the repository
@@ -123,7 +123,7 @@ final class CollectionController extends AbstractController
     $now = new \DateTime();
 
     // Check if the authorized user owns this collection
-    if ($authUser->getId() !== $collection->getUser()->getId())
+    if ($authUser->getId() != $collection->getUser()->getId())
       throw new HttpForbiddenException($request, "The current authorized user is not allowed to modify the collection with id \"{$collection->getId()}\"");
 
     // Check if the image is already in the collection
@@ -148,7 +148,7 @@ final class CollectionController extends AbstractController
     $now = new \DateTime();
 
     // Check if the authorized user owns this collection
-    if ($authUser->getId() !== $collection->getUser()->getId())
+    if ($authUser->getId() != $collection->getUser()->getId())
       throw new HttpForbiddenException($request, "The current authorized user is not allowed to modify the collection with id \"{$collection->getId()}\"");
 
     // Check if the image is not in the collection

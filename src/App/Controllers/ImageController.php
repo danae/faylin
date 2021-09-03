@@ -46,7 +46,7 @@ final class ImageController extends AbstractController
   public function patchImage(Request $request, Response $response, Image $image, User $authUser)
   {
     // Check if the authorized user owns this image
-    if ($authUser->getId() !== $image->getUser()->getId())
+    if ($authUser->getId() != $image->getUser()->getId())
       throw new HttpForbiddenException($request, "The current authorized user is not allowed to modify the image with id \"{$image->getId()}\"");
 
     // Get and validate the body parameters
@@ -79,7 +79,7 @@ final class ImageController extends AbstractController
   public function deleteImage(Request $request, Response $response, Image $image, User $authUser)
   {
     // Check if the authorized user owns this image
-    if ($authUser->getId() !== $image->getUser()->getId())
+    if ($authUser->getId() != $image->getUser()->getId())
       throw new HttpForbiddenException($request, "The current authorized user is not allowed to delete the image with id \"{$image->getId()}\"");
 
     // Delete the image from the repository
@@ -118,7 +118,7 @@ final class ImageController extends AbstractController
   public function replaceImage(Request $request, Response $response, Image $image, User $authUser)
   {
     // Check if the image is owned by the authorized user
-    if ($authUser->getId() !== $image->getUser()->getId())
+    if ($authUser->getId() != $image->getUser()->getId())
       throw new HttpForbiddenException($request, "The current authorized user is not allowed to replace the image with id \"{$id->getId()}\"");
 
     // Get the uploaded file

@@ -38,7 +38,7 @@ final class UserController extends AbstractController
   public function patchUser(Request $request, Response $response, User $user, User $authUser)
   {
     // Check if the authorized user owns this user
-    if ($authUser->getId() !== $user->getId())
+    if ($authUser->getId() != $user->getId())
       throw new HttpForbiddenException($request, "The current authorized user is not allowed to modify the user with id \"{$user->getId()}\"");
 
     // Get and validate the parameters
