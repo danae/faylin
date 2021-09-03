@@ -1,8 +1,6 @@
 <?php
 namespace Danae\Faylin\Model;
 
-use Psr\Http\Message\StreamInterface;
-
 
 // Interface that defines an image repository
 interface ImageRepositoryInterface
@@ -27,13 +25,4 @@ interface ImageRepositoryInterface
 
   // Delete an image in the repository and return the deleted count
   public function delete(Image $image): int;
-
-  // Return a stream containing the contents of an image
-  public function readFile(Image $image): StreamInterface;
-
-  // Write the contents of an image from a stream
-  public function writeFile(Image $image, StreamInterface $stream): void;
-
-  // Delete the contents of the image
-  public function deleteFile(Image $image): void;
 }

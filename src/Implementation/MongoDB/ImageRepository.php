@@ -4,9 +4,6 @@ namespace Danae\Faylin\Implementation\MongoDB;
 use MongoDB\Client;
 use MongoDB\BSON\UTCDateTime;
 use MongoDB\Model\BSONDocument;
-use League\Flysystem\Filesystem;
-use Psr\Http\Message\StreamFactoryInterface;
-use Psr\Http\Message\StreamInterface;
 
 use Danae\Faylin\Model\Image;
 use Danae\Faylin\Model\ImageRepositoryInterface;
@@ -21,35 +18,18 @@ final class ImageRepository implements ImageRepositoryInterface
   use Traits\RepositoryTrait;
 
 
-  // The filesystem to use with the repository
-  private $filesystem;
-
-  // The stream factory to use with the repository
-  private $streamFactory;
+  // The user repository to use with the repository
+  private $userRepository;
 
 
   // Constructor
-  public function __construct(Client $client, string $databaseName, string $collectionName, UserRepositoryInterface $userRepository, Filesystem $filesystem, StreamFactoryInterface $streamFactory)
+  public function __construct(Client $client, string $databaseName, string $collectionName, UserRepositoryInterface $userRepository)
   {
     $this->client = $client;
     $this->database = $this->client->selectDatabase($databaseName);
     $this->collection = $this->database->selectCollection($collectionName);
 
     $this->userRepository = $userRepository;
-    $this->filesystem = $filesystem;
-    $this->streamFactory = $streamFactory;
-  }
-
-  // Return the filesystem
-  public function getFilesystem(): Filesystem
-  {
-    return $this->filesystem;
-  }
-
-  // Return the stream factory
-  public function getStreamFactory(): StreamFactoryInterface
-  {
-    return $this->streamFactory;
   }
 
 
@@ -109,30 +89,6 @@ final class ImageRepository implements ImageRepositoryInterface
   {
     $result = $this->getCollection()->deleteOne(['_id' => $image->getId()]);
     return $result->getDeletedCount();
-  }
-
-  // Read a stream containing the contents of an image
-  public function readFile(Image $image): StreamInterface
-  {
-    $contents = $this->getFilesystem()->read($this->getFileName($image));
-    $contents = gzdecode($contents);
-    return $this->getStreamFactory()->createStream($contents);
-  }
-
-  // Write the contents of an image from a stream
-  public function writeFile(Image $image, StreamInterface $stream): void
-  {
-    $stream->rewind();
-
-    $contents = $stream->getContents();
-    $contents = gzencode($contents);
-    $this->getFilesystem()->write($this->getFileName($image), $contents);
-  }
-
-  // Delete the contents of the image
-  public function deleteFile(Image $image): void
-  {
-    $this->getFilesystem()->delete($this->getFileName($image));
   }
 
 
