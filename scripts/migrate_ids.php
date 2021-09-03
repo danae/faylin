@@ -103,7 +103,7 @@ function main(array $args)
       if (!$filesystem->fileExists(sprintf($imageFileNameFormat, $image['_id'])))
       {
         printf("Migrating contents of image '%s' with name '%s...\n'", $image['_id'], $image['name']);
-        $contents = $filesystem->read(sprintf($imageFileNameFormat, $snowflake->toBase64()));
+        $contents = $filesystem->read(sprintf($imageFileNameFormat, $previousId));
         $filesystem->write(sprintf($imageFileNameFormat, $image['_id']), $contents);
       }
     }
