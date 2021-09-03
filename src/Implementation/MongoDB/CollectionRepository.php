@@ -108,7 +108,7 @@ final class CollectionRepository implements CollectionRepositoryInterface
       'createdAt' => new UTCDateTime($collection->getCreatedAt()),
       'updatedAt' => new UTCDateTime($collection->getUpdatedAt()),
       'user' => $collection->getUser()->getId()->toString(),
-      'images' => new BSONArray(array_map(fn($image) => $image->getId(), $collection->getImages())),
+      'images' => new BSONArray(array_map(fn($image) => $image->getId()->toString(), $collection->getImages())),
       'title' => $collection->getTitle(),
       'description' => $collection->getDescription(),
       'public' => $collection->getPublic(),
@@ -124,7 +124,7 @@ final class CollectionRepository implements CollectionRepositoryInterface
       ->setCreatedAt($document['createdAt']->toDateTime())
       ->setUpdatedAt($document['updatedAt']->toDateTime())
       ->setUser($this->userRepository->find(Snowflake::fromString($document['user'])))
-      ->setImages(array_map(fn($imageId) => $this->imageRepository->find($imageId), $document['images']->getArrayCopy()))
+      ->setImages(array_map(fn($imageId) => $this->imageRepository->find(Snowflake::fromString($imageId)), $document['images']->getArrayCopy()))
       ->setTitle($document['title'] ?? "")
       ->setDescription($document['description'])
       ->setPublic($document['public']);

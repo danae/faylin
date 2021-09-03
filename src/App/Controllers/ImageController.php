@@ -58,9 +58,9 @@ final class ImageController extends AbstractController
       ->validate($request->getParsedBody())
       ->resultOrThrowBadRequest($request);
 
-    // Modify the user
+    // Modify the image
     if ($params['title'] !== null)
-      $image->setName($params['title']);
+      $image->setTitle($params['title']);
     if ($params['description'] !== null)
       $image->setDescription($params['description']);
     if ($params['public'] !== null)
@@ -84,7 +84,7 @@ final class ImageController extends AbstractController
 
     // Delete the image from the repository
     $this->imageRepository->delete($image);
-    $this->imageRepository->deleteFile($image);
+    $this->imageStore->delete($image);
 
     // Return the response
     return $response

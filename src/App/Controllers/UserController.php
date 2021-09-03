@@ -76,7 +76,7 @@ final class UserController extends AbstractController
   {
     // Get the collections
     $options = $this->createSelectOptions($request, ['sort' => '-createdAt']);
-    $collections = $this->collectionRepository->findManyBy(['user' => $user->getId()], $options);
+    $collections = $this->collectionRepository->findManyBy(['user' => $user->getId()->toString()], $options);
 
     // Return the response
     return $this->serialize($request, $response, $collections)
@@ -88,7 +88,7 @@ final class UserController extends AbstractController
   {
     // Get the images
     $options = $this->createSelectOptions($request, ['sort' => '-createdAt']);
-    $images = $this->imageRepository->findManyBy(['user' => $user->getId()], $options);
+    $images = $this->imageRepository->findManyBy(['user' => $user->getId()->toString()], $options);
 
     // Return the response
     return $this->serialize($request, $response, $images)

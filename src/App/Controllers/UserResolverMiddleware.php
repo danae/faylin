@@ -36,7 +36,7 @@ final class UserResolverMiddleware implements MiddlewareInterface
     $route = $this->getRoute($request);
 
     // Get the identifier from the route
-    if (($id = $route->getArgument('userId')) !== null);
+    if (($id = $route->getArgument('userId')) !== null)
     {
       // Get the user from the repository
       $user = $this->userRepository->find(Snowflake::fromString($id));
@@ -48,7 +48,7 @@ final class UserResolverMiddleware implements MiddlewareInterface
     }
 
     // Get the name from the route
-    if (($name = $route->getArgument('userName')) !== null);
+    else if (($name = $route->getArgument('userName')) !== null)
     {
       // Get the user from the repository
       $user = $this->userRepository->findBy(['name' => $name]);

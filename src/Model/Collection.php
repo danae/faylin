@@ -64,7 +64,7 @@ final class Collection implements NormalizableInterface
   // Remove an image from the collection
   public function removeImage(Image $imageToRemove): self
   {
-    $this->images = array_filter($this->images, fn($image) => $image->getId() !== $imageToRemove->getId());
+    $this->images = array_filter($this->images, fn($image) => $image->getId() != $imageToRemove->getId());
     return $this;
   }
 
@@ -75,7 +75,7 @@ final class Collection implements NormalizableInterface
   }
 
   // Set the title of the collection
-  public function setTitle(string $name): self
+  public function setTitle(string $title): self
   {
     $this->title = $title;
     return $this;
