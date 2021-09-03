@@ -11,12 +11,12 @@ use Danae\Faylin\Utils\Traits\RouteContextTrait;
 final class Image implements NormalizableInterface
 {
   use Traits\EntityTrait;
+  use Traits\NamedEntityTrait;
+  use Traits\DatedEntityTrait;
   use Traits\UserOwnedEntityTrait;
   use RouteContextTrait;
 
 
-  // The name of the image (read-write)
-  private $name;
 
   // The description of the image (read-write)
   private $description;
@@ -41,29 +41,16 @@ final class Image implements NormalizableInterface
   public function __construct()
   {
     $this->id = null;
+    $this->name = "";
     $this->createdAt = new \DateTime();
     $this->updatedAt = new \DateTime();
     $this->userId = null;
-    $this->name = "";
     $this->description = "";
     $this->public = true;
     $this->nsfw = false;
     $this->contentType = "";
     $this->contentLength = 0;
     $this->checksum = "";
-  }
-
-  // Get the name of the image
-  public function getName(): string
-  {
-    return $this->name;
-  }
-
-  // Set the name of the image
-  public function setName(string $name): self
-  {
-    $this->name = $name;
-    return $this;
   }
 
   // Get the description of the image
@@ -151,12 +138,12 @@ final class Image implements NormalizableInterface
     return [
       // Entity fields
       'id' => $this->getId(),
+      'name' => $this->getName(),
       'createdAt' => $normalizer->normalize($this->getCreatedAt(), $format, $context),
       'updatedAt' => $normalizer->normalize($this->getUpdatedAt(), $format, $context),
       'user' => $normalizer->normalize($this->getUser(), $format, $context),
 
       // Read-write class fields
-      'name' => $this->getName(),
       'description' => $this->getDescription(),
       'public' => $this->getPublic(),
       'nsfw' => $this->getNsfw(),

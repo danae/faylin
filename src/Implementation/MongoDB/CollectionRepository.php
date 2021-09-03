@@ -103,11 +103,11 @@ final class CollectionRepository implements CollectionRepositoryInterface
   {
     return new BSONDocument([
       '_id' => $collection->getId(),
+      'name' => $collection->getName(),
       'createdAt' => new UTCDateTime($collection->getCreatedAt()),
       'updatedAt' => new UTCDateTime($collection->getUpdatedAt()),
       'user' => $collection->getUser()->getId(),
       'images' => new BSONArray(array_map(fn($image) => $image->getId(), $collection->getImages())),
-      'name' => $collection->getName(),
       'description' => $collection->getDescription(),
       'public' => $collection->getPublic(),
     ]);
@@ -118,11 +118,11 @@ final class CollectionRepository implements CollectionRepositoryInterface
   {
     return (new Collection())
       ->setId($document['_id'])
+      ->setName($document['name'])
       ->setCreatedAt($document['createdAt']->toDateTime())
       ->setUpdatedAt($document['updatedAt']->toDateTime())
       ->setUser($this->userRepository->find($document['user']))
       ->setImages(array_map(fn($imageId) => $this->imageRepository->find($imageId), $document['images']->getArrayCopy()))
-      ->setName($document['name'])
       ->setDescription($document['description'])
       ->setPublic($document['public']);
   }

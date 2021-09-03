@@ -9,14 +9,14 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 final class Collection implements NormalizableInterface
 {
   use Traits\EntityTrait;
+  use Traits\NamedEntityTrait;
+  use Traits\DatedEntityTrait;
   use Traits\UserOwnedEntityTrait;
 
 
   // The images of the collection
   private $images;
 
-  // The name of the collection (read-write)
-  private $name;
 
   // The description of the collection (read-write)
   private $description;
@@ -29,11 +29,11 @@ final class Collection implements NormalizableInterface
   public function __construct()
   {
     $this->id = null;
+    $this->name = "";
     $this->createdAt = new \DateTime();
     $this->updatedAt = new \DateTime();
     $this->user = null;
     $this->images = [];
-    $this->name = "";
     $this->description = "";
     $this->public = true;
   }
@@ -62,19 +62,6 @@ final class Collection implements NormalizableInterface
   public function removeImage(Image $imageToRemove): self
   {
     $this->images = array_filter($this->images, fn($image) => $image->getId() !== $imageToRemove->getId());
-    return $this;
-  }
-
-  // Get the name of the collection
-  public function getName(): string
-  {
-    return $this->name;
-  }
-
-  // Set the name of the collection
-  public function setName(string $name): self
-  {
-    $this->name = $name;
     return $this;
   }
 
@@ -110,13 +97,13 @@ final class Collection implements NormalizableInterface
     return [
       // Entity fields
       'id' => $this->getId(),
+      'name' => $this->getName(),
       'createdAt' => $normalizer->normalize($this->getCreatedAt(), $format, $context),
       'updatedAt' => $normalizer->normalize($this->getUpdatedAt(), $format, $context),
       'user' => $normalizer->normalize($this->getUser(), $format, $context),
 
       // Read-write class fields
       'images' => $normalizer->normalize($this->getImages(), $format, $context),
-      'name' => $this->getName(),
       'description' => $this->getDescription(),
       'public' => $this->getPublic(),
     ];

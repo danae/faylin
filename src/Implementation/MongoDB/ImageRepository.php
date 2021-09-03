@@ -140,10 +140,10 @@ final class ImageRepository implements ImageRepositoryInterface
   {
     return new BSONDocument([
       '_id' => $image->getId(),
+      'name' => $image->getName(),
       'createdAt' => new UTCDateTime($image->getCreatedAt()),
       'updatedAt' => new UTCDateTime($image->getUpdatedAt()),
       'user' => $image->getUser()->getId(),
-      'name' => $image->getName(),
       'description' => $image->getDescription(),
       'public' => $image->getPublic(),
       'nsfw' => $image->getNsfw(),
@@ -158,10 +158,10 @@ final class ImageRepository implements ImageRepositoryInterface
   {
     return (new Image())
       ->setId($document['_id'])
+      ->setName($document['name'])
       ->setCreatedAt($document['createdAt']->toDateTime())
       ->setUpdatedAt($document['updatedAt']->toDateTime())
       ->setUser($this->userRepository->find($document['user']))
-      ->setName($document['name'])
       ->setDescription($document['description'])
       ->setPublic($document['public'])
       ->setNsfw($document['nsfw'])

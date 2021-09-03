@@ -105,11 +105,11 @@ final class UserRepository implements UserRepositoryInterface
   {
     return new BSONDocument([
       '_id' => $user->getId(),
+      'name' => $user->getName(),
       'createdAt' => new UTCDateTime($user->getCreatedAt()),
       'updatedAt' => new UTCDateTime($user->getUpdatedAt()),
       'email' => $user->getEmail(),
       'passwordHash' => $user->getPasswordHash(),
-      'name' => $user->getName(),
       'description' => $user->getDescription(),
       'public' => $user->getPublic(),
     ]);
@@ -120,11 +120,11 @@ final class UserRepository implements UserRepositoryInterface
   {
     return (new User())
       ->setId($document['_id'])
+      ->setName($document['name'])
       ->setCreatedAt($document['createdAt']->toDateTime())
       ->setUpdatedAt($document['updatedAt']->toDateTime())
       ->setEmail($document['email'])
       ->setPasswordHash($document['passwordHash'])
-      ->setName($document['name'])
       ->setDescription($document['description'])
       ->setPublic($document['public']);
   }

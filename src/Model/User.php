@@ -9,6 +9,8 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 final class User implements NormalizableInterface
 {
   use Traits\EntityTrait;
+  use Traits\NamedEntityTrait;
+  use Traits\DatedEntityTrait;
 
 
   // The email address of the user (internal)
@@ -17,8 +19,6 @@ final class User implements NormalizableInterface
   // The password hash of the user (internal)
   private $passwordHash;
 
-  // The name of the user (read-write)
-  private $name;
 
   // The description of the user (read-write)
   private $description;
@@ -31,11 +31,11 @@ final class User implements NormalizableInterface
   public function __construct()
   {
     $this->id = null;
+    $this->name = "";
     $this->createdAt = new \DateTime();
     $this->updatedAt = new \DateTime();
     $this->email = "";
     $this->passwordHash = "";
-    $this->name = "";
     $this->description = "";
     $this->public = true;
   }
@@ -79,19 +79,6 @@ final class User implements NormalizableInterface
     return $this;
   }
 
-  // Get the name of the user
-  public function getName(): string
-  {
-    return $this->name;
-  }
-
-  // Set the name of the user
-  public function setName(string $name): self
-  {
-    $this->name = $name;
-    return $this;
-  }
-
   // Get the description of the user
   public function getDescription(): string
   {
@@ -125,6 +112,7 @@ final class User implements NormalizableInterface
     return [
       // Entity fields
       'id' => $this->getId(),
+      'name' => $this->getName(),
       'createdAt' => $normalizer->normalize($this->getCreatedAt(), $format, $context),
       'updatedAt' => $normalizer->normalize($this->getUpdatedAt(), $format, $context),
 
@@ -132,7 +120,6 @@ final class User implements NormalizableInterface
       'email' => $this->getEmail(),
 
       // Read-write class fields
-      'name' => $this->getName(),
       'description' => $this->getDescription(),
       'public' => $this->getPublic(),
     ];
