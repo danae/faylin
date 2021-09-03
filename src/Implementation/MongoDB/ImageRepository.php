@@ -42,7 +42,7 @@ final class ImageRepository implements ImageRepositoryInterface
   // Find an image in the repository by its identifier
   public function find(Snowflake $id, array $options = []): ?Image
   {
-    $result = $this->getCollection()->findOne(['_id' => $id->toBase64()], $options);
+    $result = $this->getCollection()->findOne(['_id' => $id->toString()], $options);
 
     return $result !== null ? $this->denormalize($result) : null;
   }
@@ -80,14 +80,14 @@ final class ImageRepository implements ImageRepositoryInterface
   {
     $document = $this->normalize($image);
 
-    $result = $this->getCollection()->updateOne(['_id' => $image->getId()], ['$set' => $document]);
+    $result = $this->getCollection()->updateOne(['_id' => $image->getId()->toString()], ['$set' => $document]);
     return $result->getModifiedCount();
   }
 
   // Delete an image in the repository and return the deleted count
   public function delete(Image $image): int
   {
-    $result = $this->getCollection()->deleteOne(['_id' => $image->getId()]);
+    $result = $this->getCollection()->deleteOne(['_id' => $image->getId()->toString()]);
     return $result->getDeletedCount();
   }
 
@@ -96,11 +96,11 @@ final class ImageRepository implements ImageRepositoryInterface
   private function normalize(Image $image): BSONDocument
   {
     return new BSONDocument([
-      '_id' => $image->getId()->toBase64(),
+      '_id' => $image->getId()->toString(),
       'name' => $image->getName(),
       'createdAt' => new UTCDateTime($image->getCreatedAt()),
       'updatedAt' => new UTCDateTime($image->getUpdatedAt()),
-      'user' => $image->getUser()->getId()->toBase64(),
+      'user' => $image->getUser()->getId()->toString(),
       'title' => $image->getTitle(),
       'description' => $image->getDescription(),
       'public' => $image->getPublic(),
@@ -115,11 +115,11 @@ final class ImageRepository implements ImageRepositoryInterface
   private function denormalize(BSONDocument $document): Image
   {
     return (new Image())
-      ->setId(Snowflake::fromBase64($document['_id']))
+      ->setId(Snowflake::fromString($document['_id']))
       ->setName($document['name'])
       ->setCreatedAt($document['createdAt']->toDateTime())
       ->setUpdatedAt($document['updatedAt']->toDateTime())
-      ->setUser($this->userRepository->find(Snowflake::fromBase64($document['user'])))
+      ->setUser($this->userRepository->find(Snowflake::fromString($document['user'])))
       ->setTitle($document['title'] ?? "")
       ->setDescription($document['description'])
       ->setPublic($document['public'])

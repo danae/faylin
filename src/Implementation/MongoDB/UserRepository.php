@@ -33,7 +33,7 @@ final class UserRepository implements UserRepositoryInterface
   // Get a user in the repository by its identifier
   public function find(Snowflake $id, array $options = []): ?User
   {
-    $result = $this->getCollection()->findOne(['_id' => $id->toBase64()], $options);
+    $result = $this->getCollection()->findOne(['_id' => $id->toString()], $options);
 
     return $result !== null ? $this->denormalize($result) : null;
   }
@@ -71,14 +71,14 @@ final class UserRepository implements UserRepositoryInterface
   {
     $document = $this->normalize($user);
 
-    $result = $this->getCollection()->updateOne(['_id' => $user->getId()], ['$set' => $document]);
+    $result = $this->getCollection()->updateOne(['_id' => $user->getId()->toString()], ['$set' => $document]);
     return $result->getModifiedCount();
   }
 
   // Delete a user in the repository and return the deleted count
   public function delete(User $user): int
   {
-    $result = $this->getCollection()->deleteOne(['_id' => $user->getId()]);
+    $result = $this->getCollection()->deleteOne(['_id' => $user->getId()->toString()]);
     return $result->getDeletedCount();
   }
 
@@ -105,7 +105,7 @@ final class UserRepository implements UserRepositoryInterface
   private function normalize(User $user): BSONDocument
   {
     return new BSONDocument([
-      '_id' => $user->getId()->toBase64(),
+      '_id' => $user->getId()->toString(),
       'name' => $user->getName(),
       'createdAt' => new UTCDateTime($user->getCreatedAt()),
       'updatedAt' => new UTCDateTime($user->getUpdatedAt()),
@@ -121,7 +121,7 @@ final class UserRepository implements UserRepositoryInterface
   private function denormalize(BSONDocument $document): User
   {
     return (new User())
-      ->setId(Snowflake::fromBase64($document['_id']))
+      ->setId(Snowflake::fromString($document['_id']))
       ->setName($document['name'])
       ->setCreatedAt($document['createdAt']->toDateTime())
       ->setUpdatedAt($document['updatedAt']->toDateTime())

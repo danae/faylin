@@ -49,7 +49,7 @@ final class CollectionRepository implements CollectionRepositoryInterface
   // Find a collection in the repository by its identifier
   public function find(Snowflake $id, array $options = []): ?Collection
   {
-    $result = $this->getCollection()->findOne(['_id' => $id->toBase64()], $options);
+    $result = $this->getCollection()->findOne(['_id' => $id->toString()], $options);
 
     return $result !== null ? $this->denormalize($result) : null;
   }
@@ -87,14 +87,14 @@ final class CollectionRepository implements CollectionRepositoryInterface
   {
     $document = $this->normalize($collection);
 
-    $result = $this->getCollection()->updateOne(['_id' => $collection->getId()], ['$set' => $document]);
+    $result = $this->getCollection()->updateOne(['_id' => $collection->getId()->toString()], ['$set' => $document]);
     return $result->getModifiedCount();
   }
 
   // Delete a collection in the repository and return the deleted count
   public function delete(Collection $collection): int
   {
-    $result = $this->getCollection()->deleteOne(['_id' => $collection->getId()]);
+    $result = $this->getCollection()->deleteOne(['_id' => $collection->getId()->toString()]);
     return $result->getDeletedCount();
   }
 
@@ -103,11 +103,11 @@ final class CollectionRepository implements CollectionRepositoryInterface
   private function normalize(Collection $collection): BSONDocument
   {
     return new BSONDocument([
-      '_id' => $collection->getId()->toBase64(),
+      '_id' => $collection->getId()->toString(),
       'name' => $collection->getName(),
       'createdAt' => new UTCDateTime($collection->getCreatedAt()),
       'updatedAt' => new UTCDateTime($collection->getUpdatedAt()),
-      'user' => $collection->getUser()->getId()->toBase64(),
+      'user' => $collection->getUser()->getId()->toString(),
       'images' => new BSONArray(array_map(fn($image) => $image->getId(), $collection->getImages())),
       'title' => $collection->getTitle(),
       'description' => $collection->getDescription(),
@@ -119,11 +119,11 @@ final class CollectionRepository implements CollectionRepositoryInterface
   private function denormalize(BSONDocument $document): Collection
   {
     return (new Collection())
-      ->setId(Snowflake::fromBase64($document['_id']))
+      ->setId(Snowflake::fromString($document['_id']))
       ->setName($document['name'])
       ->setCreatedAt($document['createdAt']->toDateTime())
       ->setUpdatedAt($document['updatedAt']->toDateTime())
-      ->setUser($this->userRepository->find(Snowflake::fromBase64($document['user'])))
+      ->setUser($this->userRepository->find(Snowflake::fromString($document['user'])))
       ->setImages(array_map(fn($imageId) => $this->imageRepository->find($imageId), $document['images']->getArrayCopy()))
       ->setTitle($document['title'] ?? "")
       ->setDescription($document['description'])
