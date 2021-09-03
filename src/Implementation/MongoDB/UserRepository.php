@@ -111,6 +111,7 @@ final class UserRepository implements UserRepositoryInterface
       'updatedAt' => new UTCDateTime($user->getUpdatedAt()),
       'email' => $user->getEmail(),
       'passwordHash' => $user->getPasswordHash(),
+      'title' => $user->getTitle(),
       'description' => $user->getDescription(),
       'public' => $user->getPublic(),
     ]);
@@ -126,6 +127,7 @@ final class UserRepository implements UserRepositoryInterface
       ->setUpdatedAt($document['updatedAt']->toDateTime())
       ->setEmail($document['email'])
       ->setPasswordHash($document['passwordHash'])
+      ->setTitle($document['title'] ?? "")
       ->setDescription($document['description'])
       ->setPublic($document['public']);
   }

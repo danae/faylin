@@ -51,7 +51,7 @@ final class ImageController extends AbstractController
 
     // Get and validate the body parameters
     $params = (new Validator())
-      ->withOptional('name', 'string|notempty|maxlength:256')
+      ->withOptional('title', 'string|notempty|maxlength:256')
       ->withOptional('description', 'string|maxlength:256')
       ->withOptional('public', 'bool')
       ->withOptional('nsfw', 'bool')
@@ -59,8 +59,8 @@ final class ImageController extends AbstractController
       ->resultOrThrowBadRequest($request);
 
     // Modify the user
-    if ($params['name'] !== null)
-      $image->setName($params['name']);
+    if ($params['title'] !== null)
+      $image->setName($params['title']);
     if ($params['description'] !== null)
       $image->setDescription($params['description']);
     if ($params['public'] !== null)
@@ -100,8 +100,9 @@ final class ImageController extends AbstractController
     // Create the image
     $image = new Image();
     $image->generateId($snowflakeGenerator);
+    $image->setName($image->getId()->toBase64());
     $image->setUser($authUser);
-    $image->setName($this->getUploadedFileNameWithoutExtension($file));
+    $image->setTitle($this->getUploadedFileNameWithoutExtension($file));
 
     // Write the image to the store with the contents of the uploaded file
     $this->imageStore->writeUploadedFile($image, $request, $file);
@@ -149,7 +150,7 @@ final class ImageController extends AbstractController
       ->resultOrThrowBadRequest($request);
 
     // Read the image from the store as a response
-    if ($query['transform'] !== null || $format !== $this->capabilities->convertContentTypeToFormat($image->getContentType()))
+    if ($query['transform'] !== null || $contentType !== $image->getContentType())
     {
       // Create the transform
       $transform = new ImageTransform($query['transform'], $contentType);

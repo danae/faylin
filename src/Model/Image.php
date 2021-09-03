@@ -17,6 +17,8 @@ final class Image implements NormalizableInterface
   use RouteContextTrait;
 
 
+  // The title of the image (read-write)
+  private $title;
 
   // The description of the image (read-write)
   private $description;
@@ -45,12 +47,26 @@ final class Image implements NormalizableInterface
     $this->createdAt = new \DateTime();
     $this->updatedAt = new \DateTime();
     $this->userId = null;
+    $this->title = "";
     $this->description = "";
     $this->public = true;
     $this->nsfw = false;
     $this->contentType = "";
     $this->contentLength = 0;
     $this->checksum = "";
+  }
+
+  // Get the title of the image
+  public function getTitle(): string
+  {
+    return $this->title;
+  }
+
+  // Set the title of the image
+  public function setTitle(string $title): self
+  {
+    $this->title = $title;
+    return $this;
   }
 
   // Get the description of the image
@@ -144,6 +160,7 @@ final class Image implements NormalizableInterface
       'user' => $normalizer->normalize($this->getUser(), $format, $context),
 
       // Read-write class fields
+      'title' => $this->getTitle(),
       'description' => $this->getDescription(),
       'public' => $this->getPublic(),
       'nsfw' => $this->getNsfw(),

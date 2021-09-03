@@ -19,6 +19,8 @@ final class User implements NormalizableInterface
   // The password hash of the user (internal)
   private $passwordHash;
 
+  // The title of the user (read-write)
+  private $title;
 
   // The description of the user (read-write)
   private $description;
@@ -36,6 +38,7 @@ final class User implements NormalizableInterface
     $this->updatedAt = new \DateTime();
     $this->email = "";
     $this->passwordHash = "";
+    $this->title = "";
     $this->description = "";
     $this->public = true;
   }
@@ -76,6 +79,19 @@ final class User implements NormalizableInterface
   public function hashPassword(string $password): self
   {
     $this->setPasswordHash(password_hash($password, \PASSWORD_DEFAULT));
+    return $this;
+  }
+
+  // Get the title of the user
+  public function getTitle(): string
+  {
+    return $this->title;
+  }
+
+  // Set the title of the user
+  public function setTitle(string $title): self
+  {
+    $this->title = $title;
     return $this;
   }
 
@@ -120,6 +136,7 @@ final class User implements NormalizableInterface
       'email' => $this->getEmail(),
 
       // Read-write class fields
+      'title' => $this->getTitle(),
       'description' => $this->getDescription(),
       'public' => $this->getPublic(),
     ];

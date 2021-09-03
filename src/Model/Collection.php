@@ -17,6 +17,8 @@ final class Collection implements NormalizableInterface
   // The images of the collection
   private $images;
 
+  // The title of the collection (read-write)
+  private $title;
 
   // The description of the collection (read-write)
   private $description;
@@ -34,6 +36,7 @@ final class Collection implements NormalizableInterface
     $this->updatedAt = new \DateTime();
     $this->user = null;
     $this->images = [];
+    $this->title = "";
     $this->description = "";
     $this->public = true;
   }
@@ -62,6 +65,19 @@ final class Collection implements NormalizableInterface
   public function removeImage(Image $imageToRemove): self
   {
     $this->images = array_filter($this->images, fn($image) => $image->getId() !== $imageToRemove->getId());
+    return $this;
+  }
+
+  // Get the title of the collection
+  public function getTitle(): string
+  {
+    return $this->title;
+  }
+
+  // Set the title of the collection
+  public function setTitle(string $name): self
+  {
+    $this->title = $title;
     return $this;
   }
 
@@ -104,6 +120,7 @@ final class Collection implements NormalizableInterface
 
       // Read-write class fields
       'images' => $normalizer->normalize($this->getImages(), $format, $context),
+      'title' => $this->getTitle(),
       'description' => $this->getDescription(),
       'public' => $this->getPublic(),
     ];

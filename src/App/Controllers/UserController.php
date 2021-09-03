@@ -44,6 +44,7 @@ final class UserController extends AbstractController
     // Get and validate the parameters
     $params = (new Validator())
       ->withOptional('name', 'string|notempty|maxlength:32')
+      ->withOptional('title', 'string|notempty|maxlength:64')
       ->withOptional('description', 'string|maxlength:256', '')
       ->withOptional('public', 'bool')
       ->withOptional('avatarId', 'string|maxlength:256')
@@ -53,6 +54,8 @@ final class UserController extends AbstractController
     // Modify the user
     if ($params['name'] !== null)
       $user->setName($params['name']);
+    if ($params['title'] !== null)
+      $user->setTitle($params['title']);
     if ($params['description'] !== null)
       $user->setDescription($params['description']);
     if ($params['public'] !== null)

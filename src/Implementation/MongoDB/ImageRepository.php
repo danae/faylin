@@ -145,6 +145,7 @@ final class ImageRepository implements ImageRepositoryInterface
       'createdAt' => new UTCDateTime($image->getCreatedAt()),
       'updatedAt' => new UTCDateTime($image->getUpdatedAt()),
       'user' => $image->getUser()->getId()->toBase64(),
+      'title' => $image->getTitle(),
       'description' => $image->getDescription(),
       'public' => $image->getPublic(),
       'nsfw' => $image->getNsfw(),
@@ -163,6 +164,7 @@ final class ImageRepository implements ImageRepositoryInterface
       ->setCreatedAt($document['createdAt']->toDateTime())
       ->setUpdatedAt($document['updatedAt']->toDateTime())
       ->setUser($this->userRepository->find(Snowflake::fromBase64($document['user'])))
+      ->setTitle($document['title'] ?? "")
       ->setDescription($document['description'])
       ->setPublic($document['public'])
       ->setNsfw($document['nsfw'])

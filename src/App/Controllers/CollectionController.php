@@ -36,7 +36,7 @@ final class CollectionController extends AbstractController
 
     // Get and validate the body parameters
     $params = (new Validator())
-      ->withRequired('name', 'string|notempty|maxlength:256')
+      ->withRequired('title', 'string|notempty|maxlength:256')
       ->withOptional('description', 'string|maxlength:256', '')
       ->withOptional('public', 'bool', true)
       ->validate($request->getParsedBody())
@@ -45,8 +45,9 @@ final class CollectionController extends AbstractController
     // Create the collection
     $collection = new Collection();
     $collection->generateId($snowflakeGenerator);
+    $collection->setName($collection->getId()->toBase64());
     $collection->setUser($authUser);
-    $collection->setName($params['name']);
+    $collection->setTitle($params['title']);
     $collection->setDescription($params['description']);
     $collection->setPublic($params['public']);
 
@@ -74,15 +75,15 @@ final class CollectionController extends AbstractController
 
     // Get and validate the body parameters
     $params = (new Validator())
-      ->withOptional('name', 'string|notempty|maxlength:256')
+      ->withOptional('title', 'string|notempty|maxlength:256')
       ->withOptional('description', 'string|maxlength:256')
       ->withOptional('public', 'bool')
       ->validate($request->getParsedBody())
       ->resultOrThrowBadRequest($request);
 
     // Modify the collection
-    if ($params['name'] !== null)
-      $collection->setName($params['name']);
+    if ($params['title'] !== null)
+      $collection->setTitle($params['title']);
     if ($params['description'] !== null)
       $collection->setDescription($params['description']);
     if ($params['public'] !== null)
