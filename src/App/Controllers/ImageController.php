@@ -84,7 +84,7 @@ final class ImageController extends AbstractController
 
     // Delete the image from the repository
     $this->imageRepository->delete($image);
-    $this->imageStore->delete($image);
+    $this->imageStore->delete($image, $request);
 
     // Return the response
     return $response
