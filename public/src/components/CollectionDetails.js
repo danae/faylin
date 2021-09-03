@@ -82,7 +82,7 @@ export default {
 
                 <template v-else>
                   <h2 class="image-details-name mb-0">{{ collection.title }}</h2>
-                  <p class="image-details-user-name">by <router-link :to="{name: 'user', params: {userId: collection.user.id }}">{{ collection.user.name }}</router-link></p>
+                  <p class="image-details-user-name">by <router-link :to="{name: 'user', params: {userId: collection.user.id }}">{{ collection.user.title }}</router-link></p>
 
                   <template v-if="collection.description">
                     <p>{{ collection.description }}</p>

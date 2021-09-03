@@ -23,7 +23,7 @@ export default {
         </template>
 
         <template v-if="displayUserName">
-          <p class="image-thumbnail-user-name mb-0">by <router-link :to="{name: 'user', params: {userId: image.user.id}}">{{ image.user.name }}</router-link></p>
+          <p class="image-thumbnail-user-name mb-0">by <router-link :to="{name: 'user', params: {userId: image.user.id}}">{{ image.user.title }}</router-link></p>
         </template>
       </template>
 
