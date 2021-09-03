@@ -88,7 +88,7 @@ function main(array $args)
       if ($image['createdAt']->toDateTime() >= $imageDate)
         $snowflake = Snowflake::fromBase64($previousId);
       else
-        $snowflake = $generator->generate(Snowflake::convertDateTimeToMillis($image['createdAt']->toDateTime()));
+        $snowflake = $generator->generate(Snowflake::convertDateTimeToMillis($image['createdAt']->toDateTime()) - $generator->getEpoch());
 
       $userSnowflake = Snowflake::fromBase64($image['user']);
       $image['user'] = $userSnowflake->toString();

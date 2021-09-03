@@ -41,15 +41,15 @@ final class Snowflake
   }
 
   // Get the timestamp of the snowflake as a DateTime
-  public function getTimestampAsDateTime(): \DateTime
+  public function getTimestampAsDateTime(int $epoch): \DateTime
   {
-    return self::convertMillisToDateTime($this->getTimestamp());
+    return self::convertMillisToDateTime($this->getTimestamp() + $epoch);
   }
 
   // Get the datacenter identifier of the snowflake
   public function getDatacenterId(): int
   {
-    return ($this->id >> self::DATACENTER_ID_MAX) & self::DATACENTER_ID_MAX;
+    return ($this->id >> self::DATACENTER_ID_SHIFT) & self::DATACENTER_ID_MAX;
   }
 
   // Get the worker identifier of the snowflake
@@ -139,7 +139,7 @@ final class Snowflake
   }
 
   // Convert milliseconds since the Unix epoch to a DateTime
-  public static function convertMillisToDateTime(int $millis): int
+  public static function convertMillisToDateTime(int $millis): \DateTime
   {
     $dateTime = new \DateTime();
     $dateTime->setTimestamp((int)floor($millis / 1000));
