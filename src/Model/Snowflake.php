@@ -87,7 +87,7 @@ final class Snowflake
   // Return the string representation of the snowflake
   public function __toString(): string
   {
-    return $this->asString();
+    return $this->toString();
   }
 
 

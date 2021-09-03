@@ -2,6 +2,7 @@
 namespace Danae\Faylin\Model\Traits;
 
 use Danae\Faylin\Model\Snowflake;
+use Danae\Faylin\Model\SnowflakeGenerator;
 
 
 // Trait that defines an entity

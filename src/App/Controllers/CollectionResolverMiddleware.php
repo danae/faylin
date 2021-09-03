@@ -9,6 +9,7 @@ use Slim\Exception\HttpBadRequestException;
 use Slim\Exception\HttpNotFoundException;
 
 use Danae\Faylin\Model\CollectionRepositoryInterface;
+use Danae\Faylin\Model\Snowflake;
 use Danae\Faylin\Utils\Traits\RouteContextTrait;
 
 
@@ -38,7 +39,7 @@ final class CollectionResolverMiddleware implements MiddlewareInterface
     if (($id = $route->getArgument('collectionId')) !== null)
     {
       // Get the collection from the repository
-      $collection = $this->collectionRepository->find($id);
+      $collection = $this->collectionRepository->find(Snowflake::fromString($id));
       if ($collection == null)
         throw new HttpNotFoundException($request, "A collection with id \"{$id}\" coud not be found");
 

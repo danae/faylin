@@ -11,7 +11,7 @@ interface ImageRepositoryInterface
   public function count(array $filter = [], array $options = []): int;
 
   // Find an image in the repository by its identifier
-  public function find(string $id, array $options = []): ?Image;
+  public function find(Snowflake $id, array $options = []): ?Image;
 
   // Find a single image in the repository
   public function findBy(array $filter = [], array $options = []): ?Image;

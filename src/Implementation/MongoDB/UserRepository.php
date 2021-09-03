@@ -31,9 +31,9 @@ final class UserRepository implements UserRepositoryInterface
   }
 
   // Get a user in the repository by its identifier
-  public function find(string $id, array $options = []): ?User
+  public function find(Snowflake $id, array $options = []): ?User
   {
-    $result = $this->getCollection()->findOne(['_id' => $id], $options);
+    $result = $this->getCollection()->findOne(['_id' => $id->toBase64()], $options);
 
     return $result !== null ? $this->denormalize($result) : null;
   }

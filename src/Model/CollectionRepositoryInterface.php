@@ -9,7 +9,7 @@ interface CollectionRepositoryInterface
   public function count(array $filter = [], array $options = []): int;
 
   // Find a collection in the repository by its identifier
-  public function find(string $id, array $options = []): ?Collection;
+  public function find(Snowflake $id, array $options = []): ?Collection;
 
   // Find a single collection in the repository
   public function findBy(array $filter = [], array $options = []): ?Collection;

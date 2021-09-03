@@ -1,8 +1,6 @@
 <?php
 namespace Danae\Faylin\Model\Traits;
 
-use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
-
 
 // Trait that defines an entity that has a name
 trait NamedEntityTrait
@@ -12,7 +10,7 @@ trait NamedEntityTrait
 
 
   // Get the name of the entity
-  public function getName(): ?Snowflake
+  public function getName(): ?string
   {
     return $this->name;
   }

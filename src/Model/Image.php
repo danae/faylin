@@ -137,7 +137,7 @@ final class Image implements NormalizableInterface
   {
     return [
       // Entity fields
-      'id' => $this->getId(),
+      'id' => $this->getId()->toString(),
       'name' => $this->getName(),
       'createdAt' => $normalizer->normalize($this->getCreatedAt(), $format, $context),
       'updatedAt' => $normalizer->normalize($this->getUpdatedAt(), $format, $context),

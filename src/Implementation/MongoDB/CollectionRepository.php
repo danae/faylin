@@ -47,9 +47,9 @@ final class CollectionRepository implements CollectionRepositoryInterface
   }
 
   // Find a collection in the repository by its identifier
-  public function find(string $id, array $options = []): ?Collection
+  public function find(Snowflake $id, array $options = []): ?Collection
   {
-    $result = $this->getCollection()->findOne(['_id' => $id], $options);
+    $result = $this->getCollection()->findOne(['_id' => $id->toBase64()], $options);
 
     return $result !== null ? $this->denormalize($result) : null;
   }
@@ -107,7 +107,7 @@ final class CollectionRepository implements CollectionRepositoryInterface
       'name' => $collection->getName(),
       'createdAt' => new UTCDateTime($collection->getCreatedAt()),
       'updatedAt' => new UTCDateTime($collection->getUpdatedAt()),
-      'user' => $collection->getUser()->getId(),
+      'user' => $collection->getUser()->getId()->toBase64(),
       'images' => new BSONArray(array_map(fn($image) => $image->getId(), $collection->getImages())),
       'description' => $collection->getDescription(),
       'public' => $collection->getPublic(),
@@ -122,7 +122,7 @@ final class CollectionRepository implements CollectionRepositoryInterface
       ->setName($document['name'])
       ->setCreatedAt($document['createdAt']->toDateTime())
       ->setUpdatedAt($document['updatedAt']->toDateTime())
-      ->setUser($this->userRepository->find($document['user']))
+      ->setUser($this->userRepository->find(Snowflake::fromBase64($document['user'])))
       ->setImages(array_map(fn($imageId) => $this->imageRepository->find($imageId), $document['images']->getArrayCopy()))
       ->setDescription($document['description'])
       ->setPublic($document['public']);

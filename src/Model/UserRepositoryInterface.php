@@ -9,7 +9,7 @@ interface UserRepositoryInterface
   public function count(array $filter = [], array $options = []): int;
 
   // Find a user in the repository by its identifier
-  public function find(string $id, array $options = []): ?User;
+  public function find(Snowflake $id, array $options = []): ?User;
 
   // Find a single user in the repository
   public function findBy(array $filter = [], array $options = []): ?User;

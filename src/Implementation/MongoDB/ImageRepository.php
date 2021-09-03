@@ -60,9 +60,9 @@ final class ImageRepository implements ImageRepositoryInterface
   }
 
   // Find an image in the repository by its identifier
-  public function find(string $id, array $options = []): ?Image
+  public function find(Snowflake $id, array $options = []): ?Image
   {
-    $result = $this->getCollection()->findOne(['_id' => $id], $options);
+    $result = $this->getCollection()->findOne(['_id' => $id->toBase64()], $options);
 
     return $result !== null ? $this->denormalize($result) : null;
   }
@@ -123,7 +123,7 @@ final class ImageRepository implements ImageRepositoryInterface
   public function writeFile(Image $image, StreamInterface $stream): void
   {
     $stream->rewind();
-    
+
     $contents = $stream->getContents();
     $contents = gzencode($contents);
     $this->getFilesystem()->write($this->getFileName($image), $contents);
@@ -144,7 +144,7 @@ final class ImageRepository implements ImageRepositoryInterface
       'name' => $image->getName(),
       'createdAt' => new UTCDateTime($image->getCreatedAt()),
       'updatedAt' => new UTCDateTime($image->getUpdatedAt()),
-      'user' => $image->getUser()->getId(),
+      'user' => $image->getUser()->getId()->toBase64(),
       'description' => $image->getDescription(),
       'public' => $image->getPublic(),
       'nsfw' => $image->getNsfw(),
@@ -162,7 +162,7 @@ final class ImageRepository implements ImageRepositoryInterface
       ->setName($document['name'])
       ->setCreatedAt($document['createdAt']->toDateTime())
       ->setUpdatedAt($document['updatedAt']->toDateTime())
-      ->setUser($this->userRepository->find($document['user']))
+      ->setUser($this->userRepository->find(Snowflake::fromBase64($document['user'])))
       ->setDescription($document['description'])
       ->setPublic($document['public'])
       ->setNsfw($document['nsfw'])

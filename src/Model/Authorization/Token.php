@@ -56,7 +56,7 @@ final class Token implements NormalizableInterface, DenormalizableInterface
     $data = [];
 
     $data['jti'] = $this->getId()->toString();
-    $data['sub'] = $this->getUser()->getId();
+    $data['sub'] = $this->getUser()->getId()->toString();
 
     if ($this->getCreatedAt() !== null)
       $data['iat'] = $this->getCreatedAt()->getTimestamp();
@@ -73,7 +73,7 @@ final class Token implements NormalizableInterface, DenormalizableInterface
       throw new NotNormalizableValueException("Data must be an array");
 
     $this->setId(Snowflake::fromString($data['jti']));
-    $this->setUser($context['userRepository']->find($data['sub']));
+    $this->setUser($context['userRepository']->find(Snowflake::fromString($data['sub'])));
 
     if (isset($data['iat']))
       $this->setCreatedAt((new \DateTime())->setTimestamp($data['iat']));

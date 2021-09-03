@@ -9,6 +9,7 @@ use Slim\Exception\HttpBadRequestException;
 use Slim\Exception\HttpNotFoundException;
 
 use Danae\Faylin\Model\ImageRepositoryInterface;
+use Danae\Faylin\Model\Snowflake;
 use Danae\Faylin\Utils\Traits\RouteContextTrait;
 
 
@@ -38,7 +39,7 @@ final class ImageResolverMiddleware implements MiddlewareInterface
     if (($id = $route->getArgument('imageId')) !== null)
     {
       // Get the image from the repository
-      $image = $this->imageRepository->find($id);
+      $image = $this->imageRepository->find(Snowflake::fromString($id));
       if ($image == null)
         throw new HttpNotFoundException($request, "An image with id \"{$id}\" coud not be found");
 

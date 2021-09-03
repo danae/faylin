@@ -8,6 +8,7 @@ use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
 use Slim\Exception\HttpBadRequestException;
 use Slim\Exception\HttpNotFoundException;
 
+use Danae\Faylin\Model\Snowflake;
 use Danae\Faylin\Model\UserRepositoryInterface;
 use Danae\Faylin\Utils\Traits\RouteContextTrait;
 
@@ -38,7 +39,7 @@ final class UserResolverMiddleware implements MiddlewareInterface
     if (($id = $route->getArgument('userId')) !== null);
     {
       // Get the user from the repository
-      $user = $this->userRepository->find($id);
+      $user = $this->userRepository->find(Snowflake::fromString($id));
       if ($user == null)
         throw new HttpNotFoundException($request, "A user with id \"{$id}\" coud not be found");
 
