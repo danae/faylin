@@ -3,6 +3,9 @@ vendor/
 node_modules/
 jspm_packages/
 
+# Documentation build directories
+docs/_build/
+
 # Local configuration files
 /config/*.php*
 !/config/*.php.example
