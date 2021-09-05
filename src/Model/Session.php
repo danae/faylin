@@ -95,11 +95,13 @@ final class Session implements NormalizableInterface
       'userAddress' => $this->getUserAddress(),
 
       // Additional fields
-      'current' => $this->getAccessToken() == $this->context['request']->getAttribute('authToken'),
-      'browser' => $browser->browser->toString(),
-      'engine' => $browser->engine->toString(),
-      'os' => $browser->os->toString(),
-      'device' => $browser->device->toString(),
+      'current' => $this->getAccessToken() == $context['request']->getAttribute('authToken'),
+      'info' => $browser->isDetected() ? [
+        'browser' => $browser->browser->toString() ?: null,
+        'engine' => $browser->engine->toString() ?: null,
+        'os' => $browser->os->toString() ?: null,
+        'device' => $browser->device->toString() ?: null,
+      ] : null,
     ];
   }
 }
