@@ -29,12 +29,16 @@ final class AuthorizationMiddleware implements MiddlewareInterface
     try
     {
       // Authorize the request and get the authorized user
-      $user = $this->authorize($request);
-      if ($user === null)
+      $attributes = $this->authorize($request);
+      if ($attributes === null)
         throw new HttpUnauthorizedException($request, "The request contains no acceptable authorization header");
 
+      // Set the attributes on the request
+      foreach ($attributes as $name => $value)
+        $request = $request->withAttribute($name, $value);
+
       // Handle the request with the user stored as an attribute
-      return $handler->handle($request->withAttribute('authUser', $user));
+      return $handler->handle($request);
     }
     catch (AuthorizationException $ex)
     {
@@ -58,7 +62,7 @@ final class AuthorizationMiddleware implements MiddlewareInterface
   }
 
   // Authorize a request and return the authorized user
-  public function authorize(Request $request): ?User
+  public function authorize(Request $request): ?array
   {
     // Iterate over the strategies
     foreach ($this->strategies as $strategy)

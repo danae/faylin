@@ -35,7 +35,7 @@ final class BasicAuthorizationStrategy implements AuthorizationStrategyInterface
   }
 
   // Return the authorized user from the request
-  public function authorize(Request $request): User
+  public function authorize(Request $request): array
   {
     // Check if this strategy is able to authorize the request
     if (!$this->canAuthorize($request))
@@ -51,8 +51,8 @@ final class BasicAuthorizationStrategy implements AuthorizationStrategyInterface
     if ($user == null)
       throw new AuthorizationException("The authorization credentials are incorrect");
 
-    // Return the user
-    return $user;
+    // Return the user and extra attributes
+    return ['authUser' => $user];
   }
 
 

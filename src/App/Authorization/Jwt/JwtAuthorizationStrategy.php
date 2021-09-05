@@ -37,7 +37,7 @@ final class JwtAuthorizationStrategy implements AuthorizationStrategyInterface
   }
 
   // Return the authorized user from the request
-  public function authorize(Request $request): User
+  public function authorize(Request $request): array
   {
     // Check if this strategy is able to authorize the request
     if (!$this->canAuthorize($request))
@@ -51,11 +51,8 @@ final class JwtAuthorizationStrategy implements AuthorizationStrategyInterface
     // Validate the token and get the associated user
     $user = $this->context->validate($token);
 
-    // Set the token as attribute on the request
-    $request = $request->withAttribute('authToken', $token);
-
-    // Return the user
-    return $user;
+    // Return the user and extra attributes
+    return ['authUser' => $user, 'authToken' => $token];
   }
 
 

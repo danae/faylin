@@ -202,7 +202,7 @@ final class UserController extends AbstractController
   public function getAuthorizedUserSessions(Request $request, Response $response, User $authUser)
   {
     // Get the sessions
-    $sessions = $this->sessionRepository->findManyBy(['user' => $authUser->getId()->toString()]);
+    $sessions = $this->sessionRepository->findManyBy(['user' => $authUser->getId()->toString()], ['sort' => ['createdAt' => -1]]);
 
     // Return the response
     return $this->serialize($request, $response, $sessions)

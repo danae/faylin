@@ -13,5 +13,5 @@ interface AuthorizationStrategyInterface
   public function canAuthorize(Request $request): bool;
 
   // Return the authorized user from the request
-  public function authorize(Request $request): User;
+  public function authorize(Request $request): array;
 }

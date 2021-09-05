@@ -82,6 +82,7 @@ final class Session implements NormalizableInterface
   public function normalize(NormalizerInterface $normalizer, string $format = null, array $context = []): array
   {
     $browser = new Parser($this->getUserAgent());
+    $token = $context['request']->getAttribute('authToken');
 
     return [
       // Entity fields
@@ -95,7 +96,7 @@ final class Session implements NormalizableInterface
       'userAddress' => $this->getUserAddress(),
 
       // Additional fields
-      'current' => $this->getAccessToken() == $context['request']->getAttribute('authToken'),
+      'current' => $token !== null && $token === $this->getAccessToken(),
       'info' => $browser->isDetected() ? [
         'browser' => $browser->browser->toString() ?: null,
         'engine' => $browser->engine->toString() ?: null,
