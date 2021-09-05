@@ -51,6 +51,11 @@ footer {
       @extend .mb-4;
     }
   }
+
+  // Table styling
+  .table {
+    background: transparent;
+  }
 }
 
 // Emoji styling
@@ -96,34 +101,27 @@ footer {
   @extend .has-text-centered;
 }
 
-// Bar styling
-.bar {
-  @extend .has-background-light;
-  @extend .m-0;
+// Horizontal separator styling
+hr {
+  @extend .has-background-grey-lighter;
+  @extend .mx-0;
+  @extend .my-5;
+
+  height: 1px;
+
+  &.bar {
+    @extend .has-background-light;
+    @extend .m-0;
+
+    height: 2px;
+  }
 }
 
 // Box styling
 .box {
-  &.dark {
-    border: 2px $dark solid;
-  }
-  &.is-primary {
-    border: 2px $primary solid;
-  }
-  &.is-link {
-    border: 2px $link solid;
-  }
-  &.is-info {
-    border: 2px $info solid;
-  }
-  &.is-success {
-    border: 2px $success solid;
-  }
-  &.is-warning {
-    border: 2px $warning solid;
-  }
-  &.is-danger {
-    border: 2px $danger solid;
+  &.is-panel {
+    @extend .is-shadowless;
+    @extend .has-background-light;
   }
 }
 

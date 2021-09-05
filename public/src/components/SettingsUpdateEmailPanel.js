@@ -1,7 +1,7 @@
 import PasswordConfirmMixin from '../mixins/PasswordConfirmMixin.js';
 
 
-// Settings update email form component
+// Settings update email panel component
 export default {
   // The mixins for the component
   mixins: [PasswordConfirmMixin],
@@ -63,19 +63,24 @@ export default {
 
   // The template for the component
   template: `
-    <div class="settings-update-email-form panel is-primary">
+    <div class="settings-update-email-panel mb-5">
       <form ref="form" @submit.prevent="onSubmit">
-        <p class="panel-heading">Update email address</p>
+        <p class="menu-label">
+          <span class="icon-text">
+            <b-icon icon="envelope" pack="fas"></b-icon>
+            <span>Update email address</span>
+          </span>
+        </p>
 
-        <div class="panel-block is-form">
+        <div class="box is-panel">
           <b-field label="Email address" custom-class="is-small">
             <b-input v-model="clientUserEmail" type="email" name="email"></b-input>
           </b-field>
-        </div>
 
-        <a class="panel-block" @click="$refs.form.requestSubmit()">
-          <b-icon icon="save" pack="fas" class="panel-icon"></b-icon> Save email address
-        </a>
+          <b-button type="is-primary" icon-left="save" icon-pack="fas" @click="$refs.form.requestSubmit()">
+            Save email address
+          </b-button>
+        </div>
       </form>
     </div>
   `

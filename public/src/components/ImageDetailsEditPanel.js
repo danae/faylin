@@ -101,18 +101,9 @@ export default {
               <b-field label="Description" label-for="description" custom-class="is-small">
                 <b-input v-model="image.description" type="textarea" name="description"></b-input>
               </b-field>
-            </div>
 
-            <div class="panel-block is-form">
-              <p class="menu-label">
-                <span class="icon-text">
-                  <b-icon icon="eye" pack="fas"></b-icon>
-                  <span>Visibility settings</span>
-                </span>
-              </p>
-
-              <b-field>
-                <b-switch v-model="image.public" size="is-small">Public</b-switch>
+              <b-field label="Visibility settings" custom-class="is-small" class="mb-0">
+                <b-switch v-model="image.public" size="is-small">Listed publicly</b-switch>
               </b-field>
 
               <b-field>

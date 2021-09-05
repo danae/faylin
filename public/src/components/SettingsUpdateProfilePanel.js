@@ -5,7 +5,12 @@ export default {
     // Event handler when the form is submitted
     onSubmit: async function(event) {
       // Send a patch request
-      await this.$root.client.patchAuthorizedUser({name: this.$root.clientUser.name});
+      await this.$root.client.patchAuthorizedUser({
+        name: this.$root.clientUser.name,
+        title: this.$root.clientUser.title,
+        description: this.$root.clientUser.description,
+        public: this.$root.clientUser.public,
+      });
 
       // Display a success message
       this.$displayMessage('Profile updated successfully');
@@ -14,19 +19,36 @@ export default {
 
   // The template for the component
   template: `
-    <div class="settings-update-email-form panel is-primary">
+    <div class="settings-update-email-panel mb-5">
       <form ref="form" @submit.prevent="onSubmit">
-        <p class="panel-heading">Update profile</p>
+        <p class="menu-label">
+          <span class="icon-text">
+            <b-icon icon="user-circle" pack="fas"></b-icon>
+            <span>Update profile</span>
+          </span>
+        </p>
 
-        <div class="panel-block is-form">
-          <b-field label="Name" custom-class="is-small">
-            <b-input v-model="$root.clientUser.name" type="text" name="name"></b-input>
+        <div class="box is-panel">
+          <b-field label="Name" message="This is the name as it appears in your profile URL." custom-class="is-small">
+            <b-input v-model="$root.clientUser.name" type="text" maxlength="32" name="name"></b-input>
           </b-field>
-        </div>
 
-        <a class="panel-block" @click="$refs.form.requestSubmit()">
-          <b-icon icon="save" pack="fas" class="panel-icon"></b-icon> Save profile
-        </a>
+          <b-field label="Display name" message="This is the name that is displayed at your profile, images and other resources." custom-class="is-small">
+            <b-input v-model="$root.clientUser.title" type="text" maxlength="64" name="title"></b-input>
+          </b-field>
+
+          <b-field label="Description" custom-class="is-small">
+            <b-input v-model="$root.clientUser.description" type="textarea" maxlength="256" name="description"></b-input>
+          </b-field>
+
+          <b-field label="Visibility settings" custom-class="is-small">
+            <b-switch v-model="$root.clientUser.public" size="is-small">Listed publicly</b-switch>
+          </b-field>
+
+          <b-button type="is-primary" icon-left="save" icon-pack="fas" @click="$refs.form.requestSubmit()">
+            Save profile
+          </b-button>
+        </div>
       </form>
     </div>
   `

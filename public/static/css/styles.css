@@ -9296,7 +9296,7 @@ a.has-text-light:hover, a.has-text-light:focus {
   color: #c8e7ee !important;
 }
 
-.has-background-light, .bar {
+.has-background-light, hr.bar, .box.is-panel, .page .image-details-image img.is-panel, .page .image-thumbnail-image img.is-panel, .page .collection-thumbnail-image img.is-panel {
   background-color: #EFF8FA !important;
 }
 
@@ -9616,7 +9616,7 @@ a.has-text-primary-light-dark:hover, a.has-text-primary-light-dark:focus {
   color: #dbdbdb !important;
 }
 
-.has-background-grey-lighter {
+.has-background-grey-lighter, hr {
   background-color: #dbdbdb !important;
 }
 
@@ -9870,7 +9870,7 @@ a.has-text-primary-light-dark:hover, a.has-text-primary-light-dark:focus {
   border-radius: 0 !important;
 }
 
-.is-shadowless, .page .image-thumbnail-image img, .page .collection-thumbnail-image img {
+.is-shadowless, .box.is-panel, .page .image-details-image img.is-panel, .page .image-thumbnail-image img, .page .collection-thumbnail-image img {
   box-shadow: none !important;
 }
 
@@ -9895,7 +9895,7 @@ a.has-text-primary-light-dark:hover, a.has-text-primary-light-dark:focus {
   padding: 0 !important;
 }
 
-.m-0, .bar {
+.m-0, hr.bar {
   margin: 0 !important;
 }
 
@@ -9915,7 +9915,7 @@ a.has-text-primary-light-dark:hover, a.has-text-primary-light-dark:focus {
   margin-left: 0 !important;
 }
 
-.mx-0, .content .image, .page .image-thumbnail-image, .page .collection-thumbnail-image {
+.mx-0, .content .image, hr, .page .image-thumbnail-image, .page .collection-thumbnail-image {
   margin-left: 0 !important;
   margin-right: 0 !important;
 }
@@ -10070,7 +10070,7 @@ a.has-text-primary-light-dark:hover, a.has-text-primary-light-dark:focus {
   margin-right: 1.5rem !important;
 }
 
-.my-5 {
+.my-5, hr {
   margin-top: 1.5rem !important;
   margin-bottom: 1.5rem !important;
 }
@@ -18669,6 +18669,10 @@ main {
   }
 }
 
+.content .table {
+  background: transparent;
+}
+
 .emoji {
   display: inline-block;
   height: 1em;
@@ -18686,32 +18690,12 @@ main {
   max-height: 15rem;
 }
 
-.box.dark, .page .image-details-image img.dark, .page .image-thumbnail-image img.dark, .page .collection-thumbnail-image img.dark {
-  border: 2px #2A3D45 solid;
+hr {
+  height: 1px;
 }
 
-.box.is-primary, .page .image-details-image img.is-primary, .page .image-thumbnail-image img.is-primary, .page .collection-thumbnail-image img.is-primary {
-  border: 2px #5EB2CE solid;
-}
-
-.box.is-link, .page .image-details-image img.is-link, .page .image-thumbnail-image img.is-link, .page .collection-thumbnail-image img.is-link {
-  border: 2px #5EB2CE solid;
-}
-
-.box.is-info, .page .image-details-image img.is-info, .page .image-thumbnail-image img.is-info, .page .collection-thumbnail-image img.is-info {
-  border: 2px #ADD8E6 solid;
-}
-
-.box.is-success, .page .image-details-image img.is-success, .page .image-thumbnail-image img.is-success, .page .collection-thumbnail-image img.is-success {
-  border: 2px #B0DB43 solid;
-}
-
-.box.is-warning, .page .image-details-image img.is-warning, .page .image-thumbnail-image img.is-warning, .page .collection-thumbnail-image img.is-warning {
-  border: 2px #F49E4C solid;
-}
-
-.box.is-danger, .page .image-details-image img.is-danger, .page .image-thumbnail-image img.is-danger, .page .collection-thumbnail-image img.is-danger {
-  border: 2px #AB3428 solid;
+hr.bar {
+  height: 2px;
 }
 
 .panel a.panel-block:hover {

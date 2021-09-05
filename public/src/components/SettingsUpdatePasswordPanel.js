@@ -1,7 +1,7 @@
 import PasswordConfirmMixin from '../mixins/PasswordConfirmMixin.js';
 
 
-// Settings update password form component
+// Settings update password panel component
 export default {
   // The mixins for the component
   mixins: [PasswordConfirmMixin],
@@ -54,11 +54,16 @@ export default {
 
   // The template for the component
   template: `
-    <div class="settings-update-password-form panel is-primary">
+    <div class="settings-update-password-panel mb-5">
       <form ref="form" @submit.prevent="onSubmit">
-        <p class="panel-heading">Update password</p>
+        <p class="menu-label">
+          <span class="icon-text">
+            <b-icon icon="key" pack="fas"></b-icon>
+            <span>Update password</span>
+          </span>
+        </p>
 
-        <div class="panel-block is-form">
+        <div class="box is-panel">
           <b-field label="New password" custom-class="is-small">
             <b-input type="password" name="password"></b-input>
           </b-field>
@@ -66,11 +71,11 @@ export default {
           <b-field label="Repeat new password" custom-class="is-small">
             <b-input type="password" name="passwordRepeat"></b-input>
           </b-field>
-        </div>
 
-        <a class="panel-block" @click="$refs.form.requestSubmit()">
-          <b-icon icon="save" pack="fas" class="panel-icon"></b-icon> Save password
-        </a>
+          <b-button type="is-primary" icon-left="save" icon-pack="fas" @click="$refs.form.requestSubmit()">
+            Save password
+          </b-button>
+        </div>
       </form>
     </div>
   `

@@ -2,7 +2,7 @@ import ClientErrorCaptureMixin from '../mixins/ClientErrorCaptureMixin.js';
 import PasswordConfirmMixin from '../mixins/PasswordConfirmMixin.js';
 
 
-// Settings delete account form component
+// Settings delete account panel component
 export default {
   // The mixins for the component
   mixins: [PasswordConfirmMixin, ClientErrorCaptureMixin],
@@ -61,17 +61,20 @@ export default {
 
   // The template for the component
   template: `
-    <div class="settings-update-password-form panel is-danger">
+    <div class="settings-update-password-panel mb-5">
       <form ref="form" @submit.prevent="onSubmit">
-        <p class="panel-heading">Delete account</p>
+        <p class="menu-label">
+          <span class="icon-text">
+            <b-icon icon="trash-alt" pack="fas"></b-icon>
+            <span>Delete account</span>
+          </span>
+        </p>
 
-        <div class="panel-block">
-          <p>If you delete your account, all of your associated data, including shared images, will be removed forever, which is a long time! Please note that deleted accounts and their shared images can't be recovered!</p>
-        </div>
+        <p>If you delete your account, all of your associated data, including shared images, will be removed forever, which is a long time! Please note that deleted accounts and their shared images can't be recovered!</p>
 
-        <a class="panel-block has-text-danger" @click="$refs.form.requestSubmit()">
-          <b-icon icon="trash-alt" pack="fas" type="is-danger" class="panel-icon"></b-icon> Delete account
-        </a>
+        <b-button type="is-danger" icon-left="trash-alt" icon-pack="fas" @click="$refs.form.requestSubmit()">
+          Delete account
+        </b-button>
       </form>
     </div>
   `

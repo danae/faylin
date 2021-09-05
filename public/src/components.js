@@ -9,6 +9,7 @@ import ImageDetailsEditPanel from './components/ImageDetailsEditPanel.js';
 import ImageThumbnail from './components/ImageThumbnail.js';
 import ImageThumbnailList from './components/ImageThumbnailList.js';
 import SettingsDeleteAccountPanel from './components/SettingsDeleteAccountPanel.js';
+import SettingsSessionsPanel from './components/SettingsSessionsPanel.js';
 import SettingsUpdateEmailPanel from './components/SettingsUpdateEmailPanel.js';
 import SettingsUpdatePasswordPanel from './components/SettingsUpdatePasswordPanel.js';
 import SettingsUpdateProfilePanel from './components/SettingsUpdateProfilePanel.js';
@@ -34,6 +35,7 @@ const components =  {
   ImageThumbnail,
   ImageThumbnailList,
   SettingsDeleteAccountPanel,
+  SettingsSessionsPanel,
   SettingsUpdateEmailPanel,
   SettingsUpdatePasswordPanel,
   SettingsUpdateProfilePanel,
