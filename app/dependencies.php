@@ -1,5 +1,8 @@
 <?php
 use DI\ContainerBuilder;
+use Lcobucci\JWT\Configuration as JwtConfiguration;
+use Lcobucci\JWT\Signer\Hmac\Sha256;
+use Lcobucci\JWT\Signer\Key\InMemory;
 use League\Flysystem\Filesystem;
 use MongoDB\Client;
 use Psr\Container\ContainerInterface;
@@ -90,10 +93,13 @@ return function(ContainerBuilder $containerBuilder)
       ->constructorParameter('fileNameFormat', DI\get('store.imageTransformCacheFileNameFormat')),
     ImageTransformExecutorInterface::class => DI\autowire(ImageTransformExecutor::class),
 
+    // Dependencies for authorization
+    JwtConfiguration::class => function(ContainerInterface $container) {
+      return JwtConfiguration::forSymmetricSigner(new Sha256(), InMemory::base64Encoded($container->get('authorization.signKey')));
+    },
+
     // Authorization
-    JwtAuthorizationContext::class => DI\autowire()
-      ->constructorParameter('key', DI\get('authorization.signKey'))
-      ->constructorParameter('algorithm', 'HS256'),
+    JwtAuthorizationContext::class => DI\autowire(),
     JwtAuthorizationStrategy::class => DI\autowire(),
     AuthorizationMiddleware::class => function(ContainerInterface $container) {
       return new AuthorizationMiddleware([$container->get(JwtAuthorizationStrategy::class)]);

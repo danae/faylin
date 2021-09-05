@@ -24,7 +24,7 @@
     "symfony/property-access": "^5.0",
     "symfony/serializer": "^5.0",
     "league/flysystem": "^2.0",
-    "firebase/php-jwt": "^5.4",
+    "lcobucci/jwt": "^4.1",
     "whichbrowser/parser": "^2.1",
     "imagecow/imagecow": "^2.4"
   },

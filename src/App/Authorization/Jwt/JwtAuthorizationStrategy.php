@@ -48,14 +48,14 @@ final class JwtAuthorizationStrategy implements AuthorizationStrategyInterface
     if (empty($token))
       throw new AuthorizationException("The request contains an invalid authorization header");
 
-    // Get the token and its associated user
-    $token = $this->context->decode($token);
+    // Validate the token and get the associated user
+    $user = $this->context->validate($token);
 
     // Set the token as attribute on the request
     $request = $request->withAttribute('authToken', $token);
 
     // Return the user
-    return $token->getUser();
+    return $user;
   }
 
 

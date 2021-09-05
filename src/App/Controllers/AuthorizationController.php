@@ -5,6 +5,7 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Exception\HttpBadRequestException;
 
+use Danae\Faylin\Model\Session;
 use Danae\Faylin\Model\User;
 use Danae\Faylin\Model\Authorization\Token;
 use Danae\Faylin\Model\SnowflakeGenerator;
@@ -23,7 +24,7 @@ final class AuthorizationController extends AbstractController
   {
     // Get and validate the parameters
     $params = (new Validator())
-      ->withRequired('username', 'string|notempty|maxlength:32')
+      ->withRequired('username', 'string|notempty')
       ->withRequired('password', 'string|notempty')
       ->validate($request->getParsedBody())
       ->resultOrThrowBadRequest($request);
@@ -33,20 +34,22 @@ final class AuthorizationController extends AbstractController
     if ($user === null)
       throw new HttpBadRequestException($request, "The combination of username and password is incorrect");
 
-    // Create a token
-    $token = new Token();
-    $token->generateId($snowflakeGenerator);
-    $token->setUser($user);
-    $token->setExpiresAt(new \DateTime('60 minutes'));;
+    // Issue a token for the user
+    $token = $this->authorizationContext->issueFor($snowflakeGenerator->generate(), $user);
 
-    // Encode the token
-    $token = $this->authorizationContext->encode($token);
+    // Create a session for the token
+    $session = new Session();
+    $session->generateId($snowflakeGenerator);
+    $session->setUser($user);
+    $session->setUserAgent($request->getServerParams()['HTTP_USER_AGENT']);
+    $session->setUserAddress($request->getServerParams()['REMOTE_ADDR']);
+    $session->setAccessToken($token);
 
-    // Create the body
-    $body = ['token' => $token];
+    // Insert the session in the repository
+    $this->sessionRepository->insert($session);
 
     // Return the response
-    return $this->serialize($request, $response, $body)
+    return $this->serialize($request, $response, ['accessToken' => $token])
       ->withStatus(200);
   }
 }
