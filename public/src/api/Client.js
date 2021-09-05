@@ -94,8 +94,8 @@ export default class Client
   async authorizeWithUserCredentials(username, password)
   {
     const response = await this.rest.post('/api/v1/token', {username: username, password: password});
-    this.token = response.token;
-    return response.token;
+    this.token = response.accessToken;
+    return response.accessToken;
   }
 
   // Return the capabilities of the API
