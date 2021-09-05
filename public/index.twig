@@ -40,7 +40,7 @@
       <b-navbar type="is-white" wrapper-class="container">
         <!-- Navbar brand and burger button -->
         <template #brand>
-          <b-navbar-item tag="router-link" :to="{name: 'home'}" class="has-text-primary-light">
+          <b-navbar-item tag="router-link" to="/" class="has-text-primary-light">
             <span class="icon-text">
               <b-icon pack="fas" icon="igloo" size="fa-2x"></b-icon>
               <span class="has-text-weight-bold">fayl.in</span>
@@ -58,7 +58,7 @@
               </span>
             </b-navbar-item>
 
-            <b-navbar-item tag="router-link" :to="{name: 'settings'}" key="settings">
+            <b-navbar-item tag="router-link" to="/settings" key="settings">
               <span class="icon-text">
                 <b-icon pack="fas" icon="cog"></b-icon>
                 <span>Settings</span>
@@ -67,7 +67,7 @@
           </template>
 
           <template v-else>
-            <b-navbar-item tag="router-link" :to="{name: 'login'}" key="login">
+            <b-navbar-item tag="router-link" to="/login" key="login">
               <span class="icon-text">
                 <b-icon pack="fas" icon="sign-in-alt"></b-icon>
                 <span>Log in</span>

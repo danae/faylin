@@ -1,11 +1,11 @@
 // Settings route component
 export default {
-  // The data for the route
-  data: function() {
-    return {
-      // The current settings page
-      settings: 'user/account',
-    }
+  // The computed data for the route
+  computed: {
+    // The settings page
+    page: function() {
+      return this.$route.params.page ?? 'user/account'
+    },
   },
 
   // Hook when the component is created
@@ -25,27 +25,27 @@ export default {
             <div class="column is-3">
               <b-menu>
                 <b-menu-list label="User settings">
-                  <b-menu-item label="Account" :active="settings == 'user/account'" @click="settings = 'user/account'"></b-menu-item>
-                  <b-menu-item label="Profile" :active="settings == 'user/profile'" @click="settings = 'user/profile'"></b-menu-item>
-                  <b-menu-item label="Sessions" :active="settings == 'user/sessions'" @click="settings = 'user/sessions'"></b-menu-item>
+                  <b-menu-item label="Account" tag="router-link" to="/settings/user/account" :active="page === 'user/account'"></b-menu-item>
+                  <b-menu-item label="Profile" tag="router-link" to="/settings/user/profile" :active="page === 'user/profile'"></b-menu-item>
+                  <b-menu-item label="Sessions" tag="router-link" to="/settings/user/sessions" :active="page === 'user/sessions'"></b-menu-item>
                 </b-menu-list>
 
                 <b-menu-list label="Actions">
-                  <b-menu-item label="Log out" tag="router-link" :to="{name: 'logout'}">Log out</b-menu-item>
+                  <b-menu-item label="Log out" tag="router-link" to="/logout">Log out</b-menu-item>
                 </b-menu-list>
               </b-menu>
             </div>
 
             <div class="column is-9 content">
-              <template v-if="settings == 'user/account'">
+              <template v-if="page == 'user/account'">
                 <settings-user-account></settings-user-account>
               </template>
 
-              <template v-if="settings == 'user/profile'">
+              <template v-if="page == 'user/profile'">
                 <settings-user-profile></settings-user-profile>
               </template>
 
-              <template v-if="settings == 'user/sessions'">
+              <template v-if="page == 'user/sessions'">
                 <settings-user-sessions></settings-user-sessions>
               </template>
             </div>
