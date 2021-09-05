@@ -57,27 +57,16 @@ export default {
             {{ formatDate(props.row.createdAt) }}
           </b-table-column>
 
-          <b-table-column field="device" label="Device" width="40%" v-slot="props">
+          <b-table-column field="browser" label="Browser" width="40%" v-slot="props">
             <template v-if="props.row.info">
-              <template v-if="props.row.info.browser">
-                <p class="mb-0">
-                  <b-icon icon="window-maximize" pack="far" size="is-small"></b-icon>
-                  {{ props.row.info.browser }}
-                </p>
-              </template>
+              {{ props.row.info.browser }}
 
               <template v-if="props.row.info.os">
-                <p class="mb-0">
-                  <b-icon icon="cog" pack="fas" size="is-small"></b-icon>
-                  {{ props.row.info.os }}
-                </p>
+                on {{ props.row.info.os }}
               </template>
 
               <template v-if="props.row.info.device">
-                <p class="mb-0">
-                  <b-icon icon="mobile-alt" pack="fas" size="is-small"></b-icon>
-                  {{ props.row.info.device }}
-                </p>
+                ({{ props.row.info.device }})
               </template>
             </template>
 
