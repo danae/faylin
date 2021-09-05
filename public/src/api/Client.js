@@ -2,6 +2,7 @@ import ClientError from './ClientError.js';
 import Collection from './Collection.js';
 import Image from './Image.js';
 import Rest from './Rest.js';
+import Session from './Session.js';
 import User from './User.js';
 
 
@@ -272,6 +273,26 @@ export default class Client
   async deleteAuthorizedUser(currentPassword)
   {
     await this.rest.delete(`/api/v1/me`, {currentPassword});
+  }
+
+  // Get all sessions owned by the authorized user
+  async getAuthorizedUserSessions()
+  {
+    const response = await this.rest.get(`/api/v1/me/sessions/`);
+    return response.map(data => new Session(data));
+  }
+
+  // Get a session owned by the authorized user
+  async getAuthorizedUserSession(sessionId)
+  {
+    const response = await this.rest.get(`/api/v1/me/sessions/${sessionId}`);
+    return new Session(response);
+  }
+
+  // Delete a session owned by the authorized user
+  async deleteAuthorizedUserSession(sessionId)
+  {
+    await this.rest.delete(`/api/v1/me/sessions/${sessionId}`);
   }
 
   // Get all collections owned by the authorized user

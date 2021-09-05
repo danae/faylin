@@ -27,6 +27,7 @@ export default {
                 <b-menu-list label="User settings">
                   <b-menu-item label="Account" :active="settings == 'user/account'" @click="settings = 'user/account'"></b-menu-item>
                   <b-menu-item label="Profile" :active="settings == 'user/profile'" @click="settings = 'user/profile'"></b-menu-item>
+                  <b-menu-item label="Sessions" :active="settings == 'user/sessions'" @click="settings = 'user/sessions'"></b-menu-item>
                 </b-menu-list>
 
                 <b-menu-list label="Actions">
@@ -42,6 +43,10 @@ export default {
 
               <template v-if="settings == 'user/profile'">
                 <settings-user-profile></settings-user-profile>
+              </template>
+
+              <template v-if="settings == 'user/sessions'">
+                <settings-user-sessions></settings-user-sessions>
               </template>
             </div>
           </div>

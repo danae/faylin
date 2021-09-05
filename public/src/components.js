@@ -14,6 +14,7 @@ import SettingsUpdatePasswordPanel from './components/SettingsUpdatePasswordPane
 import SettingsUpdateProfilePanel from './components/SettingsUpdateProfilePanel.js';
 import SettingsUserAccount from './components/SettingsUserAccount.js';
 import SettingsUserProfile from './components/SettingsUserProfile.js';
+import SettingsUserSessions from './components/SettingsUserSessions.js';
 import UploadForm from './components/UploadForm.js';
 import UserDetails from './components/UserDetails.js';
 import UserThumbnail from './components/UserThumbnail.js';
@@ -38,6 +39,7 @@ const components =  {
   SettingsUpdateProfilePanel,
   SettingsUserAccount,
   SettingsUserProfile,
+  SettingsUserSessions,
   UploadForm,
   UserDetails,
   UserThumbnail,

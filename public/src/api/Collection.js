@@ -25,7 +25,7 @@ export default class Collection
     this.images = data.images.map(image => image instanceof Image ? image : new Image(image));
   }
 
-  // Return the string representation of the image
+  // Return the string representation of the collection
   toString()
   {
     return this.title;
