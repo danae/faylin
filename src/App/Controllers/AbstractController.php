@@ -25,6 +25,9 @@ abstract class AbstractController
   // The image transform store to use with the controller
   protected $imageTransformStore;
 
+  // The session repository to use with the controller
+  protected $sessionRepository;
+
   // The user repository to use with the controller
   protected $userRepository;
 
@@ -54,6 +57,7 @@ abstract class AbstractController
       'imageStore' => $this->imageStore,
       'imageTransformExecutor' => $this->imageTransformExecutor,
       'imageTransformStore' => $this->imageTransformStore,
+      'sessionRepository' => $this->sessionRepository,
       'userRepository' => $this->userRepository,
       'capabilities' => $this->capabilities,
       'json_encode_options' => JSON_PRETTY_PRINT | JSON_THROW_ON_ERROR,

@@ -33,12 +33,14 @@ use Danae\Faylin\Implementation\Flysystem\ImageTransformExecutor;
 use Danae\Faylin\Implementation\Flysystem\ImageTransformStore;
 use Danae\Faylin\Implementation\MongoDB\CollectionRepository;
 use Danae\Faylin\Implementation\MongoDB\ImageRepository;
+use Danae\Faylin\Implementation\MongoDB\SessionRepository;
 use Danae\Faylin\Implementation\MongoDB\UserRepository;
 use Danae\Faylin\Model\CollectionRepositoryInterface;
 use Danae\Faylin\Model\ImageRepositoryInterface;
 use Danae\Faylin\Model\ImageStoreInterface;
 use Danae\Faylin\Model\ImageTransformExecutorInterface;
 use Danae\Faylin\Model\ImageTransformStoreInterface;
+use Danae\Faylin\Model\SessionRepositoryInterface;
 use Danae\Faylin\Model\SnowflakeGenerator;
 use Danae\Faylin\Model\UserRepositoryInterface;
 
@@ -68,6 +70,9 @@ return function(ContainerBuilder $containerBuilder)
     ImageRepositoryInterface::class => DI\autowire(ImageRepository::class)
       ->constructorParameter('databaseName', DI\get('mongodb.database'))
       ->constructorParameter('collectionName', DI\get('mongodb.collection.images')),
+    SessionRepositoryInterface::class => DI\autowire(SessionRepository::class)
+      ->constructorParameter('databaseName', DI\get('mongodb.database'))
+      ->constructorParameter('collectionName', DI\get('mongodb.collection.sessions')),
     UserRepositoryInterface::class => DI\autowire(UserRepository::class)
       ->constructorParameter('databaseName', DI\get('mongodb.database'))
       ->constructorParameter('collectionName', DI\get('mongodb.collection.users')),
@@ -115,6 +120,7 @@ return function(ContainerBuilder $containerBuilder)
       ->property('imageStore', DI\get(ImageStoreInterface::class))
       ->property('imageTransformExecutor', DI\get(ImageTransformExecutorInterface::class))
       ->property('imageTransformStore', DI\get(ImageTransformStoreInterface::class))
+      ->property('sessionRepository', DI\get(SessionRepositoryInterface::class))
       ->property('userRepository', DI\get(UserRepositoryInterface::class))
       ->property('serializer', DI\get(Serializer::class))
       ->property('capabilities', DI\get(Capabilities::class))
@@ -125,6 +131,7 @@ return function(ContainerBuilder $containerBuilder)
       ->property('imageStore', DI\get(ImageStoreInterface::class))
       ->property('imageTransformExecutor', DI\get(ImageTransformExecutorInterface::class))
       ->property('imageTransformStore', DI\get(ImageTransformStoreInterface::class))
+      ->property('sessionRepository', DI\get(SessionRepositoryInterface::class))
       ->property('userRepository', DI\get(UserRepositoryInterface::class))
       ->property('serializer', DI\get(Serializer::class))
       ->property('capabilities', DI\get(Capabilities::class)),
@@ -134,6 +141,7 @@ return function(ContainerBuilder $containerBuilder)
       ->property('imageStore', DI\get(ImageStoreInterface::class))
       ->property('imageTransformExecutor', DI\get(ImageTransformExecutorInterface::class))
       ->property('imageTransformStore', DI\get(ImageTransformStoreInterface::class))
+      ->property('sessionRepository', DI\get(SessionRepositoryInterface::class))
       ->property('userRepository', DI\get(UserRepositoryInterface::class))
       ->property('serializer', DI\get(Serializer::class))
       ->property('capabilities', DI\get(Capabilities::class)),
@@ -143,6 +151,7 @@ return function(ContainerBuilder $containerBuilder)
       ->property('imageStore', DI\get(ImageStoreInterface::class))
       ->property('imageTransformExecutor', DI\get(ImageTransformExecutorInterface::class))
       ->property('imageTransformStore', DI\get(ImageTransformStoreInterface::class))
+      ->property('sessionRepository', DI\get(SessionRepositoryInterface::class))
       ->property('userRepository', DI\get(UserRepositoryInterface::class))
       ->property('serializer', DI\get(Serializer::class))
       ->property('capabilities', DI\get(Capabilities::class)),
@@ -152,6 +161,7 @@ return function(ContainerBuilder $containerBuilder)
       ->property('imageStore', DI\get(ImageStoreInterface::class))
       ->property('imageTransformExecutor', DI\get(ImageTransformExecutorInterface::class))
       ->property('imageTransformStore', DI\get(ImageTransformStoreInterface::class))
+      ->property('sessionRepository', DI\get(SessionRepositoryInterface::class))
       ->property('userRepository', DI\get(UserRepositoryInterface::class))
       ->property('serializer', DI\get(Serializer::class))
       ->property('capabilities', DI\get(Capabilities::class)),

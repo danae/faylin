@@ -18,6 +18,7 @@ return function(ContainerBuilder $containerBuilder)
   $settings['mongodb.database'] = 'faylin';
   $settings['mongodb.collection.collections'] = 'collections';
   $settings['mongodb.collection.images'] = 'images';
+  $settings['mongodb.collection.sessions'] = 'sessions';
   $settings['mongodb.collection.users'] = 'users';
 
   // Set default store settings

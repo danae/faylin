@@ -36,6 +36,9 @@ $settings['mongodb.collection.collections'] = 'collections';
 // The name of the MongoDB collection where images are stored, specified as a string
 $settings['mongodb.collection.images'] = 'images';
 
+// The name of the MongoDB collection where sessions are stored, specified as a string
+$settings['mongodb.collection.sessions'] = 'sessions';
+
 // The name of the MongoDB collection where users are stored, specified as a string
 $settings['mongodb.collection.users'] = 'users';
 
