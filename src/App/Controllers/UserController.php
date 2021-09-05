@@ -7,6 +7,7 @@ use Slim\Exception\HttpBadRequestException;
 use Slim\Exception\HttpForbiddenException;
 use Symfony\Component\Serializer\Serializer;
 
+use Danae\Faylin\Model\Session;
 use Danae\Faylin\Model\User;
 use Danae\Faylin\Validator\Validator;
 
@@ -191,6 +192,46 @@ final class UserController extends AbstractController
 
     // Remove the user from the repository
     $this->userRepository->delete($authUser);
+
+    // Return the response
+    return $response
+      ->withStatus(204);
+  }
+
+  // Return all sessions owned by the authorized user as a JSON response
+  public function getAuthorizedUserSessions(Request $request, Response $response, User $authUser)
+  {
+    // Get the sessions
+    $sessions = $this->sessionRepository->findManyBy(['user' => $authUser->getId()->toString()]);
+
+    // Return the response
+    return $this->serialize($request, $response, $sessions)
+      ->withStatus(200);
+  }
+
+  // Return a session owned by the authorized user as a JSON response
+  public function getAuthorizedUserSession(Request $request, Response $response, User $authUser, string $sessionId)
+  {
+    // Get the session
+    $session = $this->sessionRepository->findBy(['_id' => $sessionId, 'user' => $authUser->getId()->toString()]);
+    if ($session == null)
+      throw new HttpNotFoundException($request, "A session with id \"{$sessionId}\" coud not be found");
+
+    // Return the response
+    return $this->serialize($request, $response, $session)
+      ->withStatus(200);
+  }
+
+  // Delete a session owned by the authorized user
+  public function deleteAuthorizedUserSession(Request $request, Response $response, User $authUser, string $sessionId)
+  {
+    // Get the session
+    $session = $this->sessionRepository->findBy(['_id' => $sessionId, 'user' => $authUser->getId()->toString()]);
+    if ($session == null)
+      throw new HttpNotFoundException($request, "A session with id \"{$sessionId}\" coud not be found");
+
+    // Remove the session from the repository
+    $this->sessionRepository->delete($session);
 
     // Return the response
     return $response

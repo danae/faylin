@@ -182,6 +182,21 @@ return function(App $app)
         ->add(AuthorizationMiddleware::class)
         ->setName('me.delete');
 
+      // Return all sessions owned by the authorized user as a JSON response
+      $group->get('/sessions/', [UserController::class, 'getAuthorizedUserSessions'])
+        ->add(AuthorizationMiddleware::class)
+        ->setName('me.sessions.index');
+
+      // Return a session owned by the authorized user as a JSON response
+      $group->get('/sessions/{sessionId}', [UserController::class, 'getAuthorizedUserSession'])
+        ->add(AuthorizationMiddleware::class)
+        ->setName('me.sessions.get');
+
+      // Delete a session owned by the authorized user
+      $group->delete('/sessions/{sessionId}', [UserController::class, 'deleteAuthorizedUserSession'])
+        ->add(AuthorizationMiddleware::class)
+        ->setName('me.sessions.delete');
+
       // Return all collections owned by the authorized user as a JSON response
       $group->get('/collections/', [UserController::class, 'getAuthorizedUserCollections'])
         ->add(AuthorizationMiddleware::class)

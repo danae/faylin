@@ -13,7 +13,7 @@ use Danae\Faylin\Model\Snowflake;
 use Danae\Faylin\Utils\Traits\RouteContextTrait;
 
 
-// Middleware that resolves an collection from the repository and adds it to the request as an attribute
+// Middleware that resolves a collection from the repository and adds it to the request as an attribute
 final class CollectionResolverMiddleware implements MiddlewareInterface
 {
   use RouteContextTrait;
