@@ -30,19 +30,19 @@ export default {
 
         <div class="box is-panel">
           <b-field label="Name" message="This is the name as it appears in your profile URL." custom-class="is-small">
-            <b-input v-model="$root.clientUser.name" type="text" maxlength="32" name="name"></b-input>
+            <b-input v-model="$root.clientUser.name" type="text" maxlength="32" :has-counter="false" name="name"></b-input>
           </b-field>
 
           <b-field label="Display name" message="This is the name that is displayed at your profile, images and other resources." custom-class="is-small">
-            <b-input v-model="$root.clientUser.title" type="text" maxlength="64" name="title"></b-input>
+            <b-input v-model="$root.clientUser.title" type="text" maxlength="64" :has-counter="false" name="title"></b-input>
           </b-field>
 
           <b-field label="Description" custom-class="is-small">
-            <b-input v-model="$root.clientUser.description" type="textarea" maxlength="256" name="description"></b-input>
+            <b-input v-model="$root.clientUser.description" type="textarea" maxlength="256" :has-counter="false" name="description"></b-input>
           </b-field>
 
           <b-field label="Visibility settings" custom-class="is-small">
-            <b-switch v-model="$root.clientUser.public" size="is-small">Listed publicly</b-switch>
+            <b-switch v-model="$root.clientUser.public">Listed publicly</b-switch>
           </b-field>
 
           <b-button type="is-primary" icon-left="save" icon-pack="fas" @click="$refs.form.requestSubmit()">

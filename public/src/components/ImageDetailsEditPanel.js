@@ -90,34 +90,30 @@ export default {
     <div class="image-edit-panel">
       <template v-if="image">
         <form @submit.prevent="patchImage()">
-          <div class="panel is-primary">
-            <p class="panel-heading">Edit image</p>
+          <div class="box is-panel">
+            <b-field label="Title" label-for="title" custom-class="is-small">
+              <b-input v-model="image.title" type="text" maxlength="64" :has-counter="false" name="title"></b-input>
+            </b-field>
 
-            <div class="panel-block is-form">
-              <b-field label="Title" label-for="title" custom-class="is-small">
-                <b-input v-model="image.title" type="text" name="title"></b-input>
-              </b-field>
+            <b-field label="Description" label-for="description" custom-class="is-small">
+              <b-input v-model="image.description" type="textarea" maxlength="256" :has-counter="false" name="description"></b-input>
+            </b-field>
 
-              <b-field label="Description" label-for="description" custom-class="is-small">
-                <b-input v-model="image.description" type="textarea" name="description"></b-input>
-              </b-field>
+            <b-field label="Visibility settings" custom-class="is-small" class="mb-1">
+              <b-switch v-model="image.public">Listed publicly</b-switch>
+            </b-field>
 
-              <b-field label="Visibility settings" custom-class="is-small" class="mb-0">
-                <b-switch v-model="image.public" size="is-small">Listed publicly</b-switch>
-              </b-field>
+            <b-field>
+              <b-switch v-model="image.nsfw">Mature content</b-switch>
+            </b-field>
 
-              <b-field>
-                <b-switch v-model="image.nsfw" size="is-small">Mature content</b-switch>
-              </b-field>
-            </div>
+            <b-button type="is-primary" expanded icon-left="save" icon-pack="fas" class="mb-2" @click="patchImage()">
+              Save image
+            </b-button>
 
-            <a class="panel-block" @click="patchImage()">
-              <b-icon icon="save" pack="fas" class="panel-icon"></b-icon> Save image
-            </a>
-
-            <a class="panel-block" @click="replaceImage()">
-              <b-icon icon="upload" pack="fas" class="panel-icon"></b-icon> Replace image
-            </a>
+            <b-button type="is-primary" expanded icon-left="upload" icon-pack="fas" @click="replaceImage()">
+              Replace
+            </b-button>
           </div>
         </form>
       </template>

@@ -9296,7 +9296,7 @@ a.has-text-light:hover, a.has-text-light:focus {
   color: #c8e7ee !important;
 }
 
-.has-background-light, hr.bar, .box.is-panel, .page .image-details-image img.is-panel, .page .image-thumbnail-image img.is-panel, .page .collection-thumbnail-image img.is-panel {
+.has-background-light, hr.bar {
   background-color: #EFF8FA !important;
 }
 
@@ -9632,7 +9632,7 @@ a.has-text-primary-light-dark:hover, a.has-text-primary-light-dark:focus {
   color: #fafafa !important;
 }
 
-.has-background-white-bis {
+.has-background-white-bis, .box.is-panel, .page .image-details-image img.is-panel, .page .image-thumbnail-image img.is-panel, .page .collection-thumbnail-image img.is-panel {
   background-color: #fafafa !important;
 }
 

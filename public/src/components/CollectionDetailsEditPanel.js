@@ -36,35 +36,22 @@ export default {
     <div class="collection-edit-panel">
       <template v-if="collection">
         <form @submit.prevent="patchCollection()">
-          <div class="panel is-primary">
-            <p class="panel-heading">Edit collection</p>
+          <div class="box is-panel">
+            <b-field label="Title" label-for="title" custom-class="is-small">
+              <b-input v-model="collection.title" type="text" maxlength="64" :has-counter="false" name="title"></b-input>
+            </b-field>
 
-            <div class="panel-block is-form">
-              <b-field label="Title" label-for="title" custom-class="is-small">
-                <b-input v-model="collection.title" type="text" name="title"></b-input>
-              </b-field>
+            <b-field label="Description" label-for="description" custom-class="is-small">
+              <b-input v-model="collection.description" type="textarea" maxlength="256" :has-counter="false" name="description"></b-input>
+            </b-field>
 
-              <b-field label="Description" label-for="description" custom-class="is-small">
-                <b-input v-model="collection.description" type="textarea" name="description"></b-input>
-              </b-field>
-            </div>
+            <b-field label="Visibility settings" custom-class="is-small">
+              <b-switch v-model="collection.public">Listed publicly</b-switch>
+            </b-field>
 
-            <div class="panel-block is-form">
-              <p class="menu-label">
-                <span class="icon-text">
-                  <b-icon icon="eye" pack="fas"></b-icon>
-                  <span>Visibility settings</span>
-                </span>
-              </p>
-
-              <b-field>
-                <b-switch v-model="collection.public" size="is-small">Public</b-switch>
-              </b-field>
-            </div>
-
-            <a class="panel-block" @click="patchCollection()">
-              <b-icon icon="save" pack="fas" class="panel-icon"></b-icon> Save collection
-            </a>
+            <b-button type="is-primary" expanded icon-left="save" icon-pack="fas" class="mb-2" @click="patchImage()">
+              Save image
+            </b-button>
           </div>
         </form>
       </template>
