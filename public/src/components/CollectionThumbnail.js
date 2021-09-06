@@ -29,7 +29,7 @@ export default {
                     {{ collection.title }}
                   </p>
                   <p class="is-size-7 mb-0">
-                    <router-link :to="{name: 'user', params: {userId: collection.user.id}}" class="has-text-white">by {{ collection.user.title }}</router-link>
+                    by <router-link :to="{name: 'user', params: {userId: collection.user.id}}" class="has-text-white">{{ collection.user.title }}</router-link>
                   </p>
                 </div>
               </div>
