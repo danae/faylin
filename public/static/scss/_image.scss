@@ -1,0 +1,13 @@
+// Import variables and fonts
+@import 'variables';
+@import 'bulma';
+
+
+// Image styling
+.image {
+  // Mature content image
+  &.is-nsfw img {
+    transform: scale(1.1, 1.1);
+    filter: grayscale(75%) blur(10px);
+  }
+}

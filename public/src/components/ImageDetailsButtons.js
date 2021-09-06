@@ -56,12 +56,12 @@ export default {
                   </template>
 
                   <b-dropdown-item custom>
-                    <form @submit.prevent="$emit('add-new', newCollectionName)">
+                    <form @submit.prevent="$emit('add-new', newCollectionTitle)">
                         <b-field label="New collection" label-for="titletitle" custom-class="is-small">
                           <b-input v-model="newCollectionTitle" expanded type="text" name="title"></b-input>
 
                           <p class="control">
-                            <b-button type="is-primary" icon-left="plus" icon-pack="fas" @click="$emit('add-new', newCollectionName)"></b-button>
+                            <b-button type="is-primary" icon-left="plus" icon-pack="fas" @click="$emit('add-new', newCollectionTitle)"></b-button>
                           </p>
                         </b-field>
                     </form>

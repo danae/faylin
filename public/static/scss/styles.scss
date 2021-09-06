@@ -1,22 +1,13 @@
 // Import variables and fonts
 @import 'variables';
 @import 'bulma';
+@import 'image';
+@import 'thumbnail';
 
-
-// Nav layout styling
-nav {
-}
 
 // Main layout styling
 main {
-  min-height: calc(100vh - 118px);
-}
-
-// Footer layout styling
-footer {
-  @extend .is-size-7;
-  @extend .has-text-centered;
-  @extend .py-5;
+  min-height: calc(100vh - 52px);
 }
 
 // Container styling
@@ -118,7 +109,7 @@ footer {
 }
 
 // Horizontal separator styling
-hr.bar {
+.bar {
   @extend .has-background-light;
   @extend .m-0;
 
@@ -130,33 +121,6 @@ hr.bar {
   &.is-panel {
     @extend .is-shadowless;
     @extend .has-background-white-bis;
-  }
-}
-
-// Panel styling
-.panel {
-  // Panel heading
-  .panel-heading {
-    @extend .menu-label;
-    @extend .mb-0;
-  }
-
-  // Panel form
-  .panel-block.is-form {
-    @extend .is-flex-direction-column;
-    @extend .is-align-items-flex-start;
-
-    & > .field {
-      @extend .is-align-self-stretch;
-      @extend .mb-2;
-    }
-  }
-
-  // Panel link
-  a.panel-block {
-    &:hover {
-      color: $panel-block-color;
-    }
   }
 }
 
@@ -212,67 +176,9 @@ hr.bar {
         @extend .p-0;
 
         @media screen and (min-width: $tablet) {
-          max-height: calc(100vh - 174px);
+          max-height: calc(100vh - 54px - 2rem);
           width: auto;
         }
-      }
-    }
-  }
-
-  // Image and collection thumbnail styling
-  .image-thumbnail, .collection-thumbnail {
-    // Image for the thumbnail
-    &-image {
-      @extend .box;
-      @extend .is-shadowless;
-      @extend .is-clipped;
-      @extend .p-0;
-
-      &.is-nsfw img {
-        filter: blur(15px);
-      }
-    }
-
-    // Cover for the thumbnail
-    &-cover {
-      @extend .box;
-      @extend .is-shadowless;
-      @extend .is-overlay;
-      @extend .has-background-overlay;
-      @extend .has-text-white;
-      @extend .p-4;
-
-      opacity: 0.0;
-      transition: opacity .2s ease-in-out;
-
-      &:hover {
-        opacity: 1.8;
-      }
-    }
-  }
-
-  // Image and collection thumbnail list styling
-  .image-thumbnail-list, .collection-thumbnail-list {
-    // Columns for the image thumbnail list
-    .columns {
-      @extend .is-mobile;
-      @extend .is-multiline;
-
-      margin: -0.25rem;
-
-      // Column for the image thumbnail list
-      .column {
-        @extend .is-clipped;
-        @extend .is-half;
-        @extend .is-one-third-tablet;
-        @extend .is-one-quarter-widescreen;
-        @extend .p-1;
-      }
-
-      &.is-fixed .column {
-        @extend .is-clipped;
-        @extend .is-half;
-        @extend .is-one-third-widescreen;
       }
     }
   }

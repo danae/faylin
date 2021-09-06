@@ -1,0 +1,88 @@
+// Import variables and fonts
+@import 'variables';
+@import 'bulma';
+
+
+// Thumbnail styling
+.thumbnail {
+  // Image for the thumbnail
+  &-image {
+    @extend .box;
+    @extend .is-shadowless;
+    @extend .is-clipped;
+    @extend .p-0;
+  }
+
+  // Mature content cover for the thumbnail
+  &-nsfw {
+    @extend .is-overlay;
+    @extend .is-flex;
+    @extend .is-flex-direction-row;
+    @extend .is-justify-content-center;
+    @extend .is-align-items-center;
+    @extend .is-size-1;
+    @extend .has-text-white-bis;
+    @extend .p-4;
+
+    background: transparent;
+    opacity: 0.5;
+  }
+
+  // Cover for the thumbnail
+  &-cover {
+    @extend .box;
+    @extend .is-shadowless;
+    @extend .is-overlay;
+    @extend .is-flex;
+    @extend .is-flex-direction-column;
+    @extend .is-justify-content-space-between;
+    @extend .has-background-overlay;
+    @extend .has-text-white;
+    @extend .p-4;
+
+    // Thumbnail hover styling
+    opacity: 0.0;
+    transition: opacity .2s ease-in-out;
+    &:hover {
+      opacity: 1.8;
+    }
+
+    // Text in childrenshould be on one line and truncated
+    * {
+      @extend .is-clipped;
+
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+  }
+}
+
+// Thumbnail list styling
+.thumbnail-list {
+  // Column wrapper for the thumbnail list
+  .columns {
+    @extend .is-mobile;
+    @extend .is-multiline;
+
+    margin: -0.25rem;
+
+    // Column for the thumbnail list
+    & > .column {
+      @extend .is-clipped;
+      @extend .is-half;
+
+      padding: 0.25rem;
+    }
+
+    // Small responsive column for the thumbnail list
+    &.is-responsive-small > .column {
+      @extend .is-one-third-widescreen;
+    }
+
+    // Large responsive column for the thumbnail list
+    &.is-responsive-large > .column {
+      @extend .is-one-third-tablet;
+      @extend .is-one-quarter-widescreen;
+    }
+  }
+}

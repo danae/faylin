@@ -46,7 +46,7 @@ export default {
     // Add the image to a new collection
     addImageToNewCollection: async function(newCollectionTitle) {
       // Create a new collection
-      let collection = await this.$root.client.postCollection({title: newCollectionTitlenewCollectionTitle});
+      let collection = await this.$root.client.postCollection({title: newCollectionTitle});
 
       // Add the image to the collection
       this.addImageToCollection(collection);
@@ -137,7 +137,7 @@ export default {
               </div>
 
               <div class="column is-4 content">
-                <image-details-buttons :image="image" :collections="collections" :owner="owner" :editing="editing" class="mb-3" @share="shareImage()" @add="addImageToCollection" @add-new="addImageToNewCollection" @copy-link="copyImageLink()" @copy-markdown="copyImageMarkdown()" @copy-bbcode="copyImageBBCode()" @copy-html="copyImageHTML()" @edit="toggleEditing()" @delete="deleteImage"></image-details-buttons>
+                <image-details-buttons :image="image" :collections="collections" :owner="owner" :editing="editing" class="mb-4" @share="shareImage()" @add="addImageToCollection" @add-new="addImageToNewCollection" @copy-link="copyImageLink()" @copy-markdown="copyImageMarkdown()" @copy-bbcode="copyImageBBCode()" @copy-html="copyImageHTML()" @edit="toggleEditing()" @delete="deleteImage"></image-details-buttons>
 
                 <template v-if="editing">
                   <image-details-edit-panel :image="image" :replace="image.id" @close="toggleEditing()"></image-details-edit-panel>

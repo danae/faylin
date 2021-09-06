@@ -10,13 +10,19 @@ export default {
 
   // The template for the component
   template: `
-    <div class="image-thumbnail content">
+    <div class="thumbnail content">
       <template v-if="image">
         <router-link :to="{name: 'image', params: {imageId: image.id}}">
           <div class="is-relative">
-            <b-image class="image-thumbnail-image" :src="image.thumbnailUrl" :alt="image.title" :class="{'is-nsfw': image.nsfw}"></b-image>
+            <b-image class="thumbnail-image" :src="image.thumbnailUrl" :alt="image.title" :class="{'is-nsfw': image.nsfw}"></b-image>
 
-            <div class="image-thumbnail-cover">
+            <template v-if="image.nsfw">
+              <div class="thumbnail-nsfw">
+                <b-icon icon="minus-circle" pack="fas" size="is-large"></b-icon>
+              </div>
+            </template>
+
+            <div class="thumbnail-cover">
               <div class="media is-align-items-center mb-4">
                 <template v-if="image.user.avatarUrl">
                   <div class="media-left mr-2">
@@ -33,13 +39,19 @@ export default {
                   </p>
                 </div>
               </div>
+
+              <p class="has-text-right mb-0">
+                <template v-if="!image.public">
+                  <b-icon icon="eye-slash" pack="fas"></b-icon>
+                </template>
+
+                <template v-if="image.nsfw">
+                  <b-icon icon="minus-circle" pack="fas"></b-icon>
+                </template>
+              </p>
             </div>
           </div>
         </router-link>
-
-        <!--
-
-        -->
       </template>
 
       <template v-else>

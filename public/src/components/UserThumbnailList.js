@@ -9,7 +9,13 @@ export default {
   template: `
     <div class="user-thumbnail-list">
       <template v-if="users">
-        <user-thumbnail v-for="user in users" :key="user.id" :user="user"></user-thumbnail>
+        <section class="section">
+          <div class="columns is-multiline">
+            <div class="column is-half" v-for="user in users" :key="user.id">
+              <user-thumbnail :user="user"></user-thumbnail>
+            </div>
+          </div>
+        </section>
       </template>
 
       <template v-else>

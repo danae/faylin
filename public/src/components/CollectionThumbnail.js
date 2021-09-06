@@ -10,13 +10,13 @@ export default {
 
   // The template for the component
   template: `
-    <div class="collection-thumbnail content">
+    <div class="thumbnail content">
       <template v-if="collection">
         <router-link :to="{name: 'collection', params: {collectionId: collection.id}}">
           <div class="is-relative">
-            <b-image class="collection-thumbnail-image" :src="collection.images[0].thumbnailUrl" :alt="collection.title"></b-image>
+            <b-image class="thumbnail-image" :src="collection.images[0].thumbnailUrl" :alt="collection.title"></b-image>
 
-            <div class="collection-thumbnail-cover">
+            <div class="thumbnail-cover">
               <div class="media is-align-items-center mb-4">
                 <template v-if="collection.user.avatarUrl">
                   <div class="media-left mr-2">

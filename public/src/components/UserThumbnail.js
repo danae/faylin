@@ -19,46 +19,40 @@ export default {
   created: async function() {
   // Get the images for the user
     if (this.user !== null)
-      this.userImages = await this.$root.client.getUserImages(this.user.id, {perPage: 3});
+      this.userImages = await this.$root.client.getUserImages(this.user.id, {perPage: 4});
   },
 
   // The template for the component
   template: `
     <div class="user-thumbnail content">
       <template v-if="user">
-        <div class="box is-panel my-2">
-          <div class="columns">
-            <div class="column is-4">
-              <div class="media is-align-items-center mb-4">
-                <template v-if="user.avatarUrl">
-                  <div class="media-left mr-2">
-                    <router-link :to="{name: 'user', params: {userId: user.id}}">
-                      <b-image class="avatar is-48x48" :src="user.avatarUrl" :alt="user.title"></b-image>
-                    </router-link>
-                  </div>
-                </template>
-
-                <div class="media-content">
-                  <p class="is-size-6 mb-0">
-                    <router-link :to="{name: 'user', params: {userId: user.id}}">{{ user.title }}</router-link>
-                  </p>
-                  <p class="is-size-7 mb-0">
-                    @{{ user.name }}
-                  </p>
+        <div class="box is-panel">
+          <router-link :to="{name: 'user', params: {userId: user.id}}">
+            <div class="media is-align-items-center mb-4">
+              <template v-if="user.avatarUrl">
+                <div class="media-left mr-2">
+                  <b-image class="avatar is-48x48" :src="user.avatarUrl" :alt="user.title"></b-image>
                 </div>
+              </template>
+
+              <div class="media-content">
+                <p class="is-size-6 has-text-weight-bold mb-0">
+                  {{ user.title }}
+                </p>
+                <p class="is-size-7 mb-0">
+                  @{{ user.name }}
+                </p>
               </div>
-
-              <template v-if="user.description">
-                <p class="is-size-7">{{ user.description }}</p>
-              </template>
             </div>
+          </router-link>
 
-            <div class="column is-8">
-              <template v-if="userImages">
-                <image-thumbnail-list :images="userImages" :fixed="true"></image-thumbnail-list>
-              </template>
-            </div>
-          </div>
+          <template v-if="user.description">
+            <p class="is-size-7">{{ user.description }}</p>
+          </template>
+
+          <template v-if="userImages">
+            <image-thumbnail-list :images="userImages"></image-thumbnail-list>
+          </template>
         </div>
       </template>
 
