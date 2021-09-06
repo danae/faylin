@@ -3,8 +3,6 @@ export default {
   // The properties for the component
   props: {
     collections: {type: Array},
-    displayName: {type: Boolean, default: true},
-    displayUserName: {type: Boolean, default: true},
   },
 
   // The template for the component

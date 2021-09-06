@@ -7762,7 +7762,7 @@ label.panel-block:hover {
   width: 66.6666%;
 }
 
-.columns.is-mobile > .column.is-half, .page .image-thumbnail-list .columns > .column.is-half, .page .collection-thumbnail-list .columns > .column.is-half {
+.columns.is-mobile > .column.is-half, .page .image-thumbnail-list .columns > .column.is-half, .page .collection-thumbnail-list .columns > .column.is-half, .page .image-thumbnail-list .columns.is-fixed .columns > .column, .page .image-thumbnail-list .columns.is-fixed .collection-thumbnail-list .columns > .column, .page .collection-thumbnail-list .columns.is-fixed .image-thumbnail-list .columns > .column, .page .collection-thumbnail-list .columns.is-fixed .columns > .column {
   flex: none;
   width: 50%;
 }
@@ -8132,7 +8132,7 @@ label.panel-block:hover {
     flex: none;
     width: 66.6666%;
   }
-  .column.is-half, .column.is-half-tablet {
+  .column.is-half, .page .image-thumbnail-list .columns.is-fixed .column, .page .collection-thumbnail-list .columns.is-fixed .column, .column.is-half-tablet {
     flex: none;
     width: 50%;
   }
@@ -8631,7 +8631,7 @@ label.panel-block:hover {
     flex: none;
     width: 50%;
   }
-  .column.is-one-third-widescreen {
+  .column.is-one-third-widescreen, .page .image-thumbnail-list .columns.is-fixed .column, .page .collection-thumbnail-list .columns.is-fixed .column {
     flex: none;
     width: 33.3333%;
   }
@@ -10279,7 +10279,7 @@ a.has-text-overlay-dark:hover, a.has-text-overlay-dark:focus {
   pointer-events: all !important;
 }
 
-.is-clipped, .page .image-thumbnail-image, .page .collection-thumbnail-image, .page .image-thumbnail-list .columns .column, .page .collection-thumbnail-list .columns .column {
+.is-clipped, .page .image-thumbnail-image, .page .collection-thumbnail-image, .page .image-thumbnail-list .columns .column, .page .collection-thumbnail-list .columns .column, .page .image-thumbnail-list .columns.is-fixed .column, .page .collection-thumbnail-list .columns.is-fixed .column {
   overflow: hidden !important;
 }
 
@@ -15734,11 +15734,20 @@ a.has-text-overlay-dark:hover, a.has-text-overlay-dark:focus {
 }
 
 .rate .rate-item.set-on .icon,
-.rate .rate-item.set-half .is-half {
+.rate .rate-item.set-half .is-half,
+.rate .rate-item.set-half .page .image-thumbnail-list .columns.is-fixed .column,
+.page .image-thumbnail-list .columns.is-fixed .rate .rate-item.set-half .column,
+.rate .rate-item.set-half .page .collection-thumbnail-list .columns.is-fixed .column,
+.page .collection-thumbnail-list .columns.is-fixed .rate .rate-item.set-half .column {
   color: #f39134;
 }
 
-.rate .rate-item.set-half .is-half {
+
+.rate .rate-item.set-half .is-half,
+.rate .rate-item.set-half .page .image-thumbnail-list .columns.is-fixed .column,
+.page .image-thumbnail-list .columns.is-fixed .rate .rate-item.set-half .column,
+.rate .rate-item.set-half .page .collection-thumbnail-list .columns.is-fixed .column,
+.page .collection-thumbnail-list .columns.is-fixed .rate .rate-item.set-half .column {
   position: absolute;
   left: 0;
   top: 0;
@@ -15752,7 +15761,7 @@ a.has-text-overlay-dark:hover, a.has-text-overlay-dark:focus {
   width: inherit;
 }
 
-.rate .is-half > i {
+.rate .is-half > i, .rate .page .image-thumbnail-list .columns.is-fixed .column > i, .page .image-thumbnail-list .columns.is-fixed .rate .column > i, .rate .page .collection-thumbnail-list .columns.is-fixed .column > i, .page .collection-thumbnail-list .columns.is-fixed .rate .column > i {
   position: absolute;
   left: 0;
 }

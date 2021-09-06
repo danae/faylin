@@ -268,6 +268,12 @@ hr.bar {
         @extend .is-one-third;
         @extend .is-one-quarter-widescreen;
       }
+
+      &.is-fixed .column {
+        @extend .is-clipped;
+        @extend .is-half;
+        @extend .is-one-third-widescreen;
+      }
     }
   }
 }

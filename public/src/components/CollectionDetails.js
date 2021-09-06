@@ -70,7 +70,7 @@ export default {
           <section class="section">
             <div class="columns">
               <div class="column is-8">
-                <image-thumbnail-list :images="collection.images"></image-thumbnail-list>
+                <image-thumbnail-list :images="collection.images" :fixed="true"></image-thumbnail-list>
               </div>
 
               <div class="column is-4 content">

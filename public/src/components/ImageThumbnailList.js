@@ -3,15 +3,14 @@ export default {
   // The properties for the component
   props: {
     images: {type: Array},
-    displayName: {type: Boolean, default: true},
-    displayUserName: {type: Boolean, default: true},
+    fixed: {type: Boolean, default: false},
   },
 
   // The template for the component
   template: `
     <div class="image-thumbnail-list">
       <template v-if="images">
-        <div class="columns">
+        <div :class="{'columns': true, 'is-fixed': fixed}">
           <div class="column" v-for="image in images" :key="image.id">
             <image-thumbnail :image="image" :display-name="displayName" :display-user-name="displayUserName"></image-thumbnail>
           </div>
