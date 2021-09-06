@@ -6,6 +6,7 @@ use MongoDB\BSON\UTCDateTime;
 use MongoDB\Model\BSONDocument;
 
 use Danae\Faylin\Model\Snowflake;
+use Danae\Faylin\Model\ImageRepositoryInterface;
 use Danae\Faylin\Model\User;
 use Danae\Faylin\Model\UserRepositoryInterface;
 
@@ -114,6 +115,7 @@ final class UserRepository implements UserRepositoryInterface
       'title' => $user->getTitle(),
       'description' => $user->getDescription(),
       'public' => $user->getPublic(),
+      'avatar' => $user->getAvatar()
     ]);
   }
 
@@ -129,6 +131,7 @@ final class UserRepository implements UserRepositoryInterface
       ->setPasswordHash($document['passwordHash'])
       ->setTitle($document['title'] ?? "")
       ->setDescription($document['description'])
-      ->setPublic($document['public']);
+      ->setPublic($document['public'])
+      ->setAvatar($document['avatar']);
   }
 }

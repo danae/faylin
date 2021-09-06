@@ -4,6 +4,7 @@ namespace Danae\Faylin\Model;
 use Symfony\Component\Serializer\Normalizer\NormalizableInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
+use Danae\Faylin\Utils\Traits\RouteContextTrait;
 
 // Class that defines a user object
 final class User implements NormalizableInterface
@@ -11,6 +12,7 @@ final class User implements NormalizableInterface
   use Traits\EntityTrait;
   use Traits\NamedEntityTrait;
   use Traits\DatedEntityTrait;
+  use RouteContextTrait;
 
 
   // The email address of the user (internal)
@@ -28,6 +30,9 @@ final class User implements NormalizableInterface
   // The public state of the user (read-write)
   private $public;
 
+  // The avatar of the user (read-write)
+  private $avatar;
+
 
   // Constructor
   public function __construct()
@@ -41,6 +46,7 @@ final class User implements NormalizableInterface
     $this->title = "";
     $this->description = "";
     $this->public = true;
+    $this->avatar = null;
   }
 
   // Get the email address of the user
@@ -121,10 +127,25 @@ final class User implements NormalizableInterface
     return $this;
   }
 
+  // Get the avatar of the user
+  public function getAvatar(): ?string
+  {
+    return $this->avatar;
+  }
+
+  // Set the avatar of the user
+  public function setAvatar(?string $avatar): self
+  {
+    $this->avatar = $avatar;
+    return $this;
+  }
+
 
   // Normalize a user and return the normalized array
   public function normalize(NormalizerInterface $normalizer, string $format = null, array $context = []): array
   {
+    $avatarImage = $this->getAvatar() !== null ? $context['imageRepository']->find(Snowflake::fromString($this->getAvatar())) : null;
+
     return [
       // Entity fields
       'id' => $this->getId()->toString(),
@@ -139,6 +160,10 @@ final class User implements NormalizableInterface
       'title' => $this->getTitle(),
       'description' => $this->getDescription(),
       'public' => $this->getPublic(),
+      'avatar' => $this->getAvatar(),
+
+      // Additional fields
+      'avatarUrl' => $avatarImage !== null ? $this->fullUrlFor($context['request'], 'images.download', ['imageName' => $avatarImage->getName(), 'format' => 'png'], ['transform' => 'crop:128,128']) : null,
     ];
   }
 }

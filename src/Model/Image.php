@@ -172,7 +172,7 @@ final class Image implements NormalizableInterface
 
       // Additional fields
       'downloadUrl' => $this->fullUrlFor($context['request'], 'images.download', ['imageName' => $this->getName(), 'format' => $context['capabilities']->convertContentTypeToFormat($this->getContentType())]),
-      'thumbnailUrl' => $this->fullUrlFor($context['request'], 'images.download', ['imageName' => $this->getName(), 'format' => 'png'], ['transform' => 'crop:200,200']),
+      'thumbnailUrl' => $this->fullUrlFor($context['request'], 'images.download', ['imageName' => $this->getName(), 'format' => 'png'], ['transform' => 'crop:500,500']),
     ];
   }
 }
