@@ -6,8 +6,8 @@
   "license": "GPL-3.0-or-later",
   "repository": "https://github.com/danae/faylin",
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^5.15.3",
-    "buefy": "^0.9.8",
+    "@fortawesome/fontawesome-free": "^5.15.4",
+    "buefy": "^0.9.10",
     "bulma": "^0.9.3",
     "twemoji": "^13.1.0",
     "vue": "^2.6.14",
