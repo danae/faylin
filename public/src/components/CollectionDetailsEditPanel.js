@@ -49,8 +49,8 @@ export default {
               <b-switch v-model="collection.public">Listed publicly</b-switch>
             </b-field>
 
-            <b-button type="is-primary" expanded icon-left="save" icon-pack="fas" class="mb-2" @click="patchImage()">
-              Save image
+            <b-button type="is-primary" expanded icon-left="save" icon-pack="fas" class="mb-2" @click="patchCollection()">
+              Save collection
             </b-button>
           </div>
         </form>
