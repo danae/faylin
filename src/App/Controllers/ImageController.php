@@ -25,29 +25,80 @@ use Danae\Faylin\Validator\Validator;
 final class ImageController extends AbstractController
 {
   // Return all images as a JSON response
-  public function getImages(Request $request, Response $response, User $authUser)
+  public function getImages(Request $request, Response $response)
   {
+    // Get the authorized user
+    $authorizedUser = $request->getAttribute('authUser');
+
+    // Get the repository filter
+    if ($authorizedUser !== null)
+      $filter = ['$or' => [['public' => true], ['user' => $authorizedUser->getId()->toString()]]];
+    else
+      $filter = ['public' => true];
+
     // Get the images
     $options = $this->createSelectOptions($request, ['sort' => '-createdAt']);
-    $filter = $authUser !== null ? ['$or' => [['public' => true], ['user' => $authUser->getId()->toString()]]] : ['public' => true];
     $images = $this->imageRepository->findManyBy($filter, $options);
 
     // Return the response
     return $this->serialize($request, $response, $images);
   }
 
+  // Return all images owned by a user as a JSON response
+  public function getUserImages(Request $request, Response $response, User $user)
+  {
+    // Get the authorized user
+    $authorizedUser = $request->getAttribute('authUser');
+
+    // Get the repository filter
+    if ($authorizedUser !== null)
+      $filter = ['user' => $user->getId()->toString(), '$or' => [['public' => true], ['user' => $authorizedUser->getId()->toString()]]];
+    else
+      $filter = ['user' => $user->getId()->toString(), 'public' => true];
+
+    // Get the images
+    $options = $this->createSelectOptions($request, ['sort' => '-createdAt']);
+    $images = $this->imageRepository->findManyBy($filter, $options);
+
+    // Return the response
+    return $this->serialize($request, $response, $images)
+      ->withStatus(200);
+  }
+
+  // Return all images owned by the authorized user as a JSON response
+  public function getAuthorizedUserImages(Request $request, Response $response)
+  {
+    // Get the authorized user
+    $authorizedUser = $request->getAttribute('authUser');
+
+    // Return the response
+    return $this->getUserImages($request, $response, $authorizedUser);
+  }
+
   // Get an image as a JSON response
   public function getImage(Request $request, Response $response, Image $image)
   {
+    // Get the authorized user
+    $authorizedUser = $request->getAttribute('authUser');
+
+    // Check if the authorized user can read this image
+    if (!$this->canReadImage($image, $authorizedUser))
+      throw ImageResolverMiddleware::createIdNotFound($request, $image->getId()->toString());
+
     // Return the response
     return $this->serialize($request, $response, $image);
   }
 
   // Patch an image and return the image as a JSON response
-  public function patchImage(Request $request, Response $response, Image $image, User $authUser)
+  public function patchImage(Request $request, Response $response, Image $image)
   {
-    // Check if the authorized user owns this image
-    if ($authUser->getId() != $image->getUser()->getId())
+    // Get the authorized user
+    $authorizedUser = $request->getAttribute('authUser');
+
+    // Check if the authorized user can read and modify this image
+    if (!$this->canReadImage($image, $authorizedUser))
+      throw ImageResolverMiddleware::createIdNotFound($request, $image->getId()->toString());
+    if (!$this->canModifyImage($image, $authorizedUser))
       throw new HttpForbiddenException($request, "The current authorized user is not allowed to modify the image with id \"{$image->getId()}\"");
 
     // Get and validate the body parameters
@@ -77,11 +128,16 @@ final class ImageController extends AbstractController
   }
 
   // Delete an image
-  public function deleteImage(Request $request, Response $response, Image $image, User $authUser)
+  public function deleteImage(Request $request, Response $response, Image $image)
   {
-    // Check if the authorized user owns this image
-    if ($authUser->getId() != $image->getUser()->getId())
-      throw new HttpForbiddenException($request, "The current authorized user is not allowed to delete the image with id \"{$image->getId()}\"");
+    // Get the authorized user
+    $authorizedUser = $request->getAttribute('authUser');
+
+    // Check if the authorized user can read and modify this image
+    if (!$this->canReadImage($image, $authorizedUser))
+      throw ImageResolverMiddleware::createIdNotFound($request, $image->getId()->toString());
+    if (!$this->canModifyImage($image, $authorizedUser))
+      throw new HttpForbiddenException($request, "The current authorized user is not allowed to modify the image with id \"{$image->getId()}\"");
 
     // Delete the image from the repository
     $this->imageRepository->delete($image);
@@ -93,8 +149,11 @@ final class ImageController extends AbstractController
   }
 
   // Upload an image
-  public function uploadImage(Request $request, Response $response, User $authUser, SnowflakeGenerator $snowflakeGenerator)
+  public function uploadImage(Request $request, Response $response, SnowflakeGenerator $snowflakeGenerator)
   {
+    // Get the authorized user
+    $authorizedUser = $request->getAttribute('authUser');
+
     // Get the uploaded file
     $file = $this->getUploadedFile($request, 'file');
 
@@ -102,7 +161,7 @@ final class ImageController extends AbstractController
     $image = new Image();
     $image->generateId($snowflakeGenerator);
     $image->setName($image->getId()->toBase64());
-    $image->setUser($authUser);
+    $image->setUser($authorizedUser);
     $image->setTitle($this->getUploadedFileNameWithoutExtension($file));
 
     // Write the image to the store with the contents of the uploaded file
@@ -117,11 +176,16 @@ final class ImageController extends AbstractController
   }
 
   // Replace an image
-  public function replaceImage(Request $request, Response $response, Image $image, User $authUser)
+  public function replaceImage(Request $request, Response $response, Image $image)
   {
-    // Check if the image is owned by the authorized user
-    if ($authUser->getId() != $image->getUser()->getId())
-      throw new HttpForbiddenException($request, "The current authorized user is not allowed to replace the image with id \"{$id->getId()}\"");
+    // Get the authorized user
+    $authorizedUser = $request->getAttribute('authUser');
+
+    // Check if the authorized user can read and modify this image
+    if (!$this->canReadImage($image, $authorizedUser))
+      throw ImageResolverMiddleware::createIdNotFound($request, $image->getId()->toString());
+    if (!$this->canModifyImage($image, $authorizedUser))
+      throw new HttpForbiddenException($request, "The current authorized user is not allowed to modify the image with id \"{$image->getId()}\"");
 
     // Get the uploaded file
     $file = $this->getUploadedFile($request, 'file');
@@ -166,6 +230,36 @@ final class ImageController extends AbstractController
     }
   }
 
+
+  // Return if the authorized user can read an image
+  private function canReadImage(Image $image, ?User $authorizedUser): bool
+  {
+    // Check if the image is public
+    if ($image->getPublic())
+      return true;
+
+    // Check if the authorized user can modify the image
+    if (!$this->canModifyImage($image, $authorizedUser))
+      return false;
+
+    // All checks passed
+    return true;
+  }
+
+  // Return if the authorized user can modify an image
+  private function canModifyImage(Image $image, ?User $authorizedUser): bool
+  {
+    // Check if the authorized user is empty
+    if ($authorizedUser === null)
+      return false;
+
+    // Check if the identifiers of the users match
+    if ($image->getUser()->getId() != $authorizedUser->getId())
+      return false;
+
+    // All checks passed
+    return true;
+  }
 
   // Return an uploaded file from the request
   private function getUploadedFile(Request $request, string $name): UploadedFile

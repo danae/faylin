@@ -18,9 +18,18 @@ final class UserController extends AbstractController
   // Return all users as a JSON response
   public function getUsers(Request $request, Response $response)
   {
+    // Get the authorized user
+    $authorizedUser = $request->getAttribute('authUser');
+
+    // Get the repository filter
+    if ($authorizedUser !== null)
+      $filter = ['$or' => [['public' => true], ['user' => $authorizedUser->getId()->toString()]]];
+    else
+      $filter = ['public' => true];
+
     // Get the images
     $options = $this->createSelectOptions($request, ['sort' => '-createdAt']);
-    $users = $this->userRepository->findManyBy(['public' => true], $options);
+    $users = $this->userRepository->findManyBy($filter, $options);
 
     // Return the response
     return $this->serialize($request, $response, $users)
@@ -30,16 +39,28 @@ final class UserController extends AbstractController
   // Get a user as a JSON response
   public function getUser(Request $request, Response $response, User $user)
   {
+    // Get the authorized user
+    $authorizedUser = $request->getAttribute('authUser');
+
+    // Check if the authorized user can read this user
+    if (!$this->canReadUser($user, $authorizedUser))
+      throw UserResolverMiddleware::createIdNotFound($request, $user->getId()->toString());
+
     // Return the response
     return $this->serialize($request, $response, $user)
       ->withStatus(200);
   }
 
   // Patch a user and return the user as a JSON response
-  public function patchUser(Request $request, Response $response, User $user, User $authUser)
+  public function patchUser(Request $request, Response $response, User $user)
   {
-    // Check if the authorized user owns this user
-    if ($authUser->getId() != $user->getId())
+    // Get the authorized user
+    $authorizedUser = $request->getAttribute('authUser');
+
+    // Check if the authorized user can read and modify this usere
+    if (!$this->canReadUser($user, $authorizedUser))
+      throw UserResolverMiddleware::createIdNotFound($request, $user->getId()->toString());
+    if (!$this->canModifyUser($user, $authorizedUser))
       throw new HttpForbiddenException($request, "The current authorized user is not allowed to modify the user with id \"{$user->getId()}\"");
 
     // Get and validate the parameters
@@ -72,47 +93,32 @@ final class UserController extends AbstractController
       ->withStatus(200);
   }
 
-  // Return all collections owned by a user as a JSON response
-  public function getUserCollections(Request $request, Response $response, User $user)
-  {
-    // Get the collections
-    $options = $this->createSelectOptions($request, ['sort' => '-createdAt']);
-    $collections = $this->collectionRepository->findManyBy(['user' => $user->getId()->toString()], $options);
-
-    // Return the response
-    return $this->serialize($request, $response, $collections)
-      ->withStatus(200);
-  }
-
-  // Return all images owned by a user as a JSON response
-  public function getUserImages(Request $request, Response $response, User $user)
-  {
-    // Get the images
-    $options = $this->createSelectOptions($request, ['sort' => '-createdAt']);
-    $images = $this->imageRepository->findManyBy(['user' => $user->getId()->toString()], $options);
-
-    // Return the response
-    return $this->serialize($request, $response, $images)
-      ->withStatus(200);
-  }
-
   // Get the authorized user as a JSON response
-  public function getAuthorizedUser(Request $request, Response $response, User $authUser)
+  public function getAuthorizedUser(Request $request, Response $response)
   {
+    // Get the authorized user
+    $authorizedUser = $request->getAttribute('authUser');
+
     // Return the response
-    return $this->getUser($request, $response, $authUser);
+    return $this->getUser($request, $response, $authorizedUser);
   }
 
   // Patch the authorized user and return the user as a JSON response
-  public function patchAuthorizedUser(Request $request, Response $response, User $authUser)
+  public function patchAuthorizedUser(Request $request, Response $response)
   {
+    // Get the authorized user
+    $authorizedUser = $request->getAttribute('authUser');
+
     // Return the response
-    return $this->patchUser($request, $response, $authUser, $authUser);
+    return $this->patchUser($request, $response, $authorizedUser, $authorizedUser);
   }
 
   // Update the email address of the authorized user and return the user as a JSON response
-  public function updateAuthorizedUserEmail(Request $request, Response $response, User $authUser)
+  public function updateAuthorizedUserEmail(Request $request, Response $response)
   {
+    // Get the authorized user
+    $authorizedUser = $request->getAttribute('authUser');
+
     // Get and validate the parameters
     $params = (new Validator())
       ->withRequired('email', 'email|notempty|maxlength:256')
@@ -121,23 +127,26 @@ final class UserController extends AbstractController
       ->resultOrThrowBadRequest($request);
 
     // Check if the password matches
-    if (!$authUser->verifyPassword($params['currentPassword']))
+    if (!$authorizedUser->verifyPassword($params['currentPassword']))
       throw new HttpBadRequestException($request, "The password is incorrect");
 
     // Modify the user
-    $authUser->setEmail($params['email']);
+    $authorizedUser->setEmail($params['email']);
 
     // Update the user in the repository
-    $this->userRepository->update($authUser->setUpdatedAt(new \DateTime()));
+    $this->userRepository->update($authorizedUser->setUpdatedAt(new \DateTime()));
 
     // Return the response
-    return $this->serialize($request, $response, $authUser)
+    return $this->serialize($request, $response, $authorizedUser)
       ->withStatus(200);
   }
 
   // Update the password of the authorized user and return the user as a JSON response
-  public function updateAuthorizedUserPassword(Request $request, Response $response, User $authUser)
+  public function updateAuthorizedUserPassword(Request $request, Response $response)
   {
+    // Get the authorized user
+    $authorizedUser = $request->getAttribute('authUser');
+
     // Get and validate the parameters
     $params = (new Validator())
       ->withRequired('password', 'string|notempty|maxlength:256')
@@ -146,23 +155,26 @@ final class UserController extends AbstractController
       ->resultOrThrowBadRequest($request);
 
     // Check if the password matches
-    if (!$authUser->verifyPassword($params['currentPassword']))
+    if (!$authorizedUser->verifyPassword($params['currentPassword']))
       throw new HttpBadRequestException($request, "The password is incorrect");
 
     // Modify the user
-    $authUser->hashPassword($params['password']);
+    $authorizedUser->hashPassword($params['password']);
 
     // Update the user in the repository
-    $this->userRepository->update($authUser->setUpdatedAt(new \DateTime()));
+    $this->userRepository->update($authorizedUser->setUpdatedAt(new \DateTime()));
 
     // Return the response
-    return $this->serialize($request, $response, $authUser)
+    return $this->serialize($request, $response, $authorizedUser)
       ->withStatus(200);
   }
 
   // Delete the authorized user
-  public function deleteAuthorizedUser(Request $request, Response $response, User $authUser)
+  public function deleteAuthorizedUser(Request $request, Response $response)
   {
+    // Get the authorized user
+    $authorizedUser = $request->getAttribute('authUser');
+
     // Get and validate the parameters
     $params = (new Validator())
       ->withRequired('currentPassword', 'string|notempty|maxlength:256')
@@ -170,11 +182,11 @@ final class UserController extends AbstractController
       ->resultOrThrowBadRequest($request);
 
     // Check if the password matches
-    if (!$authUser->verifyPassword($params['currentPassword']))
+    if (!$authorizedUser->verifyPassword($params['currentPassword']))
       throw new HttpBadRequestException($request, "The password is incorrect");
 
     // Remove all images owned by the user
-    $images = $this->imageRepository->findManyBy(['user' => $authUser->getId()]);
+    $images = $this->imageRepository->findManyBy(['user' => $authorizedUser->getId()]);
     foreach ($images as $image)
     {
       // Delete the image from the repository
@@ -183,7 +195,7 @@ final class UserController extends AbstractController
     }
 
     // Remove all collections owned by the user
-    $collections = $this->collectionRepository->findManyBy(['user' => $authUser->getId()]);
+    $collections = $this->collectionRepository->findManyBy(['user' => $authorizedUser->getId()]);
     foreach ($collections as $collection)
     {
       // Delete the collection from the repository
@@ -191,7 +203,7 @@ final class UserController extends AbstractController
     }
 
     // Remove the user from the repository
-    $this->userRepository->delete($authUser);
+    $this->userRepository->delete($authorizedUser);
 
     // Return the response
     return $response
@@ -199,10 +211,13 @@ final class UserController extends AbstractController
   }
 
   // Return all sessions owned by the authorized user as a JSON response
-  public function getAuthorizedUserSessions(Request $request, Response $response, User $authUser)
+  public function getAuthorizedUserSessions(Request $request, Response $response)
   {
+    // Get the authorized user
+    $authorizedUser = $request->getAttribute('authUser');
+
     // Get the sessions
-    $sessions = $this->sessionRepository->findManyBy(['user' => $authUser->getId()->toString()], ['sort' => ['createdAt' => -1]]);
+    $sessions = $this->sessionRepository->findManyBy(['user' => $authorizedUser->getId()->toString()], ['sort' => ['createdAt' => -1]]);
 
     // Return the response
     return $this->serialize($request, $response, $sessions)
@@ -210,10 +225,13 @@ final class UserController extends AbstractController
   }
 
   // Return a session owned by the authorized user as a JSON response
-  public function getAuthorizedUserSession(Request $request, Response $response, User $authUser, string $sessionId)
+  public function getAuthorizedUserSession(Request $request, Response $response, string $sessionId)
   {
+    // Get the authorized user
+    $authorizedUser = $request->getAttribute('authUser');
+
     // Get the session
-    $session = $this->sessionRepository->findBy(['_id' => $sessionId, 'user' => $authUser->getId()->toString()]);
+    $session = $this->sessionRepository->findBy(['_id' => $sessionId, 'user' => $authorizedUser->getId()->toString()]);
     if ($session == null)
       throw new HttpNotFoundException($request, "A session with id \"{$sessionId}\" coud not be found");
 
@@ -223,10 +241,13 @@ final class UserController extends AbstractController
   }
 
   // Delete a session owned by the authorized user
-  public function deleteAuthorizedUserSession(Request $request, Response $response, User $authUser, string $sessionId)
+  public function deleteAuthorizedUserSession(Request $request, Response $response, string $sessionId)
   {
+    // Get the authorized user
+    $authorizedUser = $request->getAttribute('authUser');
+
     // Get the session
-    $session = $this->sessionRepository->findBy(['_id' => $sessionId, 'user' => $authUser->getId()->toString()]);
+    $session = $this->sessionRepository->findBy(['_id' => $sessionId, 'user' => $authorizedUser->getId()->toString()]);
     if ($session == null)
       throw new HttpNotFoundException($request, "A session with id \"{$sessionId}\" coud not be found");
 
@@ -238,17 +259,34 @@ final class UserController extends AbstractController
       ->withStatus(204);
   }
 
-  // Return all collections owned by the authorized user as a JSON response
-  public function getAuthorizedUserCollections(Request $request, Response $response, User $authUser)
+
+  // Return if the authorized user can read a user
+  private function canReadUser(User $user, ?User $authorizedUser): bool
   {
-    // Return the response
-    return $this->getUserCollections($request, $response, $authUser);
+    // Check if the user is public
+    if ($user->getPublic())
+      return true;
+
+    // Check if the authorized user can modify the user
+    if (!$this->canModifyUser($user, $authorizedUser))
+      return false;
+
+    // All checks passed
+    return true;
   }
 
-  // Return all images owned by the authorized user as a JSON response
-  public function getAuthorizedUserImages(Request $request, Response $response, User $authUser)
+  // Return if the authorized user can modify a user
+  private function canModifyUser(User $user, ?User $authorizedUser): bool
   {
-    // Return the response
-    return $this->getUserImages($request, $response, $authUser);
+    // Check if the authorized user is empty
+    if ($authorizedUser === null)
+      return false;
+
+    // Check if the identifiers of the users match
+    if ($user->getId() != $authorizedUser->getId())
+      return false;
+
+    // All checks passed
+    return true;
   }
 }

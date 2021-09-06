@@ -142,13 +142,13 @@ return function(App $app)
         ->setName('users.patch');
 
       // Return all collections owned by a user as a JSON response
-      $group->get('/{userId:[A-Za-z0-9-_]+}/collections/', [UserController::class, 'getUserCollections'])
+      $group->get('/{userId:[A-Za-z0-9-_]+}/collections/', [CollectionController::class, 'getUserCollections'])
         ->add(UserResolverMiddleware::class)
         ->add(AuthorizationOptionalMiddleware::class)
         ->setName('users.collections.index');
 
       // Return all images owned by a user as a JSON response
-      $group->get('/{userId:[A-Za-z0-9-_]+}/images/', [UserController::class, 'getUserImages'])
+      $group->get('/{userId:[A-Za-z0-9-_]+}/images/', [ImageController::class, 'getUserImages'])
         ->add(UserResolverMiddleware::class)
         ->add(AuthorizationOptionalMiddleware::class)
         ->setName('users.images.index');
@@ -198,12 +198,12 @@ return function(App $app)
         ->setName('me.sessions.delete');
 
       // Return all collections owned by the authorized user as a JSON response
-      $group->get('/collections/', [UserController::class, 'getAuthorizedUserCollections'])
+      $group->get('/collections/', [CollectionController::class, 'getAuthorizedUserCollections'])
         ->add(AuthorizationMiddleware::class)
         ->setName('me.collections.index');
 
       // Return all images owned by the authorized user as a JSON response
-      $group->get('/images/', [UserController::class, 'getAuthorizedUserImages'])
+      $group->get('/images/', [ImageController::class, 'getAuthorizedUserImages'])
         ->add(AuthorizationMiddleware::class)
         ->setName('me.images.index');
     });

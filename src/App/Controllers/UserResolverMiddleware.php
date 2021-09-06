@@ -41,7 +41,7 @@ final class UserResolverMiddleware implements MiddlewareInterface
       // Get the user from the repository
       $user = $this->userRepository->find(Snowflake::fromString($id));
       if ($user == null)
-        throw new HttpNotFoundException($request, "A user with id \"{$id}\" coud not be found");
+        throw self::createIdNotFound($request, $id);
 
       // Store the link as an attribute
       $request = $request->withAttribute('user', $user);
@@ -53,7 +53,7 @@ final class UserResolverMiddleware implements MiddlewareInterface
       // Get the user from the repository
       $user = $this->userRepository->findBy(['name' => $name]);
       if ($user == null)
-        throw new HttpNotFoundException($request, "A user with name \"{$name}\" coud not be found");
+        throw self::createNameNotFound($request, $name);
 
       // Store the link as an attribute
       $request = $request->withAttribute('user', $user);
@@ -61,9 +61,27 @@ final class UserResolverMiddleware implements MiddlewareInterface
 
     // No identifier or name is provided
     else
-      throw new HttpBadRequestException($request, "No user id or name was provided to the route");
+      throw self::createBadRequest($request);
 
     // Handle the request
     return $handler->handle($request);
+  }
+
+  // Return a bad request exception for an invalid route
+  public function createBadRequest(Request $request): HttpBadRequestException
+  {
+    new HttpBadRequestException($request, "No user id or name was provided to the route");
+  }
+
+  // Return a not found exception for an identifier
+  public function createIdNotFound(Request $request, string $id): HttpNotFoundException
+  {
+    return new HttpNotFoundException($request, "A user with id \"{$id}\" could not be found");
+  }
+
+  // Return a not found exception for a name
+  public function createNameNotFound(Request $request, string $name): HttpNotFoundException
+  {
+    return new HttpNotFoundException($request, "A user with name \"{$name}\" could not be found");
   }
 }

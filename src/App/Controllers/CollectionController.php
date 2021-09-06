@@ -19,21 +19,61 @@ use Danae\Faylin\Validator\Validator;
 final class CollectionController extends AbstractController
 {
   // Return all collections as a JSON response
-  public function getCollections(Request $request, Response $response, User $authUser)
+  public function getCollections(Request $request, Response $response)
   {
+    // Get the authorized user
+    $authorizedUser = $request->getAttribute('authUser');
+
+    // Get the repository filter
+    if ($authorizedUser !== null)
+      $filter = ['$or' => [['public' => true], ['user' => $authorizedUser->getId()->toString()]]];
+    else
+      $filter = ['public' => true];
+
     // Get the collections
     $options = $this->createSelectOptions($request, ['sort' => '-createdAt']);
-    $filter = $authUser !== null ? ['$or' => [['public' => true], ['user' => $authUser->getId()->toString()]]] : ['public' => true];
     $collections = $this->collectionRepository->findManyBy($filter, $options);
 
     // Return the response
     return $this->serialize($request, $response, $collections);
   }
 
-  // Post a new collection and return the collection as a JSON response
-  public function postCollection(Request $request, Response $response, User $authUser, SnowflakeGenerator $snowflakeGenerator)
+  // Return all collections owned by a user as a JSON response
+  public function getUserCollections(Request $request, Response $response, User $user)
   {
-    $now = new \DateTime();
+    // Get the authorized user
+    $authorizedUser = $request->getAttribute('authUser');
+
+    // Get the repository filter
+    if ($authorizedUser !== null)
+      $filter = ['user' => $user->getId()->toString(), '$or' => [['public' => true], ['user' => $authorizedUser->getId()->toString()]]];
+    else
+      $filter = ['user' => $user->getId()->toString(), 'public' => true];
+
+    // Get the collections
+    $options = $this->createSelectOptions($request, ['sort' => '-createdAt']);
+    $collections = $this->collectionRepository->findManyBy($filter, $options);
+
+    // Return the response
+    return $this->serialize($request, $response, $collections)
+      ->withStatus(200);
+  }
+
+  // Return all collections owned by the authorized user as a JSON response
+  public function getAuthorizedUserCollections(Request $request, Response $response)
+  {
+    // Get the authorized user
+    $authorizedUser = $request->getAttribute('authUser');
+
+    // Return the response
+    return $this->getUserCollections($request, $response, $authorizedUser);
+  }
+
+  // Post a new collection and return the collection as a JSON response
+  public function postCollection(Request $request, Response $response, SnowflakeGenerator $snowflakeGenerator)
+  {
+    // Get the authorized user
+    $authorizedUser = $request->getAttribute('authUser');
 
     // Get and validate the body parameters
     $params = (new Validator())
@@ -47,7 +87,7 @@ final class CollectionController extends AbstractController
     $collection = new Collection();
     $collection->generateId($snowflakeGenerator);
     $collection->setName($collection->getId()->toBase64());
-    $collection->setUser($authUser);
+    $collection->setUser($authorizedUser);
     $collection->setTitle($params['title']);
     $collection->setDescription($params['description']);
     $collection->setPublic($params['public']);
@@ -63,15 +103,27 @@ final class CollectionController extends AbstractController
   // Get a collection as a JSON response
   public function getCollection(Request $request, Response $response, Collection $collection)
   {
+    // Get the authorized user
+    $authorizedUser = $request->getAttribute('authUser');
+
+    // Check if the authorized user can read this collection
+    if (!$this->canReadCollection($collection, $authorizedUser))
+      throw CollectionResolverMiddleware::createIdNotFound($request, $collection->getId()->toString());
+
     // Return the response
     return $this->serialize($request, $response, $collection);
   }
 
   // Patch a collection and return the collection as a JSON response
-  public function patchCollection(Request $request, Response $response, Collection $collection, User $authUser)
+  public function patchCollection(Request $request, Response $response, Collection $collection)
   {
-    // Check if the authorized user owns this collection
-    if ($authUser->getId() != $collection->getUser()->getId())
+    // Get the authorized user
+    $authorizedUser = $request->getAttribute('authUser');
+
+    // Check if the authorized user can read and modify this collection
+    if (!$this->canReadCollection($collection, $authorizedUser))
+      throw CollectionResolverMiddleware::createIdNotFound($request, $collection->getId()->toString());
+    if (!$this->canModifyCollection($collection, $authorizedUser))
       throw new HttpForbiddenException($request, "The current authorized user is not allowed to modify the collection with id \"{$collection->getId()}\"");
 
     // Get and validate the body parameters
@@ -98,11 +150,16 @@ final class CollectionController extends AbstractController
   }
 
   // Delete a collection
-  public function deleteCollection(Request $request, Response $response, Collection $collection, User $authUser)
+  public function deleteCollection(Request $request, Response $response, Collection $collection)
   {
-    // Check if the authorized user owns this collection
-    if ($authUser->getId() != $collection->getUser()->getId())
-      throw new HttpForbiddenException($request, "The current authorized user is not allowed to delete the collection with id \"{$collection->getId()}\"");
+    // Get the authorized user
+    $authorizedUser = $request->getAttribute('authUser');
+
+    // Check if the authorized user can read and modify this collection
+    if (!$this->canReadCollection($collection, $authorizedUser))
+      throw CollectionResolverMiddleware::createIdNotFound($request, $collection->getId()->toString());
+    if (!$this->canModifyCollection($collection, $authorizedUser))
+      throw new HttpForbiddenException($request, "The current authorized user is not allowed to modify the collection with id \"{$collection->getId()}\"");
 
     // Delete the collection from the repository
     $this->collectionRepository->delete($collection);
@@ -115,17 +172,27 @@ final class CollectionController extends AbstractController
   // Get all images in a collection as a JSON response
   public function getCollectionImages(Request $request, Response $response, Collection $collection)
   {
+    // Get the authorized user
+    $authorizedUser = $request->getAttribute('authUser');
+
+    // Check if the authorized user can read this collection
+    if (!$this->canReadCollection($collection, $authorizedUser))
+      throw CollectionResolverMiddleware::createIdNotFound($request, $collection->getId()->toString());
+
     // Return the response
     return $this->serialize($request, $response, $collection->getImages());
   }
 
   // Put an image in a collection
-  public function putCollectionImage(Request $request, Response $response, Collection $collection, Image $image, User $authUser)
+  public function putCollectionImage(Request $request, Response $response, Collection $collection, Image $image)
   {
-    $now = new \DateTime();
+    // Get the authorized user
+    $authorizedUser = $request->getAttribute('authUser');
 
-    // Check if the authorized user owns this collection
-    if ($authUser->getId() != $collection->getUser()->getId())
+    // Check if the authorized user can read and modify this collection
+    if (!$this->canReadCollection($collection, $authorizedUser))
+      throw CollectionResolverMiddleware::createIdNotFound($request, $collection->getId()->toString());
+    if (!$this->canModifyCollection($collection, $authorizedUser))
       throw new HttpForbiddenException($request, "The current authorized user is not allowed to modify the collection with id \"{$collection->getId()}\"");
 
     // Check if the image is already in the collection
@@ -134,10 +201,9 @@ final class CollectionController extends AbstractController
 
     // Add the image to the collection
     $collection->addImage($image);
-    $collection->setUpdatedAt($now);
 
     // Update the collection in the repository
-    $this->collectionRepository->update($collection);
+    $this->collectionRepository->update($collection->setUpdatedAt(new \DateTime()));
 
     // Return the response
     return $response
@@ -145,12 +211,15 @@ final class CollectionController extends AbstractController
   }
 
   // Delete an image in a collection
-  public function deleteCollectionImage(Request $request, Response $response, Collection $collection, Image $image, User $authUser)
+  public function deleteCollectionImage(Request $request, Response $response, Collection $collection, Image $image)
   {
-    $now = new \DateTime();
+    // Get the authorized user
+    $authorizedUser = $request->getAttribute('authUser');
 
-    // Check if the authorized user owns this collection
-    if ($authUser->getId() != $collection->getUser()->getId())
+    // Check if the authorized user can read and modify this collection
+    if (!$this->canReadCollection($collection, $authorizedUser))
+      throw CollectionResolverMiddleware::createIdNotFound($request, $collection->getId()->toString());
+    if (!$this->canModifyCollection($collection, $authorizedUser))
       throw new HttpForbiddenException($request, "The current authorized user is not allowed to modify the collection with id \"{$collection->getId()}\"");
 
     // Check if the image is not in the collection
@@ -159,13 +228,43 @@ final class CollectionController extends AbstractController
 
     // Remove the image from the collection
     $collection->removeImage($image);
-    $collection->setUpdatedAt($now);
 
     // Update the collection in the repository
-    $this->collectionRepository->update($collection);
+    $this->collectionRepository->update($collection->setUpdatedAt(new \DateTime()));
 
     // Return the response
     return $response
       ->withStatus(204);
+  }
+
+
+  // Return if the authorized user can read a collection
+  private function canReadCollection(Collection $collection, ?User $authorizedUser): bool
+  {
+    // Check if the collection is public
+    if ($collection->getPublic())
+      return true;
+
+    // Check if the authorized user can modify the collection
+    if (!$this->canModifyCollection($collection, $authorizedUser))
+      return false;
+
+    // All checks passed
+    return true;
+  }
+
+  // Return if the authorized user can modify a collection
+  private function canModifyCollection(Collection $collection, ?User $authorizedUser): bool
+  {
+    // Check if the authorized user is empty
+    if ($authorizedUser === null)
+      return false;
+
+    // Check if the identifiers of the users match
+    if ($collection->getUser()->getId() != $authorizedUser->getId())
+      return false;
+
+    // All checks passed
+    return true;
   }
 }
