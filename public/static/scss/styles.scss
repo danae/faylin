@@ -221,8 +221,6 @@ hr.bar {
 
   // Image and collection thumbnail styling
   .image-thumbnail, .collection-thumbnail {
-    @extend .m-2;
-
     // Image for the thumbnail
     &-image {
       @extend .box;
@@ -238,6 +236,7 @@ hr.bar {
     // Cover for the thumbnail
     &-cover {
       @extend .box;
+      @extend .is-shadowless;
       @extend .is-overlay;
       @extend .has-background-overlay;
       @extend .has-text-white;
@@ -254,19 +253,20 @@ hr.bar {
 
   // Image and collection thumbnail list styling
   .image-thumbnail-list, .collection-thumbnail-list {
-    @extend .m-2;
-
     // Columns for the image thumbnail list
     .columns {
       @extend .is-mobile;
       @extend .is-multiline;
-      @extend .is-gapless;
+
+      margin: -0.25rem;
 
       // Column for the image thumbnail list
       .column {
         @extend .is-clipped;
-        @extend .is-one-third;
+        @extend .is-half;
+        @extend .is-one-third-tablet;
         @extend .is-one-quarter-widescreen;
+        @extend .p-1;
       }
 
       &.is-fixed .column {
