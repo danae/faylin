@@ -11,7 +11,7 @@ export default {
       <template v-if="collections">
         <div class="columns">
           <div class="column" v-for="collection in collections" :key="collection.id">
-            <collection-thumbnail :collection="collection" :display-name="displayName" :display-user-name="displayUserName"></collection-thumbnail>
+            <collection-thumbnail :collection="collection"></collection-thumbnail>
           </div>
         </div>
       </template>

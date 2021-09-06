@@ -36,14 +36,6 @@ export default {
             </div>
           </div>
         </router-link>
-
-        <template v-if="displayName">
-          <h4 class="collection-thumbnail-name mb-0">{{ collection.title }}</h4>
-        </template>
-
-        <template v-if="displayUserName">
-          <p class="collection-thumbnail-user-name mb-0">by <router-link :to="{name: 'user', params: {userId: collection.user.id}}">{{ collection.user.title }}</router-link></p>
-        </template>
       </template>
 
       <template v-else>

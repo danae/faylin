@@ -65,7 +65,7 @@ export default {
                 </template>
 
                 <template #default>
-                  <image-thumbnail-list :images="userImages" :display-user-name="false"></image-thumbnail-list>
+                  <image-thumbnail-list :images="userImages"></image-thumbnail-list>
                 </template>
               </b-tab-item>
 
@@ -80,7 +80,7 @@ export default {
                 </template>
 
                 <template #default>
-                  <collection-thumbnail-list :collections="userCollections" :display-user-name="false"></collection-thumbnail-list>
+                  <collection-thumbnail-list :collections="userCollections"></collection-thumbnail-list>
                 </template>
               </b-tab-item>
             </b-tabs>

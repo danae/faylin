@@ -12,7 +12,7 @@ export default {
       <template v-if="images">
         <div :class="{'columns': true, 'is-fixed': fixed}">
           <div class="column" v-for="image in images" :key="image.id">
-            <image-thumbnail :image="image" :display-name="displayName" :display-user-name="displayUserName"></image-thumbnail>
+            <image-thumbnail :image="image"></image-thumbnail>
           </div>
         </div>
       </template>
