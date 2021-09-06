@@ -19,11 +19,12 @@ use Danae\Faylin\Validator\Validator;
 final class CollectionController extends AbstractController
 {
   // Return all collections as a JSON response
-  public function getCollections(Request $request, Response $response)
+  public function getCollections(Request $request, Response $response, User $authUser)
   {
     // Get the collections
     $options = $this->createSelectOptions($request, ['sort' => '-createdAt']);
-    $collections = $this->collectionRepository->findManyBy(['public' => true], $options);
+    $filter = $authUser !== null ? ['$or' => [['public' => true], ['user' => $authUser->getId()->toString()]]] : ['public' => true];
+    $collections = $this->collectionRepository->findManyBy($filter, $options);
 
     // Return the response
     return $this->serialize($request, $response, $collections);

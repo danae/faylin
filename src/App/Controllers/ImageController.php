@@ -25,11 +25,12 @@ use Danae\Faylin\Validator\Validator;
 final class ImageController extends AbstractController
 {
   // Return all images as a JSON response
-  public function getImages(Request $request, Response $response)
+  public function getImages(Request $request, Response $response, User $authUser)
   {
     // Get the images
     $options = $this->createSelectOptions($request, ['sort' => '-createdAt']);
-    $images = $this->imageRepository->findManyBy(['public' => true], $options);
+    $filter = $authUser !== null ? ['$or' => [['public' => true], ['user' => $authUser->getId()->toString()]]] : ['public' => true];
+    $images = $this->imageRepository->findManyBy($filter, $options);
 
     // Return the response
     return $this->serialize($request, $response, $images);
