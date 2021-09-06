@@ -22,6 +22,7 @@ export default class User
     this.description = data.description;
     this.public = data.public;
     this.avatar = data.avatar;
+    this.avatarUrl = data.avatarUrl;
   }
 
   // Return the string representation of the user

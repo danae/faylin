@@ -40,6 +40,10 @@ footer {
     h#{$i} {
       @extend .is-family-secondary;
       @extend .has-text-weight-normal;
+
+      @if $i <= 2 {
+        @extend .has-text-weight-bold;
+      }
     }
   }
 
@@ -48,7 +52,20 @@ footer {
     @extend .mx-0;
 
     &:not(:last-child) {
-      @extend .mb-4;
+      @extend .mb-0;
+    }
+
+    img {
+      @extend .is-block;
+    }
+
+    // Avatar image styling
+    &.avatar {
+      @extend .mx-auto;
+
+      img {
+        @extend .is-rounded;
+      }
     }
   }
 
@@ -97,24 +114,15 @@ footer {
 
 // Hero styling
 .hero {
-  @extend .is-family-secondary;
   @extend .has-text-centered;
 }
 
 // Horizontal separator styling
-hr {
-  @extend .has-background-grey-lighter;
-  @extend .mx-0;
-  @extend .my-5;
+hr.bar {
+  @extend .has-background-light;
+  @extend .m-0;
 
-  height: 1px;
-
-  &.bar {
-    @extend .has-background-light;
-    @extend .m-0;
-
-    height: 2px;
-  }
+  height: 2px;
 }
 
 // Box styling
@@ -173,6 +181,10 @@ hr {
   @extend .is-flex-wrap-nowrap;
 }
 
+.tab-content {
+  @extend .p-0;
+}
+
 // Page components styling
 .page {
   // Image details styling
@@ -209,66 +221,52 @@ hr {
 
   // Image and collection thumbnail styling
   .image-thumbnail, .collection-thumbnail {
-    @extend .has-text-centered;
+    @extend .m-2;
 
-    // Name text for the image thumbnail
-    &-name {
-      @extend .is-size-6;
-      @extend .has-text-weight-bold;
-    }
-
-    // User name text for the image thumbnail
-    &-user-name {
-      @extend .is-size-7;
-    }
-
-    // Image for the image thumbnail
+    // Image for the thumbnail
     &-image {
-      @extend .mx-0;
-      @extend .mb-2;
+      @extend .box;
+      @extend .is-shadowless;
+      @extend .is-clipped;
+      @extend .p-0;
 
-      // Image element
-      img {
-        @extend .box;
-        @extend .is-shadowless;
-        @extend .mx-auto;
-        @extend .p-0;
+      &.is-nsfw img {
+        filter: blur(15px);
+      }
+    }
 
-        width: auto;
-        height: 10rem;
-        max-width: 100%;
+    // Cover for the thumbnail
+    &-cover {
+      @extend .box;
+      @extend .is-overlay;
+      @extend .has-background-overlay;
+      @extend .has-text-white;
+      @extend .p-4;
+
+      opacity: 0.0;
+      transition: opacity .2s ease-in-out;
+
+      &:hover {
+        opacity: 1.8;
       }
     }
   }
 
   // Image and collection thumbnail list styling
   .image-thumbnail-list, .collection-thumbnail-list {
+    @extend .m-2;
+
     // Columns for the image thumbnail list
     .columns {
+      @extend .is-mobile;
       @extend .is-multiline;
+      @extend .is-gapless;
 
       // Column for the image thumbnail list
       .column {
         @extend .is-clipped;
-        @extend .is-half;
-        @extend .is-one-third-desktop;
+        @extend .is-one-third;
         @extend .is-one-quarter-widescreen;
-        @extend .is-one-fifth-fullhd;
-      }
-    }
-  }
-
-  // User thumbnail list styling
-  .user-thumbnail-list {
-    // Columns for the user thumbnail list
-    .columns {
-      @extend .is-mobile;
-      @extend .is-multiline;
-
-      // Column for the image thumbnail list
-      .column {
-        @extend .is-narrow;
-        @extend .is-half;
       }
     }
   }

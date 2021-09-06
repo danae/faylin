@@ -16,8 +16,9 @@ $warning: #F49E4C;
 $danger: #AB3428;
 $light: #EFF8FA;
 $dark: #2A3D45;
+$overlay: transparentize($dark, 0.25);
 
-$custom-colors: ('primary-light': $primary-light);
+$custom-colors: ('primary-light': $primary-light, 'overlay': $overlay);
 
 // Custom derived colors
 $link: $primary;

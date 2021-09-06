@@ -6,8 +6,6 @@ export default {
   // The properties for the component
   props: {
     image: {type: Image},
-    displayName: {type: Boolean, default: true},
-    displayUserName: {type: Boolean, default: true},
   },
 
   // The template for the component
@@ -15,16 +13,33 @@ export default {
     <div class="image-thumbnail content">
       <template v-if="image">
         <router-link :to="{name: 'image', params: {imageId: image.id}}">
-          <b-image class="image-thumbnail-image" :src="image.thumbnailUrl" :alt="image.title"></b-image>
+          <div class="is-relative">
+            <b-image class="image-thumbnail-image" :src="image.thumbnailUrl" :alt="image.title" :class="{'is-nsfw': image.nsfw}"></b-image>
+
+            <div class="image-thumbnail-cover">
+              <div class="media is-align-items-center mb-4">
+                <template v-if="image.user.avatarUrl">
+                  <div class="media-left mr-2">
+                    <b-image class="avatar is-32x32" :src="image.user.avatarUrl" :alt="image.user.title"></b-image>
+                  </div>
+                </template>
+
+                <div class="media-content">
+                  <p class="is-size-6 mb-0">
+                    {{ image.title }}
+                  </p>
+                  <p class="is-size-7 mb-0">
+                    <router-link :to="{name: 'user', params: {userId: image.user.id}}" class="has-text-white">by {{ image.user.title }}</router-link>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
         </router-link>
 
-        <template v-if="displayName">
-          <h4 class="image-thumbnail-name mb-0">{{ image.title }}</h4>
-        </template>
+        <!--
 
-        <template v-if="displayUserName">
-          <p class="image-thumbnail-user-name mb-0">by <router-link :to="{name: 'user', params: {userId: image.user.id}}">{{ image.user.title }}</router-link></p>
-        </template>
+        -->
       </template>
 
       <template v-else>

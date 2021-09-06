@@ -37,9 +37,17 @@ export default {
   template: `
     <div class="user-details">
       <template v-if="user">
-        <div class="hero is-primary mb-4">
-          <div class="hero-body container">
-            <p class="title mb-0">{{ user.title }}</p>
+        <div class="hero is-light mb-4">
+          <div class="hero-body container content">
+            <template v-if="user.avatarUrl">
+              <b-image class="avatar is-128x128" :src="user.avatarUrl" :alt="user.title"></b-image>
+            </template>
+
+            <h1>{{ user.title }}</h1>
+
+            <template v-if="user.description">
+              <p>{{ user.description }}</p>
+            </template>
           </div>
         </div>
 

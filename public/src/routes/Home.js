@@ -33,9 +33,7 @@ export default {
       </template>
 
       <div class="container">
-        <section class="section">
-          <image-thumbnail-list :images="images"></image-thumbnail-list>
-        </section>
+        <image-thumbnail-list :images="images"></image-thumbnail-list>
       </div>
     </div>
   `
