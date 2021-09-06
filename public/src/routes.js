@@ -21,7 +21,7 @@ const routes = [
   {path: '/c/:collectionId', name: 'collection', component: CollectionDetails},
   {path: '/i/:imageId', name: 'image', component: ImageDetails},
   {path: '/u/:userId', name: 'user', component: UserDetails},
-  {path: '/~:userName', name: 'userShort', component: UserDetailsShort},
+  {path: '/@:userName', name: 'userShort', component: UserDetailsShort},
 
   // Settings routes
   {path: '/settings/:page*', name: 'settings', component: Settings, meta: {requireLoggedIn: true}},

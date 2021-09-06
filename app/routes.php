@@ -234,7 +234,7 @@ return function(App $app)
       ->setName('frontend.user');
 
     // Render a user with a short user name URL
-    $group->get('/~{userName:[A-Za-z0-9-_]+}', [FrontendController::class, 'renderUser'])
+    $group->get('/@{userName:[A-Za-z0-9-_]+}', [FrontendController::class, 'renderUser'])
       ->add(UserResolverMiddleware::class)
       ->setName('frontend.user');
 
