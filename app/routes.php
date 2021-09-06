@@ -216,6 +216,7 @@ return function(App $app)
     $group->get('/', [FrontendController::class, 'render']);
     $group->get('/login', [FrontendController::class, 'render']);
     $group->get('/logout', [FrontendController::class, 'render']);
+    $group->get('/browse[/{page:.*}]', [FrontendController::class, 'render']);
     $group->get('/settings[/{page:.*}]', [FrontendController::class, 'render']);
 
     // Render a collection

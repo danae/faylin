@@ -1,3 +1,4 @@
+import Browse from './routes/Browse.js';
 import CollectionDetails from './routes/CollectionDetails.js';
 import Home from './routes/Home.js';
 import ImageDetails from './routes/ImageDetails.js';
@@ -12,6 +13,9 @@ import UserDetailsShort from './routes/UserDetailsShort.js';
 const routes = [
   // Home route
   {path: '/', name: 'home', component: Home},
+
+  // Browse routes
+  {path: '/browse/:page*', name: 'browse', component: Browse},
 
   // Session routes
   {path: '/login', name: 'login', component: Login},
