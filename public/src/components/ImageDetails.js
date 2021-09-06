@@ -144,7 +144,7 @@ export default {
                 </template>
 
                 <template v-else>
-                  <div class="media is-align-content-center mb-4">
+                  <div class="media is-align-items-center mb-4">
                     <template v-if="image.user.avatarUrl">
                       <div class="media-left mr-3">
                         <router-link :to="{name: 'user', params: {userId: image.user.id}}">
@@ -154,12 +154,8 @@ export default {
                     </template>
 
                     <div class="media-content">
-                      <h2 class="is-size-4 has-text-weight-bold mb-0">
-                        {{ image.title }}
-                      </h2>
-                      <p class="is-size-6 mb-0">
-                        by <router-link :to="{name: 'user', params: {userId: image.user.id}}">{{ image.user.title }}</router-link>
-                      </p>
+                      <p class="is-size-4 is-family-secondary has-text-weight-bold mb-0">{{ image.title }}</p>
+                      <p class="is-size-6 mb-0">by <router-link :to="{name: 'user', params: {userId: image.user.id}}">{{ image.user.title }}</router-link></p>
                     </div>
                   </div>
 

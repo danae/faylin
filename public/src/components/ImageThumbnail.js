@@ -31,12 +31,8 @@ export default {
                 </template>
 
                 <div class="media-content">
-                  <p class="is-size-6 mb-0">
-                    {{ image.title }}
-                  </p>
-                  <p class="is-size-7 mb-0">
-                    by <router-link :to="{name: 'user', params: {userId: image.user.id}}" class="has-text-white">{{ image.user.title }}</router-link>
-                  </p>
+                  <p class="is-size-6 mb-0">{{ image.title }}</p>
+                  <p class="is-size-7 mb-0">by {{ image.user.title }}</p>
                 </div>
               </div>
 
