@@ -75,7 +75,7 @@ final class ImageTransformExecutor implements ImageTransformExecutorInterface
     $result = $this->transform($image, $transform, $request);
 
     // Get the file name for the content disposition
-    $fileName = $image->getName();
+    $fileName = $image->getTitle();
     $fileNameExtension = $this->capabilities->convertContentTypeToFormat($result->getContentType());
     if (!preg_match("/\.{$fileNameExtension}\$/i", $fileName))
       $fileName .= ".{$fileNameExtension}";
@@ -93,7 +93,6 @@ final class ImageTransformExecutor implements ImageTransformExecutorInterface
   // Execute the image transformation
   private function execute(StreamInterface $stream, Image $image, ImageTransform $transform): StreamInterface
   {
-
     // Create the Imagecow image and convert SVG images to PNG first if they must be converted
     $imagecow = ImagecowImage::fromString($stream->getContents(), ImagecowImage::LIB_IMAGICK);
     if ($image->getContentType() === 'image/svg+xml' && $transform->getContentType() !== 'image/svg+xml')

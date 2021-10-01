@@ -91,7 +91,7 @@ final class ImageStore implements ImageStoreInterface
     $stream = $this->read($image, $request);
 
     // Get the file name for the content disposition
-    $fileName = $image->getName();
+    $fileName = $image->getTitle();
     $fileNameExtension = $this->capabilities->convertContentTypeToFormat($image->getContentType());
     if (!preg_match("/\.{$fileNameExtension}\$/i", $fileName))
       $fileName .= ".{$fileNameExtension}";
