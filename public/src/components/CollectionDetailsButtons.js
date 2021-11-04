@@ -10,9 +10,6 @@ export default {
 
     // If the collection is owned by the client user
     owner: {type: Boolean, default: false},
-
-    // If the collection is currently being edited
-    editing: {type: Boolean, default: false},
   },
 
   // The template for the component
@@ -31,17 +28,9 @@ export default {
           <template v-if="owner">
             <div class="level-right">
               <div class="level-item mx-0">
-                <template v-if="editing">
-                  <b-tooltip label="Cancel editing" key="cancel">
-                    <b-button type="is-text" icon-left="times" icon-pack="fas" @click="$emit('edit')"></b-button>
-                  </b-tooltip>
-                </template>
-
-                <template v-else>
-                  <b-tooltip label="Edit collection" key="edit">
-                    <b-button type="is-text" icon-left="pencil-alt" icon-pack="fas" @click="$emit('edit')"></b-button>
-                  </b-tooltip>
-                </template>
+                <b-tooltip label="Edit collection" key="edit">
+                  <b-button type="is-text" icon-left="pencil-alt" icon-pack="fas" @click="$emit('edit')"></b-button>
+                </b-tooltip>
               </div>
 
               <div class="level-item mx-0">

@@ -2,7 +2,7 @@ import Image from '../api/Image.js';
 import UploadMixin from '../mixins/UploadMixin.js';
 
 
-// Image details edit panel component
+// Image details edit modal component
 export default {
   // The mixins for the component
   mixins: [UploadMixin],
@@ -11,6 +11,9 @@ export default {
   props: {
     // The image that is referenced in the component
     image: {type: Image},
+
+    // Toggle if the component modal is active
+    active: {type: Boolean, default: false},
   },
 
   // Hook when the component is created
@@ -49,8 +52,13 @@ export default {
       // Update the image
       this.image.update(image);
 
-      // Emit the close event
-      this.$emit('close');
+      // Close the modal
+      this.close();
+    },
+
+    // Close the modal
+    close: function() {
+      this.$parent.close();
     },
 
     // Replace the image
@@ -87,39 +95,45 @@ export default {
 
   // The template for the component
   template: `
-    <div class="image-edit-panel">
+    <div class="image-edit-modal">
       <template v-if="image">
         <form @submit.prevent="patchImage()">
-          <div class="box is-panel">
-            <b-field label="Title" label-for="title" custom-class="is-small">
-              <b-input v-model="image.title" type="text" maxlength="64" :has-counter="false" name="title"></b-input>
-            </b-field>
+          <div class="modal-card" style="width: auto;">
+            <section class="modal-card-body">
+              <b-field label="Title" label-for="title" custom-class="is-small">
+                <b-input v-model="image.title" type="text" maxlength="64" :has-counter="false" name="title"></b-input>
+              </b-field>
 
-            <b-field label="Description" label-for="description" custom-class="is-small">
-              <b-input v-model="image.description" type="textarea" maxlength="256" :has-counter="false" name="description"></b-input>
-            </b-field>
+              <b-field label="Description" label-for="description" custom-class="is-small">
+                <b-input v-model="image.description" type="textarea" maxlength="256" :has-counter="false" name="description"></b-input>
+              </b-field>
 
-            <b-field label="Visibility settings" custom-class="is-small" class="mb-1">
-              <b-switch v-model="image.public">Listed publicly</b-switch>
-            </b-field>
+              <b-field label="Visibility settings" custom-class="is-small" class="mb-1">
+                <b-switch v-model="image.public">Listed publicly</b-switch>
+              </b-field>
 
-            <b-field>
-              <b-switch v-model="image.nsfw">Mature content</b-switch>
-            </b-field>
+              <b-field>
+                <b-switch v-model="image.nsfw">Mature content</b-switch>
+              </b-field>
 
-            <b-button type="is-primary" expanded icon-left="save" icon-pack="fas" class="mb-2" @click="patchImage()">
-              Save image
-            </b-button>
+              <b-field label="Content" custom-class="is-small" class="mb-1">
+                <b-button type="is-primary" outlined icon-left="upload" icon-pack="fas" @click="replaceImage()">
+                  Replace image
+                </b-button>
+              </b-field>
+            </section>
 
-            <b-button type="is-primary" expanded icon-left="upload" icon-pack="fas" @click="replaceImage()">
-              Replace
-            </b-button>
+            <footer class="modal-card-foot is-justify-content-flex-end">
+              <b-button type="is-white" @click="close">
+                Cancel
+              </b-button>
+
+              <b-button type="is-primary" @click="patchImage">
+                Save image
+              </b-button>
+            </footer>
           </div>
         </form>
-      </template>
-
-      <template v-else>
-        <b-loading active :is-full-page="false"></b-loading>
       </template>
     </div>
   `

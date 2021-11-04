@@ -28,6 +28,11 @@ export default {
       await navigator.share({url: this.$route.fullPath, title: this.collection.name, text: this.collection.description});
     },
 
+    // Edit the collection
+    editCollection: function() {
+      this.editing = true;
+    },
+
     // Delete the collection
     deleteCollection: async function() {
       // Show the confirmation dialog
@@ -55,11 +60,6 @@ export default {
       // Redirect to the previous page
       this.$router.back();
     },
-
-    // Toggle the editing state
-    toggleEditing: function() {
-      this.editing = !this.editing;
-    },
   },
 
   // The template for the component
@@ -74,31 +74,29 @@ export default {
               </div>
 
               <div class="column is-4 content">
-                <collection-details-buttons :collection="collection" :owner="owner" :editing="editing" class="mb-3" @share="shareCollection()" @edit="toggleEditing()" @delete="deleteCollection"></collection-details-buttons>
+                <collection-details-buttons :collection="collection" :owner="owner" :editing="editing" class="mb-3" @share="shareCollection" @edit="editCollection" @delete="deleteCollection"></collection-details-buttons>
 
-                <template v-if="editing">
-                  <collection-details-edit-panel :collection="collection" @close="toggleEditing()"></collection-details-edit-panel>
-                </template>
+                <b-modal v-model="editing" :width="600">
+                  <collection-details-edit-modal :collection="collection"></collection-details-edit-modal>
+                </b-modal>
 
-                <template v-else>
-                  <div class="media is-align-items-center mb-4">
-                    <template v-if="collection.user.avatarUrl">
-                      <div class="media-left mr-3">
-                        <router-link :to="{name: 'user', params: {userId: collection.user.id}}">
-                          <b-image class="avatar is-48x48" :src="collection.user.avatarUrl" :alt="collection.user.title"></b-image>
-                        </router-link>
-                      </div>
-                    </template>
-
-                    <div class="media-content">
-                      <p class="is-size-4 is-family-secondary has-text-weight-bold mb-0">{{ collection.title }}</p>
-                      <p class="is-size-6 mb-0">by <router-link :to="{name: 'user', params: {userId: collection.user.id}}">{{ collection.user.title }}</router-link></p>
+                <div class="media is-align-items-center mb-4">
+                  <template v-if="collection.user.avatarUrl">
+                    <div class="media-left mr-3">
+                      <router-link :to="{name: 'user', params: {userId: collection.user.id}}">
+                        <b-image class="avatar is-48x48" :src="collection.user.avatarUrl" :alt="collection.user.title"></b-image>
+                      </router-link>
                     </div>
-                  </div>
-
-                  <template v-if="collection.description">
-                    <p>{{ collection.description }}</p>
                   </template>
+
+                  <div class="media-content">
+                    <p class="is-size-4 is-family-secondary has-text-weight-bold mb-0">{{ collection.title }}</p>
+                    <p class="is-size-6 mb-0">by <router-link :to="{name: 'user', params: {userId: collection.user.id}}">{{ collection.user.title }}</router-link></p>
+                  </div>
+                </div>
+
+                <template v-if="collection.description">
+                  <p>{{ collection.description }}</p>
                 </template>
               </div>
             </div>

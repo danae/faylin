@@ -13,9 +13,6 @@ export default {
 
     // If the image is owned by the client user
     owner: {type: Boolean, default: false},
-
-    // If the image is currently being edited
-    editing: {type: Boolean, default: false},
   },
 
   // The data for the component
@@ -99,7 +96,7 @@ export default {
                     </span>
                   </b-dropdown-item>
 
-                  <b-dropdown-item @click="$emit('copy-bbcode')"">
+                  <b-dropdown-item @click="$emit('copy-bbcode')">
                     <span class="icon-text">
                       <b-icon icon="comment-dots" pack="fas"></b-icon>
                       <span>Copy as BBCode</span>
@@ -120,17 +117,9 @@ export default {
           <template v-if="owner">
             <div class="level-right">
               <div class="level-item mx-0">
-                <template v-if="editing">
-                  <b-tooltip label="Cancel editing" key="cancel">
-                    <b-button type="is-text" icon-left="times" icon-pack="fas" @click="$emit('edit')"></b-button>
-                  </b-tooltip>
-                </template>
-
-                <template v-else>
-                  <b-tooltip label="Edit image" key="edit">
-                    <b-button type="is-text" icon-left="pencil-alt" icon-pack="fas" @click="$emit('edit')"></b-button>
-                  </b-tooltip>
-                </template>
+                <b-tooltip label="Edit image" key="edit">
+                  <b-button type="is-text" icon-left="pencil-alt" icon-pack="fas" @click="$emit('edit')"></b-button>
+                </b-tooltip>
               </div>
 
               <div class="level-item mx-0">

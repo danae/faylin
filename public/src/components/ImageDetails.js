@@ -89,6 +89,11 @@ export default {
       await this.copyImageLink(image => `<img src="${image.downloadUrl}" alt="${image.title}">`);
     },
 
+    // Edit the image
+    editImage: function() {
+      this.editing = true;
+    },
+
     // Delete the image
     deleteImage: async function() {
       // Show the confirmation dialog
@@ -116,11 +121,6 @@ export default {
       // Redirect to the previous page
       this.$router.back();
     },
-
-    // Toggle the editing state
-    toggleEditing: function() {
-      this.editing = !this.editing;
-    },
   },
 
   // The template for the component
@@ -137,31 +137,29 @@ export default {
               </div>
 
               <div class="column is-4 content">
-                <image-details-buttons :image="image" :collections="collections" :owner="owner" :editing="editing" class="mb-4" @share="shareImage()" @add="addImageToCollection" @add-new="addImageToNewCollection" @copy-link="copyImageLink()" @copy-markdown="copyImageMarkdown()" @copy-bbcode="copyImageBBCode()" @copy-html="copyImageHTML()" @edit="toggleEditing()" @delete="deleteImage"></image-details-buttons>
+                <image-details-buttons :image="image" :collections="collections" :owner="owner" class="mb-4" @share="shareImage" @add="addImageToCollection" @add-new="addImageToNewCollection" @copy-link="copyImageLink" @copy-markdown="copyImageMarkdown" @copy-bbcode="copyImageBBCode" @copy-html="copyImageHTML" @edit="editImage" @delete="deleteImage"></image-details-buttons>
 
-                <template v-if="editing">
-                  <image-details-edit-panel :image="image" :replace="image.id" @close="toggleEditing()"></image-details-edit-panel>
-                </template>
+                <b-modal v-model="editing" :width="600">
+                  <image-details-edit-modal :image="image" :replace="image.id"></image-details-edit-modal>
+                </b-modal>
 
-                <template v-else>
-                  <div class="media is-align-items-center mb-4">
-                    <template v-if="image.user.avatarUrl">
-                      <div class="media-left mr-3">
-                        <router-link :to="{name: 'user', params: {userId: image.user.id}}">
-                          <b-image class="avatar is-48x48" :src="image.user.avatarUrl" :alt="image.user.title"></b-image>
-                        </router-link>
-                      </div>
-                    </template>
-
-                    <div class="media-content">
-                      <p class="is-size-4 is-family-secondary has-text-weight-bold mb-0">{{ image.title }}</p>
-                      <p class="is-size-6 mb-0">by <router-link :to="{name: 'user', params: {userId: image.user.id}}">{{ image.user.title }}</router-link></p>
+                <div class="media is-align-items-center mb-4">
+                  <template v-if="image.user.avatarUrl">
+                    <div class="media-left mr-3">
+                      <router-link :to="{name: 'user', params: {userId: image.user.id}}">
+                        <b-image class="avatar is-48x48" :src="image.user.avatarUrl" :alt="image.user.title"></b-image>
+                      </router-link>
                     </div>
-                  </div>
-
-                  <template v-if="image.description">
-                    <p>{{ image.description }}</p>
                   </template>
+
+                  <div class="media-content">
+                    <p class="is-size-4 is-family-secondary has-text-weight-bold mb-0">{{ image.title }}</p>
+                    <p class="is-size-6 mb-0">by <router-link :to="{name: 'user', params: {userId: image.user.id}}">{{ image.user.title }}</router-link></p>
+                  </div>
+                </div>
+
+                <template v-if="image.description">
+                  <p>{{ image.description }}</p>
                 </template>
               </div>
             </div>
