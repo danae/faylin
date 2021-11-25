@@ -27,7 +27,7 @@ export default {
     <div class="user-thumbnail content">
       <template v-if="user">
         <div class="box is-panel">
-          <router-link :to="{name: 'user', params: {userId: user.id}}">
+          <router-link :to="{name: 'user', params: {userName: user.name}}">
             <div class="media is-align-items-center mb-4">
               <template v-if="user.avatarUrl">
                 <div class="media-left mr-2">

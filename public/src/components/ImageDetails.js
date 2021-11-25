@@ -146,7 +146,7 @@ export default {
                 <div class="media is-align-items-center mb-4">
                   <template v-if="image.user.avatarUrl">
                     <div class="media-left mr-3">
-                      <router-link :to="{name: 'user', params: {userId: image.user.id}}">
+                      <router-link :to="{name: 'user', params: {userName: image.user.name}}">
                         <b-image class="avatar is-48x48" :src="image.user.avatarUrl" :alt="image.user.title"></b-image>
                       </router-link>
                     </div>
@@ -154,7 +154,7 @@ export default {
 
                   <div class="media-content">
                     <p class="is-size-4 is-family-secondary has-text-weight-bold mb-0">{{ image.title }}</p>
-                    <p class="is-size-6 mb-0">by <router-link :to="{name: 'user', params: {userId: image.user.id}}">{{ image.user.title }}</router-link></p>
+                    <p class="is-size-6 mb-0">by <router-link :to="{name: 'user', params: {userName: image.user.name}}">{{ image.user.title }}</router-link></p>
                   </div>
                 </div>
 

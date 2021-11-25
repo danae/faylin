@@ -83,7 +83,7 @@ export default {
                 <div class="media is-align-items-center mb-4">
                   <template v-if="collection.user.avatarUrl">
                     <div class="media-left mr-3">
-                      <router-link :to="{name: 'user', params: {userId: collection.user.id}}">
+                      <router-link :to="{name: 'user', params: {userName: collection.user.name}}">
                         <b-image class="avatar is-48x48" :src="collection.user.avatarUrl" :alt="collection.user.title"></b-image>
                       </router-link>
                     </div>
@@ -91,7 +91,7 @@ export default {
 
                   <div class="media-content">
                     <p class="is-size-4 is-family-secondary has-text-weight-bold mb-0">{{ collection.title }}</p>
-                    <p class="is-size-6 mb-0">by <router-link :to="{name: 'user', params: {userId: collection.user.id}}">{{ collection.user.title }}</router-link></p>
+                    <p class="is-size-6 mb-0">by <router-link :to="{name: 'user', params: {userName: collection.user.name}}">{{ collection.user.title }}</router-link></p>
                   </div>
                 </div>
 

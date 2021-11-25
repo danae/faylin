@@ -51,7 +51,7 @@
         <!-- Navbar menu -->
         <template #end>
           <template v-if="clientLoggedIn">
-            <b-navbar-item tag="router-link" :to="{name: 'user', params: {userId: clientUser.id}}" key="profile">
+            <b-navbar-item tag="router-link" :to="{name: 'user', params: {userName: clientUser.name}}" key="profile">
               <span class="icon-text">
                 <b-icon pack="fas" icon="user-circle"></b-icon>
                 <span>Profile</span>

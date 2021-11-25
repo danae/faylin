@@ -14,7 +14,8 @@ export default {
     document.title = `User – fayl.in`;
 
     // Get the user
-    this.user = await this.$root.client.getUser(this.$route.params.userId);
+    let users = await this.$root.client.getUsers();
+    this.user = users.find(user => user.name === this.$route.params.userName);
     document.title = `${this.user.title} – fayl.in`;
   },
 

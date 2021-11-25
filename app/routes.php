@@ -234,11 +234,6 @@ return function(App $app)
       ->add(UserResolverMiddleware::class)
       ->setName('frontend.user');
 
-    // Render a user with a short user name URL
-    $group->get('/@{userName:[A-Za-z0-9-_]+}[/{page:.*}]', [FrontendController::class, 'renderUser'])
-      ->add(UserResolverMiddleware::class)
-      ->setName('frontend.user');
-
     // Download the contents of an image
     $group->get('/{imageName:[A-Za-z0-9-_]+}[.{format}]', [ImageController::class, 'downloadImage'])
       ->add(ImageResolverMiddleware::class)

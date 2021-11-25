@@ -65,7 +65,7 @@ export default {
           <div class="tabs is-centered mb-0">
             <ul>
               <li :class="{'is-active': page === 'images'}">
-                <router-link :to="{name: 'user', params: {userId: user.id, page: 'images'}}">
+                <router-link :to="{name: 'user', params: {userName: user.name, page: 'images'}}">
                   Images
                   <template v-if="userImages && userImages.length > 0">
                     <b-tag type="is-light" class="ml-2">{{ userImages.length }}</b-tag>
@@ -74,7 +74,7 @@ export default {
               </li>
 
               <li :class="{'is-active': page === 'collections'}">
-                <router-link :to="{name: 'user', params: {userId: user.id, page: 'collections'}}">
+                <router-link :to="{name: 'user', params: {userName: user.name, page: 'collections'}}">
                   Collections
                   <template v-if="userCollections && userCollections.length > 0">
                     <b-tag type="is-light" class="ml-2">{{ userCollections.length }}</b-tag>
