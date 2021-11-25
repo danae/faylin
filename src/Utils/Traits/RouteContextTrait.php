@@ -35,4 +35,16 @@ trait RouteContextTrait
   {
     return $this->getRouteParser($request)->fullUrlFor($request->getUri(), $name, $params, $queryParams);
   }
+
+  // Resolve the current endpoint to a relative URL
+  public function urlForCurrent(Request $requesr, array $params = [], array $queryParams = []): string
+  {
+    return $this->getRouteParser($request)->urlFor($this->getRoute($request)->getName(), $params, $queryParams);
+  }
+
+  // Resolve the current endpoint to an absolute URL
+  public function fullUrlForCurrent(Request $request, array $params = [], array $queryParams = []): string
+  {
+    return $this->getRouteParser($request)->fullUrlFor($request->getUri(), $this->getRoute($request)->getName(), $params, $queryParams);
+  }
 }
