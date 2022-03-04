@@ -12,7 +12,7 @@
   "minimum-stability": "dev",
   "prefer-stable": true,
   "require": {
-    "php": "^7.4",
+    "php": "^7.4||^8.0",
     "ext-mongodb": "^1.10",
     "ext-imagick": "^3.5",
     "mongodb/mongodb": "^1.9",
