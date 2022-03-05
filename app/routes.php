@@ -230,7 +230,7 @@ return function(App $app)
       ->setName('frontend.image');
 
     // Render a user
-    $group->get('/u/{userId:[0-9]+}[/{page:.*}]', [FrontendController::class, 'renderUser'])
+    $group->get('/u/{userName:[A-Za-z0-9-_]+}[/{page:.*}]', [FrontendController::class, 'renderUser'])
       ->add(UserResolverMiddleware::class)
       ->setName('frontend.user');
 
