@@ -93,7 +93,7 @@ final class FrontendController
     $context['opengraph']['og:title'] = $user->getTitle();
     $context['opengraph']['og:description'] = $user->getDescription();
     $context['opengraph']['og:type'] = 'profile';
-    $context['opengraph']['og:url'] = $this->fullUrlFor($request, 'frontend.user', ['userId' => $user->getId()->toString()]);
+    $context['opengraph']['og:url'] = $this->fullUrlFor($request, 'frontend.user', ['userName' => $user->getName()]);
     $context['opengraph']['og:site_name'] = 'fayl.in';
     $context['opengraph']['og:profile:username'] = $user->getName();
 
